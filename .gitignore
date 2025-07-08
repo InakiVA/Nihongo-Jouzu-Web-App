@@ -1,2 +1,13 @@
 venv/
 __pycache__
+
+# Node / Tailwind
+package-lock.json
+node_modules/
+npm-debug.log*
+
+# Salidas de build/caché
+.cache/
+dist/
+build/
+.vite/

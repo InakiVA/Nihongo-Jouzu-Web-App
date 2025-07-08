@@ -1,1 +1,1 @@
-# aquí van las funciones generales
+# == aquí van las funciones generales
