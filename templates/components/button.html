@@ -1,0 +1,19 @@
+{% if href %}
+<a
+  href="{{ href }}"
+  class="{{ extra_classes }}"
+  {% if target %} target="{{ target }}" {% endif %}
+  {% if type %} type="{{ type }}" {% endif %}
+  {% if name %} name="{{ name }}" {% endif %}
+>
+  {% if icon %}{% include icon %}{% endif %} {{ label }}
+</a>
+{% else %}
+<button
+  class="{{ extra_classes }}"
+  {% if type %} type="{{ type }}" {% endif %}
+  {% if name %} name="{{ name }}" {% endif %}
+>
+  {% if icon %}{% include icon %}{% endif %} {{ label }}
+</button>
+{% endif %}

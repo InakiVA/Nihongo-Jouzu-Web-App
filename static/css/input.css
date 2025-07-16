@@ -1,12 +1,19 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "daisyui";
 
-nav {
-  @apply flex flex-row bg-gray-800 p-4;
+@theme {
+  --color-darkocean: #1c2731;
+  --color-ocean: #2a3c4b;
+  --color-aqua: #008f89;
+  --color-mint: #c9f7f5;
 }
 
-nav .btn {
-  @apply bg-gray-500 text-white font-semibold p-2 m-2 rounded shadow;
-  @apply hover:bg-gray-600 transition-colors duration-300;
+nav {
+  @apply navbar max-h-12 bg-darkocean border-b-1 border-ocean shadow-2xl;
+}
+
+nav .segbtn {
+  @apply join-item btn btn-sm btn-accent shadow-none border-ocean bg-darkocean text-white mx-1;
+  @apply hover:bg-ocean;
+  @apply focus:bg-aqua focus:border-mint;
 }

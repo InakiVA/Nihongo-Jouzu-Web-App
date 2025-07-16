@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Nihongo Jouzu</title>
+    <link
+      rel="stylesheet"
+      href="{% static 'css/output.css' %}"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="flex flex-col w-screen h-screen bg-darkocean">
+    {% include "components/navbar.html" %} {% block content %}{% endblock %}
+  </body>
+</html>

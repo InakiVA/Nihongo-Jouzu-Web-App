@@ -35,6 +35,7 @@ class UsuarioGrupo(models.Model):
     )
     guardado = models.BooleanField(default=False)
     estudiando = models.BooleanField(default=False)
+    estrella = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ("usuario", "grupo")
