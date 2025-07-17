@@ -16,7 +16,7 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
-  <body class="flex flex-col w-screen h-screen bg-darkocean">
-    {% include "components/navbar.html" %} {% block content %}{% endblock %}
+  <body class="flex flex-col w-screen h-screen bg-darkest">
+    {% if is_mobile %} {% include "components/navbar_mobile.html" %} {% else %} {% include "components/navbar_desktop.html" %} {% endif %}
   </body>
 </html>

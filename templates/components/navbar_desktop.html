@@ -1,0 +1,42 @@
+<nav>
+  <div class="navbar-start">
+    <div class="join">
+        {% url 'estudio' as url_value %}
+            {% if request.path == url_value %}
+                {% include "components/button.html" with href=url_value label="Estudio" icon="components/icons/home.html" extra_classes="button-selected join-item" type="radio" name="navbar_home" %}
+            {% else %}
+                {% include "components/button.html" with href=url_value label="Estudio" icon="components/icons/home.html" extra_classes="button join-item" type="radio" name="navbar_home" %}
+            {% endif %}
+
+        {% url 'diccionario' as url_value %}
+            {% if request.path == url_value %}
+                {% include "components/button.html" with href=url_value label="Diccionario" icon="components/icons/book.html" extra_classes="button-selected join-item" type="radio" name="navbar_home" %}
+            {% else %}
+                {% include "components/button.html" with href=url_value label="Diccionario" icon="components/icons/book.html" extra_classes="button join-item" type="radio" name="navbar_home" %}
+            {% endif %}
+      
+        {% url 'grupos' as url_value %}
+            {% if request.path == url_value %}
+                {% include "components/button.html" with href=url_value label="Grupos" icon="components/icons/groups.html" extra_classes="button-selected join-item" type="radio" name="navbar_home" %}
+            {% else %}
+                {% include "components/button.html" with href=url_value label="Grupos" icon="components/icons/groups.html" extra_classes="button join-item" type="radio" name="navbar_home" %}
+            {% endif %}
+    </div>
+  </div>
+  <div class="navbar-center">
+    <h1 class="text-4xl text-light font-extrabold">日本語</h1>
+    <h1 class="text-4xl text-main font-extrabold">上手</h1>
+  </div>
+
+  <div class="navbar-end">  
+    <div class="join">
+        {% include "components/searchbar.html" %} 
+        {% url 'usuario' as url_value %}
+            {% if request.path == url_value %}
+                {% include "components/button.html" with href=url_value label="Usuario" icon="components/icons/user.html" extra_classes="button-selected join-item" type="radio" name="navbar_home" %}
+            {% else %}
+                {% include "components/button.html" with href=url_value label="Usuario" icon="components/icons/user.html" extra_classes="button join-item" type="radio" name="navbar_home" %}
+            {% endif %}
+    </div>  
+  </div>
+</nav>

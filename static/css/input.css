@@ -2,18 +2,50 @@
 @plugin "daisyui";
 
 @theme {
-  --color-darkocean: #1c2731;
-  --color-ocean: #2a3c4b;
-  --color-aqua: #008f89;
-  --color-mint: #c9f7f5;
+  --color-darkest: #1c2731;
+  --color-dark: #2a3c4b;
+  --color-main: #008f89;
+  --color-light: #c9f7f5;
 }
 
 nav {
-  @apply navbar max-h-12 bg-darkocean border-b-1 border-ocean shadow-2xl;
+  @apply navbar bg-darkest border-b-1 border-dark shadow-2xl;
 }
 
-nav .segbtn {
-  @apply join-item btn btn-sm btn-accent shadow-none border-ocean bg-darkocean text-white mx-1;
-  @apply hover:bg-ocean;
-  @apply focus:bg-aqua focus:border-mint;
+.button {
+  @apply btn btn-accent rounded-lg shadow-none border-dark bg-darkest text-white mx-1;
+  @apply hover:bg-dark;
 }
+
+.button-selected {
+  @apply btn btn-accent rounded-lg shadow-none border-light bg-main text-white mx-1;
+  @apply hover:bg-dark;
+}
+
+.button-filter{
+  @apply btn btn-accent rounded-full shadow-none border-dark bg-darkest text-white mx-1 h-8;
+  @apply hover:bg-dark;
+}
+
+.button-filter-selected{
+  @apply btn btn-accent rounded-full shadow-none border-light bg-main text-white mx-1 h-8;
+  @apply hover:bg-dark;
+}
+
+.searchbar {
+  @apply input input-success rounded-lg flex flex-auto join-item shadow-none border-dark bg-darkest text-white mx-1;
+}
+
+.searchbar_text {
+  @apply text-white placeholder:text-light placeholder:italic;
+}
+
+.tag {
+  @apply badge border-dark bg-dark text-white m-2;
+}
+
+.menu_options {
+  @apply btn btn-accent rounded-sm shadow-none border-dark bg-darkest text-white mx-1;
+  @apply hover:bg-dark;
+}
+

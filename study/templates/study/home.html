@@ -1,4 +1,8 @@
 {% extends "base.html" %} {% block content %}
+<div>
+{% include "components/button.html" with extra_classes="button-filter" label="Por nada" type="checkbox"%}
+{% include "components/button.html" with extra_classes="button-filter-selected" label="Por completar" type="checkbox"%}
+</div>
 <div class="carousel carousel-vertical rounded-box h-96">
   <div class="carousel-item h-full">
     <img

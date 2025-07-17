@@ -10,3 +10,7 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["href_estudio"] = reverse_lazy("estudio")
         return context
+
+    def is_mobile(request):
+        user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
+        return any(m in user_agent for m in ["mobile", "android", "iphone", "ipad"])
