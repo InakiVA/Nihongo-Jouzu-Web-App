@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block content %}
 <div>
-{% include "components/button.html" with extra_classes="button-filter" label="Por nada" type="checkbox"%}
-{% include "components/button.html" with extra_classes="button-filter-selected" label="Por completar" type="checkbox"%}
+{% include "components/filter_button.html" with text="Por nada" %}
+{% include "components/filter_button.html" with text="Por completar"%}
 </div>
 <div class="carousel carousel-vertical rounded-box h-96">
   <div class="carousel-item h-full">
@@ -40,4 +40,6 @@
     />
   </div>
 </div>
+  {% include "components/group_list.html" with header="Grupos sin elegir" rows=rows extra_classes="h-64 w-64"%}
+  {% include "components/group_list.html" with header="Grupos elegidos" rows=rows2 extra_classes="h-64 w-64"%}
 {% endblock %}

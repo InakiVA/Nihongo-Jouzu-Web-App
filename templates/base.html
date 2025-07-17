@@ -18,5 +18,6 @@
   </head>
   <body class="flex flex-col w-screen h-screen bg-darkest">
     {% if is_mobile %} {% include "components/navbar_mobile.html" %} {% else %} {% include "components/navbar_desktop.html" %} {% endif %}
+    {% block content %} {% endblock %}
   </body>
 </html>

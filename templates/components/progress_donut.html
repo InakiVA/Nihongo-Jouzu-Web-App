@@ -1,0 +1,30 @@
+<div class="m-2 text-xs">
+    {% if progress < 33 %}
+        {% with "text-red-400" as color_class %}
+            <div class="radial-progress {{ color_class }}" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
+                {{ progress }}%
+            </div>
+        {% endwith %}
+    {% elif progress < 66 %}
+        {% with "text-amber-400" as color_class %}
+            <div class="radial-progress {{ color_class }}" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
+                {{ progress }}%
+            </div>
+        {% endwith %}
+    {% elif progress < 100 %}
+        {% with "text-green-400" as color_class %}
+            <div class="radial-progress {{ color_class }}" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
+                {{ progress }}%
+            </div>
+        {% endwith %}
+    {% else %}
+        {% with "text-light" as color_class %}
+            <div class="radial-progress {{ color_class }}" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
+                {{ progress }}%
+            </div>
+        {% endwith %}
+    {% endif %}
+</div>
+
+
+

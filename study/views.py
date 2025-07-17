@@ -9,6 +9,20 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["href_estudio"] = reverse_lazy("estudio")
+        context["value"] = 5  # esto es para testear radial progress
+        context["value2"] = 35
+        context["value3"] = 75
+        context["value4"] = 100
+        context["rows"] = [
+            {"text": "Group1", "progress": 5},
+            {"text": "Group2", "progress": 50},
+            {"text": "nombrelarguisimowtf", "progress": 75},
+            {"text": "Group4", "progress": 100},
+        ]
+        context["rows2"] = [
+            {"text": "F", "progress": 5},
+            {"text": "G", "progress": 50},
+        ]
         return context
 
     def is_mobile(request):

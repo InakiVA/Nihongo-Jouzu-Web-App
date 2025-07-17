@@ -1,0 +1,8 @@
+<ul class="list bg-darkest border-1 border-dark rounded-box shadow-xl overflow-y-auto {{extra_classes}}">  
+  <li class="text-white p-4 pb-2 text-2xl tracking-wide">{{header}}</li>
+  <li class="m-2 mt-0">
+  {% for row in rows %}  
+    {% include "components/group_row.html" with text=row.text progress=row.progress%}
+  {% endfor %}  
+  </li>
+</ul>

@@ -1,7 +1,11 @@
 <nav>
-    <div class="flex flex-col">
-        <div class="flex flex-row items-center justify-center gap-x-4 mx-2 my-1">
-            <div class="dropdown">
+    <div class="flex flex-col justify-center">            
+        <div class="flex flex-row mb-3 justify-center">
+            <h1 class="text-4xl text-light font-extrabold">日本語</h1>
+            <h1 class="text-4xl text-main font-extrabold">上手</h1>
+        </div>
+        <div class="flex flex-row justify-center">
+            <div class="dropdown flex flex-auto">
                 <div tabindex="0" role="button">
                     {% include "components/button.html" with icon="components/icons/bars.html" extra_classes="button" %}
                 </div>
@@ -9,42 +13,41 @@
                     tabindex="0"
                     class="menu menu-sm dropdown-content bg-darkest rounded-box z-1 mt-3 w-52 p-2 shadow"
                     >
-                    {% url 'estudio' as url_value %}
-                    {% if request.path == url_value %}
-                        {% include "components/button.html" with href=url_value label="Estudio" icon="components/icons/home.html" extra_classes="button-selected join-item" type="radio" name="navbar_home" %}
-                    {% else %}
-                        {% include "components/button.html" with href=url_value label="Estudio" icon="components/icons/home.html" extra_classes="button join-item" type="radio" name="navbar_home" %}
-                    {% endif %}
-
+                    <li>
+                        {% url 'estudio' as url_value %}
+                        {% if request.path == url_value %}
+                            {% include "components/navigation_button.html" with href=url_value text="Estudio" icon="components/icons/home.html" extra_classes="button-selected join-item" type="radio" name="navbar_home" %}
+                        {% else %}
+                            {% include "components/navigation_button.html" with href=url_value text="Estudio" icon="components/icons/home.html" extra_classes="button join-item" type="radio" name="navbar_home" %}
+                        {% endif %}
+                    </li>
+                    <li>
                     {% url 'diccionario' as url_value %}
                     {% if request.path == url_value %}
-                        {% include "components/button.html" with href=url_value label="Diccionario" icon="components/icons/book.html" extra_classes="button-selected join-item" type="radio" name="navbar_home" %}
+                        {% include "components/navigation_button.html" with href=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="button-selected join-item" type="radio" name="navbar_home" %}
                     {% else %}
-                        {% include "components/button.html" with href=url_value label="Diccionario" icon="components/icons/book.html" extra_classes="button join-item" type="radio" name="navbar_home" %}
+                        {% include "components/navigation_button.html" with href=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="button join-item" type="radio" name="navbar_home" %}
                     {% endif %}
-
+                    </li>
+                    <li>
                     {% url 'grupos' as url_value %}
                     {% if request.path == url_value %}
-                        {% include "components/button.html" with href=url_value label="Grupos" icon="components/icons/groups.html" extra_classes="button-selected join-item" type="radio" name="navbar_home" %}
+                        {% include "components/navigation_button.html" with href=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="button-selected join-item" type="radio" name="navbar_home" %}
                     {% else %}
-                        {% include "components/button.html" with href=url_value label="Grupos" icon="components/icons/groups.html" extra_classes="button join-item" type="radio" name="navbar_home" %}
+                        {% include "components/navigation_button.html" with href=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="button join-item" type="radio" name="navbar_home" %}
                     {% endif %}
-
+                    </li>
+                    <li>
                     {% url 'usuario' as url_value %}
                     {% if request.path == url_value %}
-                        {% include "components/button.html" with href=url_value label="Usuario" icon="components/icons/user.html" extra_classes="button-selected join-item" type="radio" name="navbar_home" %}
+                        {% include "components/navigation_button.html" with href=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-selected join-item" type="radio" name="navbar_home" %}
                     {% else %}
-                        {% include "components/button.html" with href=url_value label="Usuario" icon="components/icons/user.html" extra_classes="button join-item" type="radio" name="navbar_home" %}
+                        {% include "components/navigation_button.html" with href=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button join-item" type="radio" name="navbar_home" %}
                     {% endif %}
+                    </li>
                 </ul>
             </div>
-            <div class="flex flex-row mb-3">
-                <h1 class="text-4xl text-light font-extrabold">日本語</h1>
-                <h1 class="text-4xl text-main font-extrabold">上手</h1>
-            </div>
-        </div>
-        <div class="mx-2 mb-1">
-        {% include "components/searchbar.html" %}  
+            {% include "components/searchbar.html" %}  
         </div>
     </div>
 </nav>

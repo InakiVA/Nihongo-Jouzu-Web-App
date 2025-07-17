@@ -13,23 +13,13 @@ nav {
 }
 
 .button {
-  @apply btn btn-accent rounded-lg shadow-none border-dark bg-darkest text-white mx-1;
+  @apply h-10 btn btn-accent shadow-none border-dark bg-darkest text-white mx-1 rounded-sm;
   @apply hover:bg-dark;
 }
 
 .button-selected {
-  @apply btn btn-accent rounded-lg shadow-none border-light bg-main text-white mx-1;
-  @apply hover:bg-dark;
-}
-
-.button-filter{
-  @apply btn btn-accent rounded-full shadow-none border-dark bg-darkest text-white mx-1 h-8;
-  @apply hover:bg-dark;
-}
-
-.button-filter-selected{
-  @apply btn btn-accent rounded-full shadow-none border-light bg-main text-white mx-1 h-8;
-  @apply hover:bg-dark;
+  @apply h-10 btn btn-accent shadow-none border-light bg-main text-white mx-1 rounded-sm;
+  @apply hover:bg-main/50;
 }
 
 .searchbar {
