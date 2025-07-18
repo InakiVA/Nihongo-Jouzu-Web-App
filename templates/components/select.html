@@ -1,4 +1,4 @@
-<select class="select select-accent bg-transparent hover:bg-dark border-teal-100/20 text-white">
+<select class="select select-ghost text-lg bg-darkest hover:bg-dark border-dark text-white">
   {% for option in options %}
     <option class="bg-darkest" value="{{ option.value }}"  {% if forloop.first %} selected {% endif %}>
       {{ option.label }}

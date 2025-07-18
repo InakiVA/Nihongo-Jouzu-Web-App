@@ -1,6 +1,7 @@
-console.log("⚡ TAILWIND CONFIG CARGADO");
+console.log("TAILWIND CONFIG CARGADO");
+
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
     "./templates/**/*.html",
     "./static/css/**/*.css",
@@ -9,14 +10,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        aqua: "#008f89",
-        mint: "#c9f7f5",
-        ocean: "#2a3c4b",
-        darkocean: "#1c2731",
+        main: "#008f89",
+        light: "#c9f7f5",
+        dark: "#2a3c4b",
+        darkest: "#1c2731",
       },
     },
   },
-  plugins: [
-    import("daisyui"), // con ESM debes usar import()
-  ],
 };

@@ -1,0 +1,31 @@
+<div class="card bg-darkest hover:bg-dark shadow-sm border-1 border-dark text-white w-auto h-auto py-1 px-2"> 
+  {% if side_to_side %}
+    <div class="flex flex-row">
+      <h2 class="text-7xl font-semibold mt-1 w-auto truncate text-ellipsis">
+        {{ title }}
+      </h2>        
+      <div class="flex flex-col justify-center truncate ml-2 w-full">            
+        <div class="pl-4 pt-1">
+      <p class="truncate w-full text-sm text-white/80">{{ lecturas }}</p>
+      <p class="truncate text-ellipsis h-auto w-full text-lg">{{ significados }}</p> 
+      <div class="w-full flex flex-row space-x-2 py-2">
+        {% for tag in tags %}
+          {% include "components/tag.html" with text=tag %}
+        {% endfor %}
+      </div>    
+    </div>             
+      </div>   
+    </div>
+  {% else %}
+    <h2 class="card-title text-3xl truncate h-auto pt-1">{{ title }}</h2>   
+    <div class="pl-4 pt-1">
+        <p class="truncate w-full text-sm text-white/80">{{ lecturas }}</p>
+        <p class="truncate text-ellipsis h-auto w-full text-lg">{{ significados }}</p> 
+        <div class="w-full flex flex-row space-x-2 py-2 overflow-hidden truncate">
+            {% for tag in tags %}
+                {% include "components/tag.html" with text=tag %}
+            {% endfor %}
+        </div>  
+    </div>       
+  {% endif %}
+</div>

@@ -1,0 +1,5 @@
+panoptimize dark:
+  --color-darkest: #1c2731;
+  --color-dark: #2a3c4b;
+  --color-main: #008f89;
+  --color-light: #c9f7f5;

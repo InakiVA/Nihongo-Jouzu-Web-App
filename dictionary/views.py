@@ -14,7 +14,7 @@ class DictionaryView(TemplateView):
         context["value3"] = 75
         context["value4"] = 100
         context["rows"] = [
-            {"text": "Group1", "progress": 5},
+            {"text": "Group1", "progress": 0},
             {"text": "Group2", "progress": 50},
             {"text": "nombrelarguisimowtf", "progress": 75},
             {"text": "Group4", "progress": 100},
@@ -24,10 +24,57 @@ class DictionaryView(TemplateView):
             {"text": "G", "progress": 50},
         ]
         context["options"] = [
-            {"value": "light", "label": "Light mode"},
+            {
+                "value": "light",
+                "label": "Light mode is very long for this option text isn't it honey",
+            },
             {"value": "dark", "label": "Dark mode"},
             {"value": "system", "label": "System"},
         ]
+        lecturas = [
+            "は",
+            "ひ",
+            "ふ",
+            "へ",
+            "ほ",
+            "ahora",
+            "unaas",
+            "bieeen",
+            "largas",
+            "para que amarre parejo",
+            "y ver si se elimina",
+        ]
+        context["lecturas"] = ", ".join(lecturas)
+        significados = [
+            "este significado es muy largo",
+            "pero bueno ya qué se le va a hacer",
+            "no me queda de otra más que testear con textos bien largos",
+        ]
+        context["significados"] = ", ".join(significados)
+        tags = (
+            "Kanji",
+            "JLPT N5",
+            "Adjetivo",
+            "Muy largo tag largo",
+            "Kanji",
+            "JLPT N5",
+            "Adjetivo",
+            "Muy largo tag largo",
+            "Kanji",
+            "JLPT N5",
+            "Adjetivo",
+            "Muy largo tag largo",
+            "Kanji",
+            "JLPT N5",
+            "Adjetivo",
+            "Muy largo tag largo",
+            "Kanji",
+            "JLPT N5",
+            "Adjetivo",
+            "Muy largo tag largo",
+        )
+        context["tags"] = tags
+        context["side_to_side"] = "Kanji" in tags
 
         return context
 

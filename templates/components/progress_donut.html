@@ -1,5 +1,11 @@
 <div class="m-2 text-xs">
-    {% if progress < 33 %}
+    {% if progress == 0 %}
+        {% with "text-white/20" as color_class %}
+            <div class="radial-progress {{ color_class }}" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
+                {{ progress }}%
+            </div>
+        {% endwith %}
+    {% elif progress < 33 %}
         {% with "text-red-400" as color_class %}
             <div class="radial-progress {{ color_class }}" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
                 {{ progress }}%

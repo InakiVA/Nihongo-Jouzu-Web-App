@@ -1,8 +1,11 @@
 {% extends "base.html" %} {% block content %}
-<div>
+<div class="space-y-4">
+{% include "components/word_card.html" with title="お元気でいらっしゃいますか" lecturas=lecturas significados=significados tags=tags notas=significados side_to_side=False%}
+{% include "components/word_card.html" with title="気" lecturas=lecturas significados=significados tags=tags notas=significados side_to_side=side_to_side%}
+{% include "components/checkbox.html" with text="Por completar"%}
 {% include "components/filter_button.html" with text="Por nada" %}
 {% include "components/filter_button.html" with text="Por completar"%}
-</div>
+
 <div class="carousel carousel-vertical rounded-box h-96">
   <div class="carousel-item h-full">
     <img
@@ -42,6 +45,7 @@
 </div>
   {% include "components/switch.html" with left_text="And" right_text="OR" %}
   {% include "components/select.html" with options=options %}
-  {% include "components/group_list.html" with header="Grupos sin elegir" rows=rows extra_classes="h-64 w-64"%}
+  {% include "components/group_list.html" with header="Grupos sin elegir" rows=rows extra_classes="h-auto w-64"%}
   {% include "components/group_list.html" with header="Grupos elegidos" rows=rows2 extra_classes="h-64 w-64"%}  
+  </div>
 {% endblock %}
