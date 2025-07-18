@@ -1,6 +1,5 @@
-console.log("TAILWIND CONFIG CARGADO");
+const daisyui = require("daisyui");
 
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./templates/**/*.html",

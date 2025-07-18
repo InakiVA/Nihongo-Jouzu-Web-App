@@ -1,38 +1,45 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @config "../../tailwind.config.js";
 @plugin "daisyui";
 
 @theme {
-  --color-darkest: #1c2731;
-  --color-dark: #2a3c4b;
-  --color-main: #008f89;
-  --color-light: #c9f7f5;
+  --color-warning: #ffde00;
+  --color-alert: #ff4763;
+  --color-success: #41f540;
+  --color-disabled: #626269;
+
+  --color-textcolor: #FFFFFF;
+  
+--color-darkest: #170d22;
+--color-dark: #252046;
+--color-main: #9911fa;
+--color-light: #e2baffff;
 }
 
 nav {
-  @apply navbar bg-darkest border-b-1 border-dark shadow-2xl;
+  @apply navbar bg-darkest border-b border-dark shadow-2xl;
 }
 
 .button {
-  @apply h-10 btn btn-accent shadow-none border-dark bg-darkest text-white mx-1 rounded-sm;
+  @apply h-10 btn btn-accent shadow-none border-dark bg-darkest text-textcolor mx-1 rounded-sm;
   @apply hover:bg-dark;
 }
 
 .button-selected {
-  @apply h-10 btn btn-accent shadow-none border-light bg-main text-white mx-1 rounded-sm;
+  @apply h-10 btn btn-accent shadow-none border-light bg-main text-textcolor mx-1 rounded-sm;
   @apply hover:bg-main/50;
 }
 
 .searchbar {
-  @apply input input-success rounded-lg flex flex-auto join-item shadow-none border-dark bg-darkest text-white mx-1;
+  @apply input input-success rounded-lg flex flex-auto join-item shadow-none border-dark bg-darkest text-textcolor mx-1;
 }
 
 .searchbar_text {
-  @apply text-white placeholder:text-light placeholder:italic;
+  @apply text-textcolor placeholder:text-light placeholder:italic;
 }
 
 .menu_options {
-  @apply btn btn-accent rounded-sm shadow-none border-dark bg-darkest text-white mx-1;
+  @apply btn btn-accent rounded-sm shadow-none border-dark bg-darkest text-textcolor mx-1;
   @apply hover:bg-dark;
 }
 

@@ -1,8 +1,8 @@
 <li class="list-row shadow-md w-auto border-1 border-dark items-center gap-2 px-4 py-1">
-    <h2 class="truncate list-col-grow font-semibold text-lg justify-start text-white/80">
+    <h2 class="truncate list-col-grow font-semibold text-lg justify-start text-textcolor/80">
         {{ text }}
     </h2>
     {% include "components/progress_donut.html" with progress=progress%}
-    {% include "components/icon_swap_button.html" with on="components/icons/star.html" oncolor="fill-white" off="components/icons/star.html" offcolor="fill-white/20" %}
-    {% include "components/icon_swap_button.html" with on="components/icons/plus.html" oncolor="fill-white" off="components/icons/minus.html" offcolor="fill-white" %}    
+    {% include "components/icon_swap_button.html" with on="components/icons/star.html" oncolor="fill-light" off="components/icons/star.html" offcolor="fill-disabled" %}
+    {% include "components/icon_swap_button.html" with on="components/icons/plus.html" oncolor="fill-light" off="components/icons/minus.html" offcolor="fill-light" %}    
 </li>
