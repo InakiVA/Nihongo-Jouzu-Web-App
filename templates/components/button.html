@@ -1,8 +1,7 @@
-<a
-  href="{{href}}"
+<button
   class="{% if is_selected %} button-selected {% else %} button {% endif %} {{ extra_classes }}"
   {% if target %} target="{{ target }}" {% endif %}
   {% if name %} name="{{ name }}" {% endif %}
 >
   {% if icon %}{% include icon %}{% endif %} {{ text }}
-</a>
+</button>
