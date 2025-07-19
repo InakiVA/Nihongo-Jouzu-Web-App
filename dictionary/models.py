@@ -11,6 +11,8 @@ class Palabra(models.Model):
         on_delete=models.CASCADE,
         related_name="palabras",
     )
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
+    ultima_modificacion = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = "Palabras"
@@ -31,6 +33,8 @@ class Significado(models.Model):
         on_delete=models.CASCADE,
         related_name="significados",
     )
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
+    ultima_modificacion = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = "Significados"
@@ -51,6 +55,8 @@ class Lectura(models.Model):
         on_delete=models.CASCADE,
         related_name="lecturas",
     )
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
+    ultima_modificacion = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = "Lecturas"
@@ -71,6 +77,8 @@ class Nota(models.Model):
         on_delete=models.CASCADE,
         related_name="notas",
     )
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
+    ultima_modificacion = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = "Notas"

@@ -13,6 +13,8 @@ class Grupo(models.Model):
         on_delete=models.CASCADE,
         related_name="grupos",
     )
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
+    ultima_modificacion = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = "Grupos"
@@ -33,7 +35,6 @@ class UsuarioGrupo(models.Model):
         on_delete=models.CASCADE,
         related_name="grupo_usuarios",
     )
-    guardado = models.BooleanField(default=False)
     estudiando = models.BooleanField(default=False)
     estrella = models.BooleanField(default=False)
 

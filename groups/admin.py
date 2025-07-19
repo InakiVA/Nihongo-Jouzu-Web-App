@@ -12,7 +12,7 @@ class GrupoAdmin(AutorMixin):
 
 @admin.register(UsuarioGrupo)
 class UsuarioGrupoAdmin(UsuarioMixin, GrupoMixin):
-    list_display = ("grupo_grupo", "usuario_username", "guardado", "estudiando")
+    list_display = ("grupo_grupo", "usuario_username", "estudiando", "estrella")
     search_fields = ("grupo__grupo", "usuario__username")
     ordering = ("usuario__username", "grupo_id")
 
