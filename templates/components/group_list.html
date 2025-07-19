@@ -2,8 +2,8 @@
   <h1 class="text-textcolor text-2xl pl-4">{{header}}</h1>
   <div class="px-4 space-y-4 pb-2">
   <li>
-  {% for row in rows %}  
-    {% include "components/group_row.html" with text=row.text progress=row.progress%}
+  {% for group in groups %}  
+    {% include "components/group_row.html" with text=group.text progress=group.progress%}
   {% endfor %}  
   </li>
   </div>

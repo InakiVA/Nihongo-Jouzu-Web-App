@@ -1,5 +1,5 @@
 {% if is_mobile %} 
-<nav>
+<nav class="mb-8">
     <div class="flex flex-col justify-center">            
         <div class="flex flex-row mb-3 justify-center">
             <h1 class="text-4xl text-light font-extrabold">日本語</h1>
@@ -53,9 +53,9 @@
     </div>
 </nav>
 {% else %} 
-<nav>
+<nav class=" mb-8">
   <div class="navbar-start">
-    <div class="join">
+    <div class="join space-x-2">
         {% url 'estudio' as url_value %}
         {% if request.path == url_value %}
             {% include "components/navigation_button.html" with is_selected=True href=url_value text="Estudio" icon="components/icons/home.html" extra_classes="join-item" name="navbar_home" %}
@@ -79,12 +79,12 @@
     </div>
   </div>
   <div class="navbar-center">
-    <h1 class="text-4xl text-light font-extrabold">日本語</h1>
-    <h1 class="text-4xl text-main font-extrabold">上手</h1>
+    <h1 class="text-4xl text-light font-extrabold text-shadow-sm text-shadow-light/30">日本語</h1>
+    <h1 class="text-4xl text-main font-extrabold text-shadow-sm text-shadow-main/30">上手</h1>
   </div>
 
   <div class="navbar-end">  
-    <div class="join">
+    <div class="join space-x-2">
         {% include "components/searchbar.html" %} 
         {% url 'usuario' as url_value %}
         {% if request.path == url_value %}

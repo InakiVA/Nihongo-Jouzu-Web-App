@@ -10,28 +10,28 @@
 
   --color-textcolor: #FFFFFF;
   
---color-darkest: #170d22;
---color-dark: #252046;
---color-main: #9911fa;
---color-light: #e2baffff;
-}
+  --color-darkest: #1c2731;
+  --color-dark: #2a3c4b;
+  --color-main: #008f89;
+  --color-light: #c9f7f5;
+  }
 
 nav {
   @apply navbar bg-darkest border-b border-dark shadow-2xl;
 }
 
 .button {
-  @apply h-10 btn btn-accent shadow-none border-dark bg-darkest text-textcolor mx-1 rounded-sm;
-  @apply hover:bg-dark;
+  @apply h-10 btn btn-accent shadow-none border-dark bg-darkest text-textcolor rounded-sm;
+  @apply hover:bg-dark hover:shadow-sm hover:shadow-dark;
 }
 
 .button-selected {
-  @apply h-10 btn btn-accent shadow-none border-light bg-main text-textcolor mx-1 rounded-sm;
+  @apply h-10 btn btn-ghost shadow-sm shadow-main border-light bg-main text-textcolor rounded-sm;
   @apply hover:bg-main/50;
 }
 
 .searchbar {
-  @apply input input-success rounded-lg flex flex-auto join-item shadow-none border-dark bg-darkest text-textcolor mx-1;
+  @apply input rounded-lg flex flex-auto join-item  border-dark bg-darkest text-textcolor;
 }
 
 .searchbar_text {
@@ -39,7 +39,22 @@ nav {
 }
 
 .menu_options {
-  @apply btn btn-accent rounded-sm shadow-none border-dark bg-darkest text-textcolor mx-1;
+  @apply btn btn-accent rounded-sm  border-dark bg-darkest text-textcolor;
   @apply hover:bg-dark;
 }
 
+.tag{
+  @apply rounded-2xl px-2.5 py-0.5 text-textcolor;
+}
+
+.check-box{
+  @apply checkbox text-light bg-darkest hover:bg-dark checked:bg-main border-light border;
+}
+
+.switch{
+  @apply toggle text-light bg-darkest hover:bg-dark checked:bg-main border-light border;
+}
+
+.select{
+  @apply select select-ghost text-lg bg-darkest hover:bg-dark border-dark text-textcolor;
+}

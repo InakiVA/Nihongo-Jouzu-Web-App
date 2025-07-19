@@ -1,11 +1,11 @@
 panoptimize dark aqua:
---color-darkest: #1c2731;
---color-dark: #2a3c4b;
---color-main: #008f89;
---color-light: #c9f7f5;
+    --color-darkest: #1c2731;
+    --color-dark: #2a3c4b;
+    --color-main: #008f89;
+    --color-light: #c9f7f5;
 
 shinji purple:
---color-darkest: #170d22;
---color-dark: #252046;
---color-main: #9911fa;
---color-light: #e2baffff;
+    --color-darkest: #170d22;
+    --color-dark: #252046;
+    --color-main: #9911fa;
+    --color-light: #e2baffff;
