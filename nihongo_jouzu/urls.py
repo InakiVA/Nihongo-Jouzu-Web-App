@@ -17,6 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from accounts.views import WelcomeView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -24,4 +25,5 @@ urlpatterns = [
     path("diccionario/", include("dictionary.urls"), name="diccionario"),
     path("grupos/", include("groups.urls"), name="grupos"),
     path("usuario/", include("accounts.urls"), name="usuario"),
+    path("", WelcomeView.as_view(), name="welcome"),
 ]

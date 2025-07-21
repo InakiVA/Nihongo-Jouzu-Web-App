@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  <div class="w-screen h-screen bg-radial from-darkest via-dark to-main flex justify-center items-center">
+    <div class="flex flex-col items-center text-center bg-darkest p-24 rounded-2xl shadow-2xl border-4 border-main hover:border-light">
+      <h1 class="text-3xl font-bold mb-6">Inicia sesión</h1>
+
+      <div class="flex flex-row py-4 items-center">
+        <label for="{{ form.username.id_for_label }}" class="px-5 text-2xl font-semibold w-60 text-end">Usuario</label>
+        <div class="searchbar">
+        {{ form.username }}
+        </div>
+      </div>
+      {% if form.username.errors %}
+        <ul class="text-red-500 text-sm mb-4">
+          {% for error in form.username.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      <div class="flex flex-row py-4 items-center">
+        <label for="{{ form.password.id_for_label }}" class="px-5 text-2xl font-semibold w-60 text-end">Contraseña</label>
+        <div class="searchbar">
+        {{ form.password }}
+        </div>
+      </div>
+      {% if form.password.errors %}
+        <ul class="text-red-500 text-sm mb-4">
+          {% for error in form.password.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      <button type="submit" class="button-selected mx-4 py-2 mt-4">Iniciar Sesión</button>
+      <div class="flex flex-row space-x-2 pt-4">
+        <p>¿No tienes una cuenta?</p>
+        <a href="{% url 'signup' %}" class="underline text-main hover:text-light transition">Crear cuenta</a>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

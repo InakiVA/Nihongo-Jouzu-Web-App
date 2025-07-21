@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from tags.models import Etiqueta
 from groups.models import Grupo
 
 
-class HomeView(TemplateView):
+class HomeView(LoginRequiredMixin, TemplateView):
     template_name = "study/home.html"
 
     def get_context_data(self, **kwargs):

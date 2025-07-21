@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import Usuario
+from django.conf import settings
 from dictionary.models import Palabra
 
 # -- Atributos de grupos
@@ -9,7 +9,7 @@ class Grupo(models.Model):
     grupo = models.CharField(max_length=50)
     descripcion = models.TextField(blank=True, null=True)
     autor = models.ForeignKey(
-        Usuario,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="grupos",
     )
@@ -26,7 +26,7 @@ class Grupo(models.Model):
 # Un usuario -> muchos grupos
 class UsuarioGrupo(models.Model):
     usuario = models.ForeignKey(
-        Usuario,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="usuario_grupos",
     )
@@ -40,7 +40,7 @@ class UsuarioGrupo(models.Model):
 
     class Meta:
         unique_together = ("usuario", "grupo")
-        db_table = "Usuarios_Grupos"
+        db_table = "settings.AUTH_USER_MODELs_Grupos"
 
     def __str__(self):
         return f"{self.usuario.username} ↔ {self.grupo.grupo}"

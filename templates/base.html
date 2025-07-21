@@ -10,8 +10,11 @@
       type="text/css"
     />
   </head>
+  
   <body class="flex flex-col w-screen min-h-screen h-auto bg-darkest">
-    {% include "components/navbar.html" %}
+    {% if user.is_authenticated %}
+      {% include "components/navbar.html" %}            
+    {% endif %}
     {% block content %} {% endblock %}
   </body>
 </html>

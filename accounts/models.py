@@ -1,25 +1,23 @@
+# accounts/models.py
 from django.db import models
+from django.contrib.auth.models import User
 
-# -- Autenticación: Registro, login, perfil
 
-
-class RolUsuario(models.TextChoices):
+class RolPerfil(models.TextChoices):
     ADMIN = "admin", "Admin"
     USER = "user", "User"
     MODERATOR = "moderator", "Moderator"
 
 
-class Usuario(models.Model):
-    username = models.CharField(max_length=25, unique=True)
-    password_hash = models.TextField()
-    role = models.CharField(
+class Perfil(models.Model):
+    usuario = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="perfil"
+    )
+    rol = models.CharField(
         max_length=10,
-        choices=RolUsuario.choices,
-        default=RolUsuario.USER,
+        choices=RolPerfil.choices,
+        default=RolPerfil.USER,
     )
 
-    class Meta:
-        db_table = "Usuarios"
-
     def __str__(self):
-        return self.username
+        return f"{self.usuario.username} - {self.rol}"

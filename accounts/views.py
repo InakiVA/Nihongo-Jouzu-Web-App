@@ -1,17 +1,52 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.urls import reverse_lazy
+from django.views.generic import CreateView, TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
+from django.contrib.auth.views import LoginView
 
 
-class UserView(TemplateView):
+class SignupView(CreateView):
+    form_class = UserCreationForm
+    template_name = "accounts/signup.html"
+    success_url = reverse_lazy("estudio")
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect("estudio")
+        return super().dispatch(request, *args, **kwargs)
+
+
+class CustomLoginView(LoginView):
+    template_name = "accounts/login.html"
+    authentication_form = AuthenticationForm
+    redirect_authenticated_user = True
+    success_url = reverse_lazy("estudio")
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect("estudio")
+        return super().dispatch(request, *args, **kwargs)
+
+
+class WelcomeView(TemplateView):
+    template_name = "accounts/welcome.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["usuario"] = self.request.user
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect("estudio")  # o la vista principal del usuario
+        return super().dispatch(request, *args, **kwargs)
+
+
+class UserView(LoginRequiredMixin, TemplateView):
     template_name = "accounts/user.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["href_usuario"] = reverse_lazy("usuario")
-
+        context["usuario"] = self.request.user
         return context
-
-    def is_mobile(request):
-        user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
-        return any(m in user_agent for m in ["mobile", "android", "iphone", "ipad"])

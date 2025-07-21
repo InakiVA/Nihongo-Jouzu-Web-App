@@ -30,8 +30,14 @@ nav {
   @apply hover:bg-main/50;
 }
 
+.button-alert {
+  @apply h-10 btn btn-ghost shadow-sm shadow-alert border-alert/20 bg-alert text-textcolor rounded-sm;
+  @apply hover:bg-alert/50;
+}
+
 .searchbar {
-  @apply input rounded-lg flex flex-auto join-item  border-dark bg-darkest text-textcolor;
+  @apply input rounded-lg flex flex-auto join-item  border-dark bg-darkest text-textcolor shadow shadow-dark;
+  @apply focus:bg-dark hover:bg-dark;
 }
 
 .searchbar_text {

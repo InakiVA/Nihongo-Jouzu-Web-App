@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
-from accounts.models import Usuario
+from django.conf import settings
 from dictionary.models import Palabra
 
 # -- Seguimiento del estudio
@@ -8,7 +8,7 @@ from dictionary.models import Palabra
 
 class UsuarioPalabra(models.Model):
     usuario = models.ForeignKey(
-        Usuario,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="usuario_palabras",
     )

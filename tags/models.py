@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import Usuario
+from django.conf import settings
 from dictionary.models import Palabra
 from groups.models import Grupo
 
@@ -9,7 +9,7 @@ from groups.models import Grupo
 class Etiqueta(models.Model):
     etiqueta = models.CharField(max_length=25)
     autor = models.ForeignKey(
-        Usuario,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="etiquetas",
     )

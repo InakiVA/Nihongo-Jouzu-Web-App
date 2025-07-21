@@ -1,9 +1,9 @@
 from django.contrib import admin
-from accounts.models import Usuario
+from accounts.models import Perfil
 
 
-@admin.register(Usuario)
+@admin.register(Perfil)
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ("username", "role")
-    search_fields = ("username", "role")
-    ordering = ("username",)
+    list_display = ("id", "usuario", "rol")
+    search_fields = ("usuario", "rol")
+    ordering = ("usuario",)

@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import Usuario
+from django.conf import settings
 
 # -- Diccionario central del vocabulario
 
@@ -7,7 +7,7 @@ from accounts.models import Usuario
 class Palabra(models.Model):
     palabra = models.CharField(max_length=50)
     autor = models.ForeignKey(
-        Usuario,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="palabras",
     )
@@ -29,7 +29,7 @@ class Significado(models.Model):
         related_name="significados",
     )
     autor = models.ForeignKey(
-        Usuario,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="significados",
     )
@@ -51,7 +51,7 @@ class Lectura(models.Model):
         related_name="lecturas",
     )
     autor = models.ForeignKey(
-        Usuario,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="lecturas",
     )
@@ -73,7 +73,7 @@ class Nota(models.Model):
         related_name="notas",
     )
     autor = models.ForeignKey(
-        Usuario,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="notas",
     )

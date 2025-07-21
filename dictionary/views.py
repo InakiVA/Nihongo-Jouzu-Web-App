@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class DictionaryView(TemplateView):
+class DictionaryView(LoginRequiredMixin, TemplateView):
     template_name = "dictionary/home.html"
 
     def get_context_data(self, **kwargs):
