@@ -1,12 +1,12 @@
 from django.contrib import admin
 from tags.models import Etiqueta, PalabraEtiqueta, GrupoEtiqueta
-from core.admin_mixins import AutorMixin, PalabraMixin, EtiquetaMixin, GrupoMixin
+from core.admin_mixins import UsuarioMixin, PalabraMixin, EtiquetaMixin, GrupoMixin
 
 
 @admin.register(Etiqueta)
-class EtiquetaAdmin(AutorMixin):
-    list_display = ("etiqueta", "autor_username")
-    search_fields = ("etiqueta", "autor__username")
+class EtiquetaAdmin(UsuarioMixin):
+    list_display = ("etiqueta", "usuario_username")
+    search_fields = ("etiqueta", "usuario__username")
     ordering = ("etiqueta",)
 
 

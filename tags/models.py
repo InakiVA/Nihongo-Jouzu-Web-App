@@ -8,7 +8,7 @@ from groups.models import Grupo
 
 class Etiqueta(models.Model):
     etiqueta = models.CharField(max_length=25)
-    autor = models.ForeignKey(
+    usuario = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="etiquetas",

@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
   <h2>Bienvenido, {{ usuario.username }}</h2>
-  <p>Tu correo: {{ usuario.email }}</p>
   <form method="POST" action="{% url 'logout' %}">
     {% csrf_token %}
-    <button type="submit" class="button-alert">Log Out</button>
+    <button type="submit" class="button-alert">Cerrar Sesión</button>
     </form>
 {% endblock %}

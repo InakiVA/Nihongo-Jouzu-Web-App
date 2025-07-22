@@ -24,6 +24,5 @@ urlpatterns = [
     path("estudio/", include("study.urls"), name="estudio"),
     path("diccionario/", include("dictionary.urls"), name="diccionario"),
     path("grupos/", include("groups.urls"), name="grupos"),
-    path("usuario/", include("accounts.urls"), name="usuario"),
-    path("", WelcomeView.as_view(), name="welcome"),
+    path("", include("accounts.urls"), name="usuario"),
 ]

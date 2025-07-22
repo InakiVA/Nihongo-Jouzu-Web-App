@@ -3,10 +3,10 @@
 <form method="post">
   {% csrf_token %}
   <div class="w-screen h-screen bg-radial from-darkest via-dark to-main flex justify-center items-center">
-    <div class="flex flex-col items-center text-center bg-darkest p-24 rounded-2xl shadow-2xl border-4 border-main hover:border-light">
+    <div class="flex flex-col items-center text-center bg-darkest p-12 rounded-2xl shadow-2xl border-4 border-main hover:border-light">
       <h1 class="text-4xl font-bold mb-6">Crea tu cuenta</h1>
       <div class="flex flex-row py-4 items-center">
-        <label for="{{ form.username.id_for_label }}" class="px-5 text-2xl font-semibold w-60 text-end">Usuario</label>
+        <label for="{{ form.username.id_for_label }}" class="px-5 text-2xl font-semibold w-40 text-end">Usuario</label>
         <div class="searchbar">
         {{ form.username }}
         </div>
@@ -20,7 +20,7 @@
       {% endif %}
 
       <div class="flex flex-row py-4 items-center">
-        <label for="{{ form.password1.id_for_label }}" class="px-5 text-2xl font-semibold w-60 text-end">Contraseña</label>
+        <label for="{{ form.password1.id_for_label }}" class="px-5 text-2xl font-semibold w-40 text-end">Contraseña</label>
         <div class="searchbar">
         {{ form.password1 }}
         </div>
@@ -34,7 +34,7 @@
       {% endif %}
 
       <div class="flex flex-row py-4 items-center">
-        <label for="{{ form.password2.id_for_label }}" class="px-5 text-xl font-semibold w-60 text-end">Confirmar contraseña</label>
+        <label for="{{ form.password2.id_for_label }}" class="px-5 text-xl font-semibold w-40 text-end">Confirmar contraseña</label>
         <div class="searchbar">
         {{ form.password2 }}
         </div>

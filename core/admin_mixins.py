@@ -2,14 +2,14 @@
 from django.contrib import admin
 
 
-class AutorMixin(admin.ModelAdmin):
-    list_select_related = ("autor",)
+class UsuarioMixin(admin.ModelAdmin):
+    list_select_related = ("usuario",)
 
-    def autor_username(self, obj):
-        return obj.autor.username
+    def usuario_username(self, obj):
+        return obj.usuario.username
 
-    autor_username.short_description = "Autor"
-    autor_username.admin_order_field = "autor__username"
+    usuario_username.short_description = "Usuario"
+    usuario_username.admin_order_field = "usuario__username"
 
 
 class UsuarioMixin(admin.ModelAdmin):

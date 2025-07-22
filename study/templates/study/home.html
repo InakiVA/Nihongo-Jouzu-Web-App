@@ -1,22 +1,27 @@
 {% extends "base.html" %} {% block content %}
 <div class="h-auto flex flex-col space-y-4">
-    <h1 class="w-auto text-center font-bold text-4xl">Estudio</h1>
-    <div class="flex flex-row flex-auto">        
-        <div class="flex flex-col flex-auto space-y-4 p-4 w-1/2">
+    <div class="flex flex-row space-x-4 px-4">
+        <h1 class="w-auto text-center font-bold text-4xl">Estudio</h1>   
+        {% include "components/navigation_button.html" with text="INICIAR" is_selected=True extra_classes="!text-xl !font-bold"%}
+    </div>     
+    <div class="{% if is_mobile %} flex flex-col {% else %} flex flex-row basis-1/2 {% endif %}">           
+        <div class="flex flex-col space-y-4 p-4 w-full">
             <h2 class="font-semibold text-2xl">Grupos de estudio</h2>
             <div class="flex flex-row w-auto flex-wrap overflow-auto whitespace-nowrap gap-2">
+                {% include "components/filter_button.html" with text="Elegidos" %}
+                {% include "components/filter_button.html" with text="Creados por mí" %}                
                 {% include "components/filter_button.html" with text="Por completar" %}
                 {% include "components/filter_button.html" with text="Con estrella" %}
             </div> 
-            <div class="flex flex-row w-auto flex-wrap overflow-auto whitespace-nowrap p-2">
+            <div>
                 {% include "components/searchbar.html" %}
                 {% include "components/select.html" with options=orden legend="Orden" %}
             </div>
-            {% include "components/group_list.html" with extra_classes="h-64 w-96" groups=grupos%}
+            {% include "components/element_list.html" with header="Grupos" extra_classes="h-auto max-h-82" elements=grupos%}
         </div>
-        <div class="divider divider-horizontal py-4"></div>
-        <div class="flex flex-col flex-auto">
-            <div class="space-y-4 p-4">
+        <div class="divider {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %}"></div>        
+        <div class="flex flex-col basis-1/2 w-full">
+            <div class="space-y-4 p-4 w-full">
                 <h2 class="font-semibold text-2xl">Preguntas</h2>
                 {% include "components/checkbox.html" with text="Orden aleatorio" %}
                 {% include "components/select.html" with options=preguntas legend="Idioma" %}
@@ -26,10 +31,11 @@
                 <h2 class="font-semibold text-2xl">Filtros de palabras</h2>
                 {% include "components/switch.html" with left_text="Y" right_text="O" %}
                 <div class="flex flex-row w-auto flex-wrap overflow-auto gap-2">
+                    {% include "components/filter_button.html" with text="Creados por mí" %}
                     {% include "components/filter_button.html" with text="Por completar" %}
                     {% include "components/filter_button.html" with text="Con estrella" %}
                 </div>                
-                <div class="collapse bg-transparent border border-dark hover:bg-dark">
+                <div class="collapse collapse-arrow bg-transparent border border-dark hover:bg-dark">
                     <input type="checkbox" />
                     <div class="collapse-title font-semibold">Etiquetas</div>
                     <div class="collapse-content space-y-4">
@@ -43,6 +49,7 @@
                 </div>                              
             </div>
         </div>
-    </div>
+    </div>    
 </div>
+
 {% endblock %}

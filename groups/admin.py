@@ -1,12 +1,12 @@
 from django.contrib import admin
 from groups.models import Grupo, GrupoPalabra, UsuarioGrupo
-from core.admin_mixins import AutorMixin, PalabraMixin, GrupoMixin, UsuarioMixin
+from core.admin_mixins import UsuarioMixin, PalabraMixin, GrupoMixin, UsuarioMixin
 
 
 @admin.register(Grupo)
-class GrupoAdmin(AutorMixin):
-    list_display = ("grupo", "autor_username")
-    search_fields = ("grupo", "autor__username")
+class GrupoAdmin(UsuarioMixin):
+    list_display = ("grupo", "usuario_username")
+    search_fields = ("grupo", "usuario__username")
     ordering = ("id",)
 
 

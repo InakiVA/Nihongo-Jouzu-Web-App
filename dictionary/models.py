@@ -6,7 +6,7 @@ from django.conf import settings
 
 class Palabra(models.Model):
     palabra = models.CharField(max_length=50)
-    autor = models.ForeignKey(
+    usuario = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="palabras",
@@ -28,7 +28,7 @@ class Significado(models.Model):
         on_delete=models.CASCADE,
         related_name="significados",
     )
-    autor = models.ForeignKey(
+    usuario = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="significados",
@@ -50,7 +50,7 @@ class Lectura(models.Model):
         on_delete=models.CASCADE,
         related_name="lecturas",
     )
-    autor = models.ForeignKey(
+    usuario = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="lecturas",
@@ -72,7 +72,7 @@ class Nota(models.Model):
         on_delete=models.CASCADE,
         related_name="notas",
     )
-    autor = models.ForeignKey(
+    usuario = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="notas",

@@ -9,7 +9,7 @@ from django.contrib.auth.views import LoginView
 class SignupView(CreateView):
     form_class = UserCreationForm
     template_name = "accounts/signup.html"
-    success_url = reverse_lazy("estudio")
+    success_url = reverse_lazy("login")
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:

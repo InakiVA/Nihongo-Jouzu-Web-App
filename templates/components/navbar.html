@@ -1,59 +1,59 @@
 {% if is_mobile %} 
-<nav class="mb-8">
-    <div class="flex flex-col justify-center">            
-        <div class="flex flex-row mb-3 justify-center">
-            <h1 class="text-4xl text-light font-extrabold">日本語</h1>
-            <h1 class="text-4xl text-main font-extrabold">上手</h1>
-        </div>
-        <div class="flex flex-row justify-center">
-            <div class="dropdown flex flex-auto">
-                <div tabindex="0" role="button">
-                    {% include "components/button.html" with icon="components/icons/bars.html" extra_classes="button" %}
-                </div>
-                <ul
-                    tabindex="0"
-                    class="menu menu-sm dropdown-content bg-darkest rounded-box z-1 mt-3 w-52 p-2 shadow"
-                    >
-                    <li>
-                        {% url 'estudio' as url_value %}
-                        {% if request.path == url_value %}
-                            {% include "components/navigation_button.html" with href=url_value text="Estudio" icon="components/icons/home.html" extra_classes="button-selected join-item" name="navbar_home" %}
-                        {% else %}
-                            {% include "components/navigation_button.html" with href=url_value text="Estudio" icon="components/icons/home.html" extra_classes="button join-item" name="navbar_home" %}
-                        {% endif %}
-                    </li>
-                    <li>
-                        {% url 'diccionario' as url_value %}
-                        {% if request.path == url_value %}
-                            {% include "components/navigation_button.html" with href=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="button-selected join-item" name="navbar_dict" %}
-                        {% else %}
-                            {% include "components/navigation_button.html" with href=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="button join-item" name="navbar_dict" %}
-                        {% endif %}
-                    </li>
-                    <li>
-                        {% url 'grupos' as url_value %}
-                        {% if request.path == url_value %}
-                            {% include "components/navigation_button.html" with href=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="button-selected join-item" name="navbar_groups" %}
-                        {% else %}
-                            {% include "components/navigation_button.html" with href=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="button join-item" name="navbar_groups" %}
-                        {% endif %}
-                    </li>
-                    <li>
-                        {% url 'usuario' as url_value %}
-                        {% if request.path == url_value %}
-                            {% include "components/navigation_button.html" with href=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-selected join-item" name="navbar_user" %}
-                        {% else %}
-                            {% include "components/navigation_button.html" with href=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button join-item" name="navbar_user" %}
-                        {% endif %}
-                    </li>
-                </ul>
-            </div>
-            {% include "components/searchbar.html" %}  
-        </div>
+<nav class="fixed top-0 left-0 z-50 w-full">
+  <div class="flex flex-col items-center justify-center space-y-4 w-full">
+    <div class="flex flex-rowjustify-center items-center">
+      <h1 class="text-4xl text-light font-extrabold">日本語</h1>
+      <h1 class="text-4xl text-main font-extrabold">上手</h1>
     </div>
+    <div class="flex flex-row items-center justify-center space-x-2 w-full px-2">
+      <div class="dropdown">
+        <div tabindex="0" role="button">
+          {% include "components/button.html" with icon="components/icons/bars.html" extra_classes="button" %}
+        </div>
+        <ul
+          tabindex="0"
+          class="menu menu-sm dropdown-content bg-darkest rounded-box z-1 mt-3  p-2 shadow"
+        >
+          <li>
+            {% url 'estudio' as url_value %}
+            {% if request.path == url_value %}
+              {% include "components/navigation_button.html" with href=url_value text="Estudio" icon="components/icons/home.html" extra_classes="button-selected join-item" name="navbar_home" %}
+            {% else %}
+              {% include "components/navigation_button.html" with href=url_value text="Estudio" icon="components/icons/home.html" extra_classes="button join-item" name="navbar_home" %}
+            {% endif %}
+          </li>
+          <li>
+            {% url 'diccionario' as url_value %}
+            {% if request.path == url_value %}
+              {% include "components/navigation_button.html" with href=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="button-selected join-item" name="navbar_dict" %}
+            {% else %}
+              {% include "components/navigation_button.html" with href=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="button join-item" name="navbar_dict" %}
+            {% endif %}
+          </li>
+          <li>
+            {% url 'grupos' as url_value %}
+            {% if request.path == url_value %}
+              {% include "components/navigation_button.html" with href=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="button-selected join-item" name="navbar_groups" %}
+            {% else %}
+              {% include "components/navigation_button.html" with href=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="button join-item" name="navbar_groups" %}
+            {% endif %}
+          </li>
+          <li>
+            {% url 'usuario' as url_value %}
+            {% if request.path == url_value %}
+              {% include "components/navigation_button.html" with href=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-selected join-item" name="navbar_user" %}
+            {% else %}
+              {% include "components/navigation_button.html" with href=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button join-item" name="navbar_user" %}
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+      {% include "components/searchbar.html" %}
+    </div>
+  </div>
 </nav>
 {% else %} 
-<nav class=" mb-8">
+<nav class="fixed top-0 left-0 z-50 w-full">
   <div class="navbar-start">
     <div class="join space-x-2">
         {% url 'estudio' as url_value %}

@@ -46,7 +46,7 @@
 </div>
   {% include "components/switch.html" with left_text="And" right_text="OR" %}
   {% include "components/select.html" with options=options %}
-  {% include "components/group_list.html" with header="Grupos sin elegir" rows=rows extra_classes="h-auto w-64"%}
-  {% include "components/group_list.html" with header="Grupos elegidos" rows=rows2 extra_classes="h-64 w-64"%}  
+  {% include "components/element_list.html" with header="Grupos sin elegir" elements=rows extra_classes="h-auto w-64"%}
+  {% include "components/element_list.html" with header="Grupos elegidos" elements=rows2 extra_classes="h-auto w-64"%}  
   </div>
 {% endblock %}

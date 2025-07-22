@@ -1,9 +1,9 @@
-<label class="swap swap-rotate">
-  <input type="checkbox" />
+<label class="swap swap-flip">
+  <input type="checkbox" {% if is_active %}checked{% endif %} />  
   <div class="swap-on">
     {% include on with color=oncolor %}
   </div>
-  <div class="swap-off">    
+  <div class="swap-off">
     {% include off with color=offcolor %}
-  </div>  
+  </div>
 </label>
