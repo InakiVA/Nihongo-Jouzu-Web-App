@@ -13,9 +13,14 @@
                 {% include "components/filter_button.html" with text="Por completar" %}
                 {% include "components/filter_button.html" with text="Con estrella" %}
             </div> 
-            <div>
+            <div class="space-y-4">                
                 {% include "components/searchbar.html" %}
-                {% include "components/select.html" with options=orden legend="Orden" %}
+                {% include "components/select.html" with options=orden_opciones selected=orden_elegido legend="Orden" url=select_orden_url%}
+                <div class="flex flex-row space-x-2">
+                {% include "components/icons/arrow_up.html" %}
+                {% include "components/switch.html" with url=descendente_url id="descendente_id" is_selected=on_descendente %}
+                {% include "components/icons/arrow_down.html" %}
+                </div>
             </div>
             {% include "components/element_list.html" with header="Grupos" extra_classes="h-auto max-h-82" elements=grupos%}
         </div>
@@ -24,7 +29,7 @@
             <div class="space-y-4 p-4 w-full">
                 <h2 class="font-semibold text-2xl">Preguntas</h2>
                 {% include "components/checkbox.html" with text="Orden aleatorio" url=aleatorio_url id="aleatorio_id" is_selected=is_aleatorio%}
-                {% include "components/select.html" with options=preguntas legend="Idioma" %}
+                {% include "components/select.html" with options=idioma_preguntas_opciones selected=idioma_preguntas_elegido legend="Idioma" url=idioma_preguntas_url%}
             </div>
             <div class="divider px-4"></div>
             <div class="flex flex-col space-y-4 place-content-center p-4">

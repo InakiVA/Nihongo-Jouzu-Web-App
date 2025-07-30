@@ -12,49 +12,13 @@ from dictionary.models import Palabra
 from progress.models import UsuarioPalabra
 
 
+# __ Checkboxes
 @require_POST
 @login_required
 def toggle_aleatorio(request):
     key = "aleatorio_id"
     value = request.session.get(key, False)
-
     request.session[key] = not value
-
-    return redirect(request.META.get("HTTP_REFERER", "/"))
-
-
-@require_POST
-@login_required
-def toggle_collapsed_etiquetas(request):
-    key = "collapsed_etiquetas_id"
-    value = request.session.get(key, False)
-
-    request.session[key] = not value
-
-    print(dict(request.session))  # Debugging line to check session state
-
-    return redirect(request.META.get("HTTP_REFERER", "/"))
-
-
-@require_POST
-@login_required
-def toggle_filtros_palabras(request):
-    key = "filtros_palabras_switch_id"
-    value = request.session.get(key, "AND")
-
-    request.session[key] = "OR" if value == "AND" else "AND"
-
-    return redirect(request.META.get("HTTP_REFERER", "/"))
-
-
-@require_POST
-@login_required
-def toggle_filtros_etiquetas(request):
-    key = "filtros_etiquetas_switch_id"
-    value = request.session.get(key, "AND")
-
-    request.session[key] = "OR" if value == "AND" else "AND"
-
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
@@ -64,23 +28,68 @@ def toggle_estudiando(request):
     grupo_id = request.POST.get("check_id")
     user = request.user
     entry = get_object_or_404(UsuarioGrupo, usuario=user, grupo_id=grupo_id)
-
     entry.estudiando = not entry.estudiando
     entry.save()
-
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
+# __ Switches
+@require_POST
+@login_required
+def toggle_descendente(request):
+    key = "descendente_id"
+    value = request.session.get(key, False)
+    request.session[key] = not value
+    print(dict(request.session))
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+@require_POST
+@login_required
+def toggle_filtros_palabras(request):
+    key = "filtros_palabras_switch_id"
+    value = request.session.get(key, "AND")
+    request.session[key] = "OR" if value == "AND" else "AND"
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+@require_POST
+@login_required
+def toggle_filtros_etiquetas_switch(request):
+    key = "filtros_etiquetas_switch_id"
+    value = request.session.get(key, "AND")
+    request.session[key] = "OR" if value == "AND" else "AND"
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+# __ Swaps
 @require_POST
 @login_required
 def toggle_estrella(request):
     grupo_id = request.POST.get("swap_id")
     user = request.user
     entry = get_object_or_404(UsuarioGrupo, usuario=user, grupo_id=grupo_id)
-
     entry.estrella = not entry.estrella
     entry.save()
+    return redirect(request.META.get("HTTP_REFERER", "/"))
 
+
+# __ Selects
+@require_POST
+@login_required
+def toggle_orden_select(request):
+    value = request.POST.get("select")
+    if value:
+        request.session["orden_elegido"] = value
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+@require_POST
+@login_required
+def toggle_idioma_preguntas(request):
+    value = request.POST.get("select")
+    if value:
+        request.session["idioma_preguntas_elegido"] = value
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
@@ -102,9 +111,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         ids_nuevos = ids_objetivo - ids_existentes
 
         if ids_nuevos:
-
             grupos_nuevos = Grupo.objects.filter(id__in=ids_nuevos).order_by("id")
-
             for grupo in grupos_nuevos:
                 UsuarioGrupo.objects.create(
                     usuario=usuario,
@@ -128,9 +135,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         ids_nuevos = ids_objetivo - ids_existentes
 
         if ids_nuevos:
-
             palabras_nuevas = Palabra.objects.filter(id__in=ids_nuevos).order_by("id")
-
             for palabra in palabras_nuevas:
                 UsuarioPalabra.objects.create(
                     usuario=usuario,
@@ -165,6 +170,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
                     "progreso": progreso,
                     "estrella": ug.estrella,
                     "estudiando": ug.estudiando,
+                    "fecha_creacion": ug.grupo.fecha_creacion,
+                    "ultima_modificacion": ug.grupo.ultima_modificacion,
+                    "autor": ug.grupo.usuario.username,
                 }
             )
         return grupos
@@ -176,27 +184,52 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["href_estudio"] = reverse_lazy("estudio")
 
-        # -- Grupos_ajustes
-        context["orden"] = ("Creación", "Nombre", "Progreso")
+        # __ Grupos_ajustes
+        context["select_orden_url"] = reverse("toggle_orden_select")
+        orden_opciones = ("Creación", "Nombre", "Progreso", "Reciente")
+        context["orden_opciones"] = orden_opciones
+        orden_elegido = self.request.session.get("orden_elegido", orden_opciones[0])
+        context["orden_elegido"] = orden_elegido
+        context["descendente_url"] = reverse("toggle_descendente")
+        context["on_descendente"] = self.request.session.get("descendente_id", False)
 
-        # -- Grupos_lista
+        # __ Grupos_lista
         context["check_url"] = reverse("toggle_estudiando")
         context["estrella_url"] = reverse("toggle_estrella")
-        context["grupos"] = self.get_user_groups_list()
 
-        # -- Preguntas
-        context["preguntas"] = ("Original", "Traducción", "Cualquiera")
+        descendente = self.request.session.get("descendente_id", False)
+
+        grupos = self.get_user_groups_list()
+
+        if orden_elegido == "Progreso":
+            grupos.sort(key=lambda g: g["progreso"], reverse=descendente)
+        elif orden_elegido == "Reciente":
+            grupos.sort(key=lambda g: g["ultima_modificacion"], reverse=descendente)
+        elif orden_elegido == "Nombre":
+            grupos.sort(key=lambda g: g["text"].lower(), reverse=descendente)
+        elif orden_elegido == "Creación":
+            grupos.sort(key=lambda g: g["id"], reverse=descendente)  # !! ojo
+
+        context["grupos"] = grupos
+
+        # __ Preguntas
+        context["idioma_preguntas_url"] = reverse("toggle_idioma_preguntas")
+        idioma_preguntas_opciones = ("Original", "Traducción", "Cualquiera")
+        context["idioma_preguntas_opciones"] = idioma_preguntas_opciones
+        context["idioma_preguntas_elegido"] = self.request.session.get(
+            "idioma_preguntas_elegido", idioma_preguntas_opciones[0]
+        )
         context["aleatorio_url"] = reverse("toggle_aleatorio")
         context["is_aleatorio"] = self.request.session.get("aleatorio_id", False)
 
-        # -- Filtros
+        # __ Filtros
         context["filtros_palabras_url"] = reverse("toggle_filtros_palabras")
 
         context["on_filtros_palabras"] = (
             self.request.session.get("filtros_palabras_switch_id") == "OR"
         )
 
-        context["filtros_etiquetas_url"] = reverse("toggle_filtros_etiquetas")
+        context["filtros_etiquetas_url"] = reverse("toggle_filtros_etiquetas_switch")
         etiquetas_switch_value = (
             self.request.session.get("filtros_etiquetas_switch_id") == "OR"
         )

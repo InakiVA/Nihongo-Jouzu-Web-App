@@ -1,12 +1,13 @@
-<fieldset class="fieldset flex flex-auto">
-  {% if legend %}
-    <legend class="fieldset-legend">{{legend}}</legend>
-  {% endif %}
-  <select class="select flex flex-auto">
-    {% for op in options %}
-      <option class="bg-darkest" value="{{ op }}"  {% if forloop.first %} selected {% endif %}>
-        {{ op }}
-      </option>
-    {% endfor %}
-  </select>
-</fieldset>
+<form method="post" action="{{ url }}">
+  {% csrf_token %}
+  <fieldset class="fieldset flex flex-auto">
+    {% if legend %}
+      <legend class="fieldset-legend">{{ legend }}</legend>
+    {% endif %}
+    <select class="select flex flex-auto bg-darkest text-white" name="select" onchange="this.form.submit()">
+      {% for op in options %}
+        <option value="{{ op }}" {% if op == selected %} selected {% endif %}> {{ op }} </option>
+      {% endfor %}
+    </select>
+  </fieldset>
+</form>

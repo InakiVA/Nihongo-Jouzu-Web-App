@@ -3,14 +3,11 @@ from . import views
 
 urlpatterns = [
     path("", views.HomeView.as_view(), name="estudio"),
+    # __ Checkboxes
     path("toggle-estudiando/", views.toggle_estudiando, name="toggle_estudiando"),
-    path("toggle-estrella/", views.toggle_estrella, name="toggle_estrella"),
     path("toggle-aleatorio/", views.toggle_aleatorio, name="toggle_aleatorio"),
-    path(
-        "toggle-collapsed-etiquetas/",
-        views.toggle_collapsed_etiquetas,
-        name="toggle_collapsed_etiquetas",
-    ),
+    # __ Switches
+    path("toggle-descendente/", views.toggle_descendente, name="toggle_descendente"),
     path(
         "toggle-filtros-palabras/",
         views.toggle_filtros_palabras,
@@ -18,7 +15,16 @@ urlpatterns = [
     ),
     path(
         "toggle-filtros-etiquetas/",
-        views.toggle_filtros_etiquetas,
-        name="toggle_filtros_etiquetas",
+        views.toggle_filtros_etiquetas_switch,
+        name="toggle_filtros_etiquetas_switch",
+    ),
+    # __ Swaps
+    path("toggle-estrella/", views.toggle_estrella, name="toggle_estrella"),
+    # __ Selects
+    path("toggle-orden/", views.toggle_orden_select, name="toggle_orden_select"),
+    path(
+        "toggle-idioma-preguntas/",
+        views.toggle_idioma_preguntas,
+        name="toggle_idioma_preguntas",
     ),
 ]
