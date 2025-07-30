@@ -20,7 +20,40 @@ def toggle_aleatorio(request):
 
     request.session[key] = not value
 
-    print(dict(request.session))
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+@require_POST
+@login_required
+def toggle_collapsed_etiquetas(request):
+    key = "collapsed_etiquetas_id"
+    value = request.session.get(key, False)
+
+    request.session[key] = not value
+
+    print(dict(request.session))  # Debugging line to check session state
+
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+@require_POST
+@login_required
+def toggle_filtros_palabras(request):
+    key = "filtros_palabras_switch_id"
+    value = request.session.get(key, "AND")
+
+    request.session[key] = "OR" if value == "AND" else "AND"
+
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+@require_POST
+@login_required
+def toggle_filtros_etiquetas(request):
+    key = "filtros_etiquetas_switch_id"
+    value = request.session.get(key, "AND")
+
+    request.session[key] = "OR" if value == "AND" else "AND"
 
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
@@ -142,16 +175,38 @@ class HomeView(LoginRequiredMixin, TemplateView):
         self.crear_grupos_nuevos_del_admin()
         context = super().get_context_data(**kwargs)
         context["href_estudio"] = reverse_lazy("estudio")
-        context["preguntas"] = ("Original", "Traducción", "Cualquiera")
+
+        # -- Grupos_ajustes
         context["orden"] = ("Creación", "Nombre", "Progreso")
+
+        # -- Grupos_lista
         context["check_url"] = reverse("toggle_estudiando")
         context["estrella_url"] = reverse("toggle_estrella")
+        context["grupos"] = self.get_user_groups_list()
+
+        # -- Preguntas
+        context["preguntas"] = ("Original", "Traducción", "Cualquiera")
         context["aleatorio_url"] = reverse("toggle_aleatorio")
         context["is_aleatorio"] = self.request.session.get("aleatorio_id", False)
+
+        # -- Filtros
+        context["filtros_palabras_url"] = reverse("toggle_filtros_palabras")
+
+        context["on_filtros_palabras"] = (
+            self.request.session.get("filtros_palabras_switch_id") == "OR"
+        )
+
+        context["filtros_etiquetas_url"] = reverse("toggle_filtros_etiquetas")
+        etiquetas_switch_value = (
+            self.request.session.get("filtros_etiquetas_switch_id") == "OR"
+        )
+        context["on_filtros_etiquetas"] = etiquetas_switch_value
         context["tags"] = Etiqueta.objects.filter(
             Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
         ).order_by("etiqueta")
-        context["grupos"] = self.get_user_groups_list()
+
+        context["is_open_collapse"] = any([etiquetas_switch_value])
+
         return context
 
     def is_mobile(request):

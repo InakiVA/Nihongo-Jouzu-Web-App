@@ -27,26 +27,26 @@
                 {% include "components/select.html" with options=preguntas legend="Idioma" %}
             </div>
             <div class="divider px-4"></div>
-            <div class="space-y-4 place-content-center p-4">
+            <div class="flex flex-col space-y-4 place-content-center p-4">
                 <h2 class="font-semibold text-2xl">Filtros de palabras</h2>
-                {% include "components/switch.html" with left_text="Y" right_text="O" %}
+                {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_palabras_url id="filtros_palabras_switch_id" is_selected=on_filtros_palabras %}
                 <div class="flex flex-row w-auto flex-wrap overflow-auto gap-2">
                     {% include "components/filter_button.html" with text="Creadas por mí" %}
                     {% include "components/filter_button.html" with text="Por completar" %}
                     {% include "components/filter_button.html" with text="Con estrella" %}
-                </div>                
+                </div>                     
                 <div class="collapse collapse-arrow bg-transparent border border-dark hover:bg-dark">
-                    <input type="checkbox" />
+                    <input type="checkbox" {% if is_open_collapse %} checked {% endif %}/>
                     <div class="collapse-title font-semibold">Etiquetas</div>
                     <div class="collapse-content space-y-4">
-                        {% include "components/switch.html" with left_text="Y" right_text="O" %}
+                        {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_etiquetas_url id="filtros_etiquetas_switch_id" is_selected=on_filtros_etiquetas %}
                         <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2">
                             {% for tag in tags %}
                             {% include "components/filter_button.html" with text=tag %}            
                             {% endfor %}
                         </li>
                     </div>  
-                </div>                              
+                </div> 
             </div>
         </div>
     </div>    
