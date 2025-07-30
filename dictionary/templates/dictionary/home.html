@@ -2,10 +2,6 @@
 <div class="space-y-4">
 {% include "components/word_card.html" with title="お元気でいらっしゃいますか" lecturas=lecturas significados=significados tags=tags notas=significados side_to_side=False%}
 {% include "components/word_card.html" with title="気" lecturas=lecturas significados=significados tags=tags notas=significados side_to_side=side_to_side%}
-{% include "components/checkbox.html" with text="Por completar"%}
-{% include "components/filter_button.html" with text="Por nada" %}
-{% include "components/filter_button.html" with text="Por completar"%}
-
 <div class="carousel w-full">
   <div id="slide1" class="carousel-item relative w-full">
     <img
@@ -45,8 +41,5 @@
   </div>
 </div>
   {% include "components/switch.html" with left_text="And" right_text="OR" %}
-  {% include "components/select.html" with options=options %}
-  {% include "components/element_list.html" with header="Grupos sin elegir" elements=rows extra_classes="h-auto w-64"%}
-  {% include "components/element_list.html" with header="Grupos elegidos" elements=rows2 extra_classes="h-auto w-64"%}  
   </div>
 {% endblock %}

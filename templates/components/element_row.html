@@ -1,9 +1,9 @@
 <li class="list-row shadow-md border-1 border-dark items-center gap-2 px-4 py-1">
-    {% include "components/checkbox.html" with text="" is_selected=is_selected extra_classes="mx-2"%}
+    {% include "components/checkbox.html" with text="" url=check_url id=id is_selected=is_selected extra_classes="mx-2"%}
     <h2 class="truncate list-col-grow font-semibold text-lg justify-start text-textcolor/80">
         {{ text }}
     </h2>
     {% include "components/progress_donut.html" with progress=progress%}
-    {% include "components/icon_swap_button.html" with on="components/icons/star.html" oncolor="fill-light" off="components/icons/star.html" offcolor="fill-disabled" %}
+    {% include "components/icon_swap_button.html" with id=id url=estrella_url on="components/icons/star.html" oncolor="fill-light" off="components/icons/star.html" offcolor="fill-disabled" %}
     
 </li>

@@ -23,7 +23,7 @@
         <div class="flex flex-col basis-1/2 w-full">
             <div class="space-y-4 p-4 w-full">
                 <h2 class="font-semibold text-2xl">Preguntas</h2>
-                {% include "components/checkbox.html" with text="Orden aleatorio" %}
+                {% include "components/checkbox.html" with text="Orden aleatorio" url=aleatorio_url id="aleatorio_id" is_selected=is_aleatorio%}
                 {% include "components/select.html" with options=preguntas legend="Idioma" %}
             </div>
             <div class="divider px-4"></div>
@@ -31,7 +31,7 @@
                 <h2 class="font-semibold text-2xl">Filtros de palabras</h2>
                 {% include "components/switch.html" with left_text="Y" right_text="O" %}
                 <div class="flex flex-row w-auto flex-wrap overflow-auto gap-2">
-                    {% include "components/filter_button.html" with text="Creados por mí" %}
+                    {% include "components/filter_button.html" with text="Creadas por mí" %}
                     {% include "components/filter_button.html" with text="Por completar" %}
                     {% include "components/filter_button.html" with text="Con estrella" %}
                 </div>                

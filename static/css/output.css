@@ -1676,6 +1676,9 @@
   .flex {
     display: flex;
   }
+  .hidden {
+    display: none;
+  }
   .table {
     display: table;
   }
@@ -1745,17 +1748,6 @@
     --tw-translate-y: calc(calc(1/2 * 100%) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
-  .swap-rotate {
-    .swap-on, input:indeterminate ~ .swap-on {
-      rotate: 45deg;
-    }
-    input:is(:checked, :indeterminate) ~ .swap-on, &.swap-active .swap-on {
-      rotate: 0deg;
-    }
-    input:is(:checked, :indeterminate) ~ .swap-off, &.swap-active .swap-off {
-      rotate: calc(45deg * -1);
-    }
-  }
   .swap-flip {
     transform-style: preserve-3d;
     perspective: 20rem;
@@ -1774,6 +1766,9 @@
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
+  }
+  .cursor-pointer {
+    cursor: pointer;
   }
   .flex-col {
     flex-direction: column;

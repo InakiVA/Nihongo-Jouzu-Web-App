@@ -1,11 +1,54 @@
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy, reverse
 from django.db.models import Q
+from django.views.decorators.http import require_POST
+from django.shortcuts import redirect, get_object_or_404
+
 from tags.models import Etiqueta
 from groups.models import Grupo, UsuarioGrupo
 from dictionary.models import Palabra
 from progress.models import UsuarioPalabra
+
+
+@require_POST
+@login_required
+def toggle_aleatorio(request):
+    key = "aleatorio_id"
+    value = request.session.get(key, False)
+
+    request.session[key] = not value
+
+    print(dict(request.session))
+
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+@require_POST
+@login_required
+def toggle_estudiando(request):
+    grupo_id = request.POST.get("check_id")
+    user = request.user
+    entry = get_object_or_404(UsuarioGrupo, usuario=user, grupo_id=grupo_id)
+
+    entry.estudiando = not entry.estudiando
+    entry.save()
+
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+@require_POST
+@login_required
+def toggle_estrella(request):
+    grupo_id = request.POST.get("swap_id")
+    user = request.user
+    entry = get_object_or_404(UsuarioGrupo, usuario=user, grupo_id=grupo_id)
+
+    entry.estrella = not entry.estrella
+    entry.save()
+
+    return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -63,6 +106,36 @@ class HomeView(LoginRequiredMixin, TemplateView):
                     estrella=False,
                 )
 
+    def get_user_groups_list(self):
+        usuario = self.request.user
+        usuario_palabras = UsuarioPalabra.objects.filter(usuario=usuario)
+        progreso_map = {up.palabra_id: up.progreso for up in usuario_palabras}
+
+        usuario_grupos = (
+            UsuarioGrupo.objects.filter(usuario=usuario)
+            .select_related("grupo")  # para acceder a ug.grupo sin query extra
+            .prefetch_related("grupo__grupo_palabras")  # para las palabras en el grupo
+            .order_by("id")
+        )
+
+        grupos = []
+        for ug in usuario_grupos:
+            palabras = [gp.palabra_id for gp in ug.grupo.grupo_palabras.all()]
+            progreso_total = sum(progreso_map.get(pid, 0) for pid in palabras)
+            cantidad = len(palabras)
+            progreso = int(progreso_total / cantidad) if cantidad > 0 else 0
+
+            grupos.append(
+                {
+                    "text": ug.grupo.grupo,
+                    "id": ug.grupo.id,
+                    "progreso": progreso,
+                    "estrella": ug.estrella,
+                    "estudiando": ug.estudiando,
+                }
+            )
+        return grupos
+
     def get_context_data(self, **kwargs):
         usuario = self.request.user
         self.crear_palabras_nuevas_del_admin()
@@ -70,23 +143,15 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["href_estudio"] = reverse_lazy("estudio")
         context["preguntas"] = ("Original", "Traducción", "Cualquiera")
-        context["orden"] = ("Nombre", "Progreso")
+        context["orden"] = ("Creación", "Nombre", "Progreso")
+        context["check_url"] = reverse("toggle_estudiando")
+        context["estrella_url"] = reverse("toggle_estrella")
+        context["aleatorio_url"] = reverse("toggle_aleatorio")
+        context["is_aleatorio"] = self.request.session.get("aleatorio_id", False)
         context["tags"] = Etiqueta.objects.filter(
             Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
         ).order_by("etiqueta")
-        usuario_grupos = UsuarioGrupo.objects.filter(
-            Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
-        ).order_by("id")
-        grupos = []
-        for ug in usuario_grupos:
-            temp = {
-                "text": ug.grupo.grupo,
-                "progreso": int(ug.progreso),
-                "estrella": ug.estrella,
-                "estudiando": ug.estudiando,
-            }
-            grupos.append(temp)
-        context["grupos"] = grupos
+        context["grupos"] = self.get_user_groups_list()
         return context
 
     def is_mobile(request):

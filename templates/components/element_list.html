@@ -5,7 +5,7 @@
   <div class="px-4 space-y-4 pb-2 overflow-y-auto inset-shadow-2xs {{extra_classes}}">
   <li>
   {% for element in elements %}  
-    {% include "components/element_row.html" with text=element.text progress=element.progreso is_selected=element.estudiando is_active=element.estrella%}
+    {% include "components/element_row.html" with text=element.text id=element.id progress=element.progreso is_selected=element.estudiando is_active=element.estrella check_url=check_url estrella_url=estrella_url%}
   {% endfor %}  
   </li>
   </div>

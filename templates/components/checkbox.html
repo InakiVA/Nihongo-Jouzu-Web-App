@@ -1,4 +1,16 @@
-<div class ="flex flex-row {{extra_classes}}">
-<input type="checkbox" {% if is_selected %}checked{% endif %} class="check-box" />
-{% if text %} <h2 class="ml-2 text-textcolor">{{text}}</h2> {% endif %}
-</div>
+<form method="post" action="{{ url }}">
+  {% csrf_token %}
+  <input type="hidden" name="check_id" value="{{ id }}">
+
+  <div class="flex flex-row items-center">
+    <input
+      type="checkbox"
+      class="check-box {{ extra_classes }}"
+      onchange="this.form.submit()"
+      {% if is_selected %} checked {% endif %}
+    />
+    {% if text %}
+      <h2 class="ml-2 text-textcolor">{{ text }}</h2>
+    {% endif %}
+  </div>
+</form>
