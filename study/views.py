@@ -16,9 +16,9 @@ from progress.models import UsuarioPalabra
 @require_POST
 @login_required
 def toggle_aleatorio(request):
-    key = "aleatorio_id"
-    value = request.session.get(key, False)
-    request.session[key] = not value
+    ajustes = request.session.get("inicio_ajustes", {})
+    ajustes["aleatorio"] = not ajustes.get("aleatorio", False)
+    request.session["inicio_ajustes"] = ajustes
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
@@ -37,28 +37,31 @@ def toggle_estudiando(request):
 @require_POST
 @login_required
 def toggle_descendente(request):
-    key = "descendente_id"
-    value = request.session.get(key, False)
-    request.session[key] = not value
-    print(dict(request.session))
+    ajustes = request.session.get("inicio_ajustes", {})
+    ajustes["descendente"] = not ajustes.get("descendente", False)
+    request.session["inicio_ajustes"] = ajustes
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
 @require_POST
 @login_required
 def toggle_filtros_palabras(request):
-    key = "filtros_palabras_switch_id"
-    value = request.session.get(key, "AND")
-    request.session[key] = "OR" if value == "AND" else "AND"
+    ajustes = request.session.get("inicio_ajustes", {})
+    ajustes["filtros_palabras"] = (
+        "OR" if ajustes.get("filtros_palabras", "AND") == "AND" else "AND"
+    )
+    request.session["inicio_ajustes"] = ajustes
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
 @require_POST
 @login_required
 def toggle_filtros_etiquetas_switch(request):
-    key = "filtros_etiquetas_switch_id"
-    value = request.session.get(key, "AND")
-    request.session[key] = "OR" if value == "AND" else "AND"
+    ajustes = request.session.get("inicio_ajustes", {})
+    ajustes["filtros_etiquetas"] = (
+        "OR" if ajustes.get("filtros_etiquetas", "AND") == "AND" else "AND"
+    )
+    request.session["inicio_ajustes"] = ajustes
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
@@ -78,23 +81,42 @@ def toggle_estrella(request):
 @require_POST
 @login_required
 def toggle_orden_select(request):
+    ajustes = request.session.get("inicio_ajustes", {})
     value = request.POST.get("select")
     if value:
-        request.session["orden_elegido"] = value
+        ajustes["orden_elegido"] = value
+        request.session["inicio_ajustes"] = ajustes
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
 @require_POST
 @login_required
 def toggle_idioma_preguntas(request):
+    ajustes = request.session.get("inicio_ajustes", {})
     value = request.POST.get("select")
     if value:
-        request.session["idioma_preguntas_elegido"] = value
+        ajustes["idioma_preguntas"] = value
+        request.session["inicio_ajustes"] = ajustes
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = "study/home.html"
+
+    def asegurar_ajustes_sesion(self):
+        ajustes_default = {
+            "orden_elegido": "Creación",
+            "descendente": False,
+            "idioma_preguntas": "Original",
+            "aleatorio": False,
+            "filtros_palabras": "AND",
+            "filtros_etiquetas": "AND",
+        }
+        if "inicio_ajustes" not in self.request.session:
+            self.request.session["inicio_ajustes"] = ajustes_default.copy()
+        else:
+            for key, val in ajustes_default.items():
+                self.request.session["inicio_ajustes"].setdefault(key, val)
 
     def crear_grupos_nuevos_del_admin(self):
         usuario = self.request.user
@@ -179,8 +201,12 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         usuario = self.request.user
+        self.asegurar_ajustes_sesion()
+        ajustes = self.request.session["inicio_ajustes"]
+
         self.crear_palabras_nuevas_del_admin()
         self.crear_grupos_nuevos_del_admin()
+
         context = super().get_context_data(**kwargs)
         context["href_estudio"] = reverse_lazy("estudio")
 
@@ -188,16 +214,15 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["select_orden_url"] = reverse("toggle_orden_select")
         orden_opciones = ("Creación", "Nombre", "Progreso", "Reciente")
         context["orden_opciones"] = orden_opciones
-        orden_elegido = self.request.session.get("orden_elegido", orden_opciones[0])
+        orden_elegido = ajustes.get("orden_elegido", orden_opciones[0])
         context["orden_elegido"] = orden_elegido
         context["descendente_url"] = reverse("toggle_descendente")
-        context["on_descendente"] = self.request.session.get("descendente_id", False)
+        descendente = ajustes.get("descendente", False)
+        context["on_descendente"] = descendente
 
         # __ Grupos_lista
         context["check_url"] = reverse("toggle_estudiando")
         context["estrella_url"] = reverse("toggle_estrella")
-
-        descendente = self.request.session.get("descendente_id", False)
 
         grupos = self.get_user_groups_list()
 
@@ -218,29 +243,25 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["idioma_preguntas_url"] = reverse("toggle_idioma_preguntas")
         idioma_preguntas_opciones = ("Original", "Traducción", "Cualquiera")
         context["idioma_preguntas_opciones"] = idioma_preguntas_opciones
-        context["idioma_preguntas_elegido"] = self.request.session.get(
-            "idioma_preguntas_elegido", idioma_preguntas_opciones[0]
+        context["idioma_preguntas"] = ajustes.get(
+            "idioma_preguntas", idioma_preguntas_opciones[0]
         )
         context["aleatorio_url"] = reverse("toggle_aleatorio")
-        context["is_aleatorio"] = self.request.session.get("aleatorio_id", False)
+        context["is_aleatorio"] = ajustes.get("aleatorio", False)
 
         # __ Filtros
         context["filtros_palabras_url"] = reverse("toggle_filtros_palabras")
-
-        context["on_filtros_palabras"] = (
-            self.request.session.get("filtros_palabras_switch_id") == "OR"
-        )
-
+        context["on_filtros_palabras"] = ajustes.get("filtros_palabras") == "OR"
         context["filtros_etiquetas_url"] = reverse("toggle_filtros_etiquetas_switch")
-        etiquetas_switch_value = (
-            self.request.session.get("filtros_etiquetas_switch_id") == "OR"
-        )
+        etiquetas_switch_value = ajustes.get("filtros_etiquetas") == "OR"
         context["on_filtros_etiquetas"] = etiquetas_switch_value
         context["tags"] = Etiqueta.objects.filter(
             Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
         ).order_by("etiqueta")
 
         context["is_open_collapse"] = any([etiquetas_switch_value])
+
+        print(dict(ajustes))
 
         return context
 

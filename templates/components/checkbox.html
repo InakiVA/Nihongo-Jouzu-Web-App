@@ -1,7 +1,6 @@
 <form method="post" action="{{ url }}">
   {% csrf_token %}
   <input type="hidden" name="check_id" value="{{ id }}">
-
   <div class="flex flex-row items-center">
     <input
       type="checkbox"
