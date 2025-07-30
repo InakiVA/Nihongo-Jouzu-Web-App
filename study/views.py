@@ -204,7 +204,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
         if orden_elegido == "Progreso":
             grupos.sort(key=lambda g: g["progreso"], reverse=descendente)
         elif orden_elegido == "Reciente":
-            grupos.sort(key=lambda g: g["ultima_modificacion"], reverse=descendente)
+            grupos.sort(
+                key=lambda g: g["ultima_modificacion"], reverse=not descendente
+            )  # porque de más reciente a menos reciente le pongo el not
         elif orden_elegido == "Nombre":
             grupos.sort(key=lambda g: g["text"].lower(), reverse=descendente)
         elif orden_elegido == "Creación":
