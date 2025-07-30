@@ -1,4 +1,10 @@
-<label class="searchbar">
-    {% include "components/icons/search.html" with color="fill-light"%}
-  <input type="search" class="searchbar_text" required placeholder="Buscar" />
-</label>
+<form method="get" class="searchbar">
+  {% include "components/icons/search.html" with color="fill-light" %}
+  <input
+    type="search"
+    name="{{ name }}"
+    class="searchbar_text"
+    placeholder="Buscar"
+    value="{{ value|default:'' }}"
+  />
+</form>

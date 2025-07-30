@@ -263,6 +263,13 @@ class HomeView(LoginRequiredMixin, TemplateView):
         if ajustes.get("Elegidos (grupos)"):
             grupos = [g for g in grupos if g["estudiando"]]
 
+        buscar_grupo_input = (
+            self.request.GET.get("buscar_grupo", "").strip().lower()
+        )  # search
+        context["buscar_grupo_input"] = buscar_grupo_input
+        if buscar_grupo_input:
+            grupos = [g for g in grupos if buscar_grupo_input in g["text"].lower()]
+
         if orden_elegido == "Progreso":
             grupos.sort(key=lambda g: g["progreso"], reverse=descendente)
         elif orden_elegido == "Reciente":
@@ -289,7 +296,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         # __ Filtros
         context["filtros_palabras_url"] = reverse("toggle_filtros_palabras")
         context["on_filtros_palabras"] = ajustes.get("filtros_palabras") == "OR"
-        context["filtros_palabras"] = [
+        filtros_palabras = [
             {
                 "text": filtro,
                 "id": filtro + " (palabras)",
@@ -302,6 +309,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
                 "Con estrella",
             ]
         ]
+        context["filtros_palabras"] = filtros_palabras
 
         context["filtros_etiquetas_url"] = reverse("toggle_filtros_etiquetas_switch")
         etiquetas_switch_value = ajustes.get("filtros_etiquetas") == "OR"

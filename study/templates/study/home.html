@@ -13,12 +13,12 @@
                 {% endfor %}
             </div> 
             <div class="space-y-4">                
-                {% include "components/searchbar.html" %}
+                {% include "components/searchbar.html" with name="buscar_grupo" value=buscar_grupo_input%}
                 {% include "components/select.html" with options=orden_opciones selected=orden_elegido legend="Orden" url=select_orden_url%}
                 <div class="flex flex-row space-x-2">
-                {% include "components/icons/arrow_up.html" %}
-                {% include "components/switch.html" with url=descendente_url id="descendente_id" is_selected=on_descendente %}
-                {% include "components/icons/arrow_down.html" %}
+                    {% include "components/icons/arrow_up.html" %}
+                    {% include "components/switch.html" with url=descendente_url id="descendente_id" is_selected=on_descendente %}
+                    {% include "components/icons/arrow_down.html" %}
                 </div>
             </div>
             {% include "components/element_list.html" with header="Grupos" extra_classes="h-auto max-h-120" elements=grupos%}
