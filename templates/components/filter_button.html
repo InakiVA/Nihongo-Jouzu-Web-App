@@ -1,5 +1,13 @@
-<label class="swap swap-flip">
-  <input type="checkbox" />
-  <div class="swap-off button !rounded-full !h-8">{{text}}</div>
-  <div class="swap-on button-selected !rounded-full !h-8">{{text}}</div>
-</label>
+<form method="post" action="{{ url }}">
+  {% csrf_token %}
+  <input type="hidden" name="filter_id" value="{{ id }}">
+  <label class="swap swap-flip">
+    <input
+      type="checkbox"
+      onchange="this.form.submit()"
+      {% if is_active %}checked{% endif %}
+    />
+    <div class="swap-on button-selected !rounded-full !h-8">{{text}}</div>
+    <div class="swap-off button !rounded-full !h-8">{{text}}</div>
+  </label>
+</form>

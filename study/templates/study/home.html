@@ -8,10 +8,9 @@
         <div class="flex flex-col space-y-4 p-4 w-full">
             <h2 class="font-semibold text-2xl">Grupos de estudio</h2>
             <div class="flex flex-row w-auto flex-wrap overflow-auto whitespace-nowrap gap-2">
-                {% include "components/filter_button.html" with text="Elegidos" %}
-                {% include "components/filter_button.html" with text="Creados por mí" %}                
-                {% include "components/filter_button.html" with text="Por completar" %}
-                {% include "components/filter_button.html" with text="Con estrella" %}
+                {% for filtro in filtros_grupos %}
+                {% include "components/filter_button.html" with text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
+                {% endfor %}
             </div> 
             <div class="space-y-4">                
                 {% include "components/searchbar.html" %}
@@ -22,7 +21,7 @@
                 {% include "components/icons/arrow_down.html" %}
                 </div>
             </div>
-            {% include "components/element_list.html" with header="Grupos" extra_classes="h-auto max-h-82" elements=grupos%}
+            {% include "components/element_list.html" with header="Grupos" extra_classes="h-auto max-h-120" elements=grupos%}
         </div>
         <div class="divider {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %}"></div>        
         <div class="flex flex-col basis-1/2 w-full">
@@ -36,9 +35,9 @@
                 <h2 class="font-semibold text-2xl">Filtros de palabras</h2>
                 {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_palabras_url id="filtros_palabras_switch_id" is_selected=on_filtros_palabras %}
                 <div class="flex flex-row w-auto flex-wrap overflow-auto gap-2">
-                    {% include "components/filter_button.html" with text="Creadas por mí" %}
-                    {% include "components/filter_button.html" with text="Por completar" %}
-                    {% include "components/filter_button.html" with text="Con estrella" %}
+                    {% for filtro in filtros_palabras %}
+                    {% include "components/filter_button.html" with text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
+                    {% endfor %}
                 </div>                     
                 <div class="collapse collapse-arrow bg-transparent border border-dark hover:bg-dark">
                     <input type="checkbox" {% if is_open_collapse %} checked {% endif %}/>
@@ -47,7 +46,7 @@
                         {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_etiquetas_url id="filtros_etiquetas_switch_id" is_selected=on_filtros_etiquetas %}
                         <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2">
                             {% for tag in tags %}
-                            {% include "components/filter_button.html" with text=tag %}            
+                            {% include "components/filter_button.html" with text=tag.text id=tag.id is_active=tag.is_active url=tag.url %}         
                             {% endfor %}
                         </li>
                     </div>  

@@ -20,6 +20,7 @@ urlpatterns = [
     ),
     # __ Swaps
     path("toggle-estrella/", views.toggle_estrella, name="toggle_estrella"),
+    path("toggle-filtro/", views.toggle_filtro, name="toggle_filtro"),
     # __ Selects
     path("toggle-orden/", views.toggle_orden_select, name="toggle_orden_select"),
     path(

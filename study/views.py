@@ -77,6 +77,21 @@ def toggle_estrella(request):
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
+@require_POST
+@login_required
+def toggle_filtro(request):
+    filtro = request.POST.get("filter_id")
+    ajustes = request.session.get("inicio_ajustes", {})
+
+    if filtro in ajustes:
+        ajustes[filtro] = not ajustes[filtro]
+    else:
+        ajustes[filtro] = True
+
+    request.session["inicio_ajustes"] = ajustes
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
 # __ Selects
 @require_POST
 @login_required
@@ -211,6 +226,20 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["href_estudio"] = reverse_lazy("estudio")
 
         # __ Grupos_ajustes
+        context["filtros_grupos"] = [
+            {
+                "text": filtro,
+                "id": filtro + " (grupos)",
+                "is_active": ajustes.get(filtro + " (grupos)", False),
+                "url": reverse("toggle_filtro"),
+            }
+            for filtro in [
+                "Elegidos",
+                "Creados por mí",
+                "Por completar",
+                "Con estrella",
+            ]
+        ]
         context["select_orden_url"] = reverse("toggle_orden_select")
         orden_opciones = ("Creación", "Nombre", "Progreso", "Reciente")
         context["orden_opciones"] = orden_opciones
@@ -225,6 +254,14 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["estrella_url"] = reverse("toggle_estrella")
 
         grupos = self.get_user_groups_list()
+        if ajustes.get("Creados por mí (grupos)"):
+            grupos = [g for g in grupos if g["autor"] == usuario.username]
+        if ajustes.get("Por completar (grupos)"):
+            grupos = [g for g in grupos if g["progreso"] < 100]
+        if ajustes.get("Con estrella (grupos)"):
+            grupos = [g for g in grupos if g["estrella"]]
+        if ajustes.get("Elegidos (grupos)"):
+            grupos = [g for g in grupos if g["estudiando"]]
 
         if orden_elegido == "Progreso":
             grupos.sort(key=lambda g: g["progreso"], reverse=descendente)
@@ -252,14 +289,44 @@ class HomeView(LoginRequiredMixin, TemplateView):
         # __ Filtros
         context["filtros_palabras_url"] = reverse("toggle_filtros_palabras")
         context["on_filtros_palabras"] = ajustes.get("filtros_palabras") == "OR"
+        context["filtros_palabras"] = [
+            {
+                "text": filtro,
+                "id": filtro + " (palabras)",
+                "is_active": ajustes.get(filtro + " (palabras)", False),
+                "url": reverse("toggle_filtro"),
+            }
+            for filtro in [
+                "Creadas por mí",
+                "Por completar",
+                "Con estrella",
+            ]
+        ]
+
         context["filtros_etiquetas_url"] = reverse("toggle_filtros_etiquetas_switch")
         etiquetas_switch_value = ajustes.get("filtros_etiquetas") == "OR"
         context["on_filtros_etiquetas"] = etiquetas_switch_value
-        context["tags"] = Etiqueta.objects.filter(
+
+        tags = []
+        tags_objects = Etiqueta.objects.filter(
             Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
         ).order_by("etiqueta")
+        open_collapse = [etiquetas_switch_value]
 
-        context["is_open_collapse"] = any([etiquetas_switch_value])
+        for tag in tags_objects:
+            active = ajustes.get(f"{tag.etiqueta} (etiqueta)", False)
+            tags.append(
+                {
+                    "text": tag.etiqueta,
+                    "id": f"{tag.etiqueta} (etiqueta)",
+                    "is_active": active,
+                    "url": reverse("toggle_filtro"),
+                }
+            )
+            open_collapse.append(active)
+
+        context["tags"] = tags
+        context["is_open_collapse"] = any(open_collapse)
 
         print(dict(ajustes))
 
