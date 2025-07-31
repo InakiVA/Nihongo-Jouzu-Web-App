@@ -15,11 +15,11 @@
           class="menu menu-sm dropdown-content bg-darkest rounded-box z-1 mt-3  p-2 shadow"
         >
           <li>
-            {% url 'estudio' as url_value %}
+            {% url 'inicio' as url_value %}
             {% if request.path == url_value %}
-              {% include "components/navigation_button.html" with href=url_value text="Estudio" icon="components/icons/home.html" extra_classes="button-selected join-item" name="navbar_home" %}
+              {% include "components/navigation_button.html" with href=url_value text="Inicio" icon="components/icons/home.html" extra_classes="button-selected join-item" name="navbar_home" %}
             {% else %}
-              {% include "components/navigation_button.html" with href=url_value text="Estudio" icon="components/icons/home.html" extra_classes="button join-item" name="navbar_home" %}
+              {% include "components/navigation_button.html" with href=url_value text="Inicio" icon="components/icons/home.html" extra_classes="button join-item" name="navbar_home" %}
             {% endif %}
           </li>
           <li>
@@ -56,11 +56,11 @@
 <nav class="fixed top-0 left-0 z-50 w-full">
   <div class="navbar-start">
     <div class="join space-x-2">
-        {% url 'estudio' as url_value %}
+        {% url 'inicio' as url_value %}
         {% if request.path == url_value %}
-            {% include "components/navigation_button.html" with is_selected=True href=url_value text="Estudio" icon="components/icons/home.html" extra_classes="join-item" name="navbar_home" %}
+            {% include "components/navigation_button.html" with is_selected=True href=url_value text="Inicio" icon="components/icons/home.html" extra_classes="join-item" name="navbar_home" %}
         {% else %}
-            {% include "components/navigation_button.html" with href=url_value text="Estudio" icon="components/icons/home.html" extra_classes="join-item" name="navbar_home" %}
+            {% include "components/navigation_button.html" with href=url_value text="Inicio" icon="components/icons/home.html" extra_classes="join-item" name="navbar_home" %}
         {% endif %}
 
         {% url 'diccionario' as url_value %}

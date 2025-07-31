@@ -2,7 +2,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.HomeView.as_view(), name="estudio"),
+    path("", views.HomeView.as_view(), name="inicio"),
+    path("estudio/", views.StudyView.as_view(), name="estudio"),
+    path("preparar-estudio/", views.preparar_estudio, name="preparar_estudio"),
     # __ Checkboxes
     path("toggle-estudiando/", views.toggle_estudiando, name="toggle_estudiando"),
     path("toggle-aleatorio/", views.toggle_aleatorio, name="toggle_aleatorio"),

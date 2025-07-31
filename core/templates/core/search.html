@@ -1,0 +1,5 @@
+{% extends "base.html" %} {% block content %}
+{% for palabra in palabras %}
+    {% include "components/word_card.html" with title=palabra.palabra lecturas=palabra.lecturas_str significados=palabra.significados_str tags=palabra.etiquetas_list notas=palabra.notas_str side_to_side=False %}
+{% endfor %}
+{% endblock %}

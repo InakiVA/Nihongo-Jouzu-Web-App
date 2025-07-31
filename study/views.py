@@ -1,13 +1,15 @@
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.urls import reverse_lazy, reverse
 from django.db.models import Q
 from django.views.decorators.http import require_POST
 from django.shortcuts import redirect, get_object_or_404
+import random
 
 from tags.models import Etiqueta
-from groups.models import Grupo, UsuarioGrupo
+from groups.models import Grupo, UsuarioGrupo, GrupoPalabra
 from dictionary.models import Palabra
 from progress.models import UsuarioPalabra
 
@@ -113,6 +115,90 @@ def toggle_idioma_preguntas(request):
         ajustes["idioma_preguntas"] = value
         request.session["inicio_ajustes"] = ajustes
     return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+def get_palabras_a_estudiar(usuario, ajustes):
+    # 1. Obtener palabras de grupos con estudiando=True
+    grupos_estudiando_ids = UsuarioGrupo.objects.filter(
+        usuario=usuario, estudiando=True
+    ).values_list("grupo_id", flat=True)
+
+    palabras_ids = (
+        GrupoPalabra.objects.filter(grupo_id__in=grupos_estudiando_ids)
+        .values_list("palabra_id", flat=True)
+        .distinct()
+    )
+
+    palabras = Palabra.objects.filter(id__in=palabras_ids)
+
+    # 2. Aplicar filtros de palabras
+    condiciones = []
+
+    if ajustes.get("Creadas por mí (palabras)"):
+        condiciones.append(Q(usuario=usuario))
+
+    if ajustes.get("Por completar (palabras)"):
+        condiciones.append(
+            ~Q(palabra_usuarios__usuario=usuario, palabra_usuarios__progreso=100)
+        )
+
+    if ajustes.get("Con estrella (palabras)"):
+        condiciones.append(
+            Q(palabra_usuarios__usuario=usuario, palabra_usuarios__estrella=True)
+        )
+
+    if condiciones:
+        if ajustes.get("filtros_palabras") == "OR":
+            filtro_palabras = condiciones.pop()
+            for cond in condiciones:
+                filtro_palabras |= cond
+        else:
+            filtro_palabras = condiciones.pop()
+            for cond in condiciones:
+                filtro_palabras &= cond
+        palabras = palabras.filter(filtro_palabras).distinct()
+
+    # 3. Aplicar filtros de etiquetas
+    etiquetas_activas = [
+        key.replace(" (etiqueta)", "")
+        for key, val in ajustes.items()
+        if key.endswith(" (etiqueta)") and val is True
+    ]
+
+    if etiquetas_activas:
+        etiquetas_obj = Etiqueta.objects.filter(etiqueta__in=etiquetas_activas)
+        if ajustes.get("filtros_etiquetas") == "OR":
+            palabras = palabras.filter(
+                palabra_etiquetas__etiqueta__in=etiquetas_obj
+            ).distinct()
+        else:
+            for etiqueta in etiquetas_obj:
+                palabras = palabras.filter(palabra_etiquetas__etiqueta=etiqueta)
+
+    palabras = list(palabras)
+
+    # 4. Aleatorizar si corresponde
+    if ajustes.get("aleatorio"):
+        random.shuffle(palabras)
+
+    return palabras
+
+
+@require_POST
+@login_required
+def preparar_estudio(request):
+    ajustes = request.session.get("inicio_ajustes", {})
+    usuario = request.user
+
+    palabras_qs = get_palabras_a_estudiar(usuario, ajustes)
+    if not palabras_qs:
+        messages.warning(
+            request, "No hay palabras que estudiar con los filtros actuales."
+        )
+        return redirect(request.META.get("HTTP_REFERER", "/"))
+    palabras_id = [palabra.id for palabra in palabras_qs]
+    request.session["palabras_a_estudiar"] = palabras_id
+    return redirect("estudio")  # O el nombre que tenga tu StudyView en `urls.py`
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -224,6 +310,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         context = super().get_context_data(**kwargs)
         context["href_estudio"] = reverse_lazy("estudio")
+
+        context["estudio_url"] = reverse_lazy("preparar_estudio")
 
         # __ Grupos_ajustes
         context["filtros_grupos"] = [
@@ -343,3 +431,13 @@ class HomeView(LoginRequiredMixin, TemplateView):
     def is_mobile(request):
         user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
         return any(m in user_agent for m in ["mobile", "android", "iphone", "ipad"])
+
+
+class StudyView(LoginRequiredMixin, TemplateView):
+    template_name = "study/estudio.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        palabra_ids = self.request.session.get("palabras_a_estudiar", [])
+        context["palabras"] = Palabra.objects.filter(id__in=palabra_ids)
+        return context

@@ -2,7 +2,10 @@
 <div class="h-auto flex flex-col space-y-4">
     <div class="flex flex-row space-x-4 px-4">
         <h1 class="w-auto text-center font-bold text-4xl">Estudio</h1>   
-        {% include "components/navigation_button.html" with text="INICIAR" is_selected=True extra_classes="!text-xl !font-bold"%}
+        <form method="post" action="{{ estudio_url }}">
+        {% csrf_token %}
+        <button type="submit" class="button !text-xl !font-bold">INICIAR</button>
+        </form>
     </div>     
     <div class="{% if is_mobile %} flex flex-col {% else %} flex flex-row basis-1/2 {% endif %}">           
         <div class="flex flex-col space-y-4 p-4 w-full">
