@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path("", views.HomeView.as_view(), name="inicio"),
-    path("estudio/", views.StudyView.as_view(), name="estudio"),
+    path("estudio/pregunta/", views.PreguntaView.as_view(), name="estudio"),
     path("preparar-estudio/", views.preparar_estudio, name="preparar_estudio"),
     # __ Checkboxes
     path("toggle-estudiando/", views.toggle_estudiando, name="toggle_estudiando"),

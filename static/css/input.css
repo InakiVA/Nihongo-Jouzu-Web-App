@@ -8,20 +8,34 @@
   --color-success: #41f540;
   --color-disabled: #626269;
 
+  --color-star: #f5c518;
+
   --color-textcolor: #FFFFFF;
   
-  --color-darkest: #1c2731;
-  --color-dark: #2a3c4b;
-  --color-main: #008f89;
-  --color-light: #c9f7f5;
+    --color-darkest: #1c2731;
+    --color-dark: #2a3c4b;
+    --color-main: #008f89;
+    --color-light: #c9f7f5;
   }
 
 nav {
-  @apply navbar bg-darkest border-b border-dark shadow-2xl;
+  @apply navbar bg-black border-b border-light shadow-xl shadow-black/20;
+}
+
+h4 {
+  @apply font-bold text-4xl;
+}
+
+h2{
+  @apply text-textcolor font-semibold text-2xl;
+}
+
+h3{
+  @apply text-textcolor font-semibold text-lg;
 }
 
 .button {
-  @apply h-10 btn btn-accent shadow-none border-dark bg-darkest text-textcolor rounded-sm;
+  @apply h-10 btn btn-accent shadow-none border-light bg-darkest text-textcolor rounded-sm;
   @apply hover:bg-dark hover:shadow-sm hover:shadow-dark;
 }
 
@@ -30,23 +44,23 @@ nav {
   @apply hover:bg-main/50;
 }
 
+.button-secondary {
+  @apply h-10 btn btn-ghost shadow-sm shadow-main border-light bg-dark text-textcolor rounded-sm;
+  @apply hover:bg-main;
+}
+
 .button-alert {
   @apply h-10 btn btn-ghost shadow-sm shadow-alert border border-textcolor bg-alert text-textcolor rounded-sm;
   @apply hover:bg-alert/50;
 }
 
-.searchbar {
-  @apply input rounded-lg flex flex-auto join-item w-auto border-dark bg-darkest text-textcolor shadow shadow-dark;
+.input {
+  @apply input rounded-lg flex flex-auto join-item w-auto border-light bg-darkest text-textcolor shadow shadow-dark;
   @apply focus:bg-dark hover:bg-dark;
 }
 
-.searchbar_text {
+.input_text {
   @apply text-textcolor placeholder:text-light placeholder:italic;
-}
-
-.menu_options {
-  @apply btn btn-accent rounded-sm  border-dark bg-darkest text-textcolor;
-  @apply hover:bg-dark;
 }
 
 .tag{
@@ -57,10 +71,34 @@ nav {
   @apply checkbox text-light bg-darkest hover:bg-dark checked:bg-main border-light border;
 }
 
+.progreso {
+  @apply progress w-full bg-dark text-light border border-light;
+}
+
+.slider{
+  @apply range range-sm [--range-thumb:white] w-full text-main bg-dark hover:bg-dark hover:text-light border border-light;
+}
+
 .switch{
   @apply toggle text-light bg-darkest hover:bg-dark checked:bg-main border-light border;
 }
 
 .select{
-  @apply select select-ghost text-lg bg-darkest hover:bg-dark border-dark text-textcolor;
+  @apply select select-ghost text-lg bg-darkest hover:bg-dark border-light text-textcolor;
+}
+
+.collapser{
+  @apply collapse collapse-arrow bg-transparent border-1 border-light hover:bg-dark
+}
+
+.list_header {
+  @apply text-textcolor text-2xl pl-4 pb-4 border-b border-light
+}
+
+.element_list {
+  @apply bg-darkest border-light rounded-box shadow-xl border-1;
+}
+
+.element_row{
+  @apply shadow-md border-1 border-dark items-center gap-2 px-4 py-1;
 }

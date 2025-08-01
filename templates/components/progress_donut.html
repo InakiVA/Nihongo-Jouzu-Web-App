@@ -24,7 +24,7 @@
             </div>
         {% endwith %}
     {% else %}
-        {% with "text-light" as color_class %}
+        {% with "text-textcolor" as color_class %}
             <div class="radial-progress {{ color_class }}" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
                 {{ progress }}%
             </div>

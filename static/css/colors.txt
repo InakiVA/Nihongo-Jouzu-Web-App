@@ -4,8 +4,27 @@ panoptimize dark aqua:
     --color-main: #008f89;
     --color-light: #c9f7f5;
 
-shinji purple:
+shinji purple: (wip?)
     --color-darkest: #170d22;
     --color-dark: #252046;
     --color-main: #9911fa;
     --color-light: #e2baffff;
+
+shinji purple and green: (wip)
+    --color-darkest: #170d22;
+    --color-dark: #252046;
+    --color-main: #10b339ff;
+    --color-light: #baffbaff;
+
+
+persona 5: (wip)
+    --color-darkest: #1d1d1dff;
+    --color-dark: #4d0000ff;
+    --color-main: #d10000ff;
+    --color-light: #fd7878ff;
+
+panoptimize dark blue:
+    --color-darkest: #1c1c31ff;
+    --color-dark: #2a2c4bff;
+    --color-main: #190dc0ff;
+    --color-light: #cec9f7ff;

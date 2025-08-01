@@ -198,7 +198,7 @@ def preparar_estudio(request):
         return redirect(request.META.get("HTTP_REFERER", "/"))
     palabras_id = [palabra.id for palabra in palabras_qs]
     request.session["palabras_a_estudiar"] = palabras_id
-    return redirect("estudio")  # O el nombre que tenga tu StudyView en `urls.py`
+    return redirect("estudio")
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -212,6 +212,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
             "aleatorio": False,
             "filtros_palabras": "AND",
             "filtros_etiquetas": "AND",
+            "index_palabra_pregunta": 0,
+            "contestada": False,
+            "correcta": False,
         }
         if "inicio_ajustes" not in self.request.session:
             self.request.session["inicio_ajustes"] = ajustes_default.copy()
@@ -433,11 +436,25 @@ class HomeView(LoginRequiredMixin, TemplateView):
         return any(m in user_agent for m in ["mobile", "android", "iphone", "ipad"])
 
 
-class StudyView(LoginRequiredMixin, TemplateView):
-    template_name = "study/estudio.html"
+class PreguntaView(LoginRequiredMixin, TemplateView):
+    template_name = "study/pregunta.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        index = self.request.session.get("index_palabra_pregunta", 0)
         palabra_ids = self.request.session.get("palabras_a_estudiar", [])
-        context["palabras"] = Palabra.objects.filter(id__in=palabra_ids)
+        palabra_obj = get_object_or_404(Palabra, id=palabra_ids[index])
+
+        context["pregunta"] = palabra_obj.palabra
+        context["index"] = 20
+        context["progreso"] = palabra_obj.palabra_usuarios.get(
+            usuario=self.request.user
+        ).progreso
+        context["estrella"] = palabra_obj.palabra_usuarios.get(
+            usuario=self.request.user
+        ).estrella
         return context
+
+    def is_mobile(request):
+        user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
+        return any(m in user_agent for m in ["mobile", "android", "iphone", "ipad"])
