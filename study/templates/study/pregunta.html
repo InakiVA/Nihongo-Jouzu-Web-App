@@ -4,7 +4,7 @@
         <h4 class="w-full text-start">Sesión de estudio</h4>
         <form method="post" action="{{ estudio_url }}">
         {% csrf_token %}
-        {% include "components/button.html" with text="Finalizar" extra_classes="button-selected !text-xl !font-bold" %}
+        {% include "components/button.html" with text="Finalizar" extra_classes="button-alert !text-xl !font-bold" %}
         </form>
     </div>
     

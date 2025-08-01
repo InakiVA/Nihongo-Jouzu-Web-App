@@ -4,16 +4,18 @@
 
 @theme {
   --color-warning: #ffde00;
-  --color-alert: #ff4763;
-  --color-success: #41f540;
-  --color-disabled: #626269;
+  --color-alert: #d10000;
+  --color-success: #4cf289;
+  --color-disabled: #9e9e9e;
+  --color-complete: #5ec9ee;
 
-  --color-star: #f5c518;
+  --color-star: #fffc56;
 
   --color-textcolor: #FFFFFF;
   
     --color-darkest: #1c2731;
     --color-dark: #2a3c4b;
+    --color-darkmain: #008f8966;
     --color-main: #008f89;
     --color-light: #c9f7f5;
   }
@@ -23,7 +25,7 @@ nav {
 }
 
 h4 {
-  @apply font-bold text-4xl;
+  @apply text-textcolor font-bold text-4xl;
 }
 
 h2{
@@ -41,12 +43,12 @@ h3{
 
 .button-selected {
   @apply h-10 btn btn-ghost shadow-sm shadow-main border-light bg-main text-textcolor rounded-sm;
-  @apply hover:bg-main/50;
+  @apply hover:bg-darkmain;
 }
 
 .button-secondary {
-  @apply h-10 btn btn-ghost shadow-sm shadow-main border-light bg-dark text-textcolor rounded-sm;
-  @apply hover:bg-main;
+  @apply h-10 btn btn-ghost shadow-sm shadow-main border-light bg-darkmain text-textcolor rounded-sm;
+  @apply hover:bg-dark;
 }
 
 .button-alert {
@@ -76,7 +78,7 @@ h3{
 }
 
 .slider{
-  @apply range range-sm [--range-thumb:white] w-full text-main bg-dark hover:bg-dark hover:text-light border border-light;
+  @apply range range-sm [--range-thumb:white] w-full text-main bg-dark hover:bg-darkest hover:text-darkmain border border-light;
 }
 
 .switch{

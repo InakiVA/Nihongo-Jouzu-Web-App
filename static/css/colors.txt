@@ -23,8 +23,8 @@ persona 5: (wip)
     --color-main: #d10000ff;
     --color-light: #fd7878ff;
 
-panoptimize dark blue:
-    --color-darkest: #1c1c31ff;
-    --color-dark: #2a2c4bff;
-    --color-main: #190dc0ff;
-    --color-light: #cec9f7ff;
+dark blue:
+    --color-darkest: #17152e;
+    --color-dark: #2b3e55;
+    --color-main: #0066cc;
+    --color-light: #d6eaff;
