@@ -40,18 +40,19 @@
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
-    --color-warning: #ffde00;
-    --color-alert: #d10000;
-    --color-success: #4cf289;
     --color-disabled: #9e9e9e;
+    --color-alert: #fc4a4a;
+    --color-warning: #e3cd40;
+    --color-success: #4cf289;
     --color-complete: #5ec9ee;
     --color-star: #fffc56;
     --color-textcolor: #FFFFFF;
-    --color-darkest: #1c2731;
-    --color-dark: #2a3c4b;
-    --color-darkmain: #008f8966;
-    --color-main: #008f89;
-    --color-light: #c9f7f5;
+    --color-neutral-light: #d6eaff;
+    --color-neutral-main: #344057;
+    --color-neutral-dark: #1a212e;
+    --color-accent-light: #ffa9a9;
+    --color-accent-main: #d10000;
+    --color-accent-dark: #730000;
   }
 }
 @layer base {
@@ -1019,79 +1020,6 @@
       cursor: not-allowed;
     }
   }
-  .card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    border-radius: var(--radius-box);
-    outline-width: 2px;
-    transition: outline 0.2s ease-in-out;
-    outline: 0 solid #0000;
-    outline-offset: 2px;
-    &:focus {
-      --tw-outline-style: none;
-      outline-style: none;
-      @media (forced-colors: active) {
-        outline: 2px solid transparent;
-        outline-offset: 2px;
-      }
-    }
-    &:focus-visible {
-      outline-color: currentColor;
-    }
-    :where(figure:first-child) {
-      overflow: hidden;
-      border-start-start-radius: inherit;
-      border-start-end-radius: inherit;
-      border-end-start-radius: unset;
-      border-end-end-radius: unset;
-    }
-    :where(figure:last-child) {
-      overflow: hidden;
-      border-start-start-radius: unset;
-      border-start-end-radius: unset;
-      border-end-start-radius: inherit;
-      border-end-end-radius: inherit;
-    }
-    &:where(.card-border) {
-      border: var(--border) solid var(--color-base-200);
-    }
-    &:where(.card-dash) {
-      border: var(--border) dashed var(--color-base-200);
-    }
-    &.image-full {
-      display: grid;
-      > * {
-        grid-column-start: 1;
-        grid-row-start: 1;
-      }
-      > .card-body {
-        position: relative;
-        color: var(--color-neutral-content);
-      }
-      :where(figure) {
-        overflow: hidden;
-        border-radius: inherit;
-      }
-      > figure img {
-        height: 100%;
-        object-fit: cover;
-        filter: brightness(28%);
-      }
-    }
-    figure {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    &:has(> input:is(input[type="checkbox"], input[type="radio"])) {
-      cursor: pointer;
-      user-select: none;
-    }
-    &:has(> :checked) {
-      outline: 2px solid currentColor;
-    }
-  }
   .swap {
     position: relative;
     display: inline-grid;
@@ -1327,6 +1255,9 @@
   .m-2 {
     margin: calc(var(--spacing) * 2);
   }
+  .m-16 {
+    margin: calc(var(--spacing) * 16);
+  }
   .mx-2 {
     margin-inline: calc(var(--spacing) * 2);
   }
@@ -1388,6 +1319,9 @@
   .mt-4 {
     margin-top: calc(var(--spacing) * 4);
   }
+  .mt-7 {
+    margin-top: calc(var(--spacing) * 7);
+  }
   .mt-20 {
     margin-top: calc(var(--spacing) * 20);
   }
@@ -1418,6 +1352,9 @@
   }
   .ml-2 {
     margin-left: calc(var(--spacing) * 2);
+  }
+  .ml-auto {
+    margin-left: auto;
   }
   .carousel-item {
     box-sizing: content-box;
@@ -1485,13 +1422,6 @@
     font-size: 0.75rem;
     grid-template-columns: 1fr;
     grid-auto-rows: max-content;
-  }
-  .card-title {
-    display: flex;
-    align-items: center;
-    gap: calc(0.25rem * 2);
-    font-size: var(--cardtitle-fs, 1.125rem);
-    font-weight: 600;
   }
   .join {
     display: inline-flex;
@@ -1600,6 +1530,9 @@
   .\!h-8 {
     height: calc(var(--spacing) * 8) !important;
   }
+  .\!h-full {
+    height: 100% !important;
+  }
   .h-auto {
     height: auto;
   }
@@ -1611,6 +1544,15 @@
   }
   .min-h-screen {
     min-height: 100vh;
+  }
+  .\!w-full {
+    width: 100% !important;
+  }
+  .w-1\/5 {
+    width: calc(1/5 * 100%);
+  }
+  .w-4\/5 {
+    width: calc(4/5 * 100%);
   }
   .w-40 {
     width: calc(var(--spacing) * 40);
@@ -1630,8 +1572,17 @@
   .min-w-42 {
     min-width: calc(var(--spacing) * 42);
   }
+  .flex-1 {
+    flex: 1;
+  }
+  .flex-1\/3 {
+    flex: calc(1/3 * 100%);
+  }
   .flex-auto {
     flex: auto;
+  }
+  .flex-none {
+    flex: none;
   }
   .flex-grow {
     flex-grow: 1;
@@ -1676,6 +1627,9 @@
   }
   .items-center {
     align-items: center;
+  }
+  .items-end {
+    align-items: flex-end;
   }
   .justify-between {
     justify-content: space-between;
@@ -1770,10 +1724,6 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
-  .border-1 {
-    border-style: var(--tw-border-style);
-    border-width: 1px;
-  }
   .border-4 {
     border-style: var(--tw-border-style);
     border-width: 4px;
@@ -1782,40 +1732,37 @@
     --tw-border-style: none !important;
     border-style: none !important;
   }
-  .border-dark {
-    border-color: var(--color-dark);
-  }
   .border-light {
-    border-color: var(--color-light);
+    border-color: #c9f7f5;
   }
   .border-main {
-    border-color: var(--color-main);
+    border-color: #008f89;
   }
   .bg-dark {
-    background-color: var(--color-dark);
+    background-color: #2a3c4b;
   }
   .bg-darkest {
-    background-color: var(--color-darkest);
+    background-color: #1c2731;
   }
   .bg-radial {
     --tw-gradient-position: in oklab;
     background-image: radial-gradient(var(--tw-gradient-stops));
   }
   .from-darkest {
-    --tw-gradient-from: var(--color-darkest);
+    --tw-gradient-from: #1c2731;
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
   .via-dark {
-    --tw-gradient-via: var(--color-dark);
+    --tw-gradient-via: #2a3c4b;
     --tw-gradient-via-stops: var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-via) var(--tw-gradient-via-position), var(--tw-gradient-to) var(--tw-gradient-to-position);
     --tw-gradient-stops: var(--tw-gradient-via-stops);
   }
   .to-main {
-    --tw-gradient-to: var(--color-main);
+    --tw-gradient-to: #008f89;
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
   .fill-light {
-    fill: var(--color-light);
+    fill: #c9f7f5;
   }
   .fill-star {
     fill: var(--color-star);
@@ -1847,6 +1794,9 @@
   .py-4 {
     padding-block: calc(var(--spacing) * 4);
   }
+  .py-8 {
+    padding-block: calc(var(--spacing) * 8);
+  }
   .pt-1 {
     padding-top: calc(var(--spacing) * 1);
   }
@@ -1868,25 +1818,21 @@
   .text-start {
     text-align: start;
   }
-  .\!text-xl {
-    font-size: var(--text-xl) !important;
-    line-height: var(--tw-leading, var(--text-xl--line-height)) !important;
+  .\!text-3xl {
+    font-size: var(--text-3xl) !important;
+    line-height: var(--tw-leading, var(--text-3xl--line-height)) !important;
+  }
+  .\!text-7xl {
+    font-size: var(--text-7xl) !important;
+    line-height: var(--tw-leading, var(--text-7xl--line-height)) !important;
   }
   .text-2xl {
     font-size: var(--text-2xl);
     line-height: var(--tw-leading, var(--text-2xl--line-height));
   }
-  .text-3xl {
-    font-size: var(--text-3xl);
-    line-height: var(--tw-leading, var(--text-3xl--line-height));
-  }
   .text-4xl {
     font-size: var(--text-4xl);
     line-height: var(--tw-leading, var(--text-4xl--line-height));
-  }
-  .text-7xl {
-    font-size: var(--text-7xl);
-    line-height: var(--tw-leading, var(--text-7xl--line-height));
   }
   .text-9xl {
     font-size: var(--text-9xl);
@@ -1943,19 +1889,19 @@
     color: var(--color-complete);
   }
   .text-dark {
-    color: var(--color-dark);
+    color: #2a3c4b;
   }
   .text-darkest {
-    color: var(--color-darkest);
+    color: #1c2731;
   }
   .text-disabled {
     color: var(--color-disabled);
   }
   .text-light {
-    color: var(--color-light);
+    color: #c9f7f5;
   }
   .text-main {
-    color: var(--color-main);
+    color: #008f89;
   }
   .text-red-500 {
     color: var(--color-red-500);
@@ -1965,9 +1911,6 @@
   }
   .text-success {
     color: var(--color-success);
-  }
-  .text-textcolor {
-    color: var(--color-textcolor);
   }
   .text-textcolor\/80 {
     color: color-mix(in srgb, #FFFFFF 80%, transparent);
@@ -1992,10 +1935,6 @@
     --tw-shadow: 0 25px 50px -12px var(--tw-shadow-color, rgb(0 0 0 / 0.25));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
-  .shadow-sm {
-    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
   .inset-shadow-2xs {
     --tw-inset-shadow: inset 0 1px var(--tw-inset-shadow-color, rgb(0 0 0 / 0.05));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
@@ -2008,13 +1947,13 @@
   .text-shadow-light\/30 {
     --tw-text-shadow-color: color-mix(in srgb, #c9f7f5 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      --tw-text-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--color-light) 30%, transparent) var(--tw-text-shadow-alpha), transparent);
+      --tw-text-shadow-color: color-mix(in oklab, color-mix(in oklab, #c9f7f5 30%, transparent) var(--tw-text-shadow-alpha), transparent);
     }
   }
   .text-shadow-main\/30 {
     --tw-text-shadow-color: color-mix(in srgb, #008f89 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      --tw-text-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--color-main) 30%, transparent) var(--tw-text-shadow-alpha), transparent);
+      --tw-text-shadow-color: color-mix(in oklab, color-mix(in oklab, #008f89 30%, transparent) var(--tw-text-shadow-alpha), transparent);
     }
   }
   .text-shadow-sm {
@@ -2023,14 +1962,7 @@
   .hover\:border-light {
     &:hover {
       @media (hover: hover) {
-        border-color: var(--color-light);
-      }
-    }
-  }
-  .hover\:bg-dark {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-dark);
+        border-color: #c9f7f5;
       }
     }
   }
@@ -2044,7 +1976,7 @@
   .hover\:text-light {
     &:hover {
       @media (hover: hover) {
-        color: var(--color-light);
+        color: #c9f7f5;
       }
     }
   }
@@ -2056,7 +1988,7 @@
   }
   .focus\:ring-main {
     &:focus {
-      --tw-ring-color: var(--color-main);
+      --tw-ring-color: #008f89;
     }
   }
   .focus\:outline-none {
@@ -2074,8 +2006,8 @@ nav {
   min-height: 4rem;
   border-bottom-style: var(--tw-border-style);
   border-bottom-width: 1px;
-  border-color: var(--color-light);
-  background-color: var(--color-black);
+  border-color: var(--color-neutral-light);
+  background-color: var(--color-neutral-dark);
   --tw-shadow: 0 20px 25px -5px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 8px 10px -6px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   --tw-shadow-color: color-mix(in srgb, #000 20%, transparent);
@@ -2083,12 +2015,23 @@ nav {
     --tw-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--color-black) 20%, transparent) var(--tw-shadow-alpha), transparent);
   }
 }
-h4 {
+body {
+  background-color: var(--color-neutral-dark);
+  color: var(--color-textcolor);
+}
+#title1 {
   font-size: var(--text-4xl);
   line-height: var(--tw-leading, var(--text-4xl--line-height));
-  --tw-font-weight: var(--font-weight-bold);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-textcolor);
+  --tw-font-weight: var(--font-weight-extrabold);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-neutral-light);
+}
+#title2 {
+  font-size: var(--text-4xl);
+  line-height: var(--tw-leading, var(--text-4xl--line-height));
+  --tw-font-weight: var(--font-weight-extrabold);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-accent-main);
 }
 h2 {
   font-size: var(--text-2xl);
@@ -2104,7 +2047,14 @@ h3 {
   font-weight: var(--font-weight-semibold);
   color: var(--color-textcolor);
 }
-.button {
+h4 {
+  font-size: var(--text-4xl);
+  line-height: var(--tw-leading, var(--text-4xl--line-height));
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-textcolor);
+}
+.button-neutral {
   :where(&) {
     width: unset;
   }
@@ -2229,167 +2179,11 @@ h3 {
   }
   height: calc(var(--spacing) * 10);
   border-radius: var(--radius-sm);
-  border-color: var(--color-light);
-  background-color: var(--color-darkest);
+  border-color: var(--color-neutral-light);
+  background-color: var(--color-neutral-dark);
   color: var(--color-textcolor);
   --tw-shadow: 0 0 #0000;
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  --btn-color: var(--color-accent);
-  --btn-fg: var(--color-accent-content);
-  &:hover {
-    @media (hover: hover) {
-      background-color: var(--color-dark);
-    }
-  }
-  &:hover {
-    @media (hover: hover) {
-      --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
-      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-    }
-  }
-  &:hover {
-    @media (hover: hover) {
-      --tw-shadow-color: #2a3c4b;
-      @supports (color: color-mix(in lab, red, red)) {
-        --tw-shadow-color: color-mix(in oklab, var(--color-dark) var(--tw-shadow-alpha), transparent);
-      }
-    }
-  }
-}
-.button-selected {
-  :where(&) {
-    width: unset;
-  }
-  display: inline-flex;
-  flex-shrink: 0;
-  cursor: pointer;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: center;
-  gap: calc(0.25rem * 1.5);
-  text-align: center;
-  vertical-align: middle;
-  outline-offset: 2px;
-  webkit-user-select: none;
-  user-select: none;
-  padding-inline: var(--btn-p);
-  color: var(--btn-fg);
-  --tw-prose-links: var(--btn-fg);
-  height: var(--size);
-  font-size: var(--fontsize, 0.875rem);
-  font-weight: 600;
-  outline-color: var(--btn-color, var(--color-base-content));
-  transition-property: color, background-color, border-color, box-shadow;
-  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
-  transition-duration: 0.2s;
-  border-start-start-radius: var(--join-ss, var(--radius-field));
-  border-start-end-radius: var(--join-se, var(--radius-field));
-  border-end-start-radius: var(--join-es, var(--radius-field));
-  border-end-end-radius: var(--join-ee, var(--radius-field));
-  background-color: var(--btn-bg);
-  background-size: auto, calc(var(--noise) * 100%);
-  background-image: none, var(--btn-noise);
-  border-width: var(--border);
-  border-style: solid;
-  border-color: var(--btn-border);
-  text-shadow: 0 0.5px oklch(100% 0 0 / calc(var(--depth) * 0.15));
-  touch-action: manipulation;
-  box-shadow: 0 0.5px 0 0.5px oklch(100% 0 0 / calc(var(--depth) * 6%)) inset, var(--btn-shadow);
-  --size: calc(var(--size-field, 0.25rem) * 10);
-  --btn-bg: var(--btn-color, var(--color-base-200));
-  --btn-fg: var(--color-base-content);
-  --btn-p: 1rem;
-  --btn-border: var(--btn-bg);
-  @supports (color: color-mix(in lab, red, red)) {
-    --btn-border: color-mix(in oklab, var(--btn-bg), #000 calc(var(--depth) * 5%));
-  }
-  --btn-shadow: 0 3px 2px -2px var(--btn-bg),
-    0 4px 3px -2px var(--btn-bg);
-  @supports (color: color-mix(in lab, red, red)) {
-    --btn-shadow: 0 3px 2px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000),
-    0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
-  }
-  --btn-noise: var(--fx-noise);
-  .prose & {
-    text-decoration-line: none;
-  }
-  @media (hover: hover) {
-    &:hover {
-      --btn-bg: var(--btn-color, var(--color-base-200));
-      @supports (color: color-mix(in lab, red, red)) {
-        --btn-bg: color-mix(in oklab, var(--btn-color, var(--color-base-200)), #000 7%);
-      }
-    }
-  }
-  &:focus-visible {
-    outline-width: 2px;
-    outline-style: solid;
-    isolation: isolate;
-  }
-  &:active:not(.btn-active) {
-    translate: 0 0.5px;
-    --btn-bg: var(--btn-color, var(--color-base-200));
-    @supports (color: color-mix(in lab, red, red)) {
-      --btn-bg: color-mix(in oklab, var(--btn-color, var(--color-base-200)), #000 5%);
-    }
-    --btn-border: var(--btn-color, var(--color-base-200));
-    @supports (color: color-mix(in lab, red, red)) {
-      --btn-border: color-mix(in oklab, var(--btn-color, var(--color-base-200)), #000 7%);
-    }
-    --btn-shadow: 0 0 0 0 oklch(0% 0 0/0), 0 0 0 0 oklch(0% 0 0/0);
-  }
-  &:is(:disabled, [disabled], .btn-disabled) {
-    &:not(.btn-link, .btn-ghost) {
-      background-color: var(--color-base-content);
-      @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
-      }
-      box-shadow: none;
-    }
-    pointer-events: none;
-    --btn-border: #0000;
-    --btn-noise: none;
-    --btn-fg: var(--color-base-content);
-    @supports (color: color-mix(in lab, red, red)) {
-      --btn-fg: color-mix(in oklch, var(--color-base-content) 20%, #0000);
-    }
-    @media (hover: hover) {
-      &:hover {
-        pointer-events: none;
-        background-color: var(--color-neutral);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-neutral) 20%, transparent);
-        }
-        --btn-border: #0000;
-        --btn-fg: var(--color-base-content);
-        @supports (color: color-mix(in lab, red, red)) {
-          --btn-fg: color-mix(in oklch, var(--color-base-content) 20%, #0000);
-        }
-      }
-    }
-  }
-  &:is(input[type="checkbox"], input[type="radio"]) {
-    appearance: none;
-    &::after {
-      content: attr(aria-label);
-    }
-  }
-  &:where(input:checked:not(.filter .btn)) {
-    --btn-color: var(--color-primary);
-    --btn-fg: var(--color-primary-content);
-    isolation: isolate;
-  }
-  height: calc(var(--spacing) * 10);
-  border-radius: var(--radius-sm);
-  border-color: var(--color-light);
-  background-color: var(--color-main);
-  color: var(--color-textcolor);
-  --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
-  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  --tw-shadow-color: #008f89;
-  @supports (color: color-mix(in lab, red, red)) {
-    --tw-shadow-color: color-mix(in oklab, var(--color-main) var(--tw-shadow-alpha), transparent);
-  }
   &:not(.btn-active, :hover, :active:focus, :focus-visible) {
     --btn-shadow: "";
     --btn-bg: #0000;
@@ -2411,7 +2205,162 @@ h3 {
   }
   &:hover {
     @media (hover: hover) {
-      background-color: var(--color-darkmain);
+      background-color: var(--color-neutral-main);
+    }
+  }
+}
+.button-main {
+  :where(&) {
+    width: unset;
+  }
+  display: inline-flex;
+  flex-shrink: 0;
+  cursor: pointer;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: calc(0.25rem * 1.5);
+  text-align: center;
+  vertical-align: middle;
+  outline-offset: 2px;
+  webkit-user-select: none;
+  user-select: none;
+  padding-inline: var(--btn-p);
+  color: var(--btn-fg);
+  --tw-prose-links: var(--btn-fg);
+  height: var(--size);
+  font-size: var(--fontsize, 0.875rem);
+  font-weight: 600;
+  outline-color: var(--btn-color, var(--color-base-content));
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 0.2s;
+  border-start-start-radius: var(--join-ss, var(--radius-field));
+  border-start-end-radius: var(--join-se, var(--radius-field));
+  border-end-start-radius: var(--join-es, var(--radius-field));
+  border-end-end-radius: var(--join-ee, var(--radius-field));
+  background-color: var(--btn-bg);
+  background-size: auto, calc(var(--noise) * 100%);
+  background-image: none, var(--btn-noise);
+  border-width: var(--border);
+  border-style: solid;
+  border-color: var(--btn-border);
+  text-shadow: 0 0.5px oklch(100% 0 0 / calc(var(--depth) * 0.15));
+  touch-action: manipulation;
+  box-shadow: 0 0.5px 0 0.5px oklch(100% 0 0 / calc(var(--depth) * 6%)) inset, var(--btn-shadow);
+  --size: calc(var(--size-field, 0.25rem) * 10);
+  --btn-bg: var(--btn-color, var(--color-base-200));
+  --btn-fg: var(--color-base-content);
+  --btn-p: 1rem;
+  --btn-border: var(--btn-bg);
+  @supports (color: color-mix(in lab, red, red)) {
+    --btn-border: color-mix(in oklab, var(--btn-bg), #000 calc(var(--depth) * 5%));
+  }
+  --btn-shadow: 0 3px 2px -2px var(--btn-bg),
+    0 4px 3px -2px var(--btn-bg);
+  @supports (color: color-mix(in lab, red, red)) {
+    --btn-shadow: 0 3px 2px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000),
+    0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
+  }
+  --btn-noise: var(--fx-noise);
+  .prose & {
+    text-decoration-line: none;
+  }
+  @media (hover: hover) {
+    &:hover {
+      --btn-bg: var(--btn-color, var(--color-base-200));
+      @supports (color: color-mix(in lab, red, red)) {
+        --btn-bg: color-mix(in oklab, var(--btn-color, var(--color-base-200)), #000 7%);
+      }
+    }
+  }
+  &:focus-visible {
+    outline-width: 2px;
+    outline-style: solid;
+    isolation: isolate;
+  }
+  &:active:not(.btn-active) {
+    translate: 0 0.5px;
+    --btn-bg: var(--btn-color, var(--color-base-200));
+    @supports (color: color-mix(in lab, red, red)) {
+      --btn-bg: color-mix(in oklab, var(--btn-color, var(--color-base-200)), #000 5%);
+    }
+    --btn-border: var(--btn-color, var(--color-base-200));
+    @supports (color: color-mix(in lab, red, red)) {
+      --btn-border: color-mix(in oklab, var(--btn-color, var(--color-base-200)), #000 7%);
+    }
+    --btn-shadow: 0 0 0 0 oklch(0% 0 0/0), 0 0 0 0 oklch(0% 0 0/0);
+  }
+  &:is(:disabled, [disabled], .btn-disabled) {
+    &:not(.btn-link, .btn-ghost) {
+      background-color: var(--color-base-content);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
+      }
+      box-shadow: none;
+    }
+    pointer-events: none;
+    --btn-border: #0000;
+    --btn-noise: none;
+    --btn-fg: var(--color-base-content);
+    @supports (color: color-mix(in lab, red, red)) {
+      --btn-fg: color-mix(in oklch, var(--color-base-content) 20%, #0000);
+    }
+    @media (hover: hover) {
+      &:hover {
+        pointer-events: none;
+        background-color: var(--color-neutral);
+        @supports (color: color-mix(in lab, red, red)) {
+          background-color: color-mix(in oklab, var(--color-neutral) 20%, transparent);
+        }
+        --btn-border: #0000;
+        --btn-fg: var(--color-base-content);
+        @supports (color: color-mix(in lab, red, red)) {
+          --btn-fg: color-mix(in oklch, var(--color-base-content) 20%, #0000);
+        }
+      }
+    }
+  }
+  &:is(input[type="checkbox"], input[type="radio"]) {
+    appearance: none;
+    &::after {
+      content: attr(aria-label);
+    }
+  }
+  &:where(input:checked:not(.filter .btn)) {
+    --btn-color: var(--color-primary);
+    --btn-fg: var(--color-primary-content);
+    isolation: isolate;
+  }
+  height: calc(var(--spacing) * 10);
+  border-radius: var(--radius-sm);
+  border-color: var(--color-accent-light);
+  background-color: var(--color-accent-main);
+  color: var(--color-textcolor);
+  --tw-shadow: 0 0 #0000;
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  &:not(.btn-active, :hover, :active:focus, :focus-visible) {
+    --btn-shadow: "";
+    --btn-bg: #0000;
+    --btn-border: #0000;
+    --btn-noise: none;
+    &:not(:disabled, [disabled], .btn-disabled) {
+      outline-color: currentColor;
+      --btn-fg: currentColor;
+    }
+  }
+  @media (hover: none) {
+    &:hover:not(.btn-active, :active, :focus-visible, :disabled, [disabled], .btn-disabled) {
+      --btn-shadow: "";
+      --btn-bg: #0000;
+      --btn-border: #0000;
+      --btn-noise: none;
+      --btn-fg: currentColor;
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-accent-dark);
     }
   }
 }
@@ -2540,15 +2489,11 @@ h3 {
   }
   height: calc(var(--spacing) * 10);
   border-radius: var(--radius-sm);
-  border-color: var(--color-light);
-  background-color: var(--color-darkmain);
+  border-color: var(--color-neutral-light);
+  background-color: var(--color-neutral-main);
   color: var(--color-textcolor);
-  --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+  --tw-shadow: 0 0 #0000;
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  --tw-shadow-color: #008f89;
-  @supports (color: color-mix(in lab, red, red)) {
-    --tw-shadow-color: color-mix(in oklab, var(--color-main) var(--tw-shadow-alpha), transparent);
-  }
   &:not(.btn-active, :hover, :active:focus, :focus-visible) {
     --btn-shadow: "";
     --btn-bg: #0000;
@@ -2570,171 +2515,126 @@ h3 {
   }
   &:hover {
     @media (hover: hover) {
-      background-color: var(--color-dark);
+      background-color: var(--color-accent-main);
     }
   }
 }
-.button-alert {
-  :where(&) {
-    width: unset;
-  }
+.select {
+  border: var(--border) solid #0000;
+  position: relative;
   display: inline-flex;
-  flex-shrink: 0;
-  cursor: pointer;
-  flex-wrap: nowrap;
+  flex-shrink: 1;
+  appearance: none;
   align-items: center;
-  justify-content: center;
   gap: calc(0.25rem * 1.5);
-  text-align: center;
+  background-color: var(--color-base-100);
+  padding-inline-start: calc(0.25rem * 4);
+  padding-inline-end: calc(0.25rem * 7);
   vertical-align: middle;
-  outline-offset: 2px;
-  webkit-user-select: none;
-  user-select: none;
-  padding-inline: var(--btn-p);
-  color: var(--btn-fg);
-  --tw-prose-links: var(--btn-fg);
+  width: clamp(3rem, 20rem, 100%);
   height: var(--size);
-  font-size: var(--fontsize, 0.875rem);
-  font-weight: 600;
-  outline-color: var(--btn-color, var(--color-base-content));
-  transition-property: color, background-color, border-color, box-shadow;
-  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
-  transition-duration: 0.2s;
+  font-size: 0.875rem;
+  touch-action: manipulation;
   border-start-start-radius: var(--join-ss, var(--radius-field));
   border-start-end-radius: var(--join-se, var(--radius-field));
   border-end-start-radius: var(--join-es, var(--radius-field));
   border-end-end-radius: var(--join-ee, var(--radius-field));
-  background-color: var(--btn-bg);
-  background-size: auto, calc(var(--noise) * 100%);
-  background-image: none, var(--btn-noise);
-  border-width: var(--border);
-  border-style: solid;
-  border-color: var(--btn-border);
-  text-shadow: 0 0.5px oklch(100% 0 0 / calc(var(--depth) * 0.15));
-  touch-action: manipulation;
-  box-shadow: 0 0.5px 0 0.5px oklch(100% 0 0 / calc(var(--depth) * 6%)) inset, var(--btn-shadow);
+  background-image: linear-gradient(45deg, #0000 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, #0000 50%);
+  background-position: calc(100% - 20px) calc(1px + 50%), calc(100% - 16.1px) calc(1px + 50%);
+  background-size: 4px 4px, 4px 4px;
+  background-repeat: no-repeat;
+  text-overflow: ellipsis;
+  box-shadow: 0 1px var(--input-color) inset, 0 -1px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset;
+  @supports (color: color-mix(in lab, red, red)) {
+    box-shadow: 0 1px color-mix(in oklab, var(--input-color) calc(var(--depth) * 10%), #0000) inset, 0 -1px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset;
+  }
+  border-color: var(--input-color);
+  --input-color: var(--color-base-content);
+  @supports (color: color-mix(in lab, red, red)) {
+    --input-color: color-mix(in oklab, var(--color-base-content) 20%, #0000);
+  }
   --size: calc(var(--size-field, 0.25rem) * 10);
-  --btn-bg: var(--btn-color, var(--color-base-200));
-  --btn-fg: var(--color-base-content);
-  --btn-p: 1rem;
-  --btn-border: var(--btn-bg);
-  @supports (color: color-mix(in lab, red, red)) {
-    --btn-border: color-mix(in oklab, var(--btn-bg), #000 calc(var(--depth) * 5%));
+  [dir="rtl"] & {
+    background-position: calc(0% + 12px) calc(1px + 50%), calc(0% + 16px) calc(1px + 50%);
   }
-  --btn-shadow: 0 3px 2px -2px var(--btn-bg),
-    0 4px 3px -2px var(--btn-bg);
-  @supports (color: color-mix(in lab, red, red)) {
-    --btn-shadow: 0 3px 2px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000),
-    0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
-  }
-  --btn-noise: var(--fx-noise);
-  .prose & {
-    text-decoration-line: none;
-  }
-  @media (hover: hover) {
-    &:hover {
-      --btn-bg: var(--btn-color, var(--color-base-200));
-      @supports (color: color-mix(in lab, red, red)) {
-        --btn-bg: color-mix(in oklab, var(--btn-color, var(--color-base-200)), #000 7%);
-      }
-    }
-  }
-  &:focus-visible {
-    outline-width: 2px;
-    outline-style: solid;
-    isolation: isolate;
-  }
-  &:active:not(.btn-active) {
-    translate: 0 0.5px;
-    --btn-bg: var(--btn-color, var(--color-base-200));
-    @supports (color: color-mix(in lab, red, red)) {
-      --btn-bg: color-mix(in oklab, var(--btn-color, var(--color-base-200)), #000 5%);
-    }
-    --btn-border: var(--btn-color, var(--color-base-200));
-    @supports (color: color-mix(in lab, red, red)) {
-      --btn-border: color-mix(in oklab, var(--btn-color, var(--color-base-200)), #000 7%);
-    }
-    --btn-shadow: 0 0 0 0 oklch(0% 0 0/0), 0 0 0 0 oklch(0% 0 0/0);
-  }
-  &:is(:disabled, [disabled], .btn-disabled) {
-    &:not(.btn-link, .btn-ghost) {
-      background-color: var(--color-base-content);
-      @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
-      }
-      box-shadow: none;
-    }
-    pointer-events: none;
-    --btn-border: #0000;
-    --btn-noise: none;
-    --btn-fg: var(--color-base-content);
-    @supports (color: color-mix(in lab, red, red)) {
-      --btn-fg: color-mix(in oklch, var(--color-base-content) 20%, #0000);
-    }
-    @media (hover: hover) {
-      &:hover {
-        pointer-events: none;
-        background-color: var(--color-neutral);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-neutral) 20%, transparent);
-        }
-        --btn-border: #0000;
-        --btn-fg: var(--color-base-content);
-        @supports (color: color-mix(in lab, red, red)) {
-          --btn-fg: color-mix(in oklch, var(--color-base-content) 20%, #0000);
-        }
-      }
-    }
-  }
-  &:is(input[type="checkbox"], input[type="radio"]) {
+  select {
+    margin-inline-start: calc(0.25rem * -4);
+    margin-inline-end: calc(0.25rem * -7);
+    width: calc(100% + 2.75rem);
     appearance: none;
-    &::after {
-      content: attr(aria-label);
+    padding-inline-start: calc(0.25rem * 4);
+    padding-inline-end: calc(0.25rem * 7);
+    height: calc(100% - 2px);
+    background: inherit;
+    border-radius: inherit;
+    border-style: none;
+    &:focus, &:focus-within {
+      --tw-outline-style: none;
+      outline-style: none;
+      @media (forced-colors: active) {
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+      }
+    }
+    &:not(:last-child) {
+      margin-inline-end: calc(0.25rem * -5.5);
+      background-image: none;
     }
   }
-  &:where(input:checked:not(.filter .btn)) {
-    --btn-color: var(--color-primary);
-    --btn-fg: var(--color-primary-content);
+  &:focus, &:focus-within {
+    --input-color: var(--color-base-content);
+    box-shadow: 0 1px var(--input-color);
+    @supports (color: color-mix(in lab, red, red)) {
+      box-shadow: 0 1px color-mix(in oklab, var(--input-color) calc(var(--depth) * 10%), #0000);
+    }
+    outline: 2px solid var(--input-color);
+    outline-offset: 2px;
     isolation: isolate;
+    z-index: 1;
   }
-  height: calc(var(--spacing) * 10);
-  border-radius: var(--radius-sm);
-  border-style: var(--tw-border-style);
-  border-width: 1px;
-  border-color: var(--color-textcolor);
-  background-color: var(--color-alert);
-  color: var(--color-textcolor);
-  --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
-  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  --tw-shadow-color: #d10000;
-  @supports (color: color-mix(in lab, red, red)) {
-    --tw-shadow-color: color-mix(in oklab, var(--color-alert) var(--tw-shadow-alpha), transparent);
-  }
-  &:not(.btn-active, :hover, :active:focus, :focus-visible) {
-    --btn-shadow: "";
-    --btn-bg: #0000;
-    --btn-border: #0000;
-    --btn-noise: none;
-    &:not(:disabled, [disabled], .btn-disabled) {
-      outline-color: currentColor;
-      --btn-fg: currentColor;
+  &:has(> select[disabled]), &:is(:disabled, [disabled]) {
+    cursor: not-allowed;
+    border-color: var(--color-base-200);
+    background-color: var(--color-base-200);
+    color: var(--color-base-content);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--color-base-content) 40%, transparent);
+    }
+    &::placeholder {
+      color: var(--color-base-content);
+      @supports (color: color-mix(in lab, red, red)) {
+        color: color-mix(in oklab, var(--color-base-content) 20%, transparent);
+      }
     }
   }
-  @media (hover: none) {
-    &:hover:not(.btn-active, :active, :focus-visible, :disabled, [disabled], .btn-disabled) {
-      --btn-shadow: "";
-      --btn-bg: #0000;
-      --btn-border: #0000;
-      --btn-noise: none;
-      --btn-fg: currentColor;
+  &:has(> select[disabled]) > select[disabled] {
+    cursor: not-allowed;
+  }
+  width: 100%;
+  background-color: transparent;
+  transition: background-color 0.2s;
+  box-shadow: none;
+  border-color: #0000;
+  &:focus, &:focus-within {
+    background-color: var(--color-base-100);
+    color: var(--color-base-content);
+    border-color: #0000;
+    box-shadow: none;
+  }
+  border-color: var(--color-neutral-light);
+  background-color: var(--color-neutral-dark);
+  font-size: var(--text-lg);
+  line-height: var(--tw-leading, var(--text-lg--line-height));
+  color: var(--color-textcolor);
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-neutral-main);
     }
   }
   &:hover {
     @media (hover: hover) {
-      background-color: color-mix(in srgb, #d10000 50%, transparent);
-      @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--color-alert) 50%, transparent);
-      }
+      --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     }
   }
 }
@@ -2845,31 +2745,35 @@ h3 {
     border-width: var(--border, 1px) 0 var(--border, 1px) var(--border, 1px);
   }
   display: flex;
+  height: 100%;
+  min-height: calc(var(--spacing) * 10);
   width: auto;
   flex: auto;
   border-radius: var(--radius-lg);
-  border-color: var(--color-light);
-  background-color: var(--color-darkest);
+  border-color: var(--color-neutral-light);
+  background-color: var(--color-neutral-dark);
   color: var(--color-textcolor);
   --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   --tw-shadow-color: #2a3c4b;
   @supports (color: color-mix(in lab, red, red)) {
-    --tw-shadow-color: color-mix(in oklab, var(--color-dark) var(--tw-shadow-alpha), transparent);
+    --tw-shadow-color: color-mix(in oklab, #2a3c4b var(--tw-shadow-alpha), transparent);
   }
   &:hover {
     @media (hover: hover) {
-      background-color: var(--color-dark);
+      background-color: var(--color-neutral-main);
     }
   }
   &:focus {
-    background-color: var(--color-dark);
+    background-color: var(--color-neutral-main);
   }
 }
 .input_text {
+  font-size: var(--text-xl);
+  line-height: var(--tw-leading, var(--text-xl--line-height));
   color: var(--color-textcolor);
   &::placeholder {
-    color: var(--color-light);
+    color: var(--color-neutral-light);
   }
   &::placeholder {
     font-style: italic;
@@ -2877,6 +2781,7 @@ h3 {
 }
 .tag {
   border-radius: var(--radius-2xl);
+  background-color: var(--color-neutral-main);
   padding-inline: calc(var(--spacing) * 2.5);
   padding-block: calc(var(--spacing) * 0.5);
   color: var(--color-textcolor);
@@ -2967,15 +2872,37 @@ h3 {
   }
   border-style: var(--tw-border-style);
   border-width: 1px;
-  border-color: var(--color-light);
-  background-color: var(--color-darkest);
-  color: var(--color-light);
+  border-color: var(--color-neutral-light);
+  background-color: var(--color-neutral-dark);
+  color: var(--color-neutral-light);
   &:checked {
-    background-color: var(--color-main);
+    background-color: var(--color-accent-main);
   }
   &:hover {
     @media (hover: hover) {
-      background-color: var(--color-dark);
+      background-color: var(--color-neutral-main);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    }
+  }
+  &:checked {
+    border-color: var(--color-accent-light);
+  }
+  &:checked {
+    background-color: var(--color-accent-main);
+  }
+  &:checked {
+    color: var(--color-textcolor);
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-accent-dark);
+      }
     }
   }
 }
@@ -3023,11 +2950,8 @@ h3 {
     }
   }
   width: 100%;
-  border-style: var(--tw-border-style);
-  border-width: 1px;
-  border-color: var(--color-light);
-  background-color: var(--color-dark);
-  color: var(--color-light);
+  background-color: var(--color-neutral-main);
+  color: var(--color-accent-main);
 }
 .slider {
   appearance: none;
@@ -3122,21 +3046,26 @@ h3 {
     opacity: 30%;
   }
   width: 100%;
-  border-style: var(--tw-border-style);
-  border-width: 1px;
-  border-color: var(--color-light);
-  background-color: var(--color-dark);
-  color: var(--color-main);
+  background-color: var(--color-neutral-dark);
+  color: var(--color-neutral);
+  --range-thumb: var(--color-neutral-content);
+  color: var(--color-accent-main);
   --range-thumb: white;
   --range-thumb-size: calc(var(--size-selector, 0.25rem) * 5);
   &:hover {
     @media (hover: hover) {
-      background-color: var(--color-darkest);
+      background-color: var(--color-neutral-dark);
     }
   }
   &:hover {
     @media (hover: hover) {
-      color: var(--color-darkmain);
+      color: var(--color-accent-dark);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     }
   }
 }
@@ -3274,127 +3203,34 @@ h3 {
   }
   border-style: var(--tw-border-style);
   border-width: 1px;
-  border-color: var(--color-light);
-  background-color: var(--color-darkest);
-  color: var(--color-light);
+  border-color: var(--color-neutral-light);
+  background-color: var(--color-neutral-dark);
+  color: var(--color-neutral-light);
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-neutral-main);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    }
+  }
   &:checked {
-    background-color: var(--color-main);
+    border-color: var(--color-accent-light);
+  }
+  &:checked {
+    background-color: var(--color-accent-main);
+  }
+  &:checked {
+    color: var(--color-textcolor);
   }
   &:hover {
     @media (hover: hover) {
-      background-color: var(--color-dark);
-    }
-  }
-}
-.select {
-  border: var(--border) solid #0000;
-  position: relative;
-  display: inline-flex;
-  flex-shrink: 1;
-  appearance: none;
-  align-items: center;
-  gap: calc(0.25rem * 1.5);
-  background-color: var(--color-base-100);
-  padding-inline-start: calc(0.25rem * 4);
-  padding-inline-end: calc(0.25rem * 7);
-  vertical-align: middle;
-  width: clamp(3rem, 20rem, 100%);
-  height: var(--size);
-  font-size: 0.875rem;
-  touch-action: manipulation;
-  border-start-start-radius: var(--join-ss, var(--radius-field));
-  border-start-end-radius: var(--join-se, var(--radius-field));
-  border-end-start-radius: var(--join-es, var(--radius-field));
-  border-end-end-radius: var(--join-ee, var(--radius-field));
-  background-image: linear-gradient(45deg, #0000 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, #0000 50%);
-  background-position: calc(100% - 20px) calc(1px + 50%), calc(100% - 16.1px) calc(1px + 50%);
-  background-size: 4px 4px, 4px 4px;
-  background-repeat: no-repeat;
-  text-overflow: ellipsis;
-  box-shadow: 0 1px var(--input-color) inset, 0 -1px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset;
-  @supports (color: color-mix(in lab, red, red)) {
-    box-shadow: 0 1px color-mix(in oklab, var(--input-color) calc(var(--depth) * 10%), #0000) inset, 0 -1px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset;
-  }
-  border-color: var(--input-color);
-  --input-color: var(--color-base-content);
-  @supports (color: color-mix(in lab, red, red)) {
-    --input-color: color-mix(in oklab, var(--color-base-content) 20%, #0000);
-  }
-  --size: calc(var(--size-field, 0.25rem) * 10);
-  [dir="rtl"] & {
-    background-position: calc(0% + 12px) calc(1px + 50%), calc(0% + 16px) calc(1px + 50%);
-  }
-  select {
-    margin-inline-start: calc(0.25rem * -4);
-    margin-inline-end: calc(0.25rem * -7);
-    width: calc(100% + 2.75rem);
-    appearance: none;
-    padding-inline-start: calc(0.25rem * 4);
-    padding-inline-end: calc(0.25rem * 7);
-    height: calc(100% - 2px);
-    background: inherit;
-    border-radius: inherit;
-    border-style: none;
-    &:focus, &:focus-within {
-      --tw-outline-style: none;
-      outline-style: none;
-      @media (forced-colors: active) {
-        outline: 2px solid transparent;
-        outline-offset: 2px;
+      &:checked {
+        background-color: var(--color-accent-dark);
       }
-    }
-    &:not(:last-child) {
-      margin-inline-end: calc(0.25rem * -5.5);
-      background-image: none;
-    }
-  }
-  &:focus, &:focus-within {
-    --input-color: var(--color-base-content);
-    box-shadow: 0 1px var(--input-color);
-    @supports (color: color-mix(in lab, red, red)) {
-      box-shadow: 0 1px color-mix(in oklab, var(--input-color) calc(var(--depth) * 10%), #0000);
-    }
-    outline: 2px solid var(--input-color);
-    outline-offset: 2px;
-    isolation: isolate;
-    z-index: 1;
-  }
-  &:has(> select[disabled]), &:is(:disabled, [disabled]) {
-    cursor: not-allowed;
-    border-color: var(--color-base-200);
-    background-color: var(--color-base-200);
-    color: var(--color-base-content);
-    @supports (color: color-mix(in lab, red, red)) {
-      color: color-mix(in oklab, var(--color-base-content) 40%, transparent);
-    }
-    &::placeholder {
-      color: var(--color-base-content);
-      @supports (color: color-mix(in lab, red, red)) {
-        color: color-mix(in oklab, var(--color-base-content) 20%, transparent);
-      }
-    }
-  }
-  &:has(> select[disabled]) > select[disabled] {
-    cursor: not-allowed;
-  }
-  background-color: transparent;
-  transition: background-color 0.2s;
-  box-shadow: none;
-  border-color: #0000;
-  &:focus, &:focus-within {
-    background-color: var(--color-base-100);
-    color: var(--color-base-content);
-    border-color: #0000;
-    box-shadow: none;
-  }
-  border-color: var(--color-light);
-  background-color: var(--color-darkest);
-  font-size: var(--text-lg);
-  line-height: var(--tw-leading, var(--text-lg--line-height));
-  color: var(--color-textcolor);
-  &:hover {
-    @media (hover: hover) {
-      background-color: var(--color-dark);
     }
   }
 }
@@ -3525,22 +3361,41 @@ h3 {
   visibility: collapse;
   border-style: var(--tw-border-style);
   border-width: 1px;
-  border-color: var(--color-light);
+  border-color: var(--color-neutral-light);
   background-color: transparent;
   &:hover {
     @media (hover: hover) {
-      background-color: var(--color-dark);
+      background-color: var(--color-neutral-main);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     }
   }
 }
 .list_header {
   border-bottom-style: var(--tw-border-style);
   border-bottom-width: 1px;
-  border-color: var(--color-light);
+  border-color: var(--color-neutral-light);
   padding-bottom: calc(var(--spacing) * 4);
+  color: var(--color-textcolor);
+}
+.list_title {
   padding-left: calc(var(--spacing) * 4);
   font-size: var(--text-2xl);
   line-height: var(--tw-leading, var(--text-2xl--line-height));
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-textcolor);
+}
+.list_subheader {
+  padding-left: calc(var(--spacing) * 4);
+  font-size: var(--text-lg);
+  line-height: var(--tw-leading, var(--text-lg--line-height));
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-textcolor);
 }
 .element_list {
@@ -3548,8 +3403,8 @@ h3 {
   border-radius: var(--radius-box);
   border-style: var(--tw-border-style);
   border-width: 1px;
-  border-color: var(--color-light);
-  background-color: var(--color-darkest);
+  border-color: var(--color-neutral-light);
+  background-color: var(--color-neutral-dark);
   --tw-shadow: 0 20px 25px -5px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 8px 10px -6px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
 }
@@ -3558,11 +3413,97 @@ h3 {
   gap: calc(var(--spacing) * 2);
   border-style: var(--tw-border-style);
   border-width: 1px;
-  border-color: var(--color-dark);
+  border-color: var(--color-neutral-main);
   padding-inline: calc(var(--spacing) * 4);
   padding-block: calc(var(--spacing) * 1);
   --tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+}
+.wordcard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-box);
+  outline-width: 2px;
+  transition: outline 0.2s ease-in-out;
+  outline: 0 solid #0000;
+  outline-offset: 2px;
+  &:focus {
+    --tw-outline-style: none;
+    outline-style: none;
+    @media (forced-colors: active) {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+    }
+  }
+  &:focus-visible {
+    outline-color: currentColor;
+  }
+  :where(figure:first-child) {
+    overflow: hidden;
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit;
+    border-end-start-radius: unset;
+    border-end-end-radius: unset;
+  }
+  :where(figure:last-child) {
+    overflow: hidden;
+    border-start-start-radius: unset;
+    border-start-end-radius: unset;
+    border-end-start-radius: inherit;
+    border-end-end-radius: inherit;
+  }
+  &:where(.card-border) {
+    border: var(--border) solid var(--color-base-200);
+  }
+  &:where(.card-dash) {
+    border: var(--border) dashed var(--color-base-200);
+  }
+  &.image-full {
+    display: grid;
+    > * {
+      grid-column-start: 1;
+      grid-row-start: 1;
+    }
+    > .card-body {
+      position: relative;
+      color: var(--color-neutral-content);
+    }
+    :where(figure) {
+      overflow: hidden;
+      border-radius: inherit;
+    }
+    > figure img {
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(28%);
+    }
+  }
+  figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &:has(> input:is(input[type="checkbox"], input[type="radio"])) {
+    cursor: pointer;
+    user-select: none;
+  }
+  &:has(> :checked) {
+    outline: 2px solid currentColor;
+  }
+  border-style: var(--tw-border-style);
+  border-width: 1px;
+  border-color: var(--color-neutral-main);
+  background-color: var(--color-neutral-dark);
+  padding-inline: calc(var(--spacing) * 4);
+  color: var(--color-textcolor);
+  --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-neutral-main);
+    }
+  }
 }
 @layer base {
   :where(:root),:root:has(input.theme-controller[value=light]:checked),[data-theme=light] {

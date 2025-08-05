@@ -1,11 +1,13 @@
 {% extends "base.html" %} {% block content %}
 <div class="flex flex-col flex-auto px-4 gap-4">
-    <div class="flex flex-row items-center justify-between w-full gap-x-4 mb-2">
-        <h4 class="w-full text-start">Sesión de estudio</h4>
-        <form method="post" action="{{ estudio_url }}">
-        {% csrf_token %}
-        {% include "components/button.html" with text="Finalizar" extra_classes="button-alert !text-xl !font-bold" %}
-        </form>
+    <div class="flex flex-row justify-between w-full gap-x-4 mb-2">
+        <h4 class="w-4/5 text-start">Sesión de estudio</h4>
+        <div class="w-1/5">
+            <form method="post" action="{{ estudio_url }}">
+            {% csrf_token %}
+            {% include "components/button.html" with text="Finalizar" extra_classes="button-main !text-3xl !font-bold !w-full py-8" %}
+            </form>
+        </div>       
     </div>
     
     <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between w-full gap-x-4">
@@ -27,13 +29,19 @@
             {% include "components/button.html" with icon="components/icons/plus.html" extra_classes="!border-none" %}
         </div>        
     </div>
-    <div class="flex flex-auto flex-col p-4 mb-4 border border-light rounded-2xl gap-4 ">
-    <h1 class="flex flex-auto justify-center text-9xl items-center ">{{pregunta}}</h1>
-    <div class="h-auto ">
-    {% include "components/input.html" with name="answer" placeholder="Respuesta:"%}
+    <div class="flex flex-col flex-1 p-4 mb-4 border border-light rounded-2xl gap-4">
+  <h1 class="flex flex-auto items-center justify-center text-9xl m-16">{{ pregunta }}</h1>
+
+  <div class="flex flex-1/3 gap-4 {% if is_mobile %}flex-col{% else %}flex-row{% endif %}">    
+    <div class="flex flex-1 ">
+      {% include "components/input.html" with name="answer" placeholder="Respuesta:" extra_classes="!text-3xl" %}
     </div>
-    {% include "components/navigation_button.html" with href=url_value text="Checar" extra_classes="button-secondary !text-xl" name="checar" %}
+    <div class="flex-none w-1/5">
+      {% include "components/navigation_button.html" with href=url_value text="Checar" extra_classes="button-secondary !text-3xl !w-full !h-full" name="checar" %}
     </div>
-         
+  </div>
+</div>
+
+        
 </div>
 {% endblock %}

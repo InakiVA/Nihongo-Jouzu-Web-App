@@ -23,8 +23,20 @@ persona 5: (wip)
     --color-main: #d10000ff;
     --color-light: #fd7878ff;
 
-dark blue:
-    --color-darkest: #17152e;
-    --color-dark: #2b3e55;
-    --color-main: #0066cc;
-    --color-light: #d6eaff;
+dark blue and red:
+    --color-neutral-light: #d6eaff;
+    --color-neutral-main: #344057;
+    --color-neutral-dark: #1a212e;
+
+    --color-accent-light: #ffa9a9;
+    --color-accent-main: #d10000;
+    --color-accent-dark: #730000;  
+
+panoptimize aqua:
+    --color-neutral-light: #c9f7f5;
+    --color-neutral-main: #2a3c4b;
+    --color-neutral-dark: #1c2731;
+
+    --color-accent-light: #7bfff8;
+    --color-accent-main: #00b3aa;
+    --color-accent-dark: #00756f;

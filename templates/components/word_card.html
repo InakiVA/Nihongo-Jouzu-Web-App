@@ -1,7 +1,7 @@
-<div class="card bg-darkest hover:bg-dark shadow-sm border-1 border-dark text-textcolor w-auto h-auto py-1 px-2"> 
+<div class="wordcard w-auto h-auto py-1 px-2"> 
   {% if side_to_side %}
     <div class="flex flex-row">
-      <h2 class="text-7xl font-semibold mt-1 w-auto truncate text-ellipsis">
+      <h2 class="!text-7xl mt-1 w-auto truncate text-ellipsis">
         {{ title }}
       </h2>        
       <div class="flex flex-col justify-center truncate ml-2 w-full">            
@@ -17,7 +17,7 @@
       </div>   
     </div>
   {% else %}
-    <h2 class="card-title text-3xl truncate h-auto pt-1">{{ title }}</h2>   
+    <h4 class="truncate h-auto mt-1">{{ title }}</h4>   
     <div class="pl-4 pt-1">
         <p class="truncate w-full text-sm text-textcolor/80">{{ lecturas }}</p>
         <p class="truncate text-ellipsis h-auto w-full text-lg">{{ significados }}</p> 

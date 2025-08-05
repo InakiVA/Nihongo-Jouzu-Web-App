@@ -345,6 +345,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["estrella_url"] = reverse("toggle_estrella")
 
         grupos = self.get_user_groups_list()
+        grupos_elegidos = [g for g in grupos if g["estudiando"]]
         if ajustes.get("Creados por mí (grupos)"):
             grupos = [g for g in grupos if g["autor"] == usuario.username]
         if ajustes.get("Por completar (grupos)"):
@@ -352,7 +353,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         if ajustes.get("Con estrella (grupos)"):
             grupos = [g for g in grupos if g["estrella"]]
         if ajustes.get("Elegidos (grupos)"):
-            grupos = [g for g in grupos if g["estudiando"]]
+            grupos = grupos_elegidos
 
         buscar_grupo_input = (
             self.request.GET.get("buscar_grupo", "").strip().lower()
@@ -427,7 +428,12 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["tags"] = tags
         context["is_open_collapse"] = any(open_collapse)
 
-        print(dict(ajustes))
+        context["cantidad_palabras"] = len(get_palabras_a_estudiar(usuario, ajustes))
+        cantidad_grupos_elegidos = len(grupos_elegidos)
+        if cantidad_grupos_elegidos == 1:
+            context["cantidad_grupos"] = f"{cantidad_grupos_elegidos} elegido"
+        else:
+            context["cantidad_grupos"] = f"{cantidad_grupos_elegidos} elegidos"
 
         return context
 

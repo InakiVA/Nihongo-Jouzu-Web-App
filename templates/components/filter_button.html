@@ -7,12 +7,12 @@
       onchange="this.form.submit()"
       {% if is_active %}checked{% endif %}
     />
-    <div class="swap-on button-selected !rounded-full !h-8">
+    <div class="swap-on button-main !rounded-full !h-8">
       <div class="flex flex-row items-center justify-center gap-1">
       {% include "components/icons/cross_mini.html" %}
       {{text}}
       </div>
     </div>
-    <div class="swap-off button !rounded-full !h-8">{{text}}</div>
+    <div class="swap-off button-neutral !rounded-full !h-8">{{text}}</div>
   </label>
 </form>

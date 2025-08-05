@@ -2,8 +2,9 @@
   <input
     type="search"
     name="{{ name }}"
-    class="input_text"
+    class="input_text {{ extra_classes }}"
     placeholder="{{ placeholder|default:'' }}"
     value="{{ value|default:'' }}"
+    id="{{ id }}"
   />
 </form>

@@ -1,12 +1,19 @@
 {% extends "base.html" %} {% block content %}
 <div class="h-auto flex flex-col space-y-4">
-    <div class="flex flex-row items-center justify-between w-full gap-x-4 px-4">
-        <h4 class="w-auto text-center">Estudio</h4>   
-        <form method="post" action="{{ estudio_url }}">
-        {% csrf_token %}
-        {% include "components/button.html" with text="Iniciar" extra_classes="button-selected !text-xl !font-bold" %}
-        </form>
-    </div>     
+    <div class="flex flex-row w-full gap-x-4 px-4 ">
+        <h4 class="text-start">Estudio</h4>        
+        <div class="ml-auto text-end">
+            <h3 class="text-end">Palabras a estudiar</h3>
+            <h3 class="text-end">{{cantidad_palabras}}</h3>
+        </div>        
+        <div class="w-1/5">
+            <form method="post" action="{{ estudio_url }}">
+                {% csrf_token %}
+                {% include "components/button.html" with text="Iniciar" extra_classes="button-main !text-3xl !font-bold !w-full py-8" %}
+            </form>
+        </div>
+    </div>
+    
     <div class="{% if is_mobile %} flex flex-col {% else %} flex flex-row basis-1/2 {% endif %}">           
         <div class="flex flex-col space-y-4 p-4 w-full">
             <h2>Grupos de estudio</h2>
@@ -15,16 +22,20 @@
                 {% include "components/filter_button.html" with text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
                 {% endfor %}
             </div> 
-            <div class="space-y-4">                
-                {% include "components/searchbar.html" with name="buscar_grupo" value=buscar_grupo_input%}
-                {% include "components/select.html" with options=orden_opciones selected=orden_elegido legend="Orden" url=select_orden_url%}
-                <div class="flex flex-row space-x-2">
-                    {% include "components/icons/arrow_up.html" %}
-                    {% include "components/switch.html" with url=descendente_url id="descendente_id" is_selected=on_descendente %}
-                    {% include "components/icons/arrow_down.html" %}
-                </div>
+            <div class="space-y-4">       
+                <div>
+                {% include "components/searchbar.html" with name="buscar_grupo" value=buscar_grupo_input placeholder="Buscar grupo:"%}
+                </div>         
+                <div class="flex flex-row items-center justify-between space-x-4">
+                    {% include "components/select.html" with options=orden_opciones selected=orden_elegido legend="Orden" url=select_orden_url%}
+                    <div class="flex flex-row space-x-2 items-center justify-between mt-7">
+                        {% include "components/icons/arrow_up.html" %}
+                        {% include "components/switch.html" with url=descendente_url id="descendente_id" is_selected=on_descendente %}
+                        {% include "components/icons/arrow_down.html" %}
+                    </div>
+                </div>                
             </div>
-            {% include "components/element_list.html" with header="Grupos" extra_classes="h-auto max-h-120 mt-4" elements=grupos%}
+            {% include "components/element_list.html" with header="Grupos" subheader=cantidad_grupos extra_classes="h-auto max-h-120 mt-4" elements=grupos%}
         </div>
         <div class="divider {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %}"></div>        
         <div class="flex flex-col basis-1/2 w-full">

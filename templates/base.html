@@ -11,7 +11,7 @@
     />
   </head>
   
-  <body class="flex flex-col w-screen min-h-screen h-auto bg-darkest space-y-4">
+  <body class="flex flex-col w-screen min-h-screen h-auto space-y-4">
     {% if user.is_authenticated %}
     {% include "components/navbar.html" %}    
     <div class="{% if is_mobile %} mt-36 {% else %} mt-20 {% endif %} "></div>        

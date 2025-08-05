@@ -3,29 +3,39 @@
 @plugin "daisyui";
 
 @theme {
-  --color-warning: #ffde00;
-  --color-alert: #d10000;
-  --color-success: #4cf289;
-  --color-disabled: #9e9e9e;
-  --color-complete: #5ec9ee;
+    --color-disabled: #9e9e9e;
+    --color-alert: #fc4a4a;
+    --color-warning: #e3cd40;  
+    --color-success: #4cf289;  
+    --color-complete: #5ec9ee;
 
-  --color-star: #fffc56;
+    --color-star: #fffc56;
 
-  --color-textcolor: #FFFFFF;
-  
-    --color-darkest: #1c2731;
-    --color-dark: #2a3c4b;
-    --color-darkmain: #008f8966;
-    --color-main: #008f89;
-    --color-light: #c9f7f5;
+    --color-textcolor: #FFFFFF;
+    
+    --color-neutral-light: #d6eaff;
+    --color-neutral-main: #344057;
+    --color-neutral-dark: #1a212e;
+
+    --color-accent-light: #ffa9a9;
+    --color-accent-main: #d10000;
+    --color-accent-dark: #730000;  
   }
 
 nav {
-  @apply navbar bg-black border-b border-light shadow-xl shadow-black/20;
+  @apply navbar bg-neutral-dark border-b border-neutral-light shadow-xl shadow-black/20;
 }
 
-h4 {
-  @apply text-textcolor font-bold text-4xl;
+body {
+  @apply bg-neutral-dark text-textcolor;
+}
+
+#title1 {
+  @apply text-4xl text-neutral-light font-extrabold
+}
+
+#title2 {
+  @apply text-4xl text-accent-main font-extrabold
 }
 
 h2{
@@ -36,71 +46,92 @@ h3{
   @apply text-textcolor font-semibold text-lg;
 }
 
-.button {
-  @apply h-10 btn btn-accent shadow-none border-light bg-darkest text-textcolor rounded-sm;
-  @apply hover:bg-dark hover:shadow-sm hover:shadow-dark;
+h4 {
+  @apply text-textcolor font-bold text-4xl;
 }
 
-.button-selected {
-  @apply h-10 btn btn-ghost shadow-sm shadow-main border-light bg-main text-textcolor rounded-sm;
-  @apply hover:bg-darkmain;
+
+.button-neutral {
+  @apply h-10 btn btn-ghost shadow-none border-neutral-light bg-neutral-dark text-textcolor rounded-sm;
+  @apply hover:bg-neutral-main;
+}
+
+.button-main {
+  @apply h-10 btn btn-ghost shadow-none border-accent-light bg-accent-main text-textcolor rounded-sm;
+  @apply hover:bg-accent-dark;
 }
 
 .button-secondary {
-  @apply h-10 btn btn-ghost shadow-sm shadow-main border-light bg-darkmain text-textcolor rounded-sm;
-  @apply hover:bg-dark;
-}
-
-.button-alert {
-  @apply h-10 btn btn-ghost shadow-sm shadow-alert border border-textcolor bg-alert text-textcolor rounded-sm;
-  @apply hover:bg-alert/50;
-}
-
-.input {
-  @apply input rounded-lg flex flex-auto join-item w-auto border-light bg-darkest text-textcolor shadow shadow-dark;
-  @apply focus:bg-dark hover:bg-dark;
-}
-
-.input_text {
-  @apply text-textcolor placeholder:text-light placeholder:italic;
-}
-
-.tag{
-  @apply rounded-2xl px-2.5 py-0.5 text-textcolor;
-}
-
-.check-box{
-  @apply checkbox text-light bg-darkest hover:bg-dark checked:bg-main border-light border;
-}
-
-.progreso {
-  @apply progress w-full bg-dark text-light border border-light;
-}
-
-.slider{
-  @apply range range-sm [--range-thumb:white] w-full text-main bg-dark hover:bg-darkest hover:text-darkmain border border-light;
-}
-
-.switch{
-  @apply toggle text-light bg-darkest hover:bg-dark checked:bg-main border-light border;
+  @apply h-10 btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm;
+  @apply hover:bg-accent-main;
 }
 
 .select{
-  @apply select select-ghost text-lg bg-darkest hover:bg-dark border-light text-textcolor;
+  @apply select select-ghost text-lg bg-neutral-dark border-neutral-light text-textcolor w-full;
+  @apply hover:bg-neutral-main hover:shadow-sm;
+}
+
+.input {
+  @apply input rounded-lg flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor shadow shadow-dark;
+  @apply focus:bg-neutral-main hover:bg-neutral-main;
+}
+
+.input_text {
+  @apply text-xl text-textcolor placeholder:text-neutral-light placeholder:italic;
+}
+
+.tag{
+  @apply bg-neutral-main rounded-2xl px-2.5 py-0.5 text-textcolor;
+}
+
+.check-box{
+  @apply checkbox text-neutral-light bg-neutral-dark  checked:bg-accent-main border-neutral-light border;
+  @apply hover:bg-neutral-main hover:shadow-sm;
+  @apply checked:bg-accent-main checked:text-textcolor checked:border-accent-light;
+  @apply hover:checked:bg-accent-dark;
+}
+
+.progreso {
+  @apply progress w-full bg-neutral-main text-accent-main ;
+}
+
+.slider{
+  @apply range range-sm range-neutral [--range-thumb:white] w-full text-accent-main bg-neutral-dark;
+  @apply hover:text-accent-dark hover:shadow-sm hover:bg-neutral-dark;
+}
+
+.switch{
+  @apply toggle text-neutral-light bg-neutral-dark border-neutral-light border;
+  @apply hover:bg-neutral-main hover:shadow-sm;
+  @apply checked:bg-accent-main checked:text-textcolor checked:border-accent-light;
+  @apply hover:checked:bg-accent-dark;
 }
 
 .collapser{
-  @apply collapse collapse-arrow bg-transparent border-1 border-light hover:bg-dark
+  @apply collapse collapse-arrow bg-transparent border-1 border-neutral-light;
+  @apply hover:bg-neutral-main hover:shadow-sm;
 }
 
 .list_header {
-  @apply text-textcolor text-2xl pl-4 pb-4 border-b border-light
+  @apply text-textcolor pb-4 border-b border-neutral-light;
+}
+
+.list_title {
+  @apply text-textcolor text-2xl font-semibold pl-4;
+}
+
+.list_subheader {
+  @apply text-textcolor text-lg font-semibold pl-4;
 }
 
 .element_list {
-  @apply bg-darkest border-light rounded-box shadow-xl border-1;
+  @apply bg-neutral-dark border-neutral-light rounded-box shadow-xl border-1;
 }
 
 .element_row{
-  @apply shadow-md border-1 border-dark items-center gap-2 px-4 py-1;
+  @apply shadow-md border-1 border-neutral-main items-center gap-2 px-4 py-1;
+}
+
+.wordcard{
+  @apply card bg-neutral-dark hover:bg-neutral-main shadow-sm border-1 border-neutral-main text-textcolor px-4;
 }
