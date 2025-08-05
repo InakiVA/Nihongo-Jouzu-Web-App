@@ -42,7 +42,7 @@ h2{
 }
 
 h3{
-  @apply text-textcolor font-semibold text-lg;
+  @apply text-textcolor/70 font-semibold text-lg;
 }
 
 h4 {
@@ -66,17 +66,17 @@ h4 {
 }
 
 .button-neutral {
-  @apply h-10 btn btn-ghost shadow-none border-neutral-light bg-neutral-dark text-textcolor rounded-sm;
+  @apply h-10 btn btn-ghost shadow-none border-neutral-light bg-neutral-dark text-textcolor rounded-sm px-4;
   @apply hover:bg-neutral-main;
 }
 
 .button-main {
-  @apply h-10 btn btn-ghost shadow-none border-accent-light bg-accent-main text-textcolor rounded-sm;
+  @apply h-10 btn btn-ghost shadow-none border-accent-light bg-accent-main text-textcolor rounded-sm px-4;
   @apply hover:bg-accent-dark;
 }
 
 .button-secondary {
-  @apply h-10 btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm;
+  @apply h-10 btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm px-4;
   @apply hover:bg-accent-main hover:border-accent-light;
 }
 
@@ -139,7 +139,7 @@ h4 {
 }
 
 .list_subheader {
-  @apply text-textcolor text-lg font-semibold pl-4;
+  @apply text-textcolor/80 text-lg font-semibold pl-4;
 }
 
 .element_list {
@@ -147,7 +147,7 @@ h4 {
 }
 
 .element_row{
-  @apply shadow-md border-1 border-neutral-main items-center gap-2 px-4 py-1;
+  @apply shadow-md border-1 border-neutral-main items-center gap-4 px-4 py-1;
 }
 
 .wordcard{

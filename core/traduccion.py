@@ -3,15 +3,13 @@ import jaconv as jac
 
 
 # recibe texto raw y lo formatea para poder convertirse bien a hira o kata
-def format_text(input):
-    input = input.lower().replace("si", "shi")
-    input = input.replace("ci", "chi")
-    input = input.replace("xn", "n|")
-    input = input.replace("nn", "n|")
-    input = input.replace("l", "x")
-    # input = input.replace("(", "（")
-    # input = input.replace(")", "）")
-    return input
+def format_text(input_):
+    input_ = input_.lower().replace("si", "shi")
+    input_ = input_.replace("ci", "chi")
+    input_ = input_.replace("xn", "n|")
+    input_ = input_.replace("nn", "n|")
+    input_ = input_.replace("l", "x")
+    return input_
 
 
 def romaji_to_hiragana(romaji_text):

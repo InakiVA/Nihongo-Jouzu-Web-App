@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+import random
+import core.utils as ut
 
 # -- Diccionario central del vocabulario
 
@@ -14,6 +16,30 @@ class Palabra(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     ultima_modificacion = models.DateTimeField(auto_now=True)
 
+    def set_pregunta_respuesta(self, input_lenguaje, is_kanji=False):
+        if input_lenguaje == "Cualquiera":
+            lenguaje_elegido = random.choice(["Original", "Significados"])
+        else:
+            lenguaje_elegido = input_lenguaje
+
+        if lenguaje_elegido == "Original":
+            if not is_kanji:
+                if self.palabra != self.lecturas_str:
+                    self.pregunta = [self.palabra, self.lecturas_str]
+                else:
+                    self.pregunta = [self.palabra]
+                self.respuestas = ut.set_alternate_inputs(self.significados_list)
+            else:
+                self.pregunta = [self.palabra]
+                self.respuestas = ut.set_alternate_inputs(
+                    self.lecturas_list + self.significados_list
+                )
+        elif lenguaje_elegido == "Significados":
+            self.pregunta = self.significados_str
+            self.respuestas = ut.set_alternate_inputs(
+                [self.palabra] + self.lecturas_list
+            )
+
     class Meta:
         db_table = "Palabras"
 
@@ -26,31 +52,43 @@ class Palabra(models.Model):
 
     @property
     def etiquetas_list(self):
-        return [e.etiqueta for e in self.etiquetas_objetos]
+        return list(set([str(e.etiqueta) for e in self.etiquetas_objetos]))
 
     @property
     def significados_objetos(self):
         return self.significados.all()
 
     @property
+    def significados_list(self):
+        return list(set([str(s.significado) for s in self.significados_objetos]))
+
+    @property
     def significados_str(self):
-        return ", ".join([s.significado for s in self.significados_objetos])
+        return ", ".join(self.significados_list)
 
     @property
     def lecturas_objetos(self):
         return self.lecturas.all()
 
     @property
+    def lecturas_list(self):
+        return list(set([str(l.lectura) for l in self.lecturas_objetos]))
+
+    @property
     def lecturas_str(self):
-        return ", ".join([l.lectura for l in self.lecturas_objetos])
+        return ", ".join(self.lecturas_list)
 
     @property
     def notas_objetos(self):
         return self.notas.all()
 
     @property
+    def notas_list(self):
+        return list(set([str(n.nota) for n in self.notas_objetos]))
+
+    @property
     def notas_(self):
-        return ", ".join([n.nota for n in self.notas_objetos])
+        return ", ".join(self.notas_list)
 
 
 class Significado(models.Model):

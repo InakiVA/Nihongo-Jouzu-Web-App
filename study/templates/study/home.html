@@ -6,10 +6,10 @@
             <h3 class="text-end">Palabras a estudiar</h3>
             <h3 class="text-end">{{cantidad_palabras}}</h3>
         </div>        
-        <div class="w-1/5">
+        <div >
             <form method="post" action="{{ estudio_url }}">
                 {% csrf_token %}
-                {% include "components/button.html" with text="Iniciar" extra_classes="button-main !text-3xl !font-bold !w-full py-8" %}
+                {% include "components/button.html" with text="Iniciar" extra_classes="button-main !text-2xl !font-bold !p-8" %}
             </form>
         </div>
     </div>

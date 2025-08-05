@@ -1,47 +1,52 @@
 {% extends "base.html" %} {% block content %}
 <div class="flex flex-col flex-auto px-4 gap-4">
-    <div class="flex flex-row justify-between w-full gap-x-4 mb-2">
-        <h4 class="w-4/5 text-start">Sesión de estudio</h4>
-        <div class="w-1/5">
-            <form method="post" action="{{ estudio_url }}">
-            {% csrf_token %}
-            {% include "components/button.html" with text="Finalizar" extra_classes="button-main !text-3xl !font-bold !w-full py-8" %}
-            </form>
-        </div>       
-    </div>
-    
-    <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between w-full gap-x-4">
-        <h2 class="whitespace-nowrap w-52">Pregunta: {{ index }}</h2>        
-        <div class="flex flex-row items-center justify-end gap-x-2 flex-grow">
-            {% include "components/button.html" with icon="components/icons/arrow_left.html" extra_classes="!border-none" %}
-            {% include "components/progreso.html" with value=index %}
-            {% include "components/button.html" with icon="components/icons/arrow_right.html" extra_classes="!border-none" %}
-        </div>
-    </div>   
-    <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between w-full gap-x-4">
-        <div class="flex flex-row items-center">
-        {% include "components/icon_swap_button.html" with id=id url=estrella_url on="components/icons/star.html" oncolor="fill-star" off="components/icons/star_off.html" offcolor="text-star" %}
-        </div>
-        <h2 class="whitespace-nowrap min-w-42">Progreso: {{ progreso }}</h2>        
-        <div class="flex flex-row items-center justify-end gap-x-2 flex-grow">
-            {% include "components/button.html" with icon="components/icons/minus.html" extra_classes="!border-none" %}
-            {% include "components/slider.html" with value=progreso %}
-            {% include "components/button.html" with icon="components/icons/plus.html" extra_classes="!border-none" %}
-        </div>        
-    </div>
-    <div class="flex flex-col flex-1 p-4 mb-4 border border-neutral-light rounded-2xl gap-4">
-  <h1 class="flex flex-auto items-center justify-center text-9xl m-16">{{ pregunta }}</h1>
-
-  <div class="flex flex-1/3 gap-4 {% if is_mobile %}flex-col{% else %}flex-row{% endif %}">    
-    <div class="flex flex-1 ">
-      {% include "components/input.html" with name="answer" placeholder="Respuesta:" extra_classes="!text-3xl" %}
-    </div>
-    <div class="flex-none w-1/5">
-      {% include "components/navigation_button.html" with href=url_value text="Checar" extra_classes="button-secondary !text-3xl !w-full !h-full" name="checar" %}
-    </div>
+  <div class="flex flex-row justify-between w-full gap-x-4 mb-2">
+    <h4 class="text-start">Sesión de estudio</h4>
+    <div>
+      <form method="post" action="{{ estudio_url }}">
+      {% csrf_token %}
+      {% include "components/button.html" with text="Finalizar" extra_classes="button-main !text-2xl !font-bold !w-full !p-8" %}
+      </form>
+    </div>       
   </div>
-</div>
-
-        
+  
+  <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between w-full gap-x-4">
+    <h2 class="whitespace-nowrap w-52">Pregunta: {{ index }}</h2>        
+    <div class="flex flex-row items-center justify-end gap-x-2 flex-grow">
+      {% include "components/button.html" with icon="components/icons/arrow_left.html" extra_classes="!border-none" %}
+      {% include "components/progreso.html" with value=index %}
+      {% include "components/button.html" with icon="components/icons/arrow_right.html" extra_classes="!border-none" %}
+    </div>
+  </div>   
+  <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between w-full gap-x-4">
+    <div class="flex flex-row items-center">
+      {% include "components/icon_swap_button.html" with id=id url=estrella_url on="components/icons/star.html" oncolor="fill-star" off="components/icons/star_off.html" offcolor="text-star" %}
+    </div>
+    <h2 class="whitespace-nowrap min-w-42">Progreso: {{ progreso }}</h2>        
+    <div class="flex flex-row items-center justify-end gap-x-2 flex-grow">
+      {% include "components/button.html" with icon="components/icons/minus.html" extra_classes="!border-none" %}
+      {% include "components/slider.html" with value=progreso %}
+      {% include "components/button.html" with icon="components/icons/plus.html" extra_classes="!border-none" %}
+    </div>        
+  </div>
+  <div class="flex flex-col flex-1 p-4 mb-4 border border-neutral-light rounded-2xl gap-4">
+    <div class="flex flex-auto flex-col gap-0 items-center justify-center">
+      <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-center whitespace-normal break-keep leading-snug">
+        {{ pregunta }}
+      </h1>
+      {% if is_kanji %}
+          {% include "components/tag.html" with text="Kanji" %}
+      {% endif %}
+      <h3>{{ lecturas }}</h3>
+    </div>
+    <div class="flex gap-4 h-14 {% if is_mobile %}flex-col{% else %}flex-row{% endif %}">    
+      <div class="flex flex-1">
+        {% include "components/input.html" with name="answer" placeholder="Respuesta:" extra_classes="!text-3xl" %}
+      </div>
+      <div class="flex-none">
+        {% include "components/navigation_button.html" with href=url_value text="Checar" extra_classes="button-secondary !text-2xl !h-full !px-8" name="checar" %}
+      </div>
+    </div>
+  </div>       
 </div>
 {% endblock %}

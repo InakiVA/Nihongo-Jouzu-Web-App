@@ -109,11 +109,9 @@ def toggle_orden_select(request):
 @require_POST
 @login_required
 def toggle_idioma_preguntas(request):
-    ajustes = request.session.get("inicio_ajustes", {})
     value = request.POST.get("select")
     if value:
-        ajustes["idioma_preguntas_elegido"] = value
-        request.session["inicio_ajustes"] = ajustes
+        request.session["idioma_preguntas_elegido"] = value
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
@@ -187,6 +185,8 @@ def get_palabras_a_estudiar(usuario, ajustes):
 @require_POST
 @login_required
 def preparar_estudio(request):
+    request.session["index_palabra_pregunta"] = 0
+    request.session["respuestas"] = []
     ajustes = request.session.get("inicio_ajustes", {})
     usuario = request.user
 
@@ -212,7 +212,6 @@ class HomeView(LoginRequiredMixin, TemplateView):
             "aleatorio": False,
             "filtros_palabras": "AND",
             "filtros_etiquetas": "AND",
-            "index_palabra_pregunta": 0,
             "contestada": False,
             "correcta": False,
         }
@@ -377,9 +376,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         # __ Preguntas
         context["idioma_preguntas_url"] = reverse("toggle_idioma_preguntas")
-        idioma_preguntas_opciones = ("Original", "Traducción", "Cualquiera")
+        idioma_preguntas_opciones = ("Original", "Significados", "Cualquiera")
         context["idioma_preguntas_opciones"] = idioma_preguntas_opciones
-        context["idioma_preguntas_elegido"] = ajustes.get(
+        context["idioma_preguntas_elegido"] = self.request.session.get(
             "idioma_preguntas_elegido", idioma_preguntas_opciones[0]
         )
         context["aleatorio_url"] = reverse("toggle_aleatorio")
@@ -435,7 +434,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         else:
             context["cantidad_grupos"] = f"{cantidad_grupos_elegidos} elegidos"
 
-        print(dict(ajustes))
+        print(dict(self.request.session))
 
         return context
 
@@ -452,15 +451,35 @@ class PreguntaView(LoginRequiredMixin, TemplateView):
         index = self.request.session.get("index_palabra_pregunta", 0)
         palabra_ids = self.request.session.get("palabras_a_estudiar", [])
         palabra_obj = get_object_or_404(Palabra, id=palabra_ids[index])
+        is_kanji = palabra_obj.palabra_etiquetas.filter(
+            etiqueta__etiqueta="Kanji"
+        ).exists()
 
-        context["pregunta"] = palabra_obj.palabra
-        context["index"] = 20
+        context["is_kanji"] = is_kanji
+
+        pregunta_lenguaje = self.request.session.get(
+            "idioma_preguntas_elegido", "Original"
+        )
+        palabra_obj.set_pregunta_respuesta(pregunta_lenguaje, is_kanji)
+
+        pregunta_list = palabra_obj.pregunta
+        context["pregunta"] = str(pregunta_list[0])
+        if len(pregunta_list) == 2:
+            context["lecturas"] = f"{str(pregunta_list[1])}"
+
+        self.request.session["respuestas"] = palabra_obj.respuestas
+
         context["progreso"] = palabra_obj.palabra_usuarios.get(
             usuario=self.request.user
         ).progreso
         context["estrella"] = palabra_obj.palabra_usuarios.get(
             usuario=self.request.user
         ).estrella
+
+        context["index"] = index + 1
+        self.request.session["index_palabra_pregunta"] = index + 1
+
+        print(dict(self.request.session))
         return context
 
     def is_mobile(request):
