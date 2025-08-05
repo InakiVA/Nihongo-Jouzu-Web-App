@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="w-screen h-screen bg-radial from-darkest via-dark to-main flex justify-center items-center">
-    <div class="flex flex-col items-center space-y-4 text-center bg-darkest p-12 rounded-2xl shadow-2xl border-4 border-main hover:border-light">
+  <div class="welcome_bg w-screen h-screen flex justify-center items-center">
+    <div class="card flex flex-col items-center space-y-4 text-center">
         <div class="flex flex-row">
-            <h1 class="text-4xl text-light font-extrabold text-shadow-sm text-shadow-light/30">日本語</h1>
-            <h1 class="text-4xl text-main font-extrabold text-shadow-sm text-shadow-main/30">上手</h1>
+            <h1 id="title1">日本語</h1>
+            <h1 id="title2">上手</h1>
         </div>
         <p class="text-xl">日本語の勉強のソフト</p>
         <div class="flex flex-row space-x-4">
-            <a href="{% url 'login' %}" class="button  px-4 py-2 rounded ">Iniciar sesión</a>
-            <a href="{% url 'signup' %}" class="button-selected text-white px-4 py-2 rounded hover:bg-green-600">Crear cuenta</a>
+            <a href="{% url 'login' %}" class="button-secondary">Iniciar sesión</a>
+            <a href="{% url 'signup' %}" class="button-main">Crear cuenta</a>
         </div>
     </div>
   </div>

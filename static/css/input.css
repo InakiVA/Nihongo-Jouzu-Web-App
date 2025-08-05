@@ -3,23 +3,29 @@
 @plugin "daisyui";
 
 @theme {
-    --color-disabled: #9e9e9e;
-    --color-alert: #fc4a4a;
-    --color-warning: #e3cd40;  
-    --color-success: #4cf289;  
-    --color-complete: #5ec9ee;
+    --color-progress-0: #9e9e9e;
+    --color-progress-33: #fc4a4a;
+    --color-progress-66: #fab451;  
+    --color-progress-99: #4cf289;  
+    --color-progress-100: #5ec9ee;
+
+    --color-mydisabled: #9e9e9e;
+    --color-myalert: #fc4a4a;
+    --color-mywarning: #fab451;
+    --color-mysuccess: #4cf289;
+    --color-mycomplete: #5ec9ee;
 
     --color-star: #fffc56;
 
     --color-textcolor: #FFFFFF;
-    
-    --color-neutral-light: #d6eaff;
-    --color-neutral-main: #344057;
-    --color-neutral-dark: #1a212e;
 
-    --color-accent-light: #ffa9a9;
-    --color-accent-main: #d10000;
-    --color-accent-dark: #730000;  
+    --color-neutral-light: #9911fa;
+    --color-neutral-main: #3e1669;
+    --color-neutral-dark: #170d22;
+
+    --color-accent-light: #baffba;
+    --color-accent-main: #19ba41;
+    --color-accent-dark: #036e1d;  
   }
 
 nav {
@@ -30,13 +36,6 @@ body {
   @apply bg-neutral-dark text-textcolor;
 }
 
-#title1 {
-  @apply text-4xl text-neutral-light font-extrabold
-}
-
-#title2 {
-  @apply text-4xl text-accent-main font-extrabold
-}
 
 h2{
   @apply text-textcolor font-semibold text-2xl;
@@ -50,6 +49,21 @@ h4 {
   @apply text-textcolor font-bold text-4xl;
 }
 
+#title1 {
+  @apply text-4xl text-neutral-light font-extrabold;
+}
+
+#title2 {
+  @apply text-4xl text-accent-main font-extrabold;
+}
+
+.welcome_bg{
+  @apply bg-radial from-neutral-dark to-neutral-main;
+}
+
+.welcome_bg .card {
+  @apply bg-neutral-dark p-12 rounded-2xl shadow-2xl border-4 border-accent-main hover:border-accent-light;
+}
 
 .button-neutral {
   @apply h-10 btn btn-ghost shadow-none border-neutral-light bg-neutral-dark text-textcolor rounded-sm;
@@ -63,7 +77,11 @@ h4 {
 
 .button-secondary {
   @apply h-10 btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm;
-  @apply hover:bg-accent-main;
+  @apply hover:bg-accent-main hover:border-accent-light;
+}
+
+.link{
+  @apply underline text-accent-main hover:text-accent-light transition;
 }
 
 .select{
@@ -72,7 +90,7 @@ h4 {
 }
 
 .input {
-  @apply input rounded-lg flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor shadow shadow-dark;
+  @apply input input-neutral rounded-lg flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor ;
   @apply focus:bg-neutral-main hover:bg-neutral-main;
 }
 

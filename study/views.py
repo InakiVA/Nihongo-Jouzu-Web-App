@@ -112,7 +112,7 @@ def toggle_idioma_preguntas(request):
     ajustes = request.session.get("inicio_ajustes", {})
     value = request.POST.get("select")
     if value:
-        ajustes["idioma_preguntas"] = value
+        ajustes["idioma_preguntas_elegido"] = value
         request.session["inicio_ajustes"] = ajustes
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
@@ -139,12 +139,12 @@ def get_palabras_a_estudiar(usuario, ajustes):
 
     if ajustes.get("Por completar (palabras)"):
         condiciones.append(
-            ~Q(palabra_usuarios__usuario=usuario, palabra_usuarios__progreso=100)
+            Q(palabra_usuarios__usuario=usuario) & ~Q(palabra_usuarios__progreso=100)
         )
 
     if ajustes.get("Con estrella (palabras)"):
         condiciones.append(
-            Q(palabra_usuarios__usuario=usuario, palabra_usuarios__estrella=True)
+            Q(palabra_usuarios__usuario=usuario) & Q(palabra_usuarios__estrella=True)
         )
 
     if condiciones:
@@ -379,8 +379,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["idioma_preguntas_url"] = reverse("toggle_idioma_preguntas")
         idioma_preguntas_opciones = ("Original", "Traducción", "Cualquiera")
         context["idioma_preguntas_opciones"] = idioma_preguntas_opciones
-        context["idioma_preguntas"] = ajustes.get(
-            "idioma_preguntas", idioma_preguntas_opciones[0]
+        context["idioma_preguntas_elegido"] = ajustes.get(
+            "idioma_preguntas_elegido", idioma_preguntas_opciones[0]
         )
         context["aleatorio_url"] = reverse("toggle_aleatorio")
         context["is_aleatorio"] = ajustes.get("aleatorio", False)
@@ -434,6 +434,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
             context["cantidad_grupos"] = f"{cantidad_grupos_elegidos} elegido"
         else:
             context["cantidad_grupos"] = f"{cantidad_grupos_elegidos} elegidos"
+
+        print(dict(ajustes))
 
         return context
 

@@ -3,6 +3,6 @@
   <h2>Bienvenido, {{ usuario.username }}</h2>
   <form method="POST" action="{% url 'logout' %}">
     {% csrf_token %}
-    <button type="submit" class="button-alert">Cerrar Sesión</button>
+    <button type="submit" class="button-main">Cerrar Sesión</button>
     </form>
 {% endblock %}

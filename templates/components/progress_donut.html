@@ -1,34 +1,24 @@
 <div class="m-2 text-xs">
     {% if progress == 0 %}
-        {% with "text-disabled" as color_class %}
-            <div class="radial-progress {{ color_class }}" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
-                {{ progress }}%
-            </div>
-        {% endwith %}
+        <div class="radial-progress text-progress-0" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
+            {{ progress }}%
+        </div>
     {% elif progress < 33 %}
-        {% with "text-alert" as color_class %}
-            <div class="radial-progress {{ color_class }}" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
-                {{ progress }}%
-            </div>
-        {% endwith %}
+        <div class="radial-progress text-progress-33" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
+            {{ progress }}%
+        </div>
     {% elif progress < 66 %}
-        {% with "text-warning" as color_class %}
-            <div class="radial-progress {{ color_class }}" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
-                {{ progress }}%
-            </div>
-        {% endwith %}
+        <div class="radial-progress text-progress-66" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
+            {{ progress }}%            
+        </div>        
     {% elif progress < 100 %}
-        {% with "text-success" as color_class %}
-            <div class="radial-progress {{ color_class }}" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
-                {{ progress }}%
-            </div>
-        {% endwith %}
+        <div class="radial-progress text-progress-99" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
+            {{ progress }}%
+        </div>
     {% else %}
-        {% with "text-complete" as color_class %}
-            <div class="radial-progress {{ color_class }}" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
-                {{ progress }}%
-            </div>
-        {% endwith %}
+        <div class="radial-progress text-progress-100" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
+            {{ progress }}%
+        </div>
     {% endif %}
 </div>
 
