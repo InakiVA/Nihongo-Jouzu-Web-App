@@ -16,6 +16,11 @@ class Palabra(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     ultima_modificacion = models.DateTimeField(auto_now=True)
 
+    contestada = False
+    correcta = False
+    pregunta = None
+    respuestas = None
+
     def set_pregunta_respuesta(self, input_lenguaje, is_kanji=False):
         if input_lenguaje == "Cualquiera":
             lenguaje_elegido = random.choice(["Original", "Significados"])

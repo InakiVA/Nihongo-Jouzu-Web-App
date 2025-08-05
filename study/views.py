@@ -70,10 +70,21 @@ def toggle_filtros_etiquetas_switch(request):
 # __ Swaps
 @require_POST
 @login_required
-def toggle_estrella(request):
+def toggle_estrella_grupo(request):
     grupo_id = request.POST.get("swap_id")
     user = request.user
     entry = get_object_or_404(UsuarioGrupo, usuario=user, grupo_id=grupo_id)
+    entry.estrella = not entry.estrella
+    entry.save()
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+@require_POST
+@login_required
+def toggle_estrella_palabra(request):
+    palabra_id = request.POST.get("swap_id")
+    user = request.user
+    entry = get_object_or_404(UsuarioPalabra, usuario=user, palabra_id=palabra_id)
     entry.estrella = not entry.estrella
     entry.save()
     return redirect(request.META.get("HTTP_REFERER", "/"))
@@ -112,6 +123,72 @@ def toggle_idioma_preguntas(request):
     value = request.POST.get("select")
     if value:
         request.session["idioma_preguntas_elegido"] = value
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+# __ Botones
+@require_POST
+@login_required
+def preparar_estudio(request):
+    request.session["index_palabra_pregunta"] = 0
+    request.session["respuestas"] = []
+    ajustes = request.session.get("inicio_ajustes", {})
+    usuario = request.user
+
+    palabras_qs = get_palabras_a_estudiar(usuario, ajustes)
+    if not palabras_qs:
+        messages.warning(
+            request, "No hay palabras que estudiar con los filtros actuales."
+        )
+        return redirect(request.META.get("HTTP_REFERER", "/"))
+    palabras_id = [palabra.id for palabra in palabras_qs]
+    request.session["palabras_a_estudiar"] = palabras_id
+    return redirect("estudio")
+
+
+@require_POST
+@login_required
+def cambiar_pregunta(request):
+    action = request.POST.get("action")
+    palabras_ids = request.session.get("palabras_a_estudiar", [])
+    index = request.session.get("index_palabra_pregunta", 0)
+
+    if action == "next":
+        index = (index + 1) % len(palabras_ids)  # cíclico hacia adelante
+    elif action == "previous":
+        index = (index - 1) % len(palabras_ids)  # cíclico hacia atrás
+
+    request.session["index_palabra_pregunta"] = index
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+@require_POST
+@login_required
+def cambiar_progreso(request):
+    user = request.user
+    action = request.POST.get("action")
+    palabras_ids = request.session.get("palabras_a_estudiar", [])
+    index = request.session.get("index_palabra_pregunta", 0)
+    palabra_obj = get_object_or_404(
+        UsuarioPalabra, usuario=user, palabra_id=palabras_ids[index]
+    )
+    progreso = palabra_obj.progreso
+
+    if action == "plus":
+        progreso += 5
+    elif action == "minus":
+        progreso -= 5
+    elif action == "slider":
+        try:
+            progreso = int(request.POST.get("slider_value", progreso))
+        except ValueError:
+            pass
+
+    progreso = min(100, progreso)
+    progreso = max(0, progreso)
+    palabra_obj.progreso = progreso
+    palabra_obj.save()
+
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
@@ -182,25 +259,6 @@ def get_palabras_a_estudiar(usuario, ajustes):
     return palabras
 
 
-@require_POST
-@login_required
-def preparar_estudio(request):
-    request.session["index_palabra_pregunta"] = 0
-    request.session["respuestas"] = []
-    ajustes = request.session.get("inicio_ajustes", {})
-    usuario = request.user
-
-    palabras_qs = get_palabras_a_estudiar(usuario, ajustes)
-    if not palabras_qs:
-        messages.warning(
-            request, "No hay palabras que estudiar con los filtros actuales."
-        )
-        return redirect(request.META.get("HTTP_REFERER", "/"))
-    palabras_id = [palabra.id for palabra in palabras_qs]
-    request.session["palabras_a_estudiar"] = palabras_id
-    return redirect("estudio")
-
-
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = "study/home.html"
 
@@ -212,8 +270,6 @@ class HomeView(LoginRequiredMixin, TemplateView):
             "aleatorio": False,
             "filtros_palabras": "AND",
             "filtros_etiquetas": "AND",
-            "contestada": False,
-            "correcta": False,
         }
         if "inicio_ajustes" not in self.request.session:
             self.request.session["inicio_ajustes"] = ajustes_default.copy()
@@ -341,7 +397,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         # __ Grupos_lista
         context["check_url"] = reverse("toggle_estudiando")
-        context["estrella_url"] = reverse("toggle_estrella")
+        context["estrella_url"] = reverse("toggle_estrella_grupo")
 
         grupos = self.get_user_groups_list()
         grupos_elegidos = [g for g in grupos if g["estudiando"]]
@@ -449,35 +505,43 @@ class PreguntaView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         index = self.request.session.get("index_palabra_pregunta", 0)
-        palabra_ids = self.request.session.get("palabras_a_estudiar", [])
-        palabra_obj = get_object_or_404(Palabra, id=palabra_ids[index])
+        palabras_ids = self.request.session.get("palabras_a_estudiar", [])
+        palabra_id = palabras_ids[index]
+        palabra_obj = get_object_or_404(Palabra, id=palabra_id)
         is_kanji = palabra_obj.palabra_etiquetas.filter(
             etiqueta__etiqueta="Kanji"
         ).exists()
-
-        context["is_kanji"] = is_kanji
-
         pregunta_lenguaje = self.request.session.get(
             "idioma_preguntas_elegido", "Original"
         )
         palabra_obj.set_pregunta_respuesta(pregunta_lenguaje, is_kanji)
 
         pregunta_list = palabra_obj.pregunta
-        context["pregunta"] = str(pregunta_list[0])
-        if len(pregunta_list) == 2:
-            context["lecturas"] = f"{str(pregunta_list[1])}"
+
+        palabra_dict = {
+            "id": palabras_ids[index],
+            "is_kanji": is_kanji,
+            "pregunta": str(pregunta_list[0]),
+            "lecturas": None,
+            "progreso": palabra_obj.palabra_usuarios.get(
+                usuario=self.request.user
+            ).progreso,
+            "estrella": palabra_obj.palabra_usuarios.get(
+                usuario=self.request.user
+            ).estrella,
+        }
+
+        if len(pregunta_list) > 1:
+            palabra_dict["lecturas"] = f"{str(pregunta_list[1])}"
 
         self.request.session["respuestas"] = palabra_obj.respuestas
 
-        context["progreso"] = palabra_obj.palabra_usuarios.get(
-            usuario=self.request.user
-        ).progreso
-        context["estrella"] = palabra_obj.palabra_usuarios.get(
-            usuario=self.request.user
-        ).estrella
-
+        context["palabra"] = palabra_dict
         context["index"] = index + 1
-        self.request.session["index_palabra_pregunta"] = index + 1
+        context["index_porcentaje"] = ((index + 1) / len(palabras_ids)) * 100
+        context["cambiar_pregunta_url"] = reverse_lazy("cambiar_pregunta")
+        context["cambiar_progreso_url"] = reverse_lazy("cambiar_progreso")
+        context["estrella_url"] = reverse("toggle_estrella_palabra")
 
         print(dict(self.request.session))
         return context
