@@ -1,10 +1,10 @@
-<form method="get" class="input">
+<form method="{{method}}" class="input" action="{{url}}">
+  {% csrf_token %}
   <input
-    type="search"
+    type="text"
     name="{{ name }}"
     class="input_text {{ extra_classes }}"
     placeholder="{{ placeholder|default:'' }}"
     value="{{ value|default:'' }}"
-    id="{{ id }}"
   />
 </form>

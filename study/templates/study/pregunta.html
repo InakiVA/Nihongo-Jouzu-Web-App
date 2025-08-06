@@ -3,24 +3,23 @@
   <div class="flex flex-row justify-between w-full gap-x-4 mb-2">
     <h4 class="text-start">Sesión de estudio</h4>
     <div>
-      <form method="post" action="{{ estudio_url }}">
-      {% csrf_token %}
-      {% include "components/button.html" with text="Finalizar" extra_classes="button-main !text-2xl !font-bold !w-full !p-8" %}
-      </form>
-    </div>       
+      {% include "components/button.html" with url=checar_pregunta_url text="Finalizar" extra_classes="button-main !text-2xl !font-bold !p-8" name="finalizar" %}      
+    </div>
   </div>
   
   <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between w-full gap-x-4">
     <h2 class="whitespace-nowrap w-52">Pregunta: {{ index }}</h2>        
-    <div class="flex flex-row items-center justify-end gap-x-2 flex-grow">
-      {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=cambiar_pregunta_url extra_classes="!border-none" %}
+    <div class="flex flex-row items-center justify-end gap-x-4 flex-grow">
+      {% include "components/button.html" with icon="components/icons/arrow_left_double.html" name="action" value="previous_unanswered" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
+      {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
       {% include "components/progreso.html" with value=index_porcentaje %}
-      {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pregunta_url extra_classes="!border-none" %}
+      {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
+      {% include "components/button.html" with icon="components/icons/arrow_right_double.html" name="action" value="next_unanswered" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
     </div>
   </div>   
   <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between w-full gap-x-4">
     <div class="flex flex-row items-center">
-      {% include "components/icon_swap_button.html" with id=palabra.id is_active=palabra.estrella url=estrella_url on="components/icons/star.html" oncolor="fill-star" off="components/icons/star_off.html" offcolor="text-star" %}
+      {% include "components/icon_swap_button.html" with id=palabra.id is_active=palabra.estrella url=estrella_url on="components/icons/star.html" oncolor="star-on" off="components/icons/star_off.html" offcolor="star-off" %}
     </div>
     {% include "components/progress_input_row.html" with progreso=palabra.progreso url=cambiar_progreso_url %}       
   </div>
@@ -36,13 +35,8 @@
         <h3>{{ palabra.lecturas }}</h3>
       {% endif %}
     </div>
-    <div class="flex gap-4 h-14 {% if is_mobile %}flex-col{% else %}flex-row{% endif %}">    
-      <div class="flex flex-1">
-        {% include "components/input.html" with name="answer" placeholder="Respuesta:" extra_classes="!text-3xl" %}
-      </div>
-      <div class="flex-none">
-        {% include "components/navigation_button.html" with href=url_value text="Checar" extra_classes="button-secondary !text-2xl !h-full !px-8" name="checar" %}
-      </div>
+    <div class="flex h-14">    
+      {% include "components/input.html" with name="answer_input" method="post" url=checar_pregunta_url placeholder="Respuesta:" extra_classes="!text-3xl" %}   
     </div>
   </div>       
 </div>

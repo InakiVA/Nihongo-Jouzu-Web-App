@@ -13,6 +13,8 @@ from groups.models import Grupo, UsuarioGrupo, GrupoPalabra
 from dictionary.models import Palabra
 from progress.models import UsuarioPalabra
 
+from core import utils as ut
+
 
 # __ Checkboxes
 @require_POST
@@ -141,9 +143,51 @@ def preparar_estudio(request):
             request, "No hay palabras que estudiar con los filtros actuales."
         )
         return redirect(request.META.get("HTTP_REFERER", "/"))
-    palabras_id = [palabra.id for palabra in palabras_qs]
+    palabras_id = [str(palabra.id) for palabra in palabras_qs]
     request.session["palabras_a_estudiar"] = palabras_id
+    request.session["palabra_actual"] = palabras_id[0]
+    contestadas = {}
+    correctas = {}
+    for key in palabras_id:
+        contestadas[key] = False
+        correctas[key] = False
+    request.session["palabras_contestadas"] = contestadas
+    request.session["palabras_correctas"] = correctas
     return redirect("estudio")
+
+
+@require_POST
+@login_required
+def checar_pregunta(request):
+    print("ALL POST DATA:", request.POST.dict())
+
+    user = request.user
+    palabra_id = request.session.get("palabra_actual")
+    palabra_obj = get_object_or_404(UsuarioPalabra, usuario=user, palabra_id=palabra_id)
+
+    answer_input = request.POST.get("answer_input")
+
+    print("AQUI")
+    print(answer_input)
+    print("ARRIBA")
+    if answer_input:
+        respuestas = request.session.get("respuestas")
+
+        is_correct = ut.check_answer(answer_input, respuestas)
+        action = "plus" if is_correct else "minus"
+        palabra_obj.progreso = ut.cambiar_progreso(palabra_obj.progreso, action)
+        palabra_obj.save()
+
+        palabras_contestadas = request.session.get("palabras_contestadas", {})
+        palabras_correctas = request.session.get("palabras_correctas", {})
+
+        palabras_contestadas[palabra_id] = True
+        palabras_correctas[palabra_id] = is_correct
+
+        request.session["palabras_contestadas"] = palabras_contestadas
+        request.session["palabras_correctas"] = palabras_correctas
+
+    return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
 @require_POST
@@ -151,14 +195,31 @@ def preparar_estudio(request):
 def cambiar_pregunta(request):
     action = request.POST.get("action")
     palabras_ids = request.session.get("palabras_a_estudiar", [])
+    palabras_contestadas = request.session.get("palabras_contestadas")
     index = request.session.get("index_palabra_pregunta", 0)
+    palabra_id = request.session.get("palabra_actual", palabras_ids[index])
 
-    if action == "next":
+    if action == "next" or action == "next_unanswered":
+        original_id = palabra_id
         index = (index + 1) % len(palabras_ids)  # cíclico hacia adelante
-    elif action == "previous":
+        palabra_id = palabras_ids[index]
+        if action == "next_unanswered":
+            while palabras_contestadas[palabra_id] and palabra_id != original_id:
+                # skip a no contestada y al loopear, break
+                index = (index + 1) % len(palabras_ids)  # cíclico hacia adelante
+                palabra_id = palabras_ids[index]
+    elif action == "previous" or action == "previous_unanswered":
+        original_id = palabra_id
         index = (index - 1) % len(palabras_ids)  # cíclico hacia atrás
+        palabra_id = palabras_ids[index]
+        if action == "previous_unanswered":
+            while palabras_contestadas[palabra_id] and palabra_id != original_id:
+                # skip a no contestada y al loopear, break
+                index = (index - 1) % len(palabras_ids)  # cíclico hacia atrás
+                palabra_id = palabras_ids[index]
 
     request.session["index_palabra_pregunta"] = index
+    request.session["palabra_actual"] = palabra_id
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
@@ -167,25 +228,18 @@ def cambiar_pregunta(request):
 def cambiar_progreso(request):
     user = request.user
     action = request.POST.get("action")
-    palabras_ids = request.session.get("palabras_a_estudiar", [])
-    index = request.session.get("index_palabra_pregunta", 0)
-    palabra_obj = get_object_or_404(
-        UsuarioPalabra, usuario=user, palabra_id=palabras_ids[index]
-    )
+    palabra_id = request.session.get("palabra_actual")
+    palabra_obj = get_object_or_404(UsuarioPalabra, usuario=user, palabra_id=palabra_id)
     progreso = palabra_obj.progreso
 
-    if action == "plus":
-        progreso += 5
-    elif action == "minus":
-        progreso -= 5
-    elif action == "slider":
+    if action == "slider":
         try:
             progreso = int(request.POST.get("slider_value", progreso))
         except ValueError:
             pass
+    else:  # plus, minus
+        progreso = ut.cambiar_progreso(progreso, action)
 
-    progreso = min(100, progreso)
-    progreso = max(0, progreso)
     palabra_obj.progreso = progreso
     palabra_obj.save()
 
@@ -400,6 +454,14 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["estrella_url"] = reverse("toggle_estrella_grupo")
 
         grupos = self.get_user_groups_list()
+
+        buscar_grupo_input = (
+            self.request.GET.get("buscar_grupo", "").strip().lower()
+        )  # search
+        context["buscar_grupo_input"] = buscar_grupo_input
+        if buscar_grupo_input:
+            grupos = [g for g in grupos if buscar_grupo_input in g["text"].lower()]
+
         grupos_elegidos = [g for g in grupos if g["estudiando"]]
         if ajustes.get("Creados por mí (grupos)"):
             grupos = [g for g in grupos if g["autor"] == usuario.username]
@@ -409,13 +471,6 @@ class HomeView(LoginRequiredMixin, TemplateView):
             grupos = [g for g in grupos if g["estrella"]]
         if ajustes.get("Elegidos (grupos)"):
             grupos = grupos_elegidos
-
-        buscar_grupo_input = (
-            self.request.GET.get("buscar_grupo", "").strip().lower()
-        )  # search
-        context["buscar_grupo_input"] = buscar_grupo_input
-        if buscar_grupo_input:
-            grupos = [g for g in grupos if buscar_grupo_input in g["text"].lower()]
 
         if orden_elegido == "Progreso":
             grupos.sort(key=lambda g: g["progreso"], reverse=descendente)
@@ -496,7 +551,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
     def is_mobile(request):
         user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
-        return any(m in user_agent for m in ["mobile", "android", "iphone", "ipad"])
+        return user_agent in set("mobile", "android", "iphone", "ipad")
 
 
 class PreguntaView(LoginRequiredMixin, TemplateView):
@@ -506,7 +561,7 @@ class PreguntaView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         index = self.request.session.get("index_palabra_pregunta", 0)
         palabras_ids = self.request.session.get("palabras_a_estudiar", [])
-        palabra_id = palabras_ids[index]
+        palabra_id = self.request.session.get("palabra_actual")
         palabra_obj = get_object_or_404(Palabra, id=palabra_id)
         is_kanji = palabra_obj.palabra_etiquetas.filter(
             etiqueta__etiqueta="Kanji"
@@ -519,7 +574,7 @@ class PreguntaView(LoginRequiredMixin, TemplateView):
         pregunta_list = palabra_obj.pregunta
 
         palabra_dict = {
-            "id": palabras_ids[index],
+            "id": palabra_id,
             "is_kanji": is_kanji,
             "pregunta": str(pregunta_list[0]),
             "lecturas": None,
@@ -541,6 +596,7 @@ class PreguntaView(LoginRequiredMixin, TemplateView):
         context["index_porcentaje"] = ((index + 1) / len(palabras_ids)) * 100
         context["cambiar_pregunta_url"] = reverse_lazy("cambiar_pregunta")
         context["cambiar_progreso_url"] = reverse_lazy("cambiar_progreso")
+        context["checar_pregunta_url"] = reverse("checar_pregunta")
         context["estrella_url"] = reverse("toggle_estrella_palabra")
 
         print(dict(self.request.session))
@@ -548,4 +604,4 @@ class PreguntaView(LoginRequiredMixin, TemplateView):
 
     def is_mobile(request):
         user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
-        return any(m in user_agent for m in ["mobile", "android", "iphone", "ipad"])
+        return user_agent in set("mobile", "android", "iphone", "ipad")

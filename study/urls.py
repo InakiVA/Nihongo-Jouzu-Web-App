@@ -7,6 +7,7 @@ urlpatterns = [
     path("preparar-estudio/", views.preparar_estudio, name="preparar_estudio"),
     path("cambiar-pregunta/", views.cambiar_pregunta, name="cambiar_pregunta"),
     path("cambiar-progreso/", views.cambiar_progreso, name="cambiar_progreso"),
+    path("checar-pregunta/", views.checar_pregunta, name="checar_pregunta"),
     # __ Checkboxes
     path("toggle-estudiando/", views.toggle_estudiando, name="toggle_estudiando"),
     path("toggle-aleatorio/", views.toggle_aleatorio, name="toggle_aleatorio"),

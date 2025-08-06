@@ -21,7 +21,7 @@
             </div> 
             <div class="space-y-4">       
                 <div>
-                {% include "components/searchbar.html" with name="buscar_grupo" value=buscar_grupo_input placeholder="Buscar grupo:"%}
+                {% include "components/searchbar.html" with name="buscar_grupo" method="get" value=buscar_grupo_input placeholder="Buscar grupo:"%}
                 </div>         
                 <div class="flex flex-row items-center justify-between space-x-4">
                     {% include "components/select.html" with options=orden_opciones selected=orden_elegido legend="Orden" url=select_orden_url%}

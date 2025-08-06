@@ -1,6 +1,6 @@
 <h2 class="whitespace-nowrap min-w-42">Progreso: {{ progreso }}</h2>        
-<div class="flex flex-row items-center justify-end gap-x-2 flex-grow">
-    {% include "components/button.html" with icon="components/icons/minus.html" name="action" value="minus" url=url extra_classes="!border-none" %}
+<div class="flex flex-row items-center justify-end gap-x-4 flex-grow">
+    {% include "components/button.html" with icon="components/icons/minus.html" name="action" value="minus" url=url extra_classes="button-neutral !border-none !px-0" %}
     {% include "components/slider.html" with value=progreso url=url%}
-    {% include "components/button.html" with icon="components/icons/plus.html" name="action" value="plus" url=url extra_classes="!border-none" %}
+    {% include "components/button.html" with icon="components/icons/plus.html" name="action" value="plus" url=url extra_classes="button-neutral !border-none !px-0" %}
 </div> 
