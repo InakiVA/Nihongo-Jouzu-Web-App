@@ -166,6 +166,8 @@ def checar_pregunta(request):
     palabra_obj = get_object_or_404(UsuarioPalabra, usuario=user, palabra_id=palabra_id)
 
     answer_input = request.POST.get("answer_input")
+    if not answer_input:
+        answer_input = request.GET.get("answer_input")
 
     print("AQUI")
     print(answer_input)
@@ -200,18 +202,18 @@ def cambiar_pregunta(request):
     palabra_id = request.session.get("palabra_actual", palabras_ids[index])
 
     if action == "next" or action == "next_unanswered":
-        original_id = palabra_id
         index = (index + 1) % len(palabras_ids)  # cíclico hacia adelante
         palabra_id = palabras_ids[index]
+        original_id = palabra_id
         if action == "next_unanswered":
             while palabras_contestadas[palabra_id] and palabra_id != original_id:
                 # skip a no contestada y al loopear, break
                 index = (index + 1) % len(palabras_ids)  # cíclico hacia adelante
                 palabra_id = palabras_ids[index]
     elif action == "previous" or action == "previous_unanswered":
-        original_id = palabra_id
         index = (index - 1) % len(palabras_ids)  # cíclico hacia atrás
         palabra_id = palabras_ids[index]
+        original_id = palabra_id
         if action == "previous_unanswered":
             while palabras_contestadas[palabra_id] and palabra_id != original_id:
                 # skip a no contestada y al loopear, break

@@ -70,17 +70,17 @@ h4 {
 }
 
 .button-neutral {
-  @apply h-10 min-w-12 btn btn-ghost shadow-none border-neutral-light bg-neutral-dark text-textcolor rounded-sm px-4;
+  @apply min-h-10 min-w-12 btn btn-ghost shadow-none border-neutral-light bg-neutral-dark text-textcolor rounded-sm px-4;
   @apply hover:bg-neutral-main;
 }
 
 .button-main {
-  @apply h-10 btn btn-ghost shadow-none border-accent-light bg-accent-main text-textcolor rounded-sm px-4;
+  @apply min-h-10 btn btn-ghost shadow-none border-accent-light bg-accent-main text-textcolor rounded-sm px-4;
   @apply hover:bg-accent-dark;
 }
 
 .button-secondary {
-  @apply h-10 btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm px-4;
+  @apply min-h-10 btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm px-16;
   @apply hover:bg-accent-main hover:border-accent-light;
 }
 

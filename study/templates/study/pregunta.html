@@ -8,7 +8,7 @@
   {% if palabra.lecturas_pregunta %}
     <h3>{{ palabra.lecturas_pregunta }}</h3>
   {% endif %}
-</div>
-<div class="flex h-14">    
-  {% include "components/input.html" with name="answer_input" method="post" url=checar_pregunta_url placeholder="Respuesta:" extra_classes="!text-3xl" %}   
+</div>    
+<div class="h-14">
+  {% include "components/input_button.html" with name="answer_input" url=checar_pregunta_url placeholder="Respuesta:" button_text="Checar" input_classes="!text-3xl" button_classes="!text-2xl !font-bold !h-full !px-8" %}        
 </div>
