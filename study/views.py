@@ -579,6 +579,7 @@ class SesionView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        usuario = self.request.user
 
         index = self.request.session.get("index_palabra_pregunta", 0)
         palabras_ids = self.request.session.get("palabras_a_estudiar", [])
@@ -593,7 +594,7 @@ class SesionView(LoginRequiredMixin, TemplateView):
         pregunta_lenguaje = self.request.session.get(
             "idioma_preguntas_elegido", "Original"
         )
-        palabra_obj.set_pregunta_respuesta(pregunta_lenguaje, is_kanji)
+        palabra_obj.set_pregunta_respuesta(pregunta_lenguaje, usuario, is_kanji)
 
         pregunta_list = palabra_obj.pregunta
         if len(pregunta_list) > 1:
@@ -605,9 +606,9 @@ class SesionView(LoginRequiredMixin, TemplateView):
             "id": palabra_id,
             "is_kanji": is_kanji,
             "palabra": palabra_obj.palabra,
-            "significados": palabra_obj.significados_list,
-            "lecturas": palabra_obj.lecturas_list,
-            "notas": palabra_obj.notas_list,
+            "significados": palabra_obj.significados_list(usuario),
+            "lecturas": palabra_obj.lecturas_list(usuario),
+            "notas": palabra_obj.notas_list(usuario),
             "etiquetas": palabra_obj.etiquetas_list,
             "progreso": palabra_obj.palabra_usuarios.get(
                 usuario=self.request.user

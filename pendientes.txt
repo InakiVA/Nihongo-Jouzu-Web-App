@@ -1,6 +1,7 @@
 == Vista de Respuesta
     ++ filtrar "" de palabra a solo del usuario o de admin
         ++ "" significados
+            .. checar que otros perfiles no la tengan bien si ponen significado de otra persona, debería hacerse esto por automático con el filtro
         ++ "" lecturas
         ++ "" notas
         $$ hacerlo desde el fetch del modelo, lista de objetos. este debe recibir el usuario como input

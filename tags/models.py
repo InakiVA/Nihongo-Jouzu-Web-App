@@ -32,13 +32,19 @@ class PalabraEtiqueta(models.Model):
         on_delete=models.CASCADE,
         related_name="etiqueta_palabras",
     )
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="palabra_etiquetas",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ("palabra", "etiqueta")
+        unique_together = ("palabra", "etiqueta", "usuario")
         db_table = "Palabras_Etiquetas"
 
     def __str__(self):
-        return f"{self.palabra.palabra} - {self.etiqueta.etiqueta}"
+        return f"{self.palabra.palabra} - {self.etiqueta.etiqueta} ({self.usuario})"
 
 
 class GrupoEtiqueta(models.Model):
@@ -52,10 +58,16 @@ class GrupoEtiqueta(models.Model):
         on_delete=models.CASCADE,
         related_name="etiqueta_grupos",
     )
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="grupo_etiquetas",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ("grupo", "etiqueta")
+        unique_together = ("grupo", "etiqueta", "usuario")
         db_table = "Grupos_Etiquetas"
 
     def __str__(self):
-        return f"{self.grupo.grupo} - {self.etiqueta.etiqueta}"
+        return f"{self.grupo.grupo} - {self.etiqueta.etiqueta} ({self.usuario})"
