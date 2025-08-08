@@ -1,8 +1,9 @@
-<form method="post" action="{{ url }}" class="{{extra_classes}}">
+<form method="post" action="{{ url }}">
   {% csrf_token %}
   <input type="hidden" name="{{name}}" value="{{value}}">
   <button
     type="submit"
+    class="{{extra_classes}}"
   >
     {% if icon %}{% include icon %}{% endif %} {{ text }}
   </button>  

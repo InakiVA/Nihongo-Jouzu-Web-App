@@ -554,14 +554,18 @@ class HomeView(LoginRequiredMixin, TemplateView):
         return user_agent in set("mobile", "android", "iphone", "ipad")
 
 
-class PreguntaView(LoginRequiredMixin, TemplateView):
-    template_name = "study/pregunta.html"
+class SesionView(LoginRequiredMixin, TemplateView):
+    template_name = "study/sesion.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         index = self.request.session.get("index_palabra_pregunta", 0)
         palabras_ids = self.request.session.get("palabras_a_estudiar", [])
         palabra_id = self.request.session.get("palabra_actual")
+        palabras_contestadas = self.request.session.get("palabras_contestadas", {})
+        palabras_correctas = self.request.session.get("palabras_correctas", {})
+
         palabra_obj = get_object_or_404(Palabra, id=palabra_id)
         is_kanji = palabra_obj.palabra_etiquetas.filter(
             etiqueta__etiqueta="Kanji"
@@ -572,26 +576,34 @@ class PreguntaView(LoginRequiredMixin, TemplateView):
         palabra_obj.set_pregunta_respuesta(pregunta_lenguaje, is_kanji)
 
         pregunta_list = palabra_obj.pregunta
+        if len(pregunta_list) > 1:
+            lectura_pregunta = f"{str(pregunta_list[1])}"
+        else:
+            lectura_pregunta = None
 
         palabra_dict = {
             "id": palabra_id,
             "is_kanji": is_kanji,
-            "pregunta": str(pregunta_list[0]),
-            "lecturas": None,
+            "palabra": palabra_obj.palabra,
+            "significados": palabra_obj.significados_list,
+            "lecturas": palabra_obj.lecturas_list,
+            "notas": palabra_obj.notas_list,
+            "etiquetas": palabra_obj.etiquetas_list,
             "progreso": palabra_obj.palabra_usuarios.get(
                 usuario=self.request.user
             ).progreso,
             "estrella": palabra_obj.palabra_usuarios.get(
                 usuario=self.request.user
             ).estrella,
+            "pregunta": str(pregunta_list[0]),
+            "lecturas_pregunta": lectura_pregunta,
         }
-
-        if len(pregunta_list) > 1:
-            palabra_dict["lecturas"] = f"{str(pregunta_list[1])}"
 
         self.request.session["respuestas"] = palabra_obj.respuestas
 
         context["palabra"] = palabra_dict
+        context["palabra_contestada"] = palabras_contestadas[palabra_id]
+        context["palabra_correcta"] = palabras_correctas[palabra_id]
         context["index"] = index + 1
         context["index_porcentaje"] = ((index + 1) / len(palabras_ids)) * 100
         context["cambiar_pregunta_url"] = reverse_lazy("cambiar_pregunta")

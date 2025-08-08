@@ -34,14 +34,14 @@
             </div>
             {% include "components/element_list.html" with header="Grupos" subheader=cantidad_grupos extra_classes="h-auto max-h-120 mt-4" elements=grupos%}
         </div>
-        <div class="divider {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %}"></div>        
+        <div class="divider before:bg-neutral-main after:bg-neutral-main {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %}"></div>        
         <div class="flex flex-col basis-1/2 w-full">
             <div class="space-y-4 p-4 w-full">
                 <h2>Preguntas</h2>
                 {% include "components/checkbox.html" with text="Orden aleatorio" url=aleatorio_url id="aleatorio_id" is_selected=is_aleatorio%}
                 {% include "components/select.html" with options=idioma_preguntas_opciones selected=idioma_preguntas_elegido legend="Idioma" url=idioma_preguntas_url%}
             </div>
-            <div class="divider px-4"></div>
+            <div class="divider before:bg-neutral-main after:bg-neutral-main px-4"></div>
             <div class="flex flex-col space-y-4 place-content-center p-4">
                 <h2>Filtros de palabras</h2>
                 {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_palabras_url id="filtros_palabras_switch_id" is_selected=on_filtros_palabras %}
@@ -50,7 +50,7 @@
                     {% include "components/filter_button.html" with text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
                     {% endfor %}
                 </div>                     
-                <div class="collapser">
+                <div tabindex="0" class="collapser collapse-arrow">
                     <input type="checkbox" {% if is_open_collapse %} checked {% endif %}/>
                     <div class="collapse-title font-semibold">Etiquetas</div>
                     <div class="collapse-content space-y-4">

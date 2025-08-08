@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% block content %}
+<div class="flex flex-col flex-auto px-4 gap-4">
+  <div class="flex flex-row justify-between w-full gap-x-4 mb-2">
+    <h4 class="text-start">Sesión de estudio</h4>
+    <div>
+      {% include "components/button.html" with url=checar_pregunta_url text="Finalizar" extra_classes="button-main !text-2xl !font-bold !p-8" name="finalizar" %}      
+    </div>
+  </div>
+  
+  <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between w-full gap-x-4">
+    <h2 class="whitespace-nowrap w-52">Pregunta: {{ index }}</h2>        
+    <div class="flex flex-row items-center justify-end gap-x-4 flex-grow">
+      {% include "components/button.html" with icon="components/icons/arrow_left_double.html" name="action" value="previous_unanswered" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
+      {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
+      {% include "components/progreso.html" with value=index_porcentaje %}
+      {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
+      {% include "components/button.html" with icon="components/icons/arrow_right_double.html" name="action" value="next_unanswered" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
+    </div>
+  </div>   
+  <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between w-full gap-x-4">
+    <div class="flex flex-row items-center">
+      {% include "components/icon_swap_button.html" with id=palabra.id is_active=palabra.estrella url=estrella_url on="components/icons/star.html" oncolor="star-on" off="components/icons/star_off.html" offcolor="star-off" %}
+    </div>
+    {% include "components/progress_input_row.html" with progreso=palabra.progreso url=cambiar_progreso_url %}       
+  </div>
+  <div class="flex flex-col flex-1 p-4 mb-4 border border-neutral-light rounded-2xl gap-4">
+    {% if palabra_contestada %}
+        {% include "study/respuesta.html" with palabra=palabra is_correct=palabra_correcta is_mobile=is_mobile %}
+    {% else %}
+        {% include "study/pregunta.html" with palabra=palabra checar_pregunta_url=checar_pregunta_url %}
+    {% endif %}
+  </div>       
+</div>
+{% endblock %}

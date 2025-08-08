@@ -1,0 +1,88 @@
+<div class="flex flex-auto {% if is_mobile %} flex-col {% else %} flex-row {% endif %} gap-0 justify-start">
+    
+    <div class="flex flex-col items-center justify-center flex-grow min-w-1/3">
+        <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-center whitespace-normal break-keep leading-snug">
+            {{ palabra.palabra }}
+        </h1>
+        {% if is_correct %}
+        {% include "components/tag.html" with text="Correcta" extra_classes="!bg-correct !font-semibold" %}
+        {% else %}
+        {% include "components/tag.html" with text="Incorrecta" extra_classes="!bg-incorrect !font-semibold" %}
+        {% endif %}
+    </div>
+
+    <div class="divider {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %} {%if is_correct %} before:bg-correct after:bg-correct {% else %} before:bg-incorrect after:bg-incorrect {% endif %}"></div>
+
+    <div class="flex-grow min-w-1/4 gap-4 overflow-auto max-h-84 space-y-4 justify-start ">
+        {% if palabra.significados %}
+        <div class="collapser collapse-arrow !border-neutral-main">
+            <input type="checkbox" checked/>
+            <div class="collapse-title font-semibold">Significados</div>
+            <div class="collapse-content">
+                <li class="flex flex-col w-auto flex-wrap overflow-auto gap-2 px-4">
+                    {% for significado in palabra.significados %}
+                    <p>{{significado}}</p>       
+                    {% endfor %}
+                </li>       
+            </div>     
+        </div> 
+        {% endif %}
+        {% if palabra.lecturas %}
+        <div class="collapser collapse-arrow !border-neutral-main">
+            <input type="checkbox" checked/>
+            <div class="collapse-title font-semibold">Lecturas</div>
+            <div class="collapse-content">
+                <li class="flex flex-col w-auto flex-wrap overflow-auto gap-2 px-4">
+                    {% for lectura in palabra.lecturas %}
+                    <p>{{lectura}}</p>       
+                    {% endfor %}
+                </li>     
+            </div>       
+        </div> 
+        {% endif %}
+        {% if palabra.etiquetas %}
+        <div class="collapser collapse-arrow !border-neutral-main">
+            <input type="checkbox"/>
+            <div class="collapse-title font-semibold">Etiquetas</div>
+            <div class="collapse-content">
+                <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2 px-4">
+                    {% for etiqueta in palabra.etiquetas %}
+                    {% include "components/tag.html" with text=etiqueta %}         
+                    {% endfor %}
+                </li> 
+            </div>          
+        </div> 
+        {% endif %}
+        {% if palabra.notas %}
+        <div class="collapser collapse-arrow !border-neutral-main">
+            <input type="checkbox"/>
+            <div class="collapse-title font-semibold">Notas:</div>
+            <div class="collapse-content">
+                <li class="flex flex-col w-auto flex-wrap overflow-auto gap-2 px-4">
+                    {% for nota in palabra.notas %}
+                    <p>{{nota}}</p>       
+                    {% endfor %}
+                </li>     
+            </div>       
+        </div> 
+        {% endif %}
+    </div>
+
+    <div class="divider {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %} {%if is_correct %} before:bg-correct after:bg-correct {% else %} before:bg-incorrect after:bg-incorrect {% endif %}"></div>
+
+    <div class="flex-grow min-w-1/4 gap-4 overflow-auto max-h-84 space-y-4 justify-start ">
+        {% if palabra.significados %}
+        <div class="collapser collapse-arrow !border-neutral-main">
+            <input type="checkbox" checked/>
+            <div class="collapse-title font-semibold">Grupos</div>
+            <div class="collapse-content">
+                <li class="flex flex-col w-auto flex-wrap overflow-auto gap-2 px-4">
+                    {% for significado in palabra.significados %}
+                    <p>{{significado}}</p>       
+                    {% endfor %}
+                </li>       
+            </div>     
+        </div> 
+        {% endif %}
+    </div>
+</div>

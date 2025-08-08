@@ -15,6 +15,9 @@
     --color-mysuccess: #4cf289;
     --color-mycomplete: #5ec9ee;
 
+    --color-correct: #16ab4d;
+    --color-incorrect: #ab1212;
+
     --color-star: #fffc56;
     --color-star-dark: #8f8c04;
 
@@ -137,7 +140,7 @@ h4 {
 }
 
 .collapser{
-  @apply collapse collapse-arrow bg-transparent border-1 border-neutral-light;
+  @apply collapse bg-transparent border-1 border-neutral-light;
   @apply hover:bg-neutral-main hover:shadow-sm;
 }
 

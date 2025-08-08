@@ -16,8 +16,6 @@ class Palabra(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     ultima_modificacion = models.DateTimeField(auto_now=True)
 
-    contestada = False
-    correcta = False
     pregunta = None
     respuestas = None
 
@@ -92,7 +90,7 @@ class Palabra(models.Model):
         return list(set([str(n.nota) for n in self.notas_objetos]))
 
     @property
-    def notas_(self):
+    def notas_str(self):
         return ", ".join(self.notas_list)
 
 
