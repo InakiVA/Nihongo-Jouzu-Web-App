@@ -3,11 +3,26 @@ from . import views
 
 urlpatterns = [
     path("", views.HomeView.as_view(), name="inicio"),
-    path("estudio/sesion/", views.SesionView.as_view(), name="estudio"),
+    path("estudio/", views.SesionView.as_view(), name="estudio"),
     path("preparar-estudio/", views.preparar_estudio, name="preparar_estudio"),
     path("cambiar-pregunta/", views.cambiar_pregunta, name="cambiar_pregunta"),
     path("cambiar-progreso/", views.cambiar_progreso, name="cambiar_progreso"),
     path("checar-pregunta/", views.checar_pregunta, name="checar_pregunta"),
+    path(
+        "agregar-significado/",
+        views.agregar_a_palabra,
+        {"tipo": "Significado"},
+        name="agregar_significado",
+    ),
+    path(
+        "agregar-lectura/",
+        views.agregar_a_palabra,
+        {"tipo": "Lectura"},
+        name="agregar_lectura",
+    ),
+    path(
+        "agregar-nota/", views.agregar_a_palabra, {"tipo": "Nota"}, name="agregar_nota"
+    ),
     # __ Checkboxes
     path("toggle-estudiando/", views.toggle_estudiando, name="toggle_estudiando"),
     path("toggle-aleatorio/", views.toggle_aleatorio, name="toggle_aleatorio"),

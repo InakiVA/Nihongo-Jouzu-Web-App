@@ -14,20 +14,22 @@
     <div class="divider {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %} {%if is_correct %} before:bg-correct after:bg-correct {% else %} before:bg-incorrect after:bg-incorrect {% endif %}"></div>
 
     <div class="flex-grow min-w-1/4 gap-4 overflow-auto max-h-84 space-y-4 justify-start ">
-        {% if palabra.significados %}
+        
         <div class="collapser collapse-arrow !border-neutral-main">
             <input type="checkbox" checked/>
             <div class="collapse-title font-semibold">Significados</div>
-            <div class="collapse-content">
+            <div class="collapse-content flex flex-col">                
                 <li class="flex flex-col w-auto flex-wrap overflow-auto gap-2 px-4">
                     {% for significado in palabra.significados %}
                     <p>{{significado}}</p>       
                     {% endfor %}
-                </li>       
+                </li> 
+                <div class="h-6 my-4 ml-4">
+                    {% include "components/input_button.html" with name="agregar_significado" url=agregar_significado placeholder="Significado:" button_text="Agregar" input_classes="!text-sm" button_classes="!text-sm !px-8" %}        
+                </div>      
             </div>     
         </div> 
-        {% endif %}
-        {% if palabra.lecturas %}
+        
         <div class="collapser collapse-arrow !border-neutral-main">
             <input type="checkbox" checked/>
             <div class="collapse-title font-semibold">Lecturas</div>
@@ -36,11 +38,13 @@
                     {% for lectura in palabra.lecturas %}
                     <p>{{lectura}}</p>       
                     {% endfor %}
-                </li>     
+                </li> 
+                <div class="h-6 my-4 ml-4">
+                    {% include "components/input_button.html" with name="agregar_lectura" url=agregar_lectura placeholder="Lectura:" button_text="Agregar" input_classes="!text-sm" button_classes="!text-sm  !px-8" %}        
+                </div>    
             </div>       
         </div> 
-        {% endif %}
-        {% if palabra.etiquetas %}
+
         <div class="collapser collapse-arrow !border-neutral-main">
             <input type="checkbox"/>
             <div class="collapse-title font-semibold">Etiquetas</div>
@@ -49,29 +53,30 @@
                     {% for etiqueta in palabra.etiquetas %}
                     {% include "components/tag.html" with text=etiqueta %}         
                     {% endfor %}
-                </li> 
+                </li>  
             </div>          
         </div> 
-        {% endif %}
-        {% if palabra.notas %}
+
         <div class="collapser collapse-arrow !border-neutral-main">
             <input type="checkbox"/>
-            <div class="collapse-title font-semibold">Notas:</div>
+            <div class="collapse-title font-semibold">Notas</div>
             <div class="collapse-content">
                 <li class="flex flex-col w-auto flex-wrap overflow-auto gap-2 px-4">
                     {% for nota in palabra.notas %}
                     <p>{{nota}}</p>       
                     {% endfor %}
-                </li>     
+                </li>
+                <div class="h-26 my-4 ml-4">
+                    {% include "components/input_button.html" with name="agregar_nota" is_textarea=True url=agregar_nota placeholder="Nota:" button_text="Agregar" input_classes="!text-sm" button_classes="!text-sm !font-semibold !px-8" %}        
+                </div>      
             </div>       
-        </div> 
-        {% endif %}
+        </div>         
     </div>
 
     <div class="divider {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %} {%if is_correct %} before:bg-correct after:bg-correct {% else %} before:bg-incorrect after:bg-incorrect {% endif %}"></div>
 
     <div class="flex-grow min-w-1/4 gap-4 overflow-auto max-h-84 space-y-4 justify-start ">
-        {% if palabra.significados %}
+        
         <div class="collapser collapse-arrow !border-neutral-main">
             <input type="checkbox" checked/>
             <div class="collapse-title font-semibold">Grupos</div>
@@ -83,6 +88,6 @@
                 </li>       
             </div>     
         </div> 
-        {% endif %}
+        
     </div>
 </div>

@@ -2,8 +2,8 @@
 <nav class="fixed top-0 left-0 z-50 w-full">
   <div class="flex flex-col items-center justify-center space-y-4 w-full">
     <div class="flex flex-rowjustify-center items-center">
-      <h1 class="title1">日本語</h1>
-      <h1 class="title2">上手</h1>
+      <h1 id="title1">日本語</h1>
+      <h1 id="title2">上手</h1>
     </div>
     <div class="flex flex-row items-center justify-center space-x-2 w-full px-2">
       <div class="dropdown">
@@ -17,33 +17,33 @@
           <li>
             {% url 'inicio' as url_value %}
             {% if request.path == url_value %}
-              {% include "components/navigation_button.html" with href=url_value text="Inicio" icon="components/icons/home.html" extra_classes="button-main join-item" name="navbar_home" %}
+              {% include "components/navigation_button.html" with url=url_value text="Inicio" icon="components/icons/home.html" extra_classes="button-main join-item" name="navbar_home" %}
             {% else %}
-              {% include "components/navigation_button.html" with href=url_value text="Inicio" icon="components/icons/home.html" extra_classes="button-neutral join-item" name="navbar_home" %}
+              {% include "components/navigation_button.html" with url=url_value text="Inicio" icon="components/icons/home.html" extra_classes="button-neutral join-item" name="navbar_home" %}
             {% endif %}
           </li>
           <li>
             {% url 'diccionario' as url_value %}
             {% if request.path == url_value %}
-              {% include "components/navigation_button.html" with href=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="button-main join-item" name="navbar_dict" %}
+              {% include "components/navigation_button.html" with url=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="button-main join-item" name="navbar_dict" %}
             {% else %}
-              {% include "components/navigation_button.html" with href=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="button-neutral join-item" name="navbar_dict" %}
+              {% include "components/navigation_button.html" with url=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="button-neutral join-item" name="navbar_dict" %}
             {% endif %}
           </li>
           <li>
             {% url 'grupos' as url_value %}
             {% if request.path == url_value %}
-              {% include "components/navigation_button.html" with href=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="button-main join-item" name="navbar_groups" %}
+              {% include "components/navigation_button.html" with url=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="button-main join-item" name="navbar_groups" %}
             {% else %}
-              {% include "components/navigation_button.html" with href=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="button-neutral join-item" name="navbar_groups" %}
+              {% include "components/navigation_button.html" with url=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="button-neutral join-item" name="navbar_groups" %}
             {% endif %}
           </li>
           <li>
             {% url 'usuario' as url_value %}
             {% if request.path == url_value %}
-              {% include "components/navigation_button.html" with href=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-main join-item" name="navbar_user" %}
+              {% include "components/navigation_button.html" with url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-main join-item" name="navbar_user" %}
             {% else %}
-              {% include "components/navigation_button.html" with href=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-neutral join-item" name="navbar_user" %}
+              {% include "components/navigation_button.html" with url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-neutral join-item" name="navbar_user" %}
             {% endif %}
           </li>
         </ul>
@@ -58,23 +58,23 @@
     <div class="join space-x-2">
         {% url 'inicio' as url_value %}
         {% if request.path == url_value %}
-            {% include "components/navigation_button.html" with is_selected=True href=url_value text="Inicio" icon="components/icons/home.html" extra_classes="join-item" name="navbar_home" %}
+            {% include "components/navigation_button.html" with is_selected=True url=url_value text="Inicio" icon="components/icons/home.html" extra_classes="join-item" name="navbar_home" %}
         {% else %}
-            {% include "components/navigation_button.html" with href=url_value text="Inicio" icon="components/icons/home.html" extra_classes="join-item" name="navbar_home" %}
+            {% include "components/navigation_button.html" with url=url_value text="Inicio" icon="components/icons/home.html" extra_classes="join-item" name="navbar_home" %}
         {% endif %}
 
         {% url 'diccionario' as url_value %}
         {% if request.path == url_value %}
-            {% include "components/navigation_button.html" with is_selected=True href=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="join-item" name="navbar_dict" %}
+            {% include "components/navigation_button.html" with is_selected=True url=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="join-item" name="navbar_dict" %}
         {% else %}
-            {% include "components/navigation_button.html" with href=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="join-item" name="navbar_dict" %}
+            {% include "components/navigation_button.html" with url=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="join-item" name="navbar_dict" %}
         {% endif %}
       
         {% url 'grupos' as url_value %}
         {% if request.path == url_value %}
-            {% include "components/navigation_button.html" with is_selected=True href=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="join-item" name="navbar_groups" %}
+            {% include "components/navigation_button.html" with is_selected=True url=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="join-item" name="navbar_groups" %}
         {% else %}
-            {% include "components/navigation_button.html" with href=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="join-item" name="navbar_groups" %}
+            {% include "components/navigation_button.html" with url=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="join-item" name="navbar_groups" %}
         {% endif %}
     </div>
   </div>
@@ -88,9 +88,9 @@
         {% include "components/searchbar.html" %} 
         {% url 'usuario' as url_value %}
         {% if request.path == url_value %}
-            {% include "components/navigation_button.html" with href=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-main join-item" name="navbar_user" %}
+            {% include "components/navigation_button.html" with url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-main join-item" name="navbar_user" %}
         {% else %}
-            {% include "components/navigation_button.html" with href=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-neutral join-item" name="navbar_user" %}
+            {% include "components/navigation_button.html" with url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-neutral join-item" name="navbar_user" %}
         {% endif %}
     </div>  
   </div>

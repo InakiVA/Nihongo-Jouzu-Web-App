@@ -70,17 +70,17 @@ h4 {
 }
 
 .button-neutral {
-  @apply min-h-10 min-w-12 btn btn-ghost shadow-none border-neutral-light bg-neutral-dark text-textcolor rounded-sm px-4;
+  @apply h-10 min-w-12 btn btn-ghost shadow-none border-neutral-light bg-neutral-dark text-textcolor rounded-sm px-4;
   @apply hover:bg-neutral-main;
 }
 
 .button-main {
-  @apply min-h-10 btn btn-ghost shadow-none border-accent-light bg-accent-main text-textcolor rounded-sm px-4;
+  @apply h-10 btn btn-ghost shadow-none border-accent-light bg-accent-main text-textcolor rounded-sm px-4;
   @apply hover:bg-accent-dark;
 }
 
 .button-secondary {
-  @apply min-h-10 btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm px-16;
+  @apply h-10 btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm px-16;
   @apply hover:bg-accent-main hover:border-accent-light;
 }
 
@@ -94,12 +94,19 @@ h4 {
 }
 
 .input {
-  @apply input input-neutral rounded-lg flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor ;
+  @apply input input-neutral rounded-lg flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
   @apply focus:bg-neutral-main hover:bg-neutral-main;
 }
 
 .input_text {
-  @apply text-xl text-textcolor placeholder:text-neutral-light placeholder:italic;
+  @apply text-xl text-textcolor wrap-break-word;
+  @apply placeholder:text-neutral-light placeholder:italic;
+}
+
+.textarea {
+  @apply input input-neutral rounded-lg flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
+  @apply focus:bg-neutral-main hover:bg-neutral-main;
+  @apply placeholder:text-neutral-light placeholder:italic;
 }
 
 .star-on{

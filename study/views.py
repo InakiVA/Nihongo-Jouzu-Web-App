@@ -10,7 +10,7 @@ import random
 
 from tags.models import Etiqueta
 from groups.models import Grupo, UsuarioGrupo, GrupoPalabra
-from dictionary.models import Palabra
+from dictionary.models import Palabra, Significado, Lectura, Nota
 from progress.models import UsuarioPalabra
 
 from core import utils as ut
@@ -158,20 +158,38 @@ def preparar_estudio(request):
 
 @require_POST
 @login_required
-def checar_pregunta(request):
+# () tipo ["Significado","Lectura","Nota"]
+def agregar_a_palabra(request, tipo):
     print("ALL POST DATA:", request.POST.dict())
 
+    user = request.user
+    palabra_id = int(request.session.get("palabra_actual"))
+    palabra_obj = get_object_or_404(Palabra, id=palabra_id)
+
+    if tipo == "Significado":
+        input_value = request.POST.get("agregar_significado")
+        Significado.objects.create(
+            significado=input_value, palabra=palabra_obj, usuario=user
+        )
+    elif tipo == "Lectura":
+        input_value = request.POST.get("agregar_lectura")
+        Lectura.objects.create(lectura=input_value, palabra=palabra_obj, usuario=user)
+    elif tipo == "Nota":
+        input_value = request.POST.get("agregar_nota")
+        Nota.objects.create(nota=input_value, palabra=palabra_obj, usuario=user)
+
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+@require_POST
+@login_required
+def checar_pregunta(request):
     user = request.user
     palabra_id = request.session.get("palabra_actual")
     palabra_obj = get_object_or_404(UsuarioPalabra, usuario=user, palabra_id=palabra_id)
 
     answer_input = request.POST.get("answer_input")
-    if not answer_input:
-        answer_input = request.GET.get("answer_input")
 
-    print("AQUI")
-    print(answer_input)
-    print("ARRIBA")
     if answer_input:
         respuestas = request.session.get("respuestas")
 
@@ -612,6 +630,10 @@ class SesionView(LoginRequiredMixin, TemplateView):
         context["cambiar_progreso_url"] = reverse_lazy("cambiar_progreso")
         context["checar_pregunta_url"] = reverse("checar_pregunta")
         context["estrella_url"] = reverse("toggle_estrella_palabra")
+
+        context["agregar_significado"] = reverse("agregar_significado")
+        context["agregar_lectura"] = reverse("agregar_lectura")
+        context["agregar_nota"] = reverse("agregar_nota")
 
         print(dict(self.request.session))
         return context

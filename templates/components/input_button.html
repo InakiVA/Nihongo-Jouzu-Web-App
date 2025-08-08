@@ -1,12 +1,25 @@
 <form action="{{ url }}" method="post" class="flex w-full h-full">
     {% csrf_token %}
     <div class="flex flex-row w-full gap-4">
+        {% if has_button_left %}
+        <div class="flex">
+            <button type="submit" class="button-secondary h-full !font-semibold {{button_classes}}">{{button_text}}</button>
+        </div>
+        {% endif %}
+        {% if is_textarea %}
+        <div class="flex flex-1">
+            <textarea name="{{ name }}" placeholder="{{ placeholder }}" class="textarea {{ input_classes }} w-full h-full resize-none"></textarea>
+        </div>
+        {% else %}
         <div class="flex flex-1 input">
             <input type="text" name="{{name}}" placeholder="{{placeholder}}" class="input_text {{input_classes}}">
         </div>
+        {% endif %}
+        {% if not has_button_left %}
         <div class="flex">
-            <button type="submit" class="button-secondary {{button_classes}}">{{button_text}}</button>
+            <button type="submit" class="button-secondary h-full !font-semibold {{button_classes}}">{{button_text}}</button>
         </div>
+        {% endif %}
     </div>
 </form>
 
