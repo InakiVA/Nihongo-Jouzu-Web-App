@@ -14,12 +14,12 @@
     <div class="{% if is_mobile %} flex flex-col {% else %} flex flex-row basis-1/2 {% endif %}">           
         <div class="flex flex-col space-y-4 p-4 w-full">
             <h2>Grupos de estudio</h2>
-            <div class="flex flex-row w-auto flex-wrap overflow-auto whitespace-nowrap gap-2">
+            <div class="flex flex-row w-auto flex-wrap overflow-auto whitespace-nowrap gap-2 py-2">
                 {% for filtro in filtros_grupos %}
                 {% include "components/filter_button.html" with text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
                 {% endfor %}
             </div> 
-            <div class="space-y-4">       
+            <div class="space-y-2">       
                 <div>
                 {% include "components/searchbar.html" with name="buscar_grupo" method="get" value=buscar_grupo_input placeholder="Buscar grupo:"%}
                 </div>         
@@ -36,16 +36,16 @@
         </div>
         <div class="divider before:bg-neutral-main after:bg-neutral-main {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %}"></div>        
         <div class="flex flex-col basis-1/2 w-full">
-            <div class="space-y-4 p-4 w-full">
-                <h2>Preguntas</h2>
+            <div class="space-y-2 p-4 w-full">
+                <h2 class="pb-2">Preguntas</h2>
                 {% include "components/checkbox.html" with text="Orden aleatorio" url=aleatorio_url id="aleatorio_id" is_selected=is_aleatorio%}
                 {% include "components/select.html" with options=idioma_preguntas_opciones selected=idioma_preguntas_elegido legend="Idioma" url=idioma_preguntas_url%}
             </div>
             <div class="divider before:bg-neutral-main after:bg-neutral-main px-4"></div>
-            <div class="flex flex-col space-y-4 place-content-center p-4">
-                <h2>Filtros de palabras</h2>
+            <div class="flex flex-col space-y-2 place-content-center p-4">
+                <h2 class="pb-2">Filtros de palabras</h2>
                 {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_palabras_url id="filtros_palabras_switch_id" is_selected=on_filtros_palabras %}
-                <div class="flex flex-row w-auto flex-wrap overflow-auto gap-2">
+                <div class="flex flex-row w-auto flex-wrap overflow-auto gap-2 pb-4">
                     {% for filtro in filtros_palabras %}
                     {% include "components/filter_button.html" with text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
                     {% endfor %}

@@ -1,0 +1,30 @@
+== Vista de Respuesta
+    ++ filtrar "" de palabra a solo del usuario o de admin
+        ++ "" significados
+        ++ "" lecturas
+        ++ "" notas
+        $$ hacerlo desde el fetch del modelo, lista de objetos. este debe recibir el usuario como input
+
+    ++ mostrar grupos a los que pertenece cada palabra en vista de respuesta
+        && estos solo deben de ser grupos del usuario, NO del admin también
+
+    ++ agregar palabra a grupos desde respuesta, solo creados por usuario
+
+    ++ agregar tags a palabra desde respuesta
+        && se debe refactorizar el modelo de PalabraEtiqueta para incluir quién hizo la relación
+        && con esto, las tags que deben aparecer filtradas deben ser las que la relación la creó o el usuario o el admin
+            .. esto porque un usuario equis puede asignar una tag del admin a una palabra del admin, y no hay manera de rastrear quién hizo la relación y puede llevar a errores
+        ++ "" etiquetas
+
+    ++ incluir respuesta dada
+
+    ++ Loop: Repetición de incorrectas una vez que se completen
+
+++ Vista de calificación
+    .. que solo aparezca una vez que se pica finalizar (o también al todas bien)
+
+== Refactorizar modelos
+    ++ PalabraEtiqueta, GrupoEtiqueta: usuario que realizó relación con etiqueta
+    ++ UsuarioPalabra: fecha_creación, ultima_modificacion
+    
+

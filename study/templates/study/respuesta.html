@@ -1,7 +1,7 @@
 <div class="flex flex-auto {% if is_mobile %} flex-col {% else %} flex-row {% endif %} gap-0 justify-start">
     
     <div class="flex flex-col items-center justify-center flex-grow min-w-1/3">
-        <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-center whitespace-normal break-keep leading-snug">
+        <h1 class="text-3xl sm:text-5xl md:text-10xl lg:text-7xl xl:text-8xl text-center whitespace-normal break-keep leading-snug">
             {{ palabra.palabra }}
         </h1>
         {% if is_correct %}
@@ -24,7 +24,7 @@
                     <p>{{significado}}</p>       
                     {% endfor %}
                 </li> 
-                <div class="h-6 my-4 ml-4">
+                <div class="h-10  mt-4 ml-4">
                     {% include "components/input_button.html" with name="agregar_significado" url=agregar_significado placeholder="Significado:" button_text="Agregar" input_classes="!text-sm" button_classes="!text-sm !px-8" %}        
                 </div>      
             </div>     
@@ -39,7 +39,7 @@
                     <p>{{lectura}}</p>       
                     {% endfor %}
                 </li> 
-                <div class="h-6 my-4 ml-4">
+                <div class="h-10  mt-4 ml-4">
                     {% include "components/input_button.html" with name="agregar_lectura" url=agregar_lectura placeholder="Lectura:" button_text="Agregar" input_classes="!text-sm" button_classes="!text-sm  !px-8" %}        
                 </div>    
             </div>       
@@ -66,7 +66,7 @@
                     <p>{{nota}}</p>       
                     {% endfor %}
                 </li>
-                <div class="h-26 my-4 ml-4">
+                <div class="h-24  mt-4 ml-4">
                     {% include "components/input_button.html" with name="agregar_nota" is_textarea=True url=agregar_nota placeholder="Nota:" button_text="Agregar" input_classes="!text-sm" button_classes="!text-sm !font-semibold !px-8" %}        
                 </div>      
             </div>       

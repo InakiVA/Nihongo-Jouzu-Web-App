@@ -99,7 +99,7 @@ h4 {
 }
 
 .input_text {
-  @apply text-xl text-textcolor wrap-break-word;
+  @apply text-lg text-textcolor wrap-break-word;
   @apply placeholder:text-neutral-light placeholder:italic;
 }
 
