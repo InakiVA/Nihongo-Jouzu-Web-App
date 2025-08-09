@@ -7,7 +7,7 @@ from dictionary.models import Palabra, Significado, Lectura, Nota
 class PalabraAdmin(UsuarioMixin):
     list_display = (
         "palabra",
-        "usuario_username",
+        "usuario",
         "fecha_creacion",
         "ultima_modificacion",
     )
@@ -18,9 +18,11 @@ class PalabraAdmin(UsuarioMixin):
 @admin.register(Significado)
 class SignificadoAdmin(UsuarioMixin, PalabraMixin):
     list_display = (
-        "palabra_palabra",
+        "palabra_id",
+        "palabra",
+        "id",
         "significado",
-        "usuario_username",
+        "usuario",
         "fecha_creacion",
         "ultima_modificacion",
     )
@@ -31,9 +33,9 @@ class SignificadoAdmin(UsuarioMixin, PalabraMixin):
 @admin.register(Lectura)
 class LecturaAdmin(UsuarioMixin, PalabraMixin):
     list_display = (
-        "palabra_palabra",
+        "palabra",
         "lectura",
-        "usuario_username",
+        "usuario",
         "fecha_creacion",
         "ultima_modificacion",
     )
@@ -44,9 +46,9 @@ class LecturaAdmin(UsuarioMixin, PalabraMixin):
 @admin.register(Nota)
 class NotaAdmin(UsuarioMixin, PalabraMixin):
     list_display = (
-        "palabra_palabra",
+        "palabra",
         "nota",
-        "usuario_username",
+        "usuario",
         "fecha_creacion",
         "ultima_modificacion",
     )
