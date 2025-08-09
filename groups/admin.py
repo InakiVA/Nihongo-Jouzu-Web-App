@@ -6,6 +6,7 @@ from core.admin_mixins import UsuarioMixin, PalabraMixin, GrupoMixin, UsuarioMix
 @admin.register(Grupo)
 class GrupoAdmin(UsuarioMixin):
     list_display = (
+        "id",
         "grupo",
         "usuario_username",
         "fecha_creacion",
@@ -17,7 +18,7 @@ class GrupoAdmin(UsuarioMixin):
 
 @admin.register(UsuarioGrupo)
 class UsuarioGrupoAdmin(UsuarioMixin, GrupoMixin):
-    list_display = ("usuario_username", "grupo_grupo", "estudiando", "estrella")
+    list_display = ("id", "usuario_username", "grupo_grupo", "estudiando", "estrella")
     search_fields = ("grupo__grupo", "usuario__username")
     ordering = ("usuario__username", "grupo_id")
 
@@ -25,6 +26,7 @@ class UsuarioGrupoAdmin(UsuarioMixin, GrupoMixin):
 @admin.register(GrupoPalabra)
 class GrupoPalabraAdmin(GrupoMixin, PalabraMixin):
     list_display = (
+        "id",
         "grupo_grupo",
         "palabra_palabra",
     )

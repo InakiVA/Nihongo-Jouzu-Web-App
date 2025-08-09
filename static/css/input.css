@@ -71,7 +71,7 @@ h4 {
 
 .button-neutral {
   @apply h-10 min-w-12 btn btn-ghost shadow-none border-neutral-light bg-neutral-dark text-textcolor rounded-sm px-4;
-  @apply hover:bg-neutral-main;
+  @apply hover:bg-accent-main;
 }
 
 .button-main {
@@ -91,6 +91,7 @@ h4 {
 .select{
   @apply select select-ghost text-lg bg-neutral-dark border-neutral-light text-textcolor w-full;
   @apply hover:bg-neutral-main hover:shadow-sm;
+  @apply focus:bg-neutral-main;
 }
 
 .input {
@@ -120,7 +121,7 @@ h4 {
 }
 
 .tag{
-  @apply bg-neutral-main rounded-2xl px-2.5 py-0.5 text-textcolor;
+  @apply bg-neutral-main rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
 }
 
 .check-box{

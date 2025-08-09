@@ -1,0 +1,24 @@
+<form action="{{ url }}" method="post" class="flex w-full h-full">
+    {% csrf_token %}
+    <fieldset class="fieldset flex flex-auto gap-4">
+    {% if has_button_left %}
+    <div class="flex">
+        <button type="submit" class="button-secondary !font-semibold {{button_classes}}">{{button_text}}</button>
+    </div>
+    {% endif %}
+    {% if legend %}
+    <legend class="fieldset-legend">{{ legend }}</legend>
+    {% endif %}
+    <select class="select !w-full flex-1 bg-darkest text-white" name="{{name}}">
+    {% for op in options %}
+        <option value="{{ op }}" {% if op == selected %} selected {% endif %}>{{ op }}</option>
+    {% endfor %}
+    </select>
+    {% if not has_button_left %}
+    <div class="flex">
+        <button type="submit" class="button-secondary !font-semibold {{button_classes}}">{{button_text}}</button>
+    </div>
+    {% endif %}
+    </fieldset>
+</form>
+

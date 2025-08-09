@@ -8,7 +8,7 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import redirect, get_object_or_404
 import random
 
-from tags.models import Etiqueta
+from tags.models import Etiqueta, PalabraEtiqueta
 from groups.models import Grupo, UsuarioGrupo, GrupoPalabra
 from dictionary.models import Palabra, Significado, Lectura, Nota
 from progress.models import UsuarioPalabra
@@ -158,7 +158,7 @@ def preparar_estudio(request):
 
 @require_POST
 @login_required
-# () tipo ["Significado","Lectura","Nota"]
+# () tipo ["Significado","Lectura","Nota","Etiqueta"]
 def agregar_a_palabra(request, tipo):
     print("ALL POST DATA:", request.POST.dict())
 
@@ -177,6 +177,13 @@ def agregar_a_palabra(request, tipo):
     elif tipo == "Nota":
         input_value = request.POST.get("agregar_nota")
         Nota.objects.create(nota=input_value, palabra=palabra_obj, usuario=user)
+    elif tipo == "Etiqueta":
+        input_value = request.POST.get("agregar_etiqueta")
+        etiquetas_dict = request.session.get("new_etiquetas", {})
+        etiqueta_id = etiquetas_dict[input_value]
+        PalabraEtiqueta.objects.create(
+            etiqueta_id=etiqueta_id, palabra=palabra_obj, usuario=user
+        )
 
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
@@ -602,6 +609,17 @@ class SesionView(LoginRequiredMixin, TemplateView):
         else:
             lectura_pregunta = None
 
+        etiquetas_list = palabra_obj.etiquetas_objetos(usuario)
+        etiquetas_id_list = [e.etiqueta.id for e in etiquetas_list]
+        new_etiquetas_list = Etiqueta.objects.filter(
+            (Q(usuario=usuario) | Q(usuario__perfil__rol="admin"))
+            & ~Q(id__in=etiquetas_id_list)
+        ).order_by("etiqueta")
+        new_etiquetas_str = [e.etiqueta for e in new_etiquetas_list]
+        new_etiquetas_id = [e.id for e in new_etiquetas_list]
+        new_etiquetas_list = dict(zip(new_etiquetas_str, new_etiquetas_id))
+        self.request.session["new_etiquetas"] = new_etiquetas_list
+
         palabra_dict = {
             "id": palabra_id,
             "is_kanji": is_kanji,
@@ -609,7 +627,7 @@ class SesionView(LoginRequiredMixin, TemplateView):
             "significados": palabra_obj.significados_list(usuario),
             "lecturas": palabra_obj.lecturas_list(usuario),
             "notas": palabra_obj.notas_list(usuario),
-            "etiquetas": palabra_obj.etiquetas_list,
+            "etiquetas": palabra_obj.etiquetas_list(usuario),
             "progreso": palabra_obj.palabra_usuarios.get(
                 usuario=self.request.user
             ).progreso,
@@ -635,6 +653,8 @@ class SesionView(LoginRequiredMixin, TemplateView):
         context["agregar_significado"] = reverse("agregar_significado")
         context["agregar_lectura"] = reverse("agregar_lectura")
         context["agregar_nota"] = reverse("agregar_nota")
+        context["agregar_etiqueta"] = reverse("agregar_etiqueta")
+        context["nuevas_etiquetas"] = new_etiquetas_str
 
         print(dict(self.request.session))
         return context

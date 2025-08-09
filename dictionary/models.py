@@ -55,59 +55,49 @@ class Palabra(models.Model):
         return self.palabra
 
     def significados_objetos(self, usuario):
-        return list(
-            set(
-                self.significados.filter(
-                    Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
-                )
-            )
+        return self.significados.filter(
+            Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
         )
 
     def significados_list(self, usuario):
         significados = self.significados_objetos(usuario)
-        return list(set([str(s.significado) for s in significados]))
+        return [str(s.significado) for s in significados]
 
     def significados_str(self, usuario):
         significados = self.significados_list(usuario)
         return ", ".join(significados)
 
     def lecturas_objetos(self, usuario):
-        return list(
-            set(
-                self.lecturas.filter(
-                    Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
-                )
-            )
+        return self.lecturas.filter(
+            Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
         )
 
     def lecturas_list(self, usuario):
         lecturas = self.lecturas_objetos(usuario)
-        return list(set([str(l.lectura) for l in lecturas]))
+        return [str(l.lectura) for l in lecturas]
 
     def lecturas_str(self, usuario):
         lecturas = self.lecturas_list(usuario)
         return ", ".join(lecturas)
 
     def notas_objetos(self, usuario):
-        return list(
-            set(self.notas.filter(Q(usuario=usuario) | Q(usuario__perfil__rol="admin")))
-        )
+        return self.notas.filter(Q(usuario=usuario) | Q(usuario__perfil__rol="admin"))
 
     def notas_list(self, usuario):
         notas = self.notas_objetos(usuario)
-        return list(set([str(n.nota) for n in notas]))
+        return [str(n.nota) for n in notas]
 
     def notas_str(self, usuario):
         notas = self.notas_list(usuario)
         return ", ".join(notas)
 
-    @property
-    def etiquetas_objetos(self):
-        return [pe.etiqueta for pe in self.palabra_etiquetas.all()]
+    def etiquetas_objetos(self, usuario):
+        return self.palabra_etiquetas.filter(
+            Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
+        )
 
-    @property
-    def etiquetas_list(self):
-        return list(set([str(e.etiqueta) for e in self.etiquetas_objetos]))
+    def etiquetas_list(self, usuario):
+        return [str(e.etiqueta) for e in self.etiquetas_objetos(usuario)]
 
 
 class Significado(models.Model):
@@ -129,7 +119,7 @@ class Significado(models.Model):
         db_table = "Significados"
 
     def __str__(self):
-        return f"{self.palabra.palabra}: {self.significado}..."
+        return f"{self.palabra.palabra}: {self.significado}"
 
 
 class Lectura(models.Model):

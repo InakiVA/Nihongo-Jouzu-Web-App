@@ -23,6 +23,12 @@ urlpatterns = [
     path(
         "agregar-nota/", views.agregar_a_palabra, {"tipo": "Nota"}, name="agregar_nota"
     ),
+    path(
+        "agregar-etiqueta/",
+        views.agregar_a_palabra,
+        {"tipo": "Etiqueta"},
+        name="agregar_etiqueta",
+    ),
     # __ Checkboxes
     path("toggle-estudiando/", views.toggle_estudiando, name="toggle_estudiando"),
     path("toggle-aleatorio/", views.toggle_aleatorio, name="toggle_aleatorio"),

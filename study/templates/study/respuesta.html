@@ -48,13 +48,16 @@
         <div class="collapser collapse-arrow !border-neutral-main">
             <input type="checkbox"/>
             <div class="collapse-title font-semibold">Etiquetas</div>
-            <div class="collapse-content">
+            <div class="collapse-content ">
                 <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2 px-4">
                     {% for etiqueta in palabra.etiquetas %}
                     {% include "components/tag.html" with text=etiqueta %}         
                     {% endfor %}
-                </li>  
-            </div>          
+                </li> 
+                <div class="h-10  mt-4 ml-4">
+                    {% include "components/select_button.html" with name="agregar_etiqueta" url=agregar_etiqueta button_text="Agregar" options=nuevas_etiquetas button_classes="!text-sm  !px-8"%}             
+                </div>             
+            </div>
         </div> 
 
         <div class="collapser collapse-arrow !border-neutral-main">
