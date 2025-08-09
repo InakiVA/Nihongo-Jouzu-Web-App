@@ -3,6 +3,8 @@ from django.conf import settings
 from dictionary.models import Palabra
 from progress.models import UsuarioPalabra
 
+import datetime as dt
+
 # -- Atributos de grupos
 
 
@@ -38,6 +40,12 @@ class UsuarioGrupo(models.Model):
     )
     estudiando = models.BooleanField(default=False)
     estrella = models.BooleanField(default=False)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
+    ultima_modificacion = models.DateTimeField(auto_now_add=True)
+
+    def update_modificacion(self):
+        self.ultima_modificacion = dt.datetime.now()
+        print(self)
 
     @property
     def progreso(self):
@@ -81,6 +89,8 @@ class GrupoPalabra(models.Model):
         on_delete=models.CASCADE,
         related_name="palabra_grupos",
     )
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
+    ultima_modificacion = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = ("grupo", "palabra")

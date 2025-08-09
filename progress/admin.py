@@ -5,6 +5,14 @@ from core.admin_mixins import UsuarioMixin, PalabraMixin
 
 @admin.register(UsuarioPalabra)
 class UsuarioPalabraAdmin(UsuarioMixin, PalabraMixin):
-    list_display = ("id", "palabra_palabra", "usuario_username", "progreso", "estrella")
+    list_display = (
+        "id",
+        "palabra_palabra",
+        "usuario_username",
+        "progreso",
+        "estrella",
+        "fecha_creacion",
+        "ultima_modificacion",
+    )
     search_fields = ("palabra__palabra", "usuario__username")
     ordering = ("usuario__username", "palabra_id")

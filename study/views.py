@@ -137,6 +137,8 @@ def preparar_estudio(request):
     ajustes = request.session.get("inicio_ajustes", {})
     usuario = request.user
 
+    actualizar_grupos(usuario)
+
     palabras_qs = get_palabras_a_estudiar(usuario, ajustes)
     if not palabras_qs:
         messages.warning(
@@ -273,12 +275,18 @@ def cambiar_progreso(request):
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
+def actualizar_grupos(usuario):
+    grupos_estudiando = UsuarioGrupo.objects.filter(usuario=usuario, estudiando=True)
+    for grupo in grupos_estudiando:
+        grupo.update_modificacion()
+        grupo.save()
+
+
 def get_palabras_a_estudiar(usuario, ajustes):
     # 1. Obtener palabras de grupos con estudiando=True
     grupos_estudiando_ids = UsuarioGrupo.objects.filter(
         usuario=usuario, estudiando=True
     ).values_list("grupo_id", flat=True)
-
     palabras_ids = (
         GrupoPalabra.objects.filter(grupo_id__in=grupos_estudiando_ids)
         .values_list("palabra_id", flat=True)
@@ -433,7 +441,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
                     "estrella": ug.estrella,
                     "estudiando": ug.estudiando,
                     "fecha_creacion": ug.grupo.fecha_creacion,
-                    "ultima_modificacion": ug.grupo.ultima_modificacion,
+                    "ultima_modificacion": ug.ultima_modificacion,
                     "autor": ug.grupo.usuario.username,
                 }
             )

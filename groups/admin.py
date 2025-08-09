@@ -18,7 +18,15 @@ class GrupoAdmin(UsuarioMixin):
 
 @admin.register(UsuarioGrupo)
 class UsuarioGrupoAdmin(UsuarioMixin, GrupoMixin):
-    list_display = ("id", "usuario_username", "grupo_grupo", "estudiando", "estrella")
+    list_display = (
+        "id",
+        "usuario_username",
+        "grupo_grupo",
+        "estudiando",
+        "estrella",
+        "fecha_creacion",
+        "ultima_modificacion",
+    )
     search_fields = ("grupo__grupo", "usuario__username")
     ordering = ("usuario__username", "grupo_id")
 
@@ -29,6 +37,8 @@ class GrupoPalabraAdmin(GrupoMixin, PalabraMixin):
         "id",
         "grupo_grupo",
         "palabra_palabra",
+        "fecha_creacion",
+        "ultima_modificacion",
     )
     search_fields = ("grupo__grupo", "palabra__palabra")
     ordering = ("grupo_id", "palabra_id")

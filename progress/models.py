@@ -22,6 +22,8 @@ class UsuarioPalabra(models.Model):
         validators=[MinValueValidator(0), MaxValueValidator(100)],
     )
     estrella = models.BooleanField(default=False)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
+    ultima_modificacion = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = ("usuario", "palabra")

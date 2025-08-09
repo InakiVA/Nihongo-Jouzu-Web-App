@@ -13,6 +13,8 @@ class Etiqueta(models.Model):
         on_delete=models.CASCADE,
         related_name="etiquetas",
     )
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
+    ultima_modificacion = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = "Etiquetas"
@@ -37,7 +39,8 @@ class PalabraEtiqueta(models.Model):
         on_delete=models.CASCADE,
         related_name="palabra_etiquetas",
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
+    ultima_modificacion = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = ("palabra", "etiqueta", "usuario")
@@ -63,7 +66,8 @@ class GrupoEtiqueta(models.Model):
         on_delete=models.CASCADE,
         related_name="grupo_etiquetas",
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
+    ultima_modificacion = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = ("grupo", "etiqueta", "usuario")
