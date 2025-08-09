@@ -1,7 +1,6 @@
 # python manage.py shell
 from django.db import transaction
 from django.db.models import Min, Count
-from tags.models import PalabraEtiqueta, GrupoEtiqueta
 from dictionary.models import Palabra, Significado, Lectura, Nota
 
 
@@ -16,7 +15,6 @@ def dedupe_model(Model, fields):
             .annotate(min_id=Min("id"), cnt=Count("id"))
             .filter(cnt__gt=1)
         )
-
         to_delete_ids = []
         for g in dup_groups:
             # Build a filter matching the group
@@ -29,25 +27,13 @@ def dedupe_model(Model, fields):
                     .values_list("id", flat=True)
                 )
             )
-
         if to_delete_ids:
             Model.objects.filter(id__in=to_delete_ids).delete()
         return len(to_delete_ids)
 
 
-# --- Choose your fields ---
-# If you want “logical” duplicates (recommended):
-pe_fields = ["palabra_id", "etiqueta_id", "usuario_id"]  # ignore created_at
-ge_fields = ["grupo_id", "etiqueta_id", "usuario_id"]
-pl_fields = ["palabra_id", "etiqueta_id", "usuario_id"]
+fields = ["palabra", "significado", "usuario_id"]  # ignore created_at
 
 
-# If you really want the *entire row* (strict):
-# pe_fields = ['palabra_id', 'etiqueta_id', 'usuario_id', 'created_at']
-# ge_fields = ['grupo_id', 'etiqueta_id', 'usuario_id', 'created_at']
-
-deleted_pe = dedupe_model(PalabraEtiqueta, pe_fields)
-deleted_ge = dedupe_model(GrupoEtiqueta, ge_fields)
-print(
-    f"Deleted {deleted_pe} PalabraEtiqueta duplicates, {deleted_ge} GrupoEtiqueta duplicates"
-)
+deleted = dedupe_model(Significado, fields)
+print(f"Deleted {deleted} duplicates")
