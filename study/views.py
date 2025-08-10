@@ -144,17 +144,20 @@ def preparar_estudio(request):
         messages.warning(
             request, "No hay palabras que estudiar con los filtros actuales."
         )
-        return redirect(request.META.get("HTTP_REFERER", "/"))
+        return redirect("inicio")
     palabras_id = [str(palabra.id) for palabra in palabras_qs]
     request.session["palabras_a_estudiar"] = palabras_id
     request.session["palabra_actual"] = palabras_id[0]
     contestadas = {}
     correctas = {}
+    respuestas_incorrectas = {}
     for key in palabras_id:
         contestadas[key] = False
         correctas[key] = False
+        respuestas_incorrectas[key] = []
     request.session["palabras_contestadas"] = contestadas
     request.session["palabras_correctas"] = correctas
+    request.session["respuestas_incorrectas"] = respuestas_incorrectas
     return redirect("estudio")
 
 
@@ -216,40 +219,71 @@ def checar_pregunta(request):
         request.session["palabras_contestadas"] = palabras_contestadas
         request.session["palabras_correctas"] = palabras_correctas
 
+        if not is_correct:
+            respuestas_incorrectas = request.session.get("respuestas_incorrectas", {})
+            respuestas_incorrectas[palabra_id].append(answer_input)
+            request.session["respuestas_incorrectas"] = respuestas_incorrectas
+
     return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+# {} False si quedan por tener correctas, True si todas correctas
+@require_POST
+@login_required
+def todas_contestadas_correctas(request):
+    palabras_contestadas = request.session.get("palabras_contestadas", {})
+    for palabra in palabras_contestadas:
+        if not palabras_contestadas[palabra]:
+            return False
+    palabras_ids = []
+    palabras_correctas = request.session.get("palabras_correctas", {})
+    for palabra in palabras_correctas:
+        if not palabras_correctas[palabra]:
+            palabras_ids.append(palabra)
+            palabras_contestadas[palabra] = False
+    if not palabras_ids:
+        return redirect("resultados")
+    request.session["palabras_a_estudiar"] = palabras_ids
+    request.session["index_palabra_pregunta"] = 0
+    request.session["palabra_actual"] = palabras_ids[0]
+    request.session["palabras_contestadas"] = palabras_contestadas
+    return False
 
 
 @require_POST
 @login_required
 def cambiar_pregunta(request):
     action = request.POST.get("action")
-    palabras_ids = request.session.get("palabras_a_estudiar", [])
-    palabras_contestadas = request.session.get("palabras_contestadas")
-    index = request.session.get("index_palabra_pregunta", 0)
-    palabra_id = request.session.get("palabra_actual", palabras_ids[index])
+    if todas_contestadas_correctas(request):
+        return redirect(reverse_lazy("resultados"))
+    else:
+        palabras_ids = request.session.get("palabras_a_estudiar", [])
+        palabras_contestadas = request.session.get("palabras_contestadas")
+        index = request.session.get("index_palabra_pregunta", 0)
+        palabra_id = request.session.get("palabra_actual", palabras_ids[index])
 
-    if action == "next" or action == "next_unanswered":
-        index = (index + 1) % len(palabras_ids)  # cíclico hacia adelante
-        palabra_id = palabras_ids[index]
-        original_id = palabra_id
-        if action == "next_unanswered":
-            while palabras_contestadas[palabra_id] and palabra_id != original_id:
-                # skip a no contestada y al loopear, break
-                index = (index + 1) % len(palabras_ids)  # cíclico hacia adelante
-                palabra_id = palabras_ids[index]
-    elif action == "previous" or action == "previous_unanswered":
-        index = (index - 1) % len(palabras_ids)  # cíclico hacia atrás
-        palabra_id = palabras_ids[index]
-        original_id = palabra_id
-        if action == "previous_unanswered":
-            while palabras_contestadas[palabra_id] and palabra_id != original_id:
-                # skip a no contestada y al loopear, break
-                index = (index - 1) % len(palabras_ids)  # cíclico hacia atrás
-                palabra_id = palabras_ids[index]
+        if action == "next" or action == "next_unanswered":
+            index = (index + 1) % len(palabras_ids)  # cíclico hacia adelante
+            palabra_id = palabras_ids[index]
+            original_id = palabra_id
+            if action == "next_unanswered":
+                while palabras_contestadas[palabra_id] and palabra_id != original_id:
+                    # skip a no contestada y al loopear, break
+                    index = (index + 1) % len(palabras_ids)  # cíclico hacia adelante
+                    palabra_id = palabras_ids[index]
+        elif action == "previous" or action == "previous_unanswered":
+            index = (index - 1) % len(palabras_ids)  # cíclico hacia atrás
+            palabra_id = palabras_ids[index]
+            original_id = palabra_id
+            if action == "previous_unanswered":
+                while palabras_contestadas[palabra_id] and palabra_id != original_id:
+                    # skip a no contestada y al loopear, break
+                    index = (index - 1) % len(palabras_ids)  # cíclico hacia atrás
+                    palabra_id = palabras_ids[index]
 
-    request.session["index_palabra_pregunta"] = index
-    request.session["palabra_actual"] = palabra_id
-    return redirect(request.META.get("HTTP_REFERER", "/"))
+        request.session["index_palabra_pregunta"] = index
+        request.session["palabra_actual"] = palabra_id
+        return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
 @require_POST
@@ -589,18 +623,22 @@ class HomeView(LoginRequiredMixin, TemplateView):
         return user_agent in set("mobile", "android", "iphone", "ipad")
 
 
+class ResultadosView(LoginRequiredMixin, TemplateView):
+    template_name = "study/resultados.html"
+
+
 class SesionView(LoginRequiredMixin, TemplateView):
     template_name = "study/sesion.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         usuario = self.request.user
-
         index = self.request.session.get("index_palabra_pregunta", 0)
         palabras_ids = self.request.session.get("palabras_a_estudiar", [])
         palabra_id = self.request.session.get("palabra_actual")
         palabras_contestadas = self.request.session.get("palabras_contestadas", {})
         palabras_correctas = self.request.session.get("palabras_correctas", {})
+        respuestas_incorrectas = self.request.session.get("respuestas_incorrectas", {})
 
         palabra_obj = get_object_or_404(Palabra, id=palabra_id)
         is_kanji = palabra_obj.palabra_etiquetas.filter(
@@ -644,10 +682,14 @@ class SesionView(LoginRequiredMixin, TemplateView):
             ).estrella,
             "pregunta": str(pregunta_list[0]),
             "lecturas_pregunta": lectura_pregunta,
+            "respuestas_incorrectas": ", ".join(
+                respuestas_incorrectas[palabra_id],
+            ),
         }
 
         self.request.session["respuestas"] = palabra_obj.respuestas
 
+        context["finalizar_url"] = reverse_lazy("resultados")
         context["palabra"] = palabra_dict
         context["palabra_contestada"] = palabras_contestadas[palabra_id]
         context["palabra_correcta"] = palabras_correctas[palabra_id]
