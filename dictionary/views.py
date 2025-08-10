@@ -44,12 +44,14 @@ class DictionaryView(LoginRequiredMixin, TemplateView):
             "largas",
             "para que amarre parejo",
             "y ver si se elimina",
+            "ffffffffffffffffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaak",
         ]
         context["lecturas"] = ", ".join(lecturas)
         significados = [
             "este significado es muy largo",
             "pero bueno ya qué se le va a hacer",
             "no me queda de otra más que testear con textos bien largos",
+            "una y otra vez hasta que se pase a otro renglón",
         ]
         context["significados"] = ", ".join(significados)
         tags = (
@@ -76,6 +78,12 @@ class DictionaryView(LoginRequiredMixin, TemplateView):
         )
         context["tags"] = tags
         context["side_to_side"] = "Kanji" in tags
+        context["palabra"] = {
+            "palabra": "お元気でいらっしゃいますか",
+            "lecturas": ", ".join(lecturas),
+            "significados": ", ".join(significados),
+            "etiquetas": tags,
+        }
 
         return context
 

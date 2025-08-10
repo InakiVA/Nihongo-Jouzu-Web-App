@@ -626,6 +626,101 @@ class HomeView(LoginRequiredMixin, TemplateView):
 class ResultadosView(LoginRequiredMixin, TemplateView):
     template_name = "study/resultados.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        usuario = self.request.user
+
+        # Palabras de sesión
+        palabras_inputs_dict = self.request.session.get("respuestas_incorrectas", {})
+
+        # -- esto solo es para ordenar por más intentos incorrectos primero
+        palabras_inputs_list = list(
+            zip(palabras_inputs_dict, palabras_inputs_dict.values())
+        )
+        palabras_inputs_list = sorted(
+            palabras_inputs_list, key=lambda x: len(x[1]), reverse=True
+        )
+        palabras_inputs_dict = dict(palabras_inputs_list)
+        # -- fin de orden
+
+        # Palabras que están contestadas o previamente intentadas pero mal
+        palabras_contestadas = self.request.session.get("palabras_contestadas", {})
+        palabras_contestadas_list = []
+        for palabra_id in palabras_contestadas:
+            if (
+                palabras_contestadas[palabra_id]
+                or len(palabras_inputs_dict[palabra_id]) > 0
+            ):
+                palabras_contestadas_list.append(palabra_id)
+        palabras_contestadas_total = max(len(palabras_contestadas_list), 1)
+
+        palabras_incorrectas_id = []
+        palabras_correctas_id = []
+        for palabra in palabras_contestadas_list:
+            if len(palabras_inputs_dict[palabra]) > 0:
+                palabras_incorrectas_id.append(palabra)
+            else:
+                palabras_correctas_id.append(palabra)
+        calificacion = int(
+            (len(palabras_correctas_id) / palabras_contestadas_total) * 100
+        )
+
+        context["calificacion"] = calificacion
+        context["balance"] = (
+            f"{len(palabras_correctas_id)} de {len(palabras_contestadas_list)}"
+        )
+
+        palabras_incorrectas = []
+        palabras_correctas = []
+
+        for palabra_id in palabras_incorrectas_id:
+            palabra_obj = get_object_or_404(Palabra, id=palabra_id)
+            palabras_incorrectas.append(
+                {
+                    "palabra": palabra_obj.palabra,
+                    "significados": palabra_obj.significados_str(usuario),
+                    "lecturas": palabra_obj.lecturas_str(usuario),
+                    "etiquetas": palabra_obj.etiquetas_list(usuario),
+                    "notas": palabra_obj.notas_str(usuario),
+                    "progreso": palabra_obj.palabra_usuarios.get(
+                        usuario=self.request.user
+                    ).progreso,
+                    "estrella": palabra_obj.palabra_usuarios.get(
+                        usuario=self.request.user
+                    ).estrella,
+                    "incorrectas": ", ".join(palabras_inputs_dict[palabra_id]),
+                }
+            )
+
+        for palabra_id in palabras_correctas_id:
+            palabra_obj = get_object_or_404(Palabra, id=palabra_id)
+            palabras_correctas.append(
+                {
+                    "palabra": palabra_obj.palabra,
+                    "significados": palabra_obj.significados_str(usuario),
+                    "lecturas": palabra_obj.lecturas_str(usuario),
+                    "etiquetas": palabra_obj.etiquetas_list(usuario),
+                    "notas": palabra_obj.notas_str(usuario),
+                    "progreso": palabra_obj.palabra_usuarios.get(
+                        usuario=self.request.user
+                    ).progreso,
+                    "estrella": palabra_obj.palabra_usuarios.get(
+                        usuario=self.request.user
+                    ).estrella,
+                }
+            )
+
+        context["incorrectas"] = palabras_incorrectas
+        context["correctas"] = palabras_correctas
+
+        print(dict(self.request.session))
+
+        return context
+
+    def is_mobile(request):
+        user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
+        return user_agent in set("mobile", "android", "iphone", "ipad")
+
 
 class SesionView(LoginRequiredMixin, TemplateView):
     template_name = "study/sesion.html"

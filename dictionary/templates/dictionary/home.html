@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block content %}
 <div class="space-y-4">
-{% include "components/word_card.html" with title="お元気でいらっしゃいますか" lecturas=lecturas significados=significados tags=tags notas=significados side_to_side=False%}
+{% include "components/word_card.html" with palabra=palabra%}
 {% include "components/word_card.html" with title="気" lecturas=lecturas significados=significados tags=tags notas=significados side_to_side=side_to_side%}
 <div class="carousel w-full">
   <div id="slide1" class="carousel-item relative w-full">

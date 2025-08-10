@@ -1,26 +1,25 @@
-<div class="m-2 text-xs">
-    {% if progress == 0 %}
-        <div class="radial-progress text-progress-0" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
-            {{ progress }}%
-        </div>
-    {% elif progress < 33 %}
-        <div class="radial-progress text-progress-33" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
-            {{ progress }}%
-        </div>
-    {% elif progress < 66 %}
-        <div class="radial-progress text-progress-66" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
-            {{ progress }}%            
-        </div>        
-    {% elif progress < 100 %}
-        <div class="radial-progress text-progress-99" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
-            {{ progress }}%
-        </div>
-    {% else %}
-        <div class="radial-progress text-progress-100" style="--value:{{ progress }}; --size:2.5rem;" aria-valuenow="{{ progress }}" role="progressbar">
-            {{ progress }}%
-        </div>
-    {% endif %}
-</div>
+{% if progress == 0 %}
+    <div class="radial-progress text-progress-0 text-xs {{extra_classes}}" style="--value:{{ progress }}; --size:{{size | default:'2.5' }}rem;" aria-valuenow="{{ progress }}" role="progressbar">
+        {{ text }}%
+    </div>
+{% elif progress < 33 %}
+    <div class="radial-progress text-progress-33 text-xs {{extra_classes}}" style="--value:{{ progress }}; --size:{{size | default:'2.5' }}rem;" aria-valuenow="{{ progress }}" role="progressbar">
+        {{ text }}%
+    </div>
+{% elif progress < 66 %}
+    <div class="radial-progress text-progress-66 text-xs {{extra_classes}}" style="--value:{{ progress }}; --size:{{size | default:'2.5' }}rem;" aria-valuenow="{{ progress }}" role="progressbar">
+        {{ text }}%            
+    </div>        
+{% elif progress < 100 %}
+    <div class="radial-progress text-progress-99 text-xs {{extra_classes}}" style="--value:{{ progress }}; --size:{{size | default:'2.5' }}rem;" aria-valuenow="{{ progress }}" role="progressbar">
+        {{ text }}%
+    </div>
+{% else %}
+    <div class="radial-progress text-progress-100 text-xs {{extra_classes}}" style="--value:{{ progress }}; --size:{{size | default:'2.5' }}rem;" aria-valuenow="{{ progress }}" role="progressbar">
+        {{ text }}%
+    </div>
+{% endif %}
+
 
 
 
