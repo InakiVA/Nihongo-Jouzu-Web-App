@@ -19,20 +19,25 @@
 
     << incluir respuesta inputeada, abajo de la palabra
 
-    ++ loop: Repetición de incorrectas una vez que se completen
-    ++ al acabar primera vuelta, guardar cuántas se tuvieron bien para luego mostrar x/y correctas
+    << loop: Repetición de incorrectas una vez que se completen
+    << al acabar primera vuelta, guardar cuántas se tuvieron bien para luego mostrar x/y correctas
 
 == Vista de calificación
-    ++ cards de palabras correctas e incorrectas
+    << cards de palabras correctas e incorrectas
     << rueda de calificación
     << que mejor sea otra vista o algo, una variable que se lee en html, para evitar implementar las barras de progreso y pregunta
     << diccionario con ids de palabras y lista de respuestas dadas, si está bien que no se agregue a la lista
-    ++ cards de palabras con significados y respuesta dada
+    << cards de palabras con significados y respuesta dada
     
     << que solo aparezca una vez que se pica finalizar (o también al todas bien)
 
 == Refactorizar modelos
     << PalabraEtiqueta, GrupoEtiqueta: usuario que realizó relación con etiqueta
     ++ UsuarioPalabra: fecha_creación, ultima_modificacion
-    
+
+
+== Vista de grupos
+== Vista de diccionario
+== Vista de palabra-detalles
+== Vista de usuario
 

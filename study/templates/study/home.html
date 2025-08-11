@@ -14,15 +14,17 @@
     <div class="{% if is_mobile %} flex flex-col {% else %} flex flex-row basis-1/2 {% endif %}">           
         <div class="flex flex-col space-y-4 p-4 w-full">
             <h2>Grupos de estudio</h2>
-            <div class="flex flex-row w-auto flex-wrap overflow-auto whitespace-nowrap gap-2 py-2">
-                {% for filtro in filtros_grupos %}
-                {% include "components/filter_button.html" with text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
-                {% endfor %}
-            </div> 
+            
             <div class="space-y-2">       
                 <div>
                 {% include "components/searchbar.html" with name="buscar_grupo" method="get" value=buscar_grupo_input placeholder="Buscar grupo:"%}
-                </div>         
+                </div>     
+                <legend class="fieldset-legend">Filtros</legend>
+            <div class="flex flex-row w-auto flex-wrap overflow-auto whitespace-nowrap gap-2 py-2">                
+                {% for filtro in filtros_grupos %}
+                {% include "components/filter_button.html" with text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
+                {% endfor %}
+            </div>     
                 <div class="flex flex-row items-center justify-between space-x-4">
                     {% include "components/select.html" with options=orden_opciones selected=orden_elegido legend="Orden" url=select_orden_url%}
                     <div class="flex flex-row space-x-2 items-center justify-between mt-7">
@@ -36,16 +38,20 @@
         </div>
         <div class="divider before:bg-neutral-main after:bg-neutral-main {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %}"></div>        
         <div class="flex flex-col basis-1/2 w-full">
-            <div class="space-y-2 p-4 w-full">
-                <h2 class="pb-2">Preguntas</h2>
-                {% include "components/checkbox.html" with text="Orden aleatorio" url=aleatorio_url id="aleatorio_id" is_selected=is_aleatorio%}
+            <div class="space-y-4 p-4 w-full">
+                <h2>Preguntas</h2>
                 {% include "components/select.html" with options=idioma_preguntas_opciones selected=idioma_preguntas_elegido legend="Idioma" url=idioma_preguntas_url%}
+                {% include "components/checkbox.html" with text="Orden aleatorio" url=aleatorio_url id="aleatorio_id" is_selected=is_aleatorio%}
+                
             </div>
             <div class="divider before:bg-neutral-main after:bg-neutral-main px-4"></div>
-            <div class="flex flex-col space-y-2 place-content-center p-4">
-                <h2 class="pb-2">Filtros de palabras</h2>
-                {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_palabras_url id="filtros_palabras_switch_id" is_selected=on_filtros_palabras %}
-                <div class="flex flex-row w-auto flex-wrap overflow-auto gap-2 pb-4">
+            <div class="flex flex-col gap-4 place-content-center p-4">
+                <h2>Palabras</h2>
+                <div class="flex flex-row gap-4 items-end">
+                    <legend class="fieldset-legend">Filtros</legend>
+                    {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_palabras_url id="filtros_palabras_switch_id" is_selected=on_filtros_palabras %}
+                </div>
+                <div class="flex flex-row w-auto flex-wrap overflow-auto gap-2">
                     {% for filtro in filtros_palabras %}
                     {% include "components/filter_button.html" with text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
                     {% endfor %}
@@ -54,7 +60,10 @@
                     <input type="checkbox" {% if is_open_collapse %} checked {% endif %}/>
                     <div class="collapse-title font-semibold">Etiquetas</div>
                     <div class="collapse-content space-y-4">
-                        {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_etiquetas_url id="filtros_etiquetas_switch_id" is_selected=on_filtros_etiquetas %}
+                        <div class="flex flex-row gap-4 items-end">
+                            <legend class="fieldset-legend">Filtros</legend>
+                            {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_etiquetas_url id="filtros_etiquetas_switch_id" is_selected=on_filtros_etiquetas %}
+                        </div>
                         <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2">
                             {% for tag in tags %}
                             {% include "components/filter_button.html" with text=tag.text id=tag.id is_active=tag.is_active url=tag.url %}         

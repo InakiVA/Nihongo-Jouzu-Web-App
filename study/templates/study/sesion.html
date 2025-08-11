@@ -7,16 +7,16 @@
     </div>
   </div>  
   <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between w-full gap-x-4">
-    <h2 class="whitespace-nowrap w-52">Pregunta: {{ index }}</h2>        
-    <div class="flex flex-row items-center justify-end gap-x-4 flex-grow">
+     
+    <div class="flex flex-row items-center justify-center gap-x-4 w-full">
       {% include "components/button.html" with icon="components/icons/arrow_left_double.html" name="action" value="previous_unanswered" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
       {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
-      {% include "components/progreso.html" with value=index_porcentaje %}
+      <h4 class="whitespace-nowrap text-center">Pregunta {{ index }}</h4>       
       {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
       {% include "components/button.html" with icon="components/icons/arrow_right_double.html" name="action" value="next_unanswered" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
     </div>
   </div>   
-  <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between w-full gap-x-4">
+  <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between gap-x-4">
     <div class="flex flex-row items-center">
       {% include "components/icon_swap_button.html" with id=palabra.id is_active=palabra.estrella url=estrella_url on="components/icons/star.html" oncolor="star-on" off="components/icons/star_off.html" offcolor="star-off" %}
     </div>

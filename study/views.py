@@ -263,24 +263,23 @@ def cambiar_pregunta(request):
         palabra_id = request.session.get("palabra_actual", palabras_ids[index])
 
         if action == "next" or action == "next_unanswered":
+            original_id = palabra_id
             index = (index + 1) % len(palabras_ids)  # cíclico hacia adelante
             palabra_id = palabras_ids[index]
-            original_id = palabra_id
             if action == "next_unanswered":
                 while palabras_contestadas[palabra_id] and palabra_id != original_id:
                     # skip a no contestada y al loopear, break
                     index = (index + 1) % len(palabras_ids)  # cíclico hacia adelante
                     palabra_id = palabras_ids[index]
         elif action == "previous" or action == "previous_unanswered":
+            original_id = palabra_id
             index = (index - 1) % len(palabras_ids)  # cíclico hacia atrás
             palabra_id = palabras_ids[index]
-            original_id = palabra_id
             if action == "previous_unanswered":
                 while palabras_contestadas[palabra_id] and palabra_id != original_id:
                     # skip a no contestada y al loopear, break
                     index = (index - 1) % len(palabras_ids)  # cíclico hacia atrás
                     palabra_id = palabras_ids[index]
-
         request.session["index_palabra_pregunta"] = index
         request.session["palabra_actual"] = palabra_id
         return redirect(request.META.get("HTTP_REFERER", "/"))
