@@ -89,19 +89,19 @@ h4 {
 }
 
 .select{
-  @apply select select-ghost text-lg bg-neutral-dark border-neutral-light text-textcolor w-full;
+  @apply select select-ghost text-lg !font-light bg-neutral-dark border-neutral-light text-textcolor w-full;
   @apply hover:bg-neutral-main hover:shadow-sm;
   @apply focus:bg-neutral-main;
 }
 
 .input {
-  @apply input input-neutral rounded-lg flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
+  @apply input input-neutral rounded-lg !font-light flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
   @apply focus:bg-neutral-main hover:bg-neutral-main;
 }
 
 .input_text {
   @apply text-lg text-textcolor wrap-break-word;
-  @apply placeholder:text-neutral-light placeholder:italic;
+  @apply placeholder:text-textcolor-dark placeholder:italic;
 }
 
 .textarea {
@@ -150,6 +150,10 @@ h4 {
 .collapser{
   @apply collapse bg-transparent border-1 border-neutral-light;
   @apply hover:bg-neutral-main hover:shadow-sm;
+}
+
+.collapse-title{
+  @apply collapse-title font-light text-lg;
 }
 
 .list_header {

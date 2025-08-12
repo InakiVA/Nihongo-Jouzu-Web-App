@@ -6,6 +6,7 @@ from django.urls import reverse_lazy, reverse
 from django.db.models import Q
 from django.views.decorators.http import require_POST
 from django.shortcuts import redirect, get_object_or_404
+from django.db import transaction, IntegrityError
 import random
 
 from tags.models import Etiqueta, PalabraEtiqueta
@@ -34,6 +35,27 @@ def toggle_estudiando(request):
     entry = get_object_or_404(UsuarioGrupo, usuario=user, grupo_id=grupo_id)
     entry.estudiando = not entry.estudiando
     entry.save()
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+@require_POST
+@login_required
+def toggle_palabra_en_grupo(request):
+    grupo_id = request.POST.get("check_id")
+    palabra_id = request.session.get("palabra_actual")
+    try:
+        with transaction.atomic():
+            obj, new = GrupoPalabra.objects.get_or_create(
+                grupo_id=grupo_id,
+                palabra_id=palabra_id,
+            )
+            if new:
+                messages.success(request, "Añadido al grupo.")
+            else:
+                obj.delete()
+                messages.info(request, "Quitado del grupo.")
+    except IntegrityError:
+        messages.error(request, "Conflicto de integridad. Intenta de nuevo.")
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
@@ -755,10 +777,16 @@ class SesionView(LoginRequiredMixin, TemplateView):
             (Q(usuario=usuario) | Q(usuario__perfil__rol="admin"))
             & ~Q(id__in=etiquetas_id_list)
         ).order_by("etiqueta")
-        new_etiquetas_str = [e.etiqueta for e in new_etiquetas_list]
+        new_etiquetas_str_list = [e.etiqueta for e in new_etiquetas_list]
         new_etiquetas_id = [e.id for e in new_etiquetas_list]
-        new_etiquetas_list = dict(zip(new_etiquetas_str, new_etiquetas_id))
+        new_etiquetas_list = dict(zip(new_etiquetas_str_list, new_etiquetas_id))
         self.request.session["new_etiquetas"] = new_etiquetas_list
+        context["nuevas_etiquetas"] = new_etiquetas_str_list
+
+        grupos_usuario = list(Grupo.objects.filter(usuario=usuario))
+        grupos_de_palabra_de_usuario = set(
+            Grupo.objects.filter(usuario=usuario, grupo_palabras__palabra=palabra_obj)
+        )
 
         palabra_dict = {
             "id": palabra_id,
@@ -768,6 +796,7 @@ class SesionView(LoginRequiredMixin, TemplateView):
             "lecturas": palabra_obj.lecturas_list(usuario),
             "notas": palabra_obj.notas_list(usuario),
             "etiquetas": palabra_obj.etiquetas_list(usuario),
+            "grupos": palabra_obj.grupos_list(usuario),
             "progreso": palabra_obj.palabra_usuarios.get(
                 usuario=self.request.user
             ).progreso,
@@ -782,6 +811,18 @@ class SesionView(LoginRequiredMixin, TemplateView):
         }
 
         self.request.session["respuestas"] = palabra_obj.respuestas
+
+        grupos_checks = []
+        for grupo in grupos_usuario:
+            grupos_checks.append(
+                {
+                    "id": grupo.id,
+                    "text": grupo.grupo,
+                    "is_selected": grupo in grupos_de_palabra_de_usuario,
+                }
+            )
+        context["grupos_checks"] = grupos_checks
+        context["grupos_checks_url"] = reverse("toggle_palabra_en_grupo")
 
         context["finalizar_url"] = reverse_lazy("resultados")
         context["palabra"] = palabra_dict
@@ -798,11 +839,10 @@ class SesionView(LoginRequiredMixin, TemplateView):
         context["agregar_lectura"] = reverse("agregar_lectura")
         context["agregar_nota"] = reverse("agregar_nota")
         context["agregar_etiqueta"] = reverse("agregar_etiqueta")
-        context["nuevas_etiquetas"] = new_etiquetas_str
 
         print(dict(self.request.session))
         return context
 
     def is_mobile(request):
         user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
-        return user_agent in set("mobile", "android", "iphone", "ipad")
+        return user_agent in set("mobile", "android", "iphone")

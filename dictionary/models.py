@@ -5,7 +5,6 @@ from django.db.models import Q
 import random
 import core.utils as ut
 
-
 # -- Diccionario central del vocabulario
 
 
@@ -98,6 +97,14 @@ class Palabra(models.Model):
 
     def etiquetas_list(self, usuario):
         return [str(e.etiqueta) for e in self.etiquetas_objetos(usuario)]
+
+    def grupos_objetos(self, usuario):
+        return self.palabra_grupos.filter(
+            Q(grupo__usuario=usuario) | Q(grupo__usuario__perfil__rol="admin")
+        )
+
+    def grupos_list(self, usuario):
+        return [str(g.grupo) for g in self.grupos_objetos(usuario)]
 
 
 class Significado(models.Model):

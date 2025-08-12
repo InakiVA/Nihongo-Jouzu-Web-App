@@ -87,6 +87,6 @@ class DictionaryView(LoginRequiredMixin, TemplateView):
 
         return context
 
-    """def is_mobile(request):
+    def is_mobile(request):
         user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
-        return any(m in user_agent for m in ["mobile", "android", "iphone", "ipad"])"""
+        return any(m in user_agent for m in ["mobile", "android", "iphone"])

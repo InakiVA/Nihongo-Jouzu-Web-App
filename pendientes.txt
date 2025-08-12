@@ -6,10 +6,10 @@
         << "" notas
         << hacerlo desde el fetch del modelo, lista de objetos. este debe recibir el usuario como input
 
-    ++ mostrar grupos a los que pertenece cada palabra en vista de respuesta
-        && estos solo deben de ser grupos del usuario, NO del admin también
+    << mostrar grupos a los que pertenece cada palabra en vista de respuesta
+        << estos solo deben de ser grupos del usuario, NO del admin también - nel, sí muestra los del admin pero no son modificables
 
-    ++ agregar palabra a grupos desde respuesta, solo creados por usuario
+    << agregar palabra a grupos desde respuesta, solo creados por usuario
 
     << agregar tags a palabra desde respuesta
         << se debe refactorizar el modelo de PalabraEtiqueta para incluir quién hizo la relación
@@ -33,11 +33,54 @@
 
 == Refactorizar modelos
     << PalabraEtiqueta, GrupoEtiqueta: usuario que realizó relación con etiqueta
-    ++ UsuarioPalabra: fecha_creación, ultima_modificacion
+    << UsuarioPalabra: fecha_creación, ultima_modificacion - ya estaba my g
 
+== Vista de búsqueda:
+    ++ Palabras con word card, hyperlink a palabra-detalles
+    ?? Incluir búsqueda de grupos
+    ?? Incluir búsqueda de tags - palabras o grupos que tengan como tag el input dado mejor
+
+-- CRUD:
+
+== Vista de palabras
+    ++ Crear palabra
+    ++ Lista de palabras
+        ++ Cambiar "Diccionario" a "Palabras" en navbar y urls
+        ++ lista con estrella y progreso
+    ++ Filtros por etiqueta, estrella, progreso, creador
+
+== Vista de palabra-detalles
+    $$ vista normal con un botón de editar toggle, eliminar aparece al picar editar
+    ++ Editar palabra
+    ++ Eliminar palabra
+    ++ Agregar lecturas, significados, notas, etiquetas
+    ++ Editar ""
+    ++ Eliminar "" 
+    ++ Agregar a grupo, eliminar de grupo
+    ++ Fecha de creación
+    ++ Último estudio
+    ++ Estrella y progreso- modificables en modo editar
 
 == Vista de grupos
-== Vista de diccionario
-== Vista de palabra-detalles
+    ++ Crear grupo
+    ++ Lista de grupos con estrella y progreso
+        ?? cantidad de palabras en grupo
+
+== Vista de grupo-detalles
+    ++ Progreso, descripcion
+    ++ Lista de palabras en grupo
+    ++ Botón toggle con mismas propiedades de edición y eliminación que palabra
+        ++ Agregar palabras
+        ++ Agregar etiquetas
+    ++ Filtros por estrella, progreso, creador
+    .. omitir grupo_etiquetas hasta encontrarle propósito funcional
+
+== Vista de etiquetas
+    ++ Agregar etiquetas al navbar
+    ++ CRUD
+    .. omitir grupo_etiquetas hasta encontrarle propósito funcional
+
 == Vista de usuario
+
+
 

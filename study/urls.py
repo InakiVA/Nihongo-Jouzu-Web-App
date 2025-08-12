@@ -33,6 +33,11 @@ urlpatterns = [
     # __ Checkboxes
     path("toggle-estudiando/", views.toggle_estudiando, name="toggle_estudiando"),
     path("toggle-aleatorio/", views.toggle_aleatorio, name="toggle_aleatorio"),
+    path(
+        "toggle-palabra-en-grupo",
+        views.toggle_palabra_en_grupo,
+        name="toggle_palabra_en_grupo",
+    ),
     # __ Switches
     path("toggle-descendente/", views.toggle_descendente, name="toggle_descendente"),
     path(

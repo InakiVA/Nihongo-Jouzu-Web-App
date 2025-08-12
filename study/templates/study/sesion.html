@@ -1,17 +1,17 @@
 {% extends "base.html" %} {% block content %}
 <div class="flex flex-col flex-auto px-4 gap-4">
-  <div class="flex flex-row justify-between w-full gap-x-4 mb-2">
+  <div class="flex flex-row justify-between w-full gap-x-4">
     <h4 class="text-start">Sesión de estudio</h4>
     <div>
-      {% include "components/navigation_button.html" with url=finalizar_url text="Finalizar" extra_classes="button-main !text-2xl !font-bold !p-8" name="finalizar" %}      
+      {% include "components/navigation_button.html" with url=finalizar_url text="Finalizar" extra_classes="button-main !text-2xl !font-bold !px-8 !py-6" name="finalizar" %}      
     </div>
   </div>  
   <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between w-full gap-x-4">
      
-    <div class="flex flex-row items-center justify-center gap-x-4 w-full">
+    <div class="flex flex-row justify-center gap-x-4 w-full">
       {% include "components/button.html" with icon="components/icons/arrow_left_double.html" name="action" value="previous_unanswered" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
       {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
-      <h4 class="whitespace-nowrap text-center">Pregunta {{ index }}</h4>       
+      <h2 class="!text-4xl">Pregunta {{index}}</h2>      
       {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
       {% include "components/button.html" with icon="components/icons/arrow_right_double.html" name="action" value="next_unanswered" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
     </div>
@@ -22,11 +22,11 @@
     </div>
     {% include "components/progress_input_row.html" with progreso=palabra.progreso url=cambiar_progreso_url %}       
   </div>
-  <div class="flex flex-col flex-1 p-4 mb-4 border border-neutral-light rounded-2xl gap-4">
+  <div class="flex flex-col flex-auto p-4 mb-4 border border-neutral-light rounded-2xl gap-4 max-h-[70vh] overflow-auto">
     {% if palabra_contestada %}
-        {% include "study/respuesta.html" with palabra=palabra is_correct=palabra_correcta is_mobile=is_mobile %}
+      {% include "study/respuesta.html" with palabra=palabra is_correct=palabra_correcta is_mobile=is_mobile %}
     {% else %}
-        {% include "study/pregunta.html" with palabra=palabra checar_pregunta_url=checar_pregunta_url %}
+      {% include "study/pregunta.html" with palabra=palabra checar_pregunta_url=checar_pregunta_url %}
     {% endif %}
   </div>       
 </div>

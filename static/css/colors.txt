@@ -1,5 +1,6 @@
 shinji purple and green:
     --color-textcolor: #FFFFFF;
+    --color-textcolor-dark: #c7c7c7;
 
     --color-neutral-light: #9911fa;
     --color-neutral-main: #3e1669;
@@ -11,6 +12,7 @@ shinji purple and green:
 
 dark blue and red:
     --color-textcolor: #FFFFFF;
+    --color-textcolor-dark: #c7c7c7;
 
     --color-neutral-light: #f5f5f5;
     --color-neutral-main: #2a3c4b;
@@ -22,6 +24,7 @@ dark blue and red:
 
 panoptimize aqua:
     --color-textcolor: #FFFFFF;
+    --color-textcolor-dark: #c7c7c7;
 
     --color-neutral-light: #c9f7f5;
     --color-neutral-main: #2a3c4b;

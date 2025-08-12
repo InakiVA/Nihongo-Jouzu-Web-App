@@ -1,5 +1,5 @@
 <div class ="flex flex-row">
-{% if left_text %} <h3 class="mr-2">{{left_text}}</h3> {% endif %}
+{% if left_text %} <h3 class="mr-2 font-light">{{left_text}}</h3> {% endif %}
 <form method="post" action="{{ url }}">
   {% csrf_token %}
   <input type="hidden" name="switch_id" value="{{ id }}">
@@ -13,6 +13,6 @@
     />    
   </div>
 </form>
-{% if right_text %} <h3 class="ml-2">{{right_text}}</h3> {% endif %}
+{% if right_text %} <h3 class="ml-2 font-light">{{right_text}}</h3> {% endif %}
 </div>
 
