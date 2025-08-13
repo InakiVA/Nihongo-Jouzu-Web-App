@@ -25,9 +25,9 @@
           <li>
             {% url 'diccionario' as url_value %}
             {% if request.path == url_value %}
-              {% include "components/navigation_button.html" with url=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="button-main join-item" name="navbar_dict" %}
+              {% include "components/navigation_button.html" with url=url_value text="Palabras" icon="components/icons/book.html" extra_classes="button-main join-item" name="navbar_dict" %}
             {% else %}
-              {% include "components/navigation_button.html" with url=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="button-neutral join-item" name="navbar_dict" %}
+              {% include "components/navigation_button.html" with url=url_value text="Palabras" icon="components/icons/book.html" extra_classes="button-neutral join-item" name="navbar_dict" %}
             {% endif %}
           </li>
           <li>
@@ -65,9 +65,9 @@
 
         {% url 'diccionario' as url_value %}
         {% if request.path == url_value %}
-            {% include "components/navigation_button.html" with is_selected=True url=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="join-item" name="navbar_dict" %}
+            {% include "components/navigation_button.html" with is_selected=True url=url_value text="Palabras" icon="components/icons/book.html" extra_classes="join-item" name="navbar_dict" %}
         {% else %}
-            {% include "components/navigation_button.html" with url=url_value text="Diccionario" icon="components/icons/book.html" extra_classes="join-item" name="navbar_dict" %}
+            {% include "components/navigation_button.html" with url=url_value text="Palabras" icon="components/icons/book.html" extra_classes="join-item" name="navbar_dict" %}
         {% endif %}
       
         {% url 'grupos' as url_value %}

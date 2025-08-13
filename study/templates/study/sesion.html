@@ -29,35 +29,38 @@
       {% include "study/pregunta_card.html" with palabra=palabra checar_pregunta_url=checar_pregunta_url %}
     {% endif %}
   </div>      
+  
   {% if palabra_contestada %}
-      <div class="space-y-4">
-        <h2>Grupos</h2>
-        <h3 class="px-4">{{palabra.grupos}}</h3>
-        {% if grupos_checks %}
-        <div class="collapser collapse-plus !border-neutral-main">
-          <input type="checkbox"/>
-            <h3 class="collapse-title font-light">Modificar grupos de palabra</h3>
-            <div class="collapse-content space-y-4"> 
-                {% for grupo in grupos_checks %}
-                {% include "components/checkbox.html" with text=grupo.text id=grupo.id is_selected=grupo.is_selected url=grupos_checks_url %}
-                {% endfor %}                
-            </div>     
-        </div>
+  <div class="pb-4">
+    <div class="space-y-4">
+      <h2>Grupos</h2>
+      <h3 class="px-4">{{palabra.grupos}}</h3>
+      {% if grupos_checks %}
+      <div class="collapser collapse-plus !border-neutral-main">
+        <input type="checkbox"/>
+          <h3 class="collapse-title font-light">Modificar grupos de palabra</h3>
+          <div class="collapse-content space-y-4"> 
+              {% for grupo in grupos_checks %}
+              {% include "components/checkbox.html" with text=grupo.text id=grupo.id is_selected=grupo.is_selected url=grupos_checks_url %}
+              {% endfor %}                
+          </div>     
       </div>
-      {% endif %}  
-      {% if palabra_contestada and palabras_relacionadas%}
-      <div class="divider before:bg-neutral-main after:bg-neutral-main  px-4 "></div>
-      {% endif %}        
-      {% if palabras_relacionadas %}      
-      <div class="space-y-4">
-        <h2>Palabras relacionadas</h2>
-        <div class="flex flex-col gap-4">    
-          {% for palabra in palabras_relacionadas %}            
-          {% include "components/word_card.html" with palabra=palabra %}
-          {% endfor %}
-        </div>   
-      </div>
-      {% endif %} 
+    </div>
+    {% endif %}  
+    {% if palabra_contestada and palabras_relacionadas%}
+    <div class="divider before:bg-neutral-main after:bg-neutral-main  px-4 "></div>
+    {% endif %}        
+    {% if palabras_relacionadas %}      
+    <div class="space-y-4">
+      <h2>Palabras relacionadas</h2>
+      <div class="flex flex-col gap-4">    
+        {% for palabra in palabras_relacionadas %}            
+        {% include "components/word_card.html" with palabra=palabra %}
+        {% endfor %}
+      </div>   
+    </div>
+    {% endif %}
+  </div>
   {% endif %} 
 </div>
 {% endblock %}

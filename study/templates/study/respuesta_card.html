@@ -19,9 +19,9 @@
 
     <div class="divider {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %} {%if is_correct %} before:bg-correct after:bg-correct {% else %} before:bg-incorrect after:bg-incorrect {% endif %}"></div>
 
-    <div class="flex flex-auto flex-col gap-4">
+    <div class="flex flex-auto flex-col gap-2">
         <div class="collapser collapse-plus !border-neutral-main">
-            <input type="checkbox"/>
+            <input type="radio" name="value_accordion"/>
             <div class="collapse-title flex items-end gap-4">
                 <h2>Significados</h2>              
                 <h3>{{palabra.significados}}</h3>                           
@@ -32,7 +32,7 @@
         </div>     
         
         <div class="collapser collapse-plus !border-neutral-main">
-            <input type="checkbox"/>
+            <input type="radio" name="value_accordion"/>
             <div class="collapse-title flex items-end gap-4">
                 <h2>Lecturas</h2>              
                 <h3>{{palabra.lecturas}}</h3>                           
@@ -43,7 +43,7 @@
         </div> 
 
         <div class="collapser collapse-plus !border-neutral-main">
-            <input type="checkbox"/>
+            <input type="radio" name="value_accordion"/>
             <div class="collapse-title flex items-end gap-4">  
                 <h2>Etiquetas</h2>              
                 <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2 font-light">
@@ -58,7 +58,7 @@
         </div>
 
         <div class="collapser collapse-plus !border-neutral-main">
-            <input type="checkbox"/>
+            <input type="radio" name="value_accordion" checked/>
             <div class="collapse-title flex items-end gap-4">
                 <h2>Notas</h2>              
                 <h3>{{palabra.notas}}</h3>                           

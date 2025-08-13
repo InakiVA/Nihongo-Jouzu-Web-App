@@ -110,7 +110,7 @@ h4 {
 }
 
 .textarea {
-  @apply input input-neutral rounded-lg !font-light flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
+  @apply input input-neutral rounded-lg text-lg !font-light flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
   @apply focus:bg-neutral-main hover:bg-neutral-main;
   @apply placeholder:text-textcolor-dark placeholder:italic;
 }
