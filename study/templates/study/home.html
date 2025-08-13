@@ -51,24 +51,26 @@
                 
             </div>
             <div class="divider before:bg-neutral-main after:bg-neutral-main px-4"></div>
-            <div class="flex flex-col gap-4 place-content-center">
+            <div class="flex flex-col gap-2 place-content-center">
                 <h2>Palabras</h2>
-                <div class="flex flex-row gap-4 items-end">
-                    <legend class="fieldset-legend">Filtros</legend>
-                    {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_palabras_url id="filtros_palabras_switch_id" is_selected=on_filtros_palabras %}
+                <legend class="fieldset-legend pb-2">Filtros</legend>
+                <div class="flex flex-row gap-8 items-end">                    
+                    {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_palabras_andor_url is_selected=on_filtros_palabras_andor %}
+                    {% include "components/switch.html" with left_text="Inclusivo" right_text="Exclusivo" url=filtros_palabras_inclusivo_url is_selected=on_filtros_palabras_inclusivo %}
                 </div>
                 <div class="flex flex-row w-auto flex-wrap overflow-auto gap-2">
                     {% for filtro in filtros_palabras %}
                     {% include "components/filter_button.html" with text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
                     {% endfor %}
                 </div>                     
-                <div tabindex="0" class="collapser collapse-arrow">
+                <div tabindex="0" class="collapser collapse-arrow my-4">
                     <input type="checkbox" {% if is_open_collapse %} checked {% endif %}/>
-                    <h2 class="collapse-title">Etiquetas</h2>
+                    <h2 class="collapse-title">Etiquetas</h2>                    
                     <div class="collapse-content space-y-4">
-                        <div class="flex flex-row gap-4 items-end">
-                            <legend class="fieldset-legend">Filtros</legend>
-                            {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_etiquetas_url id="filtros_etiquetas_switch_id" is_selected=on_filtros_etiquetas %}
+                        <legend class="fieldset-legend pb-4">Filtros</legend>
+                        <div class="flex flex-row gap-8 items-end">                            
+                            {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_etiquetas_andor_url is_selected=on_filtros_etiquetas_andor %}
+                            {% include "components/switch.html" with left_text="Inclusivo" right_text="Exclusivo" url=filtros_etiquetas_inclusivo_url is_selected=on_filtros_etiquetas_inclusivo %}
                         </div>
                         <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2">
                             {% for tag in tags %}

@@ -62,31 +62,26 @@ def toggle_palabra_en_grupo(request):
 # __ Switches
 @require_POST
 @login_required
-def toggle_descendente(request):
+def toggle_inicio_switch(request, switch):
     ajustes = request.session.get("inicio_ajustes", {})
-    ajustes["descendente"] = not ajustes.get("descendente", False)
-    request.session["inicio_ajustes"] = ajustes
-    return redirect(request.META.get("HTTP_REFERER", "/"))
-
-
-@require_POST
-@login_required
-def toggle_filtros_palabras(request):
-    ajustes = request.session.get("inicio_ajustes", {})
-    ajustes["filtros_palabras"] = (
-        "OR" if ajustes.get("filtros_palabras", "AND") == "AND" else "AND"
-    )
-    request.session["inicio_ajustes"] = ajustes
-    return redirect(request.META.get("HTTP_REFERER", "/"))
-
-
-@require_POST
-@login_required
-def toggle_filtros_etiquetas_switch(request):
-    ajustes = request.session.get("inicio_ajustes", {})
-    ajustes["filtros_etiquetas"] = (
-        "OR" if ajustes.get("filtros_etiquetas", "AND") == "AND" else "AND"
-    )
+    if switch == "descendente":
+        ajustes["descendente"] = not ajustes.get("descendente", False)
+    if switch == "filtros_palabras_andor":
+        ajustes["filtros_palabras_andor"] = (
+            "OR" if ajustes.get("filtros_palabras_andor", "AND") == "AND" else "AND"
+        )
+    elif switch == "filtros_palabras_inclusivo":
+        ajustes["filtros_palabras_inclusivo"] = (
+            False if ajustes.get("filtros_palabras_inclusivo", True) == True else True
+        )
+    elif switch == "filtros_etiquetas_andor":
+        ajustes["filtros_etiquetas_andor"] = (
+            "OR" if ajustes.get("filtros_etiquetas_andor", "AND") == "AND" else "AND"
+        )
+    elif switch == "filtros_etiquetas_inclusivo":
+        ajustes["filtros_etiquetas_inclusivo"] = (
+            False if ajustes.get("filtros_etiquetas_inclusivo", True) == True else True
+        )
     request.session["inicio_ajustes"] = ajustes
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
@@ -352,22 +347,39 @@ def get_palabras_a_estudiar(usuario, ajustes):
 
     # 2. Aplicar filtros de palabras
     condiciones = []
+    filtros_palabras_inclusivo = ajustes.get("filtros_palabras_inclusivo", True)
 
     if ajustes.get("Creadas por mí (palabras)"):
-        condiciones.append(Q(usuario=usuario))
+        if filtros_palabras_inclusivo:
+            condiciones.append(Q(usuario=usuario))
+        else:
+            condiciones.append(~Q(usuario=usuario))
 
     if ajustes.get("Por completar (palabras)"):
-        condiciones.append(
-            Q(palabra_usuarios__usuario=usuario) & ~Q(palabra_usuarios__progreso=100)
-        )
+        if filtros_palabras_inclusivo:
+            condiciones.append(
+                Q(palabra_usuarios__usuario=usuario)
+                & ~Q(palabra_usuarios__progreso=100)
+            )
+        else:
+            condiciones.append(
+                Q(palabra_usuarios__usuario=usuario) & Q(palabra_usuarios__progreso=100)
+            )
 
     if ajustes.get("Con estrella (palabras)"):
-        condiciones.append(
-            Q(palabra_usuarios__usuario=usuario) & Q(palabra_usuarios__estrella=True)
-        )
+        if filtros_palabras_inclusivo:
+            condiciones.append(
+                Q(palabra_usuarios__usuario=usuario)
+                & Q(palabra_usuarios__estrella=True)
+            )
+        else:
+            condiciones.append(
+                Q(palabra_usuarios__usuario=usuario)
+                & Q(palabra_usuarios__estrella=False)
+            )
 
     if condiciones:
-        if ajustes.get("filtros_palabras") == "OR":
+        if ajustes.get("filtros_palabras_andor") == "OR":
             filtro_palabras = condiciones.pop()
             for cond in condiciones:
                 filtro_palabras |= cond
@@ -386,13 +398,24 @@ def get_palabras_a_estudiar(usuario, ajustes):
 
     if etiquetas_activas:
         etiquetas_obj = Etiqueta.objects.filter(etiqueta__in=etiquetas_activas)
-        if ajustes.get("filtros_etiquetas") == "OR":
-            palabras = palabras.filter(
-                palabra_etiquetas__etiqueta__in=etiquetas_obj
-            ).distinct()
+        filtros_etiquetas_inclusivo = ajustes.get("filtros_etiquetas_inclusivo", True)
+        filtros_etiquetas_or = ajustes.get("filtros_etiquetas_andor") == "OR"
+        if filtros_etiquetas_inclusivo:
+            if filtros_etiquetas_or:
+                palabras = palabras.filter(
+                    palabra_etiquetas__etiqueta__in=etiquetas_obj
+                ).distinct()
+            else:
+                for etiqueta in etiquetas_obj:
+                    palabras = palabras.filter(palabra_etiquetas__etiqueta=etiqueta)
         else:
-            for etiqueta in etiquetas_obj:
-                palabras = palabras.filter(palabra_etiquetas__etiqueta=etiqueta)
+            if filtros_etiquetas_or:
+                palabras = palabras.exclude(
+                    palabra_etiquetas__etiqueta__in=etiquetas_obj
+                ).distinct()
+            else:
+                for etiqueta in etiquetas_obj:
+                    palabras = palabras.exclude(palabra_etiquetas__etiqueta=etiqueta)
 
     palabras = list(palabras)
 
@@ -412,8 +435,10 @@ class HomeView(LoginRequiredMixin, TemplateView):
             "descendente": False,
             "idioma_preguntas": "Original",
             "aleatorio": False,
-            "filtros_palabras": "AND",
-            "filtros_etiquetas": "AND",
+            "filtros_palabras_andor": "AND",
+            "filtros_palabras_inclusivo": True,
+            "filtros_etiquetas_andor": "AND",
+            "filtros_etiquetas_inclusivo": True,
         }
         if "inicio_ajustes" not in self.request.session:
             self.request.session["inicio_ajustes"] = ajustes_default.copy()
@@ -586,8 +611,16 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["is_aleatorio"] = ajustes.get("aleatorio", False)
 
         # __ Filtros
-        context["filtros_palabras_url"] = reverse("toggle_filtros_palabras")
-        context["on_filtros_palabras"] = ajustes.get("filtros_palabras") == "OR"
+        context["filtros_palabras_andor_url"] = reverse("toggle_filtros_palabras_andor")
+        context["filtros_palabras_inclusivo_url"] = reverse(
+            "toggle_filtros_palabras_inclusivo"
+        )
+        context["on_filtros_palabras_andor"] = (
+            ajustes.get("filtros_palabras_andor") == "OR"
+        )
+        context["on_filtros_palabras_inclusivo"] = (
+            ajustes.get("filtros_palabras_inclusivo") == False
+        )
         filtros_palabras = [
             {
                 "text": filtro,
@@ -603,15 +636,24 @@ class HomeView(LoginRequiredMixin, TemplateView):
         ]
         context["filtros_palabras"] = filtros_palabras
 
-        context["filtros_etiquetas_url"] = reverse("toggle_filtros_etiquetas_switch")
-        etiquetas_switch_value = ajustes.get("filtros_etiquetas") == "OR"
-        context["on_filtros_etiquetas"] = etiquetas_switch_value
+        context["filtros_etiquetas_andor_url"] = reverse(
+            "toggle_filtros_etiquetas_andor"
+        )
+        context["filtros_etiquetas_inclusivo_url"] = reverse(
+            "toggle_filtros_etiquetas_inclusivo"
+        )
+        etiquetas_andor_switch_value = ajustes.get("filtros_etiquetas_andor") == "OR"
+        etiquetas_inclusivo_switch_value = (
+            ajustes.get("filtros_etiquetas_inclusivo") == False
+        )
+        context["on_filtros_etiquetas_andor"] = etiquetas_andor_switch_value
+        context["on_filtros_etiquetas_inclusivo"] = etiquetas_inclusivo_switch_value
 
         tags = []
         tags_objects = Etiqueta.objects.filter(
             Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
         ).order_by("etiqueta")
-        open_collapse = [etiquetas_switch_value]
+        open_collapse = [etiquetas_andor_switch_value, etiquetas_inclusivo_switch_value]
 
         for tag in tags_objects:
             active = ajustes.get(f"{tag.etiqueta} (etiqueta)", False)

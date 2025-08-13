@@ -39,16 +39,35 @@ urlpatterns = [
         name="toggle_palabra_en_grupo",
     ),
     # __ Switches
-    path("toggle-descendente/", views.toggle_descendente, name="toggle_descendente"),
     path(
-        "toggle-filtros-palabras/",
-        views.toggle_filtros_palabras,
-        name="toggle_filtros_palabras",
+        "toggle-descendente/",
+        views.toggle_inicio_switch,
+        {"switch": "descendente"},
+        name="toggle_descendente",
     ),
     path(
-        "toggle-filtros-etiquetas/",
-        views.toggle_filtros_etiquetas_switch,
-        name="toggle_filtros_etiquetas_switch",
+        "toggle-filtros-palabras-andor/",
+        views.toggle_inicio_switch,
+        {"switch": "filtros_palabras_andor"},
+        name="toggle_filtros_palabras_andor",
+    ),
+    path(
+        "toggle-filtros-palabras-inclusivo/",
+        views.toggle_inicio_switch,
+        {"switch": "filtros_palabras_inclusivo"},
+        name="toggle_filtros_palabras_inclusivo",
+    ),
+    path(
+        "toggle-filtros-etiquetas-andor/",
+        views.toggle_inicio_switch,
+        {"switch": "filtros_etiquetas_andor"},
+        name="toggle_filtros_etiquetas_andor",
+    ),
+    path(
+        "toggle-filtros-etiquetas-inclusivo/",
+        views.toggle_inicio_switch,
+        {"switch": "filtros_etiquetas_inclusivo"},
+        name="toggle_filtros_etiquetas_inclusivo",
     ),
     # __ Swaps
     path(
