@@ -106,6 +106,10 @@ class Palabra(models.Model):
     def grupos_list(self, usuario):
         return [str(g.grupo) for g in self.grupos_objetos(usuario)]
 
+    def grupos_str(self, usuario):
+        grupos = self.grupos_list(usuario)
+        return ", ".join(grupos)
+
 
 class Significado(models.Model):
     significado = models.TextField(max_length=50)

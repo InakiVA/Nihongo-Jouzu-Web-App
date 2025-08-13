@@ -792,11 +792,11 @@ class SesionView(LoginRequiredMixin, TemplateView):
             "id": palabra_id,
             "is_kanji": is_kanji,
             "palabra": palabra_obj.palabra,
-            "significados": palabra_obj.significados_list(usuario),
-            "lecturas": palabra_obj.lecturas_list(usuario),
-            "notas": palabra_obj.notas_list(usuario),
+            "significados": palabra_obj.significados_str(usuario),
+            "lecturas": palabra_obj.lecturas_str(usuario),
+            "notas": palabra_obj.notas_str(usuario),
             "etiquetas": palabra_obj.etiquetas_list(usuario),
-            "grupos": palabra_obj.grupos_list(usuario),
+            "grupos": palabra_obj.grupos_str(usuario),
             "progreso": palabra_obj.palabra_usuarios.get(
                 usuario=self.request.user
             ).progreso,
@@ -810,7 +810,34 @@ class SesionView(LoginRequiredMixin, TemplateView):
             ),
         }
 
+        context["palabra"] = palabra_dict
+        context["palabra_contestada"] = palabras_contestadas[palabra_id]
+        context["palabra_correcta"] = palabras_correctas[palabra_id]
         self.request.session["respuestas"] = palabra_obj.respuestas
+
+        palabras_relacionadas = Palabra.objects.filter(
+            Q(usuario=usuario) | Q(usuario__perfil__rol="admin"),
+            palabra__contains=palabra_obj.palabra,
+        )
+        palabras_relacionadas_dict_list = []
+        for palabra in palabras_relacionadas:
+            if palabra.id != palabra_obj.id:
+                palabras_relacionadas_dict_list.append(
+                    {
+                        "palabra": palabra.palabra,
+                        "significados": palabra.significados_str(usuario),
+                        "lecturas": palabra.lecturas_str(usuario),
+                        "etiquetas": palabra.etiquetas_list(usuario),
+                        "notas": palabra.notas_str(usuario),
+                        "progreso": palabra.palabra_usuarios.get(
+                            usuario=self.request.user
+                        ).progreso,
+                        "estrella": palabra.palabra_usuarios.get(
+                            usuario=self.request.user
+                        ).estrella,
+                    }
+                )
+        context["palabras_relacionadas"] = palabras_relacionadas_dict_list
 
         grupos_checks = []
         for grupo in grupos_usuario:
@@ -825,9 +852,7 @@ class SesionView(LoginRequiredMixin, TemplateView):
         context["grupos_checks_url"] = reverse("toggle_palabra_en_grupo")
 
         context["finalizar_url"] = reverse_lazy("resultados")
-        context["palabra"] = palabra_dict
-        context["palabra_contestada"] = palabras_contestadas[palabra_id]
-        context["palabra_correcta"] = palabras_correctas[palabra_id]
+
         context["index"] = index + 1
         context["index_porcentaje"] = ((index + 1) / len(palabras_ids)) * 100
         context["cambiar_pregunta_url"] = reverse_lazy("cambiar_pregunta")

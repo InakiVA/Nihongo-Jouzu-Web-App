@@ -1,0 +1,71 @@
+<div class="flex flex-auto {% if is_mobile %} flex-col {% else %} flex-row {% endif %} gap-0 justify-start">
+    
+    <div class="flex flex-col items-center justify-center h-full min-w-1/5 px-10">
+        <h1 class="text-3xl font-light sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-center whitespace-normal break-keep leading-snug">
+            {{ palabra.palabra }}
+        </h1>
+        {% if is_correct %}
+            {% include "components/tag.html" with text="Correcta" extra_classes="!bg-correct !font-semibold" %}
+        {% else %}
+            {% include "components/tag.html" with text="Incorrecta" extra_classes="!bg-incorrect !font-semibold" %}
+        {% endif %}
+        {% if palabra.respuestas_incorrectas %}
+            <div class="w-full px-2 py-4 flex-col space-y-2 text-start">
+                <h3>Respuestas incorrectas dadas:</h3>
+                <p class="px-4">{{palabra.respuestas_incorrectas}}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="divider {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %} {%if is_correct %} before:bg-correct after:bg-correct {% else %} before:bg-incorrect after:bg-incorrect {% endif %}"></div>
+
+    <div class="flex flex-auto flex-col gap-4">
+        <div class="collapser collapse-plus !border-neutral-main">
+            <input type="checkbox"/>
+            <div class="collapse-title flex items-end gap-4">
+                <h2>Significados</h2>              
+                <h3>{{palabra.significados}}</h3>                           
+            </div>
+            <div class="collapse-content">
+                {% include "components/input_button.html" with name="agregar_significado" url=agregar_significado placeholder="Nuevo significado:" button_text="Agregar"%}        
+            </div>  
+        </div>     
+        
+        <div class="collapser collapse-plus !border-neutral-main">
+            <input type="checkbox"/>
+            <div class="collapse-title flex items-end gap-4">
+                <h2>Lecturas</h2>              
+                <h3>{{palabra.lecturas}}</h3>                           
+            </div>
+            <div class="collapse-content">
+                {% include "components/input_button.html" with name="agregar_lectura" url=agregar_lectura placeholder="Nueva lectura:" button_text="Agregar" %}        
+            </div>  
+        </div> 
+
+        <div class="collapser collapse-plus !border-neutral-main">
+            <input type="checkbox"/>
+            <div class="collapse-title flex items-end gap-4">  
+                <h2>Etiquetas</h2>              
+                <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2 font-light">
+                    {% for etiqueta in palabra.etiquetas %}
+                    {% include "components/tag.html" with text=etiqueta %}         
+                    {% endfor %}
+                </li>                         
+            </div>
+            <div class="collapse-content">
+                {% include "components/select_button.html" with name="agregar_etiqueta" url=agregar_etiqueta button_text="Agregar" options=nuevas_etiquetas%}             
+            </div>  
+        </div>
+
+        <div class="collapser collapse-plus !border-neutral-main">
+            <input type="checkbox"/>
+            <div class="collapse-title flex items-end gap-4">
+                <h2>Notas</h2>              
+                <h3>{{palabra.notas}}</h3>                           
+            </div>
+            <div class="collapse-content">
+                {% include "components/input_button.html" with name="agregar_nota"  url=agregar_nota placeholder="Nueva nota:" button_text="Agregar" is_textarea=True%}        
+            </div>  
+        </div>             
+    </div>       
+</div>

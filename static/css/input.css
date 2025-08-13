@@ -84,6 +84,11 @@ h4 {
   @apply hover:bg-accent-main hover:border-accent-light;
 }
 
+.button-big{
+  @apply h-10 min-w-12 btn btn-ghost shadow-none border-accent-light bg-accent-main text-textcolor rounded-sm  text-2xl font-bold p-8;
+  @apply hover:bg-accent-dark;
+}
+
 .link{
   @apply underline text-accent-main hover:text-accent-light transition;
 }
@@ -105,9 +110,9 @@ h4 {
 }
 
 .textarea {
-  @apply input input-neutral rounded-lg flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
+  @apply input input-neutral rounded-lg !font-light flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
   @apply focus:bg-neutral-main hover:bg-neutral-main;
-  @apply placeholder:text-neutral-light placeholder:italic;
+  @apply placeholder:text-textcolor-dark placeholder:italic;
 }
 
 .star-on{
