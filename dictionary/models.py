@@ -110,6 +110,19 @@ class Palabra(models.Model):
         grupos = self.grupos_list(usuario)
         return ", ".join(grupos)
 
+    def palabras_relacionadas(self, usuario):
+        palabras_relacionadas = Palabra.objects.filter(
+            Q(usuario=usuario) | Q(usuario__perfil__rol="admin"),
+            palabra__contains=self.palabra,
+        ).exclude(id=self.id)
+        palabra_chars = list(self.palabra)
+        kanjis_relacionados = Palabra.objects.filter(
+            Q(usuario=usuario) | Q(usuario__perfil__rol="admin"),
+            palabra__in=palabra_chars,
+            palabra_etiquetas__etiqueta__etiqueta="Kanji",
+        ).exclude(id=self.id)
+        return palabras_relacionadas | kanjis_relacionados
+
 
 class Significado(models.Model):
     significado = models.TextField(max_length=50)

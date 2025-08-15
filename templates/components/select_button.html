@@ -1,6 +1,6 @@
 <form action="{{ url }}" method="post" class="flex w-full h-full">
     {% csrf_token %}
-    <fieldset class="flex flex-auto gap-4">
+    <fieldset class="flex flex-auto gap-2">
     {% if has_button_left %}
     <div class="flex">
         <button type="submit" class="button-secondary !font-semibold {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>

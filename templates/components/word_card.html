@@ -1,20 +1,21 @@
+{% if not url %}
 <div class="wordcard collapse collapse-arrow gap-2 {{extra_classes}}"> 
   <input type="checkbox"/>
-  <div class="collapse-title py-0">
-    <div>
+  <div class="collapse-title py-0 gap-2">
+    <div class="flex items-end gap-4">
       <h4 class="!font-light">{{ palabra.palabra }}</h4>  
       <p class="text-textcolor-dark">{{ palabra.lecturas }}</p>
     </div> 
     <h2 class="text-ellipsis !font-light">{{ palabra.significados }}</h2> 
-  </div>   
-  <div class="collapse-content space-y-2 py-0">
     {% if palabra.etiquetas %}
-    <div class="flex flex-row gap-2 flex-wrap">
+    <div class="flex flex-row gap-2 flex-wrap pt-2">
         {% for tag in palabra.etiquetas %}
             {% include "components/tag.html" with text=tag %}
         {% endfor %}
     </div>    
-    {% endif %}     
+    {% endif %}
+  </div>   
+  <div class="collapse-content space-y-2 py-0">         
     {% if palabra.notas %}
     <p class="text-textcolor-dark">Notas: {{ palabra.notas }}</p>
     {% endif %}  
@@ -31,3 +32,23 @@
     {% endif %}
   </div>
 </div>
+{% else %}
+<a href="{{url}}" class="block" id="{{id}}" name="wordcard">
+  <div class="wordcard gap-2 {{extra_classes}}"> 
+    <div class="py-0 gap-2">
+      <div class="flex items-end gap-4">
+        <h4 class="!font-light">{{ palabra.palabra }}</h4>  
+        <p class="text-textcolor-dark">{{ palabra.lecturas }}</p>
+      </div> 
+      <h2 class="text-ellipsis !font-light">{{ palabra.significados }}</h2> 
+      {% if palabra.etiquetas %}
+      <div class="flex flex-row gap-2 flex-wrap pt-2">
+          {% for tag in palabra.etiquetas %}
+              {% include "components/tag.html" with text=tag %}
+          {% endfor %}
+      </div>    
+      {% endif %}
+    </div>   
+  </div>
+</a>
+{% endif %}

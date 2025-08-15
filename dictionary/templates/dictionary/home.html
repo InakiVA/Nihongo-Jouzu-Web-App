@@ -4,7 +4,7 @@
   <div class="flex flex-row flex-auto gap-x-2 px-4">
     <h4 class="text-start">Palabras</h4>
     <div class="flex flex-auto"></div>
-    {% include "components/button.html" with text="Crear Palabra" url=toggle_modal_url extra_classes="button-big" %}
+    {% include "components/button.html" with text="Nueva Palabra" icon="components/icons/add.html" url=toggle_modal_url extra_classes="button-big" %}
   </div>
 
   <dialog id="crear_palabra_modal" class="modal" {% if ajustes_modal.open_modal %} open {% endif %}>
@@ -46,8 +46,8 @@
           {% endif %}
         </div>
 
-        <div class="flex flex-col pt-4">
-        {% include "components/button.html" with text="Crear" extra_classes="button-main !text-xl" %}
+        <div class="flex flex-col pt-8">
+        {% include "components/button.html" with text="Crear" icon="components/icons/add.html" extra_classes="button-big" %}
         </div>
       </form>
       

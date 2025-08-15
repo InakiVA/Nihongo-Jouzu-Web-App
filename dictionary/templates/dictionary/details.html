@@ -1,3 +1,80 @@
 {% extends "base.html" %} {% block content %}
+<div class="mx-4 space-y-4">
+    <div class="border border-neutral-light rounded-xl flex flex-auto flex-col p-4">
+        <div class="flex flex-row justify-between pb-4">
+            <h1 class="text-8xl font-light">{{palabra.palabra}}</h1>
+            {% include "components/button.html" with text="Editar" icon="components/icons/pencil.html" extra_classes="button-big button-secondary" %}
+        </div>
+        
+        <div class="flex flex-auto flex-col gap-2">
+            <div class="border-neutral-main">
+                <div class="flex items-end gap-4">
+                    <h2>Significados</h2>              
+                    <h3>{{palabra.significados}}</h3>                           
+                </div> 
+            </div>     
+            
+            <div class="border-neutral-main">
+                <div class="flex items-end gap-4">
+                    <h2>Lecturas</h2>              
+                    <h3>{{palabra.lecturas}}</h3>                           
+                </div>
+            </div> 
 
+            <div class="border-neutral-main">
+                <div class="flex items-end gap-4">  
+                    <h2>Etiquetas</h2>              
+                    <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2 font-light">
+                        {% for etiqueta in palabra.etiquetas %}
+                        {% include "components/tag.html" with text=etiqueta %}         
+                        {% endfor %}
+                    </li>                         
+                </div> 
+            </div>
+
+            <div class="border-neutral-main">
+                <div class="flex items-end gap-4">
+                    <h2>Notas</h2>              
+                    <h3>{{palabra.notas}}</h3>                           
+                </div>
+            </div>             
+        </div>     
+    </div>
+
+    <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between gap-x-4">
+        <div class="flex flex-row items-center">
+            {% include "components/icon_swap_button.html" with id=palabra.id is_active=palabra.estrella url="" on="components/icons/star.html" oncolor="star-on" off="components/icons/star_off.html" offcolor="star-off" %}
+        </div>
+        {% include "components/progress_input_row.html" with progreso=palabra.progreso url="" %}       
+    </div>
+
+    <div class="pb-4 space-y-4">
+        <div class="space-y-4">
+            <h2>Grupos</h2>
+            <h3 class="px-4">{{palabra.grupos}}</h3>
+            {% if grupos_checks %}
+            <div class="collapser collapse-plus !border-neutral-main">
+                <input type="checkbox"/>
+                <h3 class="collapse-title font-light">Modificar grupos de palabra</h3>
+                <div class="collapse-content space-y-4"> 
+                    {% for grupo in grupos_checks %}
+                    {% include "components/checkbox.html" with text=grupo.text id=grupo.id is_selected=grupo.is_selected url=grupos_checks_url %}
+                    {% endfor %}                
+                </div>     
+            </div>
+            {% endif %} 
+        </div>
+            
+        {% if palabras_relacionadas %}      
+        <div class="space-y-4">
+            <h2>Palabras relacionadas</h2>
+            <div class="flex flex-col gap-4">    
+                {% for palabra in palabras_relacionadas %}            
+                {% include "components/word_card.html" with palabra=palabra %}
+                {% endfor %}
+            </div>   
+        </div>
+        {% endif %}    
+    </div>
+</div>
 {% endblock %}
