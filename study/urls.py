@@ -72,20 +72,28 @@ urlpatterns = [
     # __ Swaps
     path(
         "toggle-estrella-grupo/",
-        views.toggle_estrella_grupo,
+        views.toggle_estrella,
+        {"objeto": "grupo"},
         name="toggle_estrella_grupo",
     ),
     path(
         "toggle-estrella-palabra/",
-        views.toggle_estrella_palabra,
+        views.toggle_estrella,
+        {"objeto": "palabra"},
         name="toggle_estrella_palabra",
     ),
     path("toggle-filtro/", views.toggle_filtro, name="toggle_filtro"),
     # __ Selects
-    path("toggle-orden/", views.toggle_orden_select, name="toggle_orden_select"),
+    path(
+        "toggle-orden-grupos/",
+        views.toggle_select,
+        {"select": "orden_elegido"},
+        name="toggle_orden_grupos",
+    ),
     path(
         "toggle-idioma-preguntas/",
-        views.toggle_idioma_preguntas,
+        views.toggle_select,
+        {"select": "idioma_preguntas_elegido"},
         name="toggle_idioma_preguntas",
     ),
 ]

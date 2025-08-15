@@ -89,21 +89,13 @@ def toggle_inicio_switch(request, switch):
 # __ Swaps
 @require_POST
 @login_required
-def toggle_estrella_grupo(request):
-    grupo_id = request.POST.get("swap_id")
+def toggle_estrella(request, objeto):
+    swap_id = request.POST.get("swap_id")
     user = request.user
-    entry = get_object_or_404(UsuarioGrupo, usuario=user, grupo_id=grupo_id)
-    entry.estrella = not entry.estrella
-    entry.save()
-    return redirect(request.META.get("HTTP_REFERER", "/"))
-
-
-@require_POST
-@login_required
-def toggle_estrella_palabra(request):
-    palabra_id = request.POST.get("swap_id")
-    user = request.user
-    entry = get_object_or_404(UsuarioPalabra, usuario=user, palabra_id=palabra_id)
+    if objeto == "grupo":
+        entry = get_object_or_404(UsuarioGrupo, usuario=user, grupo_id=swap_id)
+    elif objeto == "palabra":
+        entry = get_object_or_404(UsuarioPalabra, usuario=user, palabra_id=swap_id)
     entry.estrella = not entry.estrella
     entry.save()
     return redirect(request.META.get("HTTP_REFERER", "/"))
@@ -124,24 +116,18 @@ def toggle_filtro(request):
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
-# __ Selects
+# __ Select
 @require_POST
 @login_required
-def toggle_orden_select(request):
-    ajustes = request.session.get("inicio_ajustes", {})
+def toggle_select(request, select):
     value = request.POST.get("select")
-    if value:
+    if select == "orden_elegido":
+        ajustes = request.session.get("inicio_ajustes", {})
         ajustes["orden_elegido"] = value
         request.session["inicio_ajustes"] = ajustes
-    return redirect(request.META.get("HTTP_REFERER", "/"))
-
-
-@require_POST
-@login_required
-def toggle_idioma_preguntas(request):
-    value = request.POST.get("select")
-    if value:
+    elif select == "idioma_preguntas_elegido":
         request.session["idioma_preguntas_elegido"] = value
+
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
@@ -560,7 +546,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
                 "Con estrella",
             ]
         ]
-        context["select_orden_url"] = reverse("toggle_orden_select")
+        context["select_orden_url"] = reverse("toggle_orden_grupos")
         orden_opciones = ("Creación", "Nombre", "Progreso", "Reciente")
         context["orden_opciones"] = orden_opciones
         orden_elegido = ajustes.get("orden_elegido", orden_opciones[0])

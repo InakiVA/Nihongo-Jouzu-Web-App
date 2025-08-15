@@ -41,8 +41,6 @@
     --radius-sm: 0.25rem;
     --radius-lg: 0.5rem;
     --radius-2xl: 1rem;
-    --ease-out: cubic-bezier(0, 0, 0.2, 1);
-    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
@@ -1608,18 +1606,6 @@
       cursor: not-allowed;
     }
   }
-  .modal-backdrop {
-    grid-column-start: 1;
-    grid-row-start: 1;
-    display: grid;
-    align-self: stretch;
-    justify-self: stretch;
-    color: transparent;
-    z-index: -1;
-    button {
-      cursor: pointer;
-    }
-  }
   .z-1 {
     z-index: 1;
   }
@@ -2168,9 +2154,6 @@
   }
   .\!bg-incorrect {
     background-color: var(--color-incorrect) !important;
-  }
-  .fill-textcolor {
-    fill: var(--color-textcolor);
   }
   .\!p-6 {
     padding: calc(var(--spacing) * 6) !important;
