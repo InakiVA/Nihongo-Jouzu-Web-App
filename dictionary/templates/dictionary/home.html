@@ -4,41 +4,52 @@
   <div class="flex flex-row flex-auto gap-x-2 px-4">
     <h4 class="text-start">Palabras</h4>
     <div class="flex flex-auto"></div>
-    <button type="button" class="button-big"
-            onclick="document.getElementById('crear_palabra_modal').showModal()">
-      Crear Palabra
-    </button>
+    {% include "components/button.html" with text="Crear Palabra" url=toggle_modal_url extra_classes="button-big" %}
   </div>
 
-  <dialog id="crear_palabra_modal" class="modal">
+  <dialog id="crear_palabra_modal" class="modal" {% if ajustes_modal.open_modal %} open {% endif %}>
     <div class="modal-box space-y-4">
       <div class="flex flex-row justify-between items-center">
         <h2>Palabra a crear</h2>
-        <form method="dialog">
-          {% include "components/button.html" with icon="components/icons/cross.html" extra_classes="button-icon-only"%}
-        </form>
+        {% include "components/button.html" with url=toggle_modal_url icon="components/icons/cross.html" extra_classes="button-icon-only"%}
       </div>     
       
-      <fieldset class="gap-4 p-4 flex flex-auto flex-col">
+      <form action="{{ crear_palabra_url }}" method="post" class="gap-4 p-4 flex flex-auto flex-col">
+        {% csrf_token %}
         <div class="flex flex-auto flex-col gap-2">
           <legend class="fieldset-legend">Palabra</legend>
-          {% include "components/input.html" with placeholder="Tu palabra:" name="palabra_nueva"%}
+          {% if not ajustes_modal.palabra_valida and intentado %}
+          {% include "components/input.html" with placeholder="Tu palabra:" name="palabra_nueva" extra_classes="!border-myalert" %}
+          <legend class="fieldset-legend text-myalert">Favor de ingresar palabra</legend>          
+          {% else %}
+          {% include "components/input.html" with placeholder="Tu palabra:" name="palabra_nueva" value=ajustes_modal.palabra_valida%}
+          {% endif %}
         </div>
 
         <div class="flex flex-auto flex-col gap-2">
           <legend class="fieldset-legend">Significado</legend>
-          {% include "components/input.html" with placeholder="Su significado:" name="significado_nuevo"%}
+          {% if not ajustes_modal.significado_valido and intentado %}
+          {% include "components/input.html" with placeholder="Su significado:" name="significado_nuevo" extra_classes="!border-myalert" %}
+          <legend class="fieldset-legend text-myalert">Favor de ingresar su significado</legend> 
+          {% else %}
+          {% include "components/input.html" with placeholder="Su significado:" name="significado_nuevo" value=ajustes_modal.significado_valido%}
+          {% endif %}
         </div>
 
         <div class="flex flex-auto flex-col gap-2">
           <legend class="fieldset-legend">Lectura</legend>
-          {% include "components/input.html" with placeholder="Su lectura:" name="lectura_nueva"%}
+          {% if not ajustes_modal.lectura_valida and intentado %}
+          {% include "components/input.html" with placeholder="Su lectura:" name="lectura_nueva" extra_classes="!border-myalert" %}
+          <legend class="fieldset-legend text-myalert">Favor de ingresar su lectura</legend> 
+          {% else %}
+          {% include "components/input.html" with placeholder="Su lectura:" name="lectura_nueva" value=ajustes_modal.lectura_valida%}
+          {% endif %}
         </div>
 
         <div class="flex flex-col pt-4">
         {% include "components/button.html" with text="Crear" extra_classes="button-main !text-xl" %}
         </div>
-      </fieldset>
+      </form>
       
     </div>
 

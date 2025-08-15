@@ -4,19 +4,19 @@
 
 @theme {
     --color-progress-0: #9e9e9e;
-    --color-progress-33: #ab1212;
+    --color-progress-33: #ff2f4e;
     --color-progress-66: #fab451;  
-    --color-progress-99: #16ab4d;  
+    --color-progress-99: #2ce36f;  
     --color-progress-100: #5ec9ee;
 
     --color-mydisabled: #9e9e9e;
-    --color-myalert: #ab1212;
+    --color-myalert: #ff2f4e;
     --color-mywarning: #fab451;
-    --color-mysuccess: #16ab4d;
+    --color-mysuccess: #2ce36f;
     --color-mycomplete: #5ec9ee;
 
-    --color-correct: #16ab4d;
-    --color-incorrect: #ab1212;
+    --color-correct: #2ce36f;
+    --color-incorrect: #ff2f4e;
 
     --color-star: #fffc56;
     --color-star-dark: #8f8c04;
@@ -105,7 +105,7 @@ h4 {
 }
 
 .input {
-  @apply input input-neutral rounded-lg !font-light flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
+  @apply input input-neutral rounded-lg font-light flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
   @apply focus:bg-neutral-main hover:bg-neutral-main;
 }
 

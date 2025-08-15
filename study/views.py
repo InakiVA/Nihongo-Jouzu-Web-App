@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.views.decorators.http import require_POST
 from django.shortcuts import redirect, get_object_or_404
 from django.db import transaction, IntegrityError
+
 import random
 
 from tags.models import Etiqueta, PalabraEtiqueta

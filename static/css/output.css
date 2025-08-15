@@ -46,13 +46,13 @@
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
     --color-progress-0: #9e9e9e;
-    --color-progress-33: #ab1212;
+    --color-progress-33: #ff2f4e;
     --color-progress-66: #fab451;
-    --color-progress-99: #16ab4d;
+    --color-progress-99: #2ce36f;
     --color-progress-100: #5ec9ee;
-    --color-myalert: #ab1212;
-    --color-correct: #16ab4d;
-    --color-incorrect: #ab1212;
+    --color-myalert: #ff2f4e;
+    --color-correct: #2ce36f;
+    --color-incorrect: #ff2f4e;
     --color-star: #fffc56;
     --color-star-dark: #8f8c04;
     --color-textcolor: #FFFFFF;
@@ -2137,6 +2137,9 @@
     --tw-border-style: none !important;
     border-style: none !important;
   }
+  .\!border-myalert {
+    border-color: var(--color-myalert) !important;
+  }
   .\!border-neutral-main {
     border-color: var(--color-neutral-main) !important;
   }
@@ -3526,8 +3529,8 @@ h4 {
   border-radius: var(--radius-lg);
   border-color: var(--color-neutral-light);
   background-color: var(--color-neutral-dark);
-  --tw-font-weight: var(--font-weight-light) !important;
-  font-weight: var(--font-weight-light) !important;
+  --tw-font-weight: var(--font-weight-light);
+  font-weight: var(--font-weight-light);
   color: var(--color-textcolor);
   &, &:focus, &:focus-within {
     --input-color: var(--color-neutral);
