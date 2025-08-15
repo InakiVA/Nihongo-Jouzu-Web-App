@@ -1,60 +1,13 @@
 from django.shortcuts import render
 from django.db.models import Q
-from django.views.generic import TemplateView
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
+from django.views.generic import TemplateView
 
 from dictionary.models import Palabra, Significado, Lectura
 from progress.models import UsuarioPalabra
 from groups.models import Grupo
-
-
-@require_POST
-@login_required
-def toggle_modal(request):
-    modal_settings = request.session.get("ajustes_modal", {})
-    open_modal = modal_settings.get("open_modal", False)
-    modal_settings["open_modal"] = not open_modal
-    modal_settings["intentado"] = False
-    request.session["ajustes_modal"] = modal_settings
-    return redirect(request.META.get("HTTP_REFERER", "/"))
-
-
-@require_POST
-@login_required
-def crear_palabra(request):
-    modal_settings = request.session.get("ajustes_modal")
-    modal_settings["intentado"] = True
-    palabra_value = request.POST.get("palabra_nueva")
-    significado_value = request.POST.get("significado_nuevo")
-    lectura_value = request.POST.get("lectura_nueva")
-    if False == all([palabra_value, significado_value, lectura_value]):
-        for key, value in zip(
-            ["palabra_valida", "significado_valido", "lectura_valida"],
-            [palabra_value, significado_value, lectura_value],
-        ):
-            modal_settings[key] = value
-        request.session["ajustes_modal"] = modal_settings
-        return redirect(request.META.get("HTTP_REFERER", "/"))
-    for key, value in zip(
-        ["palabra_valida", "significado_valido", "lectura_valida"],
-        ["", "", ""],
-    ):
-        modal_settings[key] = value
-    modal_settings["open_modal"] = not modal_settings["open_modal"]
-    user = request.user
-    palabra_obj = Palabra.objects.create(usuario=user, palabra=palabra_value)
-    UsuarioPalabra.objects.create(usuario=user, palabra=palabra_obj)
-    Significado.objects.create(
-        significado=significado_value, palabra=palabra_obj, usuario=user
-    )
-    Lectura.objects.create(lectura=lectura_value, palabra=palabra_obj, usuario=user)
-    request.session["palabra_actual"] = palabra_obj.id
-    request.session["ajustes_modal"] = modal_settings
-    return redirect("detalles")
 
 
 class DetailView(LoginRequiredMixin, TemplateView):
@@ -138,6 +91,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        usuario = self.request.user
 
         context["crear_palabra_url"] = reverse("crear_palabra")
         context["toggle_modal_url"] = reverse("toggle_modal")
@@ -145,6 +99,42 @@ class HomeView(LoginRequiredMixin, TemplateView):
         ajustes_modal = self.request.session.get("ajustes_modal", {})
         context["ajustes_modal"] = ajustes_modal
         context["intentado"] = ajustes_modal.get("intentado", False)
+
+        palabras = Palabra.objects.filter(
+            (Q(usuario=usuario) | Q(usuario__perfil__rol="admin"))
+        )
+        index = self.request.session.get("page_index", 0)
+        if index > len(palabras) // 10:
+            index = 0
+        elif index < 0:
+            index = len(palabras) // 10
+        self.request.session["page_index"] = index
+        palabras_list = []
+        for palabra in palabras[
+            max(0, index * 10) : min(len(palabras), index * 10 + 10)
+        ]:
+            palabras_list.append(
+                {
+                    "id": palabra.id,
+                    "palabra": palabra.palabra,
+                    "significados": palabra.significados_str(usuario),
+                    "lecturas": palabra.lecturas_str(usuario),
+                    "notas": palabra.notas_str(usuario),
+                    "etiquetas": palabra.etiquetas_list(usuario),
+                    "grupos": palabra.grupos_str(usuario),
+                    "progreso": palabra.palabra_usuarios.get(
+                        usuario=self.request.user
+                    ).progreso,
+                    "estrella": palabra.palabra_usuarios.get(
+                        usuario=self.request.user
+                    ).estrella,
+                }
+            )
+        context["palabras_list"] = palabras_list
+        context["index"] = index + 1
+        context["cambiar_pagina_url"] = reverse("cambiar_pagina")
+
+        context["palabra_url"] = reverse("elegir_palabra")
 
         print(dict(self.request.session))
         return context

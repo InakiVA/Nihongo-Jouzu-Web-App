@@ -187,7 +187,7 @@ h4 {
 }
 
 .wordcard{
-  @apply hover:bg-neutral-main bg-neutral-dark shadow-sm border-1 border-neutral-main text-textcolor;
+  @apply hover:bg-neutral-main bg-neutral-dark shadow-sm border-1 border-neutral-main text-textcolor rounded-base;
 }
 
 .modal-box{

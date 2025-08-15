@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="flex flex-col flex-auto">
-  <div class="flex flex-row flex-auto gap-x-2 px-4">
+  <div class="flex flex-row w-full gap-x-4 px-4 items-start">
     <h4 class="text-start">Palabras</h4>
-    <div class="flex flex-auto"></div>
+    <div class="flex flex-row flex-auto justify-start gap-x-4 items-center">
+      {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=cambiar_pagina_url extra_classes="button-icon-only" %}
+      <h2>Página {{index}}</h2>      
+      {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pagina_url extra_classes="button-icon-only" %}
+    </div>
     {% include "components/button.html" with text="Nueva Palabra" icon="components/icons/add.html" url=toggle_modal_url extra_classes="button-big" %}
   </div>
 
@@ -49,10 +53,14 @@
         <div class="flex flex-col pt-8">
         {% include "components/button.html" with text="Crear" icon="components/icons/add.html" extra_classes="button-big" %}
         </div>
-      </form>
-      
+      </form>      
     </div>
-
   </dialog>
+
+  <li class="flex flex-col flex-auto gap-2 p-4 items-start">
+    {% for palabra in palabras_list %}
+    {% include "components/word_card.html" with palabra=palabra url=palabra_url%}         
+    {% endfor %}
+  </li>
 </div>
 {% endblock %}
