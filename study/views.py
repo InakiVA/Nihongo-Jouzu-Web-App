@@ -190,15 +190,20 @@ def agregar_a_palabra(request, tipo):
 
     if tipo == "Significado":
         input_value = request.POST.get("agregar_significado")
-        Significado.objects.create(
-            significado=input_value, palabra=palabra_obj, usuario=user
-        )
+        if input_value:
+            Significado.objects.create(
+                significado=input_value, palabra=palabra_obj, usuario=user
+            )
     elif tipo == "Lectura":
         input_value = request.POST.get("agregar_lectura")
-        Lectura.objects.create(lectura=input_value, palabra=palabra_obj, usuario=user)
+        if input_value:
+            Lectura.objects.create(
+                lectura=input_value, palabra=palabra_obj, usuario=user
+            )
     elif tipo == "Nota":
         input_value = request.POST.get("agregar_nota")
-        Nota.objects.create(nota=input_value, palabra=palabra_obj, usuario=user)
+        if input_value:
+            Nota.objects.create(nota=input_value, palabra=palabra_obj, usuario=user)
     elif tipo == "Etiqueta":
         input_value = request.POST.get("agregar_etiqueta")
         etiquetas_dict = request.session.get("new_etiquetas", {})

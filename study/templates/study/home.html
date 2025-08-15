@@ -19,7 +19,7 @@
         <div class="flex flex-auto flex-col gap-4 min-w-1/4 px-2">
             <h2>Filtros de búsqueda de grupos</h2>       
             <div>
-            {% include "components/searchbar.html" with name="buscar_grupo" method="get" value=buscar_grupo_input placeholder="Buscar grupo:"%}
+            {% include "components/input.html" with icon="components/icons/search.html" name="buscar_grupo" url=request.path method="get" type="search" value=buscar_grupo_input placeholder="Buscar grupo:"%}
             </div>   
             <div>
                 <legend class="fieldset-legend">Filtros</legend>
@@ -34,9 +34,9 @@
                 <div class="flex flex-row items-center justify-between space-x-4">
                     {% include "components/select.html" with options=orden_opciones selected=orden_elegido url=select_orden_url%}
                     <div class="flex flex-row space-x-2 items-center justify-between">
-                        {% include "components/icons/arrow_up.html" %}
+                        {% include "components/icons/full_arrow_up.html" %}
                         {% include "components/switch.html" with url=descendente_url id="descendente_id" is_selected=on_descendente %}
-                        {% include "components/icons/arrow_down.html" %}
+                        {% include "components/icons/full_arrow_down.html" %}
                     </div>
                 </div> 
             </div>               

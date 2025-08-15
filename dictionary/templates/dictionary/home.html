@@ -19,14 +19,29 @@
         </form>
       </div>     
       
-      {% include "components/input_button.html" %}
+      <fieldset class="gap-4 p-4 flex flex-auto flex-col">
+        <div class="flex flex-auto flex-col gap-2">
+          <legend class="fieldset-legend">Palabra</legend>
+          {% include "components/input.html" with placeholder="Tu palabra:" name="palabra_nueva"%}
+        </div>
+
+        <div class="flex flex-auto flex-col gap-2">
+          <legend class="fieldset-legend">Significado</legend>
+          {% include "components/input.html" with placeholder="Su significado:" name="significado_nuevo"%}
+        </div>
+
+        <div class="flex flex-auto flex-col gap-2">
+          <legend class="fieldset-legend">Lectura</legend>
+          {% include "components/input.html" with placeholder="Su lectura:" name="lectura_nueva"%}
+        </div>
+
+        <div class="flex flex-col pt-4">
+        {% include "components/button.html" with text="Crear" extra_classes="button-main !text-xl" %}
+        </div>
+      </fieldset>
       
-      </div>
     </div>
-    <!-- Optional: clicking the backdrop closes the dialog -->
-    <form method="dialog" class="modal-backdrop">
-      <button>close</button>
-    </form>
+
   </dialog>
 </div>
 {% endblock %}

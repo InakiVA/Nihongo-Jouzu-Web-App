@@ -5,9 +5,9 @@
             {{ palabra.palabra }}
         </h1>
         {% if is_correct %}
-            {% include "components/tag.html" with text="Correcta" extra_classes="!bg-correct !font-semibold" %}
+            {% include "components/tag.html" with text="Correcta" icon="components/icons/check_mini.html" extra_classes="!bg-correct !font-semibold" %}
         {% else %}
-            {% include "components/tag.html" with text="Incorrecta" extra_classes="!bg-incorrect !font-semibold" %}
+            {% include "components/tag.html" with text="Incorrecta" icon="components/icons/cross_mini.html" extra_classes="!bg-incorrect !font-semibold" %}
         {% endif %}
         <div class="w-full items-start">
             <div class="py-4 flex-col space-y-2 text-start justify-start overflow-clip w-100">
@@ -29,7 +29,7 @@
                 <h3>{{palabra.significados}}</h3>                           
             </div>
             <div class="collapse-content">
-                {% include "components/input_button.html" with name="agregar_significado" url=agregar_significado placeholder="Nuevo significado:" button_text="Agregar"%}        
+                {% include "components/input_button.html" with name="agregar_significado" icon="components/icons/add_mini.html" url=agregar_significado placeholder="Nuevo significado:" button_text="Agregar"%}        
             </div>  
         </div>     
         
@@ -40,7 +40,7 @@
                 <h3>{{palabra.lecturas}}</h3>                           
             </div>
             <div class="collapse-content">
-                {% include "components/input_button.html" with name="agregar_lectura" url=agregar_lectura placeholder="Nueva lectura:" button_text="Agregar" %}        
+                {% include "components/input_button.html" with name="agregar_lectura" icon="components/icons/add_mini.html" url=agregar_lectura placeholder="Nueva lectura:" button_text="Agregar" %}        
             </div>  
         </div> 
 
@@ -55,7 +55,7 @@
                 </li>                         
             </div>
             <div class="collapse-content">
-                {% include "components/select_button.html" with name="agregar_etiqueta" url=agregar_etiqueta button_text="Agregar" options=nuevas_etiquetas%}             
+                {% include "components/select_button.html" with name="agregar_etiqueta" legend="Elige una etiqueta" icon="components/icons/add_mini.html" url=agregar_etiqueta button_text="Agregar" options=nuevas_etiquetas%}             
             </div>  
         </div>
 
@@ -66,7 +66,7 @@
                 <h3>{{palabra.notas}}</h3>                           
             </div>
             <div class="collapse-content">
-                {% include "components/input_button.html" with name="agregar_nota"  url=agregar_nota placeholder="Nueva nota:" button_text="Agregar" is_textarea=True%}        
+                {% include "components/input_button.html" with name="agregar_nota" icon="components/icons/add_mini.html" url=agregar_nota placeholder="Nueva nota:" button_text="Agregar" is_textarea=True%}        
             </div>  
         </div>             
     </div>       

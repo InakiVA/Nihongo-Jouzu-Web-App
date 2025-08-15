@@ -80,7 +80,7 @@ h4 {
 }
 
 .button-secondary {
-  @apply h-10 min-w-12 btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm px-16;
+  @apply h-10 min-w-12 btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor font-semibold rounded-sm px-4;
   @apply hover:bg-accent-main hover:border-accent-light;
 }
 

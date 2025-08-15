@@ -3,7 +3,7 @@
     <div class="flex flex-row w-full h-full gap-4">
         {% if has_button_left %}
         <div class="flex">
-            {%include "components/button.html" with text=button_text extra_classes="button-secondary !h-full !font-semibold !px-8 {{button_classes}}" %}
+            <button class="button-secondary !h-full {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>        
         </div>
         {% endif %}
         {% if is_textarea %}
@@ -11,13 +11,13 @@
             {% include "components/textarea.html" with name=name placeholder=placeholder extra_classes=input_classes %}
         </div>
         {% else %}
-        <div class="flex flex-1 input">
-            {% include "components/input.html" with name=name placeholder=placeholder extra_classes=input_classes%}
+        <div class="flex flex-1">
+            {% include "components/input.html" with icon=None name=name placeholder=placeholder extra_classes=input_classes%}
         </div>
         {% endif %}
         {% if not has_button_left %}
         <div class="flex">
-            {%include "components/button.html" with text=button_text extra_classes="button-secondary !h-full !font-semibold !px-8 {{button_classes}}" %}
+            <button class="button-secondary !h-full {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>            
         </div>
         {% endif %}
     </div>
