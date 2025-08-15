@@ -42,7 +42,7 @@ class Palabra(models.Model):
                     self.lecturas_list(usuario) + self.significados_list(usuario)
                 )
         elif lenguaje_elegido == "Significados":
-            self.pregunta = self.significados_str(usuario)
+            self.pregunta = [self.significados_str(usuario)]
             self.respuestas = ut.set_alternate_inputs(
                 [self.palabra] + self.lecturas_list(usuario)
             )

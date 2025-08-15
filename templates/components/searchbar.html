@@ -1,10 +1,4 @@
 <form method="get" class="input">
   {% include "components/icons/search.html" with color="fill-textcolor" %}
-  <input
-    type="search"
-    name="{{ name }}"
-    class="input_text {{extra_classes}}"
-    placeholder="{{placeholder| default:'Buscar:'}}"
-    value="{{ value|default:'' }}"
-  />
+  {% include "components/input.html" with type="search" name=name placeholder=placeholder extra_classes=extra_classes%}
 </form>

@@ -3,17 +3,16 @@
   <div class="flex flex-row justify-between w-full gap-x-4">
     <h4 class="text-start">Sesión de estudio</h4>
     <div>
-      {% include "components/navigation_button.html" with url=finalizar_url text="Finalizar" extra_classes="button-big" name="finalizar" %}      
+      {% include "components/button.html" with is_navigation=True url=finalizar_url text="Finalizar" extra_classes="button-big" name="finalizar" %}      
     </div>
   </div>  
-  <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between w-full gap-x-4">
-     
+  <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between w-full gap-x-4">     
     <div class="flex flex-row justify-center gap-x-4 w-full">
-      {% include "components/button.html" with icon="components/icons/arrow_left_double.html" name="action" value="previous_unanswered" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
-      {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
+      {% include "components/button.html" with icon="components/icons/arrow_left_double.html" name="action" value="previous_unanswered" url=cambiar_pregunta_url extra_classes="button-icon-only" %}
+      {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=cambiar_pregunta_url extra_classes="button-icon-only" %}
       <h2 class="!text-4xl">Pregunta {{index}}</h2>      
-      {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
-      {% include "components/button.html" with icon="components/icons/arrow_right_double.html" name="action" value="next_unanswered" url=cambiar_pregunta_url extra_classes="button-neutral !border-none !px-0" %}
+      {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pregunta_url extra_classes="button-icon-only" %}
+      {% include "components/button.html" with icon="components/icons/arrow_right_double.html" name="action" value="next_unanswered" url=cambiar_pregunta_url extra_classes="button-icon-only" %}
     </div>
   </div>   
   <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between gap-x-4">
@@ -28,8 +27,7 @@
     {% else %}
       {% include "study/pregunta_card.html" with palabra=palabra checar_pregunta_url=checar_pregunta_url %}
     {% endif %}
-  </div>      
-  
+  </div>        
   {% if palabra_contestada %}
   <div class="pb-4">
     <div class="space-y-4">

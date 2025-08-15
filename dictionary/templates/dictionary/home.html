@@ -11,14 +11,16 @@
   </div>
 
   <dialog id="crear_palabra_modal" class="modal">
-    <div class="modal-box">
-      <h3 class="text-lg font-bold">Hello!</h3>
-      <p class="py-4">Press ESC key or click the button below to close</p>
-      <div class="modal-action">
-        <!-- Works because we're inside <dialog> -->
+    <div class="modal-box space-y-4">
+      <div class="flex flex-row justify-between items-center">
+        <h2>Palabra a crear</h2>
         <form method="dialog">
-          <button class="btn">Close</button>
+          {% include "components/button.html" with icon="components/icons/cross.html" extra_classes="button-icon-only"%}
         </form>
+      </div>     
+      
+      {% include "components/input_button.html" %}
+      
       </div>
     </div>
     <!-- Optional: clicking the backdrop closes the dialog -->

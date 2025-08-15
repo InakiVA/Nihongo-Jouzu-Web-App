@@ -1,10 +1,8 @@
+{% if url %}
 <form method="{{method}}" class="input" action="{{url}}">
   {% csrf_token %}
-  <input
-    type="text"
-    name="{{ name }}"
-    class="input_text {{ extra_classes }}"
-    placeholder="{{ placeholder|default:'' }}"
-    value="{{ value|default:'' }}"
-  />
+  <input type="{{ type|default:'text' }}" name="{{ name }}" class="input_text {{ extra_classes }}" placeholder="{{ placeholder|default:'Buscar:' }}" value="{{ value|default:'' }}"/>
 </form>
+{% else %}
+<input type="{{ type|default:'text' }}" name="{{ name }}" class="input_text {{ extra_classes }}" placeholder="{{ placeholder|default:'Buscar:' }}" value="{{ value|default:'' }}"/>
+{% endif %}
