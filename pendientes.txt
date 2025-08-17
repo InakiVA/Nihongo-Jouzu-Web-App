@@ -37,29 +37,31 @@
 
 == Vista de búsqueda:
     ++ Palabras con word card, hyperlink a palabra-detalles
-    ?? Incluir búsqueda de grupos
-    ?? Incluir búsqueda de tags - palabras o grupos que tengan como tag el input dado mejor
+    $$ implementar que se busquen palabras, lecturas y significados
+    ++ Incluir búsqueda de grupos - tab separation
+    ++ Incluir búsqueda de tags - palabras o grupos que tengan como tag el input dado mejor
 
 -- CRUD:
 
 == Vista de palabras
-    ++ Crear palabra
-    ++ Lista de palabras
-        ++ Cambiar "Diccionario" a "Palabras" en navbar y urls
-        ++ lista con estrella y progreso
+    << Crear palabra
+    << Lista de palabras
+        << Cambiar "Diccionario" a "Palabras" en navbar y urls
+        >> lista con estrella y progreso
     ++ Filtros por etiqueta, estrella, progreso, creador
 
 == Vista de palabra-detalles
+    << Creada
     $$ vista normal con un botón de editar toggle, eliminar aparece al picar editar
     ++ Editar palabra
     ++ Eliminar palabra
     ++ Agregar lecturas, significados, notas, etiquetas
     ++ Editar ""
     ++ Eliminar "" 
-    ++ Agregar a grupo, eliminar de grupo
+    << Agregar a grupo, eliminar de grupo
     ++ Fecha de creación
     ++ Último estudio
-    ++ Estrella y progreso- modificables en modo editar
+    << Estrella y progreso-
 
 == Vista de grupos
     ++ Crear grupo

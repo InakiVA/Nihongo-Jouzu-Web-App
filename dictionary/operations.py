@@ -11,38 +11,6 @@ from groups.models import Grupo
 
 @require_POST
 @login_required
-def toggle_modal(request):
-    modal_settings = request.session.get("ajustes_modal", {})
-    open_modal = modal_settings.get("open_modal", False)
-    modal_settings["open_modal"] = not open_modal
-    modal_settings["intentado"] = False
-    request.session["ajustes_modal"] = modal_settings
-    return redirect(request.META.get("HTTP_REFERER", "/"))
-
-
-# bound ocurre dentro de llamada de context por si negativo
-@require_POST
-@login_required
-def cambiar_pagina(request):
-    action = request.POST.get("action")
-    index = request.session.get("page_index", 0)
-    if action == "next":
-        index += 1
-    elif action == "previous":
-        index -= 1
-    request.session["page_index"] = index
-    return redirect(request.META.get("HTTP_REFERER", "/"))
-
-
-def elegir_palabra(request):
-    palabra_id = request.POST.get("wordcard")
-    print(f"{palabra_id}: AAAAAAAAAAAAAAA")
-    request.session["palabra_actual"] = palabra_id
-    return redirect("detalles")
-
-
-@require_POST
-@login_required
 def crear_palabra(request):
     modal_settings = request.session.get("ajustes_modal")
     modal_settings["intentado"] = True

@@ -11,116 +11,19 @@ from dictionary.models import Palabra
 from progress.models import UsuarioPalabra
 
 import study.operations as op
+import core.operations as c_op
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = "study/home.html"
 
-    def asegurar_ajustes_sesion(self):
-        ajustes_default = {
-            "orden_elegido": "Creación",
-            "descendente": False,
-            "idioma_preguntas": "Original",
-            "aleatorio": False,
-            "filtros_palabras_andor": "AND",
-            "filtros_palabras_inclusivo": True,
-            "filtros_etiquetas_andor": "AND",
-            "filtros_etiquetas_inclusivo": True,
-        }
-        if "inicio_ajustes" not in self.request.session:
-            self.request.session["inicio_ajustes"] = ajustes_default.copy()
-        else:
-            for key, val in ajustes_default.items():
-                self.request.session["inicio_ajustes"].setdefault(key, val)
-
-    def crear_grupos_nuevos_del_admin(self):
-        usuario = self.request.user
-        ids_objetivo = set(
-            Grupo.objects.filter(
-                Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
-            ).values_list("id", flat=True)
-        )  # que registro sea de admin o de usuario
-        ids_existentes = set(
-            UsuarioGrupo.objects.filter(usuario=usuario).values_list(
-                "grupo_id", flat=True
-            )
-        )  # registros ya en tabla relacional
-        ids_nuevos = ids_objetivo - ids_existentes
-
-        if ids_nuevos:
-            grupos_nuevos = Grupo.objects.filter(id__in=ids_nuevos).order_by("id")
-            for grupo in grupos_nuevos:
-                UsuarioGrupo.objects.create(
-                    usuario=usuario,
-                    grupo=grupo,
-                    estudiando=False,
-                    estrella=False,
-                )
-
-    def crear_palabras_nuevas_del_admin(self):
-        usuario = self.request.user
-        ids_objetivo = set(
-            Palabra.objects.filter(
-                Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
-            ).values_list("id", flat=True)
-        )  # que registro sea de admin o de usuario
-        ids_existentes = set(
-            UsuarioPalabra.objects.filter(usuario=usuario).values_list(
-                "palabra_id", flat=True
-            )
-        )  # registros ya en tabla relacional
-        ids_nuevos = ids_objetivo - ids_existentes
-
-        if ids_nuevos:
-            palabras_nuevas = Palabra.objects.filter(id__in=ids_nuevos).order_by("id")
-            for palabra in palabras_nuevas:
-                UsuarioPalabra.objects.create(
-                    usuario=usuario,
-                    palabra=palabra,
-                    progreso=0,
-                    estrella=False,
-                )
-
-    def get_user_groups_list(self):
-        usuario = self.request.user
-        usuario_palabras = UsuarioPalabra.objects.filter(usuario=usuario)
-        progreso_map = {up.palabra_id: up.progreso for up in usuario_palabras}
-
-        usuario_grupos = (
-            UsuarioGrupo.objects.filter(usuario=usuario)
-            .select_related("grupo")  # para acceder a ug.grupo sin query extra
-            .prefetch_related("grupo__grupo_palabras")  # para las palabras en el grupo
-            .order_by("id")
-        )
-
-        grupos = []
-        for ug in usuario_grupos:
-            palabras = [gp.palabra_id for gp in ug.grupo.grupo_palabras.all()]
-            progreso_total = sum(progreso_map.get(pid, 0) for pid in palabras)
-            cantidad = len(palabras)
-            progreso = int(progreso_total / cantidad) if cantidad > 0 else 0
-
-            grupos.append(
-                {
-                    "text": ug.grupo.grupo,
-                    "id": ug.grupo.id,
-                    "progreso": progreso,
-                    "estrella": ug.estrella,
-                    "estudiando": ug.estudiando,
-                    "fecha_creacion": ug.grupo.fecha_creacion,
-                    "ultima_modificacion": ug.ultima_modificacion,
-                    "autor": ug.grupo.usuario.username,
-                }
-            )
-        return grupos
-
     def get_context_data(self, **kwargs):
         usuario = self.request.user
-        self.asegurar_ajustes_sesion()
+        c_op.asegurar_ajustes_sesion(self.request)
         ajustes = self.request.session["inicio_ajustes"]
 
-        self.crear_palabras_nuevas_del_admin()
-        self.crear_grupos_nuevos_del_admin()
+        c_op.crear_palabras_nuevas_del_admin(usuario)
+        c_op.crear_grupos_nuevos_del_admin(usuario)
 
         context = super().get_context_data(**kwargs)
         context["href_estudio"] = reverse_lazy("estudio")
@@ -133,7 +36,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
                 "text": filtro,
                 "id": filtro + " (grupos)",
                 "is_active": ajustes.get(filtro + " (grupos)", False),
-                "url": reverse("toggle_filtro"),
+                "url": reverse_lazy("toggle_filtro"),
             }
             for filtro in [
                 "Elegidos",
@@ -142,20 +45,20 @@ class HomeView(LoginRequiredMixin, TemplateView):
                 "Con estrella",
             ]
         ]
-        context["select_orden_url"] = reverse("toggle_orden_grupos")
+        context["select_orden_url"] = reverse_lazy("toggle_orden_grupos")
         orden_opciones = ("Creación", "Nombre", "Progreso", "Reciente")
         context["orden_opciones"] = orden_opciones
         orden_elegido = ajustes.get("orden_elegido", orden_opciones[0])
         context["orden_elegido"] = orden_elegido
-        context["descendente_url"] = reverse("toggle_descendente")
+        context["descendente_url"] = reverse_lazy("toggle_descendente")
         descendente = ajustes.get("descendente", False)
         context["on_descendente"] = descendente
 
         # __ Grupos_lista
-        context["check_url"] = reverse("toggle_estudiando")
-        context["estrella_url"] = reverse("toggle_estrella_grupo")
+        context["check_url"] = reverse_lazy("toggle_estudiando")
+        context["estrella_url"] = reverse_lazy("toggle_estrella_grupo")
 
-        grupos = self.get_user_groups_list()
+        grupos = c_op.get_user_groups_list(usuario)
 
         buscar_grupo_input = (
             self.request.GET.get("buscar_grupo", "").strip().lower()
@@ -188,18 +91,20 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["grupos"] = grupos
 
         # __ Preguntas
-        context["idioma_preguntas_url"] = reverse("toggle_idioma_preguntas")
+        context["idioma_preguntas_url"] = reverse_lazy("toggle_idioma_preguntas")
         idioma_preguntas_opciones = ("Original", "Significados", "Cualquiera")
         context["idioma_preguntas_opciones"] = idioma_preguntas_opciones
         context["idioma_preguntas_elegido"] = self.request.session.get(
             "idioma_preguntas_elegido", idioma_preguntas_opciones[0]
         )
-        context["aleatorio_url"] = reverse("toggle_aleatorio")
+        context["aleatorio_url"] = reverse_lazy("toggle_aleatorio")
         context["is_aleatorio"] = ajustes.get("aleatorio", False)
 
         # __ Filtros
-        context["filtros_palabras_andor_url"] = reverse("toggle_filtros_palabras_andor")
-        context["filtros_palabras_inclusivo_url"] = reverse(
+        context["filtros_palabras_andor_url"] = reverse_lazy(
+            "toggle_filtros_palabras_andor"
+        )
+        context["filtros_palabras_inclusivo_url"] = reverse_lazy(
             "toggle_filtros_palabras_inclusivo"
         )
         context["on_filtros_palabras_andor"] = (
@@ -213,7 +118,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
                 "text": filtro,
                 "id": filtro + " (palabras)",
                 "is_active": ajustes.get(filtro + " (palabras)", False),
-                "url": reverse("toggle_filtro"),
+                "url": reverse_lazy("toggle_filtro"),
             }
             for filtro in [
                 "Creadas por mí",
@@ -223,10 +128,10 @@ class HomeView(LoginRequiredMixin, TemplateView):
         ]
         context["filtros_palabras"] = filtros_palabras
 
-        context["filtros_etiquetas_andor_url"] = reverse(
+        context["filtros_etiquetas_andor_url"] = reverse_lazy(
             "toggle_filtros_etiquetas_andor"
         )
-        context["filtros_etiquetas_inclusivo_url"] = reverse(
+        context["filtros_etiquetas_inclusivo_url"] = reverse_lazy(
             "toggle_filtros_etiquetas_inclusivo"
         )
         etiquetas_andor_switch_value = ajustes.get("filtros_etiquetas_andor") == "OR"
@@ -249,7 +154,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
                     "text": tag.etiqueta,
                     "id": f"{tag.etiqueta} (etiqueta)",
                     "is_active": active,
-                    "url": reverse("toggle_filtro"),
+                    "url": reverse_lazy("toggle_filtro"),
                 }
             )
             open_collapse.append(active)
@@ -474,7 +379,7 @@ class SesionView(LoginRequiredMixin, TemplateView):
                 }
             )
         context["grupos_checks"] = grupos_checks
-        context["grupos_checks_url"] = reverse("toggle_palabra_en_grupo")
+        context["grupos_checks_url"] = reverse_lazy("toggle_palabra_en_grupo")
 
         context["finalizar_url"] = reverse_lazy("resultados")
 
@@ -483,12 +388,12 @@ class SesionView(LoginRequiredMixin, TemplateView):
         context["cambiar_pregunta_url"] = reverse_lazy("cambiar_pregunta")
         context["cambiar_progreso_url"] = reverse_lazy("cambiar_progreso")
         context["checar_pregunta_url"] = reverse("checar_pregunta")
-        context["estrella_url"] = reverse("toggle_estrella_palabra")
+        context["estrella_url"] = reverse_lazy("toggle_estrella_palabra")
 
-        context["agregar_significado"] = reverse("agregar_significado")
-        context["agregar_lectura"] = reverse("agregar_lectura")
-        context["agregar_nota"] = reverse("agregar_nota")
-        context["agregar_etiqueta"] = reverse("agregar_etiqueta")
+        context["agregar_significado"] = reverse_lazy("agregar_significado")
+        context["agregar_lectura"] = reverse_lazy("agregar_lectura")
+        context["agregar_nota"] = reverse_lazy("agregar_nota")
+        context["agregar_etiqueta"] = reverse_lazy("agregar_etiqueta")
 
         print(dict(self.request.session))
         return context

@@ -1,8 +1,10 @@
 <div class="input {{ extra_classes }}">
   {% if icon %}{% include icon %}{% endif %}
   {% if url %}
-  <form method="{{method}}" action="{{url}}">
-    {% csrf_token %}
+  <form method="{{method|default:'post'}}" action="{{url}}">
+    {% if not method or method == "post" %}
+      {% csrf_token %}
+    {% endif %}
     <input type="{{ type|default:'text' }}" name="{{ name }}" class="input_text {{ extra_classes }}" placeholder="{{ placeholder|default:'Buscar:' }}" value="{{ value|default:'' }}"/>
   </form>
   {% else %}

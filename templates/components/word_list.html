@@ -1,0 +1,5 @@
+<li class="flex flex-col flex-auto gap-2 p-4 items-start">
+    {% for palabra in palabras_list %}
+    {% include "components/word_card.html" with palabra=palabra url=url%}         
+    {% endfor %}
+</li>

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "progress",
     "study",
     "tags",
+    "core",
 ]
 
 MIDDLEWARE = [

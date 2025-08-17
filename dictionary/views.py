@@ -72,16 +72,7 @@ class DetailView(LoginRequiredMixin, TemplateView):
                 }
             )
         context["grupos_checks"] = grupos_checks
-        context["grupos_checks_url"] = reverse("toggle_palabra_en_grupo")
-
-        return context
-
-
-class SearchView(LoginRequiredMixin, TemplateView):
-    template_name = "dictionary/search.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context["grupos_checks_url"] = reverse_lazy("toggle_palabra_en_grupo")
 
         return context
 
@@ -93,8 +84,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         usuario = self.request.user
 
-        context["crear_palabra_url"] = reverse("crear_palabra")
-        context["toggle_modal_url"] = reverse("toggle_modal")
+        context["crear_palabra_url"] = reverse_lazy("crear_palabra")
+        context["toggle_modal_url"] = reverse_lazy("toggle_modal")
 
         ajustes_modal = self.request.session.get("ajustes_modal", {})
         context["ajustes_modal"] = ajustes_modal
@@ -132,9 +123,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
             )
         context["palabras_list"] = palabras_list
         context["index"] = index + 1
-        context["cambiar_pagina_url"] = reverse("cambiar_pagina")
+        context["cambiar_pagina_url"] = reverse_lazy("cambiar_pagina")
 
-        context["palabra_url"] = reverse("elegir_palabra")
+        context["palabra_url"] = reverse_lazy("elegir_palabra")
 
         print(dict(self.request.session))
         return context

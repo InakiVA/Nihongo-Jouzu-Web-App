@@ -57,10 +57,6 @@
     </div>
   </dialog>
 
-  <li class="flex flex-col flex-auto gap-2 p-4 items-start">
-    {% for palabra in palabras_list %}
-    {% include "components/word_card.html" with palabra=palabra url=palabra_url%}         
-    {% endfor %}
-  </li>
+  {% include "components/word_list.html" with url=palabra_url palabras_list=palabras_list%}
 </div>
 {% endblock %}

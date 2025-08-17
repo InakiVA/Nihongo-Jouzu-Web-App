@@ -48,7 +48,8 @@
           </li>
         </ul>
       </div>
-      {% include "components/input.html" with icon="components/icons/search.html" %}
+      {% url 'buscar' as buscar_url %}
+      {% include "components/input.html" with icon="components/icons/search.html" name="search" url=buscar_url method="get"%}
     </div>
   </div>
 </nav>
@@ -85,13 +86,14 @@
 
   <div class="navbar-end">  
     <div class="join space-x-2">
-        {% include "components/input.html" with icon="components/icons/search.html" %}
-        {% url 'usuario' as url_value %}
-        {% if request.path == url_value %}
-            {% include "components/button.html" with is_navigation=True url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-main join-item" name="navbar_user" %}
-        {% else %}
-            {% include "components/button.html" with is_navigation=True url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-neutral join-item" name="navbar_user" %}
-        {% endif %}
+      {% url 'buscar' as buscar_url %}
+      {% include "components/input.html" with icon="components/icons/search.html" name="search" url=buscar_url method="get"%}
+      {% url 'usuario' as url_value %}
+      {% if request.path == url_value %}
+        {% include "components/button.html" with is_navigation=True url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-main join-item" name="navbar_user" %}
+      {% else %}
+        {% include "components/button.html" with is_navigation=True url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-neutral join-item" name="navbar_user" %}
+      {% endif %}
     </div>  
   </div>
 </nav>

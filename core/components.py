@@ -1,13 +1,31 @@
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.shortcuts import redirect, get_object_or_404
-from django.db import transaction, IntegrityError
-from django.contrib import messages
+from django.db.models import Q
 
 from tags.models import Etiqueta, PalabraEtiqueta
 from groups.models import Grupo, UsuarioGrupo, GrupoPalabra
 from dictionary.models import Palabra, Significado, Lectura, Nota
 from progress.models import UsuarioPalabra
+
+import core.utils as ut
+
+
+# __ Inputs
+@login_required
+def buscar(request, usuario):
+    search_input = request.GET.get("search")
+    search_input_list = ut.set_alternate_inputs([search_input])
+    tipo = request.session.get("buscando_tipo", "palabra")
+    if tipo == "palabra":
+        results = Palabra.objects.filter(
+            Q(usuario=usuario) | Q(usuario__perfil__rol="admin"),
+            palabra__in=search_input_list,
+        )
+    elif tipo == "grupo":
+        pass
+
+    return results
 
 
 # __ Swaps

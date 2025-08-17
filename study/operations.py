@@ -1,16 +1,16 @@
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.db.models import Q
+from django.contrib import messages
 
 import random
 from core import utils as ut
 
-from tags.models import Etiqueta, PalabraEtiqueta
-from groups.models import Grupo, UsuarioGrupo, GrupoPalabra
-from dictionary.models import Palabra, Significado, Lectura, Nota
+from tags.models import Etiqueta
+from groups.models import UsuarioGrupo, GrupoPalabra
+from dictionary.models import Palabra
 from progress.models import UsuarioPalabra
 
 
@@ -45,43 +45,6 @@ def preparar_estudio(request):
     request.session["palabras_correctas"] = correctas
     request.session["respuestas_incorrectas"] = respuestas_incorrectas
     return redirect("estudio")
-
-
-@require_POST
-@login_required
-# () tipo ["Significado","Lectura","Nota","Etiqueta"]
-def agregar_a_palabra(request, tipo):
-    print("ALL POST DATA:", request.POST.dict())
-
-    user = request.user
-    palabra_id = int(request.session.get("palabra_actual"))
-    palabra_obj = get_object_or_404(Palabra, id=palabra_id)
-
-    if tipo == "Significado":
-        input_value = request.POST.get("agregar_significado")
-        if input_value:
-            Significado.objects.create(
-                significado=input_value, palabra=palabra_obj, usuario=user
-            )
-    elif tipo == "Lectura":
-        input_value = request.POST.get("agregar_lectura")
-        if input_value:
-            Lectura.objects.create(
-                lectura=input_value, palabra=palabra_obj, usuario=user
-            )
-    elif tipo == "Nota":
-        input_value = request.POST.get("agregar_nota")
-        if input_value:
-            Nota.objects.create(nota=input_value, palabra=palabra_obj, usuario=user)
-    elif tipo == "Etiqueta":
-        input_value = request.POST.get("agregar_etiqueta")
-        etiquetas_dict = request.session.get("new_etiquetas", {})
-        etiqueta_id = etiquetas_dict[input_value]
-        PalabraEtiqueta.objects.create(
-            etiqueta_id=etiqueta_id, palabra=palabra_obj, usuario=user
-        )
-
-    return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
 @require_POST
@@ -174,29 +137,6 @@ def cambiar_pregunta(request):
         request.session["index_palabra_pregunta"] = index
         request.session["palabra_actual"] = palabra_id
         return redirect(request.META.get("HTTP_REFERER", "/"))
-
-
-@require_POST
-@login_required
-def cambiar_progreso(request):
-    user = request.user
-    action = request.POST.get("action")
-    palabra_id = request.session.get("palabra_actual")
-    palabra_obj = get_object_or_404(UsuarioPalabra, usuario=user, palabra_id=palabra_id)
-    progreso = palabra_obj.progreso
-
-    if action == "slider":
-        try:
-            progreso = int(request.POST.get("slider_value", progreso))
-        except ValueError:
-            pass
-    else:  # plus, minus
-        progreso = ut.cambiar_progreso(progreso, action)
-
-    palabra_obj.progreso = progreso
-    palabra_obj.save()
-
-    return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
 def actualizar_grupos(usuario):
