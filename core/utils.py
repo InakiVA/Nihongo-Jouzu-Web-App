@@ -1,6 +1,15 @@
 import core.traduccion as trad
 
 
+def bound_page_index(index, max_value):
+    if index > max_value // 10:
+        index = 0
+    elif index < 0:
+        index = max_value // 10
+
+    return index
+
+
 def cambiar_progreso(progreso, action):
     if action == "plus":
         progreso += 5

@@ -1,4 +1,7 @@
-<h2 class="whitespace-nowrap">Progreso: {{ progreso }}%</h2>        
+<div class="flex gap-4">
+<h2 class="whitespace-nowrap">Progreso:</h2>  
+{% include "components/progress_donut.html" with progress=progreso text=progreso%}
+</div>      
 <div class="flex flex-row items-center justify-end gap-x-4 flex-grow">
     {% include "components/button.html" with icon="components/icons/minus.html" name="action" value="minus" url=url extra_classes="button-neutral !border-none !px-0" %}
     {% include "components/progreso.html" with value=progreso%}

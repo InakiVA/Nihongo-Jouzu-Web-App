@@ -17,9 +17,7 @@
             <div class="space-y-4">
                 <h2>Respuestas incorrectas</h2>
                 <div class="flex flex-col gap-4 border rounded-2xl border-incorrect p-4">    
-                    {% for palabra in incorrectas %}            
-                    {% include "components/word_card.html" with palabra=palabra %}
-                    {% endfor %}
+                    {% include "components/word_list.html" with url=palabra_url palabras_list=incorrectas %}
                 </div>   
                 </div>
             {% endif %}
@@ -30,9 +28,7 @@
             <div class=" space-y-4">
                 <h2>Respuestas correctas</h2>
                 <div class="flex flex-col gap-4 border rounded-2xl border-correct p-4">    
-                    {% for palabra in correctas %}            
-                    {% include "components/word_card.html" with palabra=palabra %}
-                    {% endfor %}
+                    {% include "components/word_list.html" with url=palabra_url palabras_list=correctas %}
                 </div>     
             </div> 
             {% endif %}

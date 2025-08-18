@@ -1,12 +1,12 @@
 {% extends "base.html" %} {% block content %}
-<div class="mx-4 space-y-4">
-    <div class="border border-neutral-light rounded-xl flex flex-auto flex-col px-6 py-4">
-        <div class="flex flex-row justify-between pb-4">
+<div class="space-y-4 px-4">
+    <div class="border border-neutral-light rounded-xl flex flex-auto flex-col py-4">
+        <div class="flex flex-row justify-between p-8 pt-2">
             <h1 class="text-8xl font-light">{{palabra.palabra}}</h1>
             {% include "components/button.html" with text="Editar" icon="components/icons/pencil.html" extra_classes="button-big button-secondary" %}
         </div>
         
-        <div class="flex flex-auto flex-col gap-2">
+        <div class="pl-6 flex flex-auto flex-col gap-2">
             <div class="border-neutral-main">
                 <div class="flex items-end gap-4">
                     <h2>Significados</h2>              
@@ -67,12 +67,8 @@
             
         {% if palabras_relacionadas %}      
         <div class="space-y-4">
-            <h2>Palabras relacionadas</h2>
-            <div class="flex flex-col gap-4">    
-                {% for palabra in palabras_relacionadas %}            
-                {% include "components/word_card.html" with palabra=palabra %}
-                {% endfor %}
-            </div>   
+            <h2>Palabras relacionadas</h2>  
+            {% include "components/word_list.html" with url=palabras_relacionadas_url palabras_list=palabras_relacionadas %}
         </div>
         {% endif %}    
     </div>

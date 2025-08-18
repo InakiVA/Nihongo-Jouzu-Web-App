@@ -29,17 +29,22 @@ def toggle_modal(request):
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
-# bound ocurre dentro de llamada de context por si negativo
+# ** bound ocurre dentro de llamada de context por si negativo
 @require_POST
 @login_required
-def cambiar_pagina(request):
+def cambiar_pagina(request, pagina):
     action = request.POST.get("action")
-    index = request.session.get("page_index", 0)
     if action == "next":
-        index += 1
+        change = 1
     elif action == "previous":
-        index -= 1
-    request.session["page_index"] = index
+        change = -1
+    if pagina == "palabras":
+        ajustes_palabras = request.session.get("ajustes_palabras", {})
+        index = ajustes_palabras.get("page_index", 0)
+        index += change
+        ajustes_palabras["page_index"] = index
+        request.session["ajustes_palabras"] = ajustes_palabras
+
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 

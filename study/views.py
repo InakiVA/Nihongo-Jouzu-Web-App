@@ -232,6 +232,7 @@ class ResultadosView(LoginRequiredMixin, TemplateView):
             palabra_obj = get_object_or_404(Palabra, id=palabra_id)
             palabras_incorrectas.append(
                 {
+                    "id": palabra_obj.id,
                     "palabra": palabra_obj.palabra,
                     "significados": palabra_obj.significados_str(usuario),
                     "lecturas": palabra_obj.lecturas_str(usuario),
@@ -251,6 +252,7 @@ class ResultadosView(LoginRequiredMixin, TemplateView):
             palabra_obj = get_object_or_404(Palabra, id=palabra_id)
             palabras_correctas.append(
                 {
+                    "id": palabra_obj.id,
                     "palabra": palabra_obj.palabra,
                     "significados": palabra_obj.significados_str(usuario),
                     "lecturas": palabra_obj.lecturas_str(usuario),
@@ -267,6 +269,7 @@ class ResultadosView(LoginRequiredMixin, TemplateView):
 
         context["incorrectas"] = palabras_incorrectas
         context["correctas"] = palabras_correctas
+        context["palabra_url"] = reverse_lazy("elegir_palabra")
 
         print(dict(self.request.session))
 

@@ -52,9 +52,7 @@
     <div class="space-y-4">
       <h2>Palabras relacionadas</h2>
       <div class="flex flex-col gap-4">    
-        {% for palabra in palabras_relacionadas %}            
-        {% include "components/word_card.html" with palabra=palabra id=palabra.id %}
-        {% endfor %}
+        {% include "components/word_list.html" with palabras_list=palabras_relacionadas %}
       </div>   
     </div>
     {% endif %}

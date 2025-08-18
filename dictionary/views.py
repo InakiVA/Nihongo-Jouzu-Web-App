@@ -9,6 +9,8 @@ from dictionary.models import Palabra, Significado, Lectura
 from progress.models import UsuarioPalabra
 from groups.models import Grupo
 
+import core.utils as ut
+
 
 class DetailView(LoginRequiredMixin, TemplateView):
     template_name = "dictionary/details.html"
@@ -56,6 +58,7 @@ class DetailView(LoginRequiredMixin, TemplateView):
                 }
             )
         context["palabras_relacionadas"] = palabras_relacionadas_dict_list
+        context["palabras_relacionadas_url"] = reverse_lazy("elegir_palabra")
 
         grupos_usuario = list(Grupo.objects.filter(usuario=usuario))
         grupos_de_palabra_de_usuario = set(
@@ -87,23 +90,18 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["crear_palabra_url"] = reverse_lazy("crear_palabra")
         context["toggle_modal_url"] = reverse_lazy("toggle_modal")
 
-        ajustes_modal = self.request.session.get("ajustes_modal", {})
-        context["ajustes_modal"] = ajustes_modal
-        context["intentado"] = ajustes_modal.get("intentado", False)
+        ajustes_palabras = self.request.session.get("ajustes_palabras", {})
+
+        context["intentado"] = ajustes_palabras.get("intentado", False)
 
         palabras = Palabra.objects.filter(
             (Q(usuario=usuario) | Q(usuario__perfil__rol="admin"))
         )
-        index = self.request.session.get("page_index", 0)
-        if index > len(palabras) // 10:
-            index = 0
-        elif index < 0:
-            index = len(palabras) // 10
-        self.request.session["page_index"] = index
+        index = ajustes_palabras.get("page_index", 0)
+        index = ut.bound_page_index(index, len(palabras))
+        ajustes_palabras["page_index"] = index
         palabras_list = []
-        for palabra in palabras[
-            max(0, index * 10) : min(len(palabras), index * 10 + 10)
-        ]:
+        for palabra in palabras[index * 10 : min(len(palabras), index * 10 + 10)]:
             palabras_list.append(
                 {
                     "id": palabra.id,
@@ -126,8 +124,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["cambiar_pagina_url"] = reverse_lazy("cambiar_pagina")
 
         context["palabra_url"] = reverse_lazy("elegir_palabra")
+        context["ajustes_palabras"] = ajustes_palabras
+        self.request.session["ajustes_palabras"] = ajustes_palabras
 
-        print(dict(self.request.session))
         return context
 
     def is_mobile(request):

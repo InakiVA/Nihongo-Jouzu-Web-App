@@ -29,7 +29,12 @@ urlpatterns = [
     # __ funcionalidades
     path("toggle-modal", c_op.toggle_modal, name="toggle_modal"),
     path("elegir-palabra", c_op.elegir_palabra, name="elegir_palabra"),
-    path("switch-palabras-page", c_op.cambiar_pagina, name="cambiar_pagina"),
+    path(
+        "switch-palabras-page",
+        c_op.cambiar_pagina,
+        {"pagina": "palabras"},
+        name="cambiar_pagina",
+    ),
     # __ Checkboxes
     path(
         "toggle-estudiando/",

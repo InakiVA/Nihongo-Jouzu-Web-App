@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="flex flex-col flex-auto">
-  <div class="flex flex-row w-full gap-x-4 px-4 items-start">
+<div class="flex flex-col flex-auto px-4">
+  <div class="flex flex-row w-full gap-x-4 items-start">
     <h4 class="text-start">Palabras</h4>
     <div class="flex flex-row flex-auto justify-start gap-x-4 items-center">
       {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=cambiar_pagina_url extra_classes="button-icon-only" %}
