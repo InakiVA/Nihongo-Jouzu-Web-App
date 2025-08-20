@@ -64,6 +64,7 @@
     ++ Fecha de creación
     ++ Último estudio
     << Estrella y progreso-
+    << no funciona progress bar y star
 
 == Vista de grupos
     ++ Crear grupo

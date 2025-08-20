@@ -101,17 +101,17 @@ def toggle_switch(request, switch):
         ajustes["filtros_palabras_andor"] = (
             "OR" if ajustes.get("filtros_palabras_andor", "AND") == "AND" else "AND"
         )
-    elif switch == "filtros_palabras_inclusivo":
-        ajustes["filtros_palabras_inclusivo"] = (
-            False if ajustes.get("filtros_palabras_inclusivo", True) == True else True
+    elif switch == "filtros_palabras_exclusivo":
+        ajustes["filtros_palabras_exclusivo"] = (
+            False if ajustes.get("filtros_palabras_exclusivo", True) == True else True
         )
     elif switch == "filtros_etiquetas_andor":
         ajustes["filtros_etiquetas_andor"] = (
             "OR" if ajustes.get("filtros_etiquetas_andor", "AND") == "AND" else "AND"
         )
-    elif switch == "filtros_etiquetas_inclusivo":
-        ajustes["filtros_etiquetas_inclusivo"] = (
-            False if ajustes.get("filtros_etiquetas_inclusivo", True) == True else True
+    elif switch == "filtros_etiquetas_exclusivo":
+        ajustes["filtros_etiquetas_exclusivo"] = (
+            False if ajustes.get("filtros_etiquetas_exclusivo", True) == True else True
         )
     request.session["inicio_ajustes"] = ajustes
     return redirect(request.META.get("HTTP_REFERER", "/"))

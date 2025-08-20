@@ -1,17 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="flex flex-col flex-auto px-4">
-  <div class="flex flex-row w-full gap-x-4 items-start">
-    <h4 class="text-start">Palabras</h4>
-    <div class="flex flex-row flex-auto justify-start gap-x-4 items-center">
-      {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=cambiar_pagina_url extra_classes="button-icon-only" %}
-      <h2>Página {{index}}</h2>      
-      {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pagina_url extra_classes="button-icon-only" %}
-    </div>
+<div class="flex flex-col flex-auto px-4 gap-4">
+  <div class="flex flex-row w-full gap-4 justify-between items-start">
+    <h4 class="text-start">Palabras</h4>    
     {% include "components/button.html" with text="Nueva Palabra" icon="components/icons/add.html" url=toggle_modal_url extra_classes="button-big" %}
   </div>
 
-  <dialog id="crear_palabra_modal" class="modal" {% if ajustes_modal.open_modal %} open {% endif %}>
+  <dialog id="crear_palabra_modal" class="modal" {% if ajustes_palabras.open_modal %} open {% endif %}>
     <div class="modal-box space-y-4">
       <div class="flex flex-row justify-between items-center">
         <h2>Palabra a crear</h2>
@@ -22,31 +17,31 @@
         {% csrf_token %}
         <div class="flex flex-auto flex-col gap-2">
           <legend class="fieldset-legend">Palabra</legend>
-          {% if not ajustes_modal.palabra_valida and intentado %}
+          {% if not ajustes_palabras.palabra_valida and intentado %}
           {% include "components/input.html" with placeholder="Tu palabra:" name="palabra_nueva" extra_classes="!border-myalert" %}
           <legend class="fieldset-legend text-myalert">Favor de ingresar palabra</legend>          
           {% else %}
-          {% include "components/input.html" with placeholder="Tu palabra:" name="palabra_nueva" value=ajustes_modal.palabra_valida%}
+          {% include "components/input.html" with placeholder="Tu palabra:" name="palabra_nueva" value=ajustes_palabras.palabra_valida%}
           {% endif %}
         </div>
 
         <div class="flex flex-auto flex-col gap-2">
           <legend class="fieldset-legend">Significado</legend>
-          {% if not ajustes_modal.significado_valido and intentado %}
+          {% if not ajustes_palabras.significado_valido and intentado %}
           {% include "components/input.html" with placeholder="Su significado:" name="significado_nuevo" extra_classes="!border-myalert" %}
           <legend class="fieldset-legend text-myalert">Favor de ingresar su significado</legend> 
           {% else %}
-          {% include "components/input.html" with placeholder="Su significado:" name="significado_nuevo" value=ajustes_modal.significado_valido%}
+          {% include "components/input.html" with placeholder="Su significado:" name="significado_nuevo" value=ajustes_palabras.significado_valido%}
           {% endif %}
         </div>
 
         <div class="flex flex-auto flex-col gap-2">
           <legend class="fieldset-legend">Lectura</legend>
-          {% if not ajustes_modal.lectura_valida and intentado %}
+          {% if not ajustes_palabras.lectura_valida and intentado %}
           {% include "components/input.html" with placeholder="Su lectura:" name="lectura_nueva" extra_classes="!border-myalert" %}
           <legend class="fieldset-legend text-myalert">Favor de ingresar su lectura</legend> 
           {% else %}
-          {% include "components/input.html" with placeholder="Su lectura:" name="lectura_nueva" value=ajustes_modal.lectura_valida%}
+          {% include "components/input.html" with placeholder="Su lectura:" name="lectura_nueva" value=ajustes_palabras.lectura_valida%}
           {% endif %}
         </div>
 
@@ -58,5 +53,15 @@
   </dialog>
 
   {% include "components/word_list.html" with url=palabra_url palabras_list=palabras_list%}
+
+  <div class="flex flex-row flex-auto w-full items-center justify-center gap-4">
+    {% include "components/pagination.html" with pages=pages_list %}
+  </div>
+  <div class="flex flex-row flex-auto w-full items-center justify-center gap-4 pb-4">
+    {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=cambiar_pagina_url extra_classes="button-icon-only" %}
+    <h2>Página {{index}}</h2>      
+    {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pagina_url extra_classes="button-icon-only" %}
+  </div>
+  
 </div>
 {% endblock %}

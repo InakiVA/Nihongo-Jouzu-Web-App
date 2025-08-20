@@ -10,6 +10,14 @@ def bound_page_index(index, max_value):
     return index
 
 
+def create_pages_list(index, max_value):
+    pages_list = []
+    for i in range(max_value):
+        pages_list.append({"text": i + 1, "current": index == i})
+    pages_list.append({})
+    return pages_list
+
+
 def cambiar_progreso(progreso, action):
     if action == "plus":
         progreso += 5

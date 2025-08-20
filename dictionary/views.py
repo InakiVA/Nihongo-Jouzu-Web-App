@@ -76,6 +76,8 @@ class DetailView(LoginRequiredMixin, TemplateView):
             )
         context["grupos_checks"] = grupos_checks
         context["grupos_checks_url"] = reverse_lazy("toggle_palabra_en_grupo")
+        context["estrella_url"] = reverse_lazy("toggle_estrella_palabra")
+        context["cambiar_progreso_url"] = reverse_lazy("cambiar_progreso")
 
         return context
 
@@ -99,6 +101,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         )
         index = ajustes_palabras.get("page_index", 0)
         index = ut.bound_page_index(index, len(palabras))
+
         ajustes_palabras["page_index"] = index
         palabras_list = []
         for palabra in palabras[index * 10 : min(len(palabras), index * 10 + 10)]:
@@ -121,6 +124,11 @@ class HomeView(LoginRequiredMixin, TemplateView):
             )
         context["palabras_list"] = palabras_list
         context["index"] = index + 1
+
+        max_page = len(palabras) // 10
+
+        context["pages_list"] = ut.create_pages_list(index, max_page)
+
         context["cambiar_pagina_url"] = reverse_lazy("cambiar_pagina")
 
         context["palabra_url"] = reverse_lazy("elegir_palabra")

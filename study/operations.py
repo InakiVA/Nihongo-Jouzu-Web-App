@@ -161,16 +161,16 @@ def get_palabras_a_estudiar(usuario, ajustes):
 
     # 2. Aplicar filtros de palabras
     condiciones = []
-    filtros_palabras_inclusivo = ajustes.get("filtros_palabras_inclusivo", True)
+    filtros_palabras_exclusivo = ajustes.get("filtros_palabras_exclusivo", False)
 
     if ajustes.get("Creadas por mí (palabras)"):
-        if filtros_palabras_inclusivo:
+        if not filtros_palabras_exclusivo:
             condiciones.append(Q(usuario=usuario))
         else:
             condiciones.append(~Q(usuario=usuario))
 
     if ajustes.get("Por completar (palabras)"):
-        if filtros_palabras_inclusivo:
+        if not filtros_palabras_exclusivo:
             condiciones.append(
                 Q(palabra_usuarios__usuario=usuario)
                 & ~Q(palabra_usuarios__progreso=100)
@@ -181,7 +181,7 @@ def get_palabras_a_estudiar(usuario, ajustes):
             )
 
     if ajustes.get("Con estrella (palabras)"):
-        if filtros_palabras_inclusivo:
+        if not filtros_palabras_exclusivo:
             condiciones.append(
                 Q(palabra_usuarios__usuario=usuario)
                 & Q(palabra_usuarios__estrella=True)
@@ -212,9 +212,9 @@ def get_palabras_a_estudiar(usuario, ajustes):
 
     if etiquetas_activas:
         etiquetas_obj = Etiqueta.objects.filter(etiqueta__in=etiquetas_activas)
-        filtros_etiquetas_inclusivo = ajustes.get("filtros_etiquetas_inclusivo", True)
+        filtros_etiquetas_exclusivo = ajustes.get("filtros_etiquetas_exclusivo", True)
         filtros_etiquetas_or = ajustes.get("filtros_etiquetas_andor") == "OR"
-        if filtros_etiquetas_inclusivo:
+        if not filtros_etiquetas_exclusivo:
             if filtros_etiquetas_or:
                 palabras = palabras.filter(
                     palabra_etiquetas__etiqueta__in=etiquetas_obj

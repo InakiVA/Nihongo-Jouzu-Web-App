@@ -68,10 +68,10 @@ urlpatterns = [
         name="toggle_filtros_palabras_andor",
     ),
     path(
-        "toggle-filtros-palabras-inclusivo/",
+        "toggle-filtros-palabras-exclusivo/",
         c_cp.toggle_switch,
-        {"switch": "filtros_palabras_inclusivo"},
-        name="toggle_filtros_palabras_inclusivo",
+        {"switch": "filtros_palabras_exclusivo"},
+        name="toggle_filtros_palabras_exclusivo",
     ),
     path(
         "toggle-filtros-etiquetas-andor/",
@@ -80,10 +80,10 @@ urlpatterns = [
         name="toggle_filtros_etiquetas_andor",
     ),
     path(
-        "toggle-filtros-etiquetas-inclusivo/",
+        "toggle-filtros-etiquetas-exclusivo/",
         c_cp.toggle_switch,
-        {"switch": "filtros_etiquetas_inclusivo"},
-        name="toggle_filtros_etiquetas_inclusivo",
+        {"switch": "filtros_etiquetas_exclusivo"},
+        name="toggle_filtros_etiquetas_exclusivo",
     ),
     # __ Swaps
     path(

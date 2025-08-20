@@ -21,11 +21,12 @@ def elegir_palabra(request):
 @require_POST
 @login_required
 def toggle_modal(request):
-    modal_settings = request.session.get("ajustes_modal", {})
+    print(dict(request.session))
+    modal_settings = request.session.get("ajustes_palabras", {})
     open_modal = modal_settings.get("open_modal", False)
     modal_settings["open_modal"] = not open_modal
     modal_settings["intentado"] = False
-    request.session["ajustes_modal"] = modal_settings
+    request.session["ajustes_palabras"] = modal_settings
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
@@ -114,9 +115,9 @@ def asegurar_ajustes_sesion(request):
         "idioma_preguntas": "Original",
         "aleatorio": False,
         "filtros_palabras_andor": "AND",
-        "filtros_palabras_inclusivo": True,
+        "filtros_palabras_exclusivo": True,
         "filtros_etiquetas_andor": "AND",
-        "filtros_etiquetas_inclusivo": True,
+        "filtros_etiquetas_exclusivo": True,
     }
     if "inicio_ajustes" not in request.session:
         request.session["inicio_ajustes"] = ajustes_default.copy()

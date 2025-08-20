@@ -1,3 +1,4 @@
+<div>
 {% if is_navigation %}
   <a href="{{url}}" class="{% if is_selected %} button-main {% else %} button-neutral {% endif %} {{ extra_classes }}"
     {% if target %} target="{{ target }}" {% endif %}
@@ -20,3 +21,4 @@
   </button> 
   {% endif %}
 {% endif %}
+</div>

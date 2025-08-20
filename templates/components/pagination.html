@@ -1,0 +1,9 @@
+<div class="join">
+    {% for page in pages %}
+        {% if not page.text %}
+            <button class="join-item button-neutral" disabled>...</button>
+        {% else %}
+            <button class="join-item {%if page.current%} button-main {% else %} button-neutral {% endif %}">{{page.text}}</button>
+        {% endif %}
+    {% endfor %}
+</div>

@@ -41,16 +41,15 @@
         </div>     
     </div>
 
-    <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between gap-x-4">
-        <div class="flex flex-row items-center">
-            {% include "components/icon_swap_button.html" with id=palabra.id is_active=palabra.estrella url="" on="components/icons/star.html" oncolor="star-on" off="components/icons/star_off.html" offcolor="star-off" %}
-        </div>
-        {% include "components/progress_input_row.html" with progreso=palabra.progreso url="" %}       
+    <div class="px-4">
+        {% include "components/progress_input_row.html" with progreso=palabra.progreso progress_url=cambiar_progreso_url estrella_url=estrella_url%}         
     </div>
 
     <div class="pb-4 space-y-4">
         <div class="space-y-4">
-            <h2>Grupos</h2>
+            <div class="divider divider-start before:bg-neutral-main after:bg-neutral-main pr-4 py-8">
+                <h2>Grupos</h2>
+            </div>   
             <h3 class="px-4">{{palabra.grupos}}</h3>
             {% if grupos_checks %}
             <div class="collapser collapse-plus !border-neutral-main">
@@ -67,7 +66,9 @@
             
         {% if palabras_relacionadas %}      
         <div class="space-y-4">
-            <h2>Palabras relacionadas</h2>  
+            <div class="divider divider-start before:bg-neutral-main after:bg-neutral-main pr-4 py-8">
+                <h2>Palabras relacionadas</h2>
+            </div> 
             {% include "components/word_list.html" with url=palabras_relacionadas_url palabras_list=palabras_relacionadas %}
         </div>
         {% endif %}    

@@ -104,15 +104,13 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["filtros_palabras_andor_url"] = reverse_lazy(
             "toggle_filtros_palabras_andor"
         )
-        context["filtros_palabras_inclusivo_url"] = reverse_lazy(
-            "toggle_filtros_palabras_inclusivo"
+        context["filtros_palabras_exclusivo_url"] = reverse_lazy(
+            "toggle_filtros_palabras_exclusivo"
         )
-        context["on_filtros_palabras_andor"] = (
-            ajustes.get("filtros_palabras_andor") == "OR"
-        )
-        context["on_filtros_palabras_inclusivo"] = (
-            ajustes.get("filtros_palabras_inclusivo") == False
-        )
+        palabras_or = ajustes.get("filtros_palabras_andor") == "OR"
+        context["on_filtros_palabras_andor"] = palabras_or
+        on_filtros_palabras_exclusivo = ajustes.get("filtros_palabras_exclusivo")
+        context["on_filtros_palabras_exclusivo"] = on_filtros_palabras_exclusivo
         filtros_palabras = [
             {
                 "text": filtro,
@@ -127,25 +125,45 @@ class HomeView(LoginRequiredMixin, TemplateView):
             ]
         ]
         context["filtros_palabras"] = filtros_palabras
+        texto_palabras = ""
+        filtros_palabras_prendidos = []
+        for filtro in filtros_palabras:
+            if filtro["is_active"]:
+                filtros_palabras_prendidos.append(filtro["text"].lower())
+        if filtros_palabras_prendidos:
+            if on_filtros_palabras_exclusivo:
+                texto_palabras = " no "
+                if palabras_or:
+                    text_union = " o no ".join(filtros_palabras_prendidos)
+                else:
+                    text_union = " y no ".join(filtros_palabras_prendidos)
+                texto_palabras += text_union
+            else:
+                texto_palabras = " "
+                if palabras_or:
+                    text_union = " o ".join(filtros_palabras_prendidos)
+                else:
+                    text_union = " y ".join(filtros_palabras_prendidos)
+                texto_palabras += text_union
+
+        context["filtros_palabras_show"] = len(filtros_palabras_prendidos) >= 2
 
         context["filtros_etiquetas_andor_url"] = reverse_lazy(
             "toggle_filtros_etiquetas_andor"
         )
-        context["filtros_etiquetas_inclusivo_url"] = reverse_lazy(
-            "toggle_filtros_etiquetas_inclusivo"
+        context["filtros_etiquetas_exclusivo_url"] = reverse_lazy(
+            "toggle_filtros_etiquetas_exclusivo"
         )
         etiquetas_andor_switch_value = ajustes.get("filtros_etiquetas_andor") == "OR"
-        etiquetas_inclusivo_switch_value = (
-            ajustes.get("filtros_etiquetas_inclusivo") == False
-        )
+        etiquetas_exclusivo_switch_value = ajustes.get("filtros_etiquetas_exclusivo")
         context["on_filtros_etiquetas_andor"] = etiquetas_andor_switch_value
-        context["on_filtros_etiquetas_inclusivo"] = etiquetas_inclusivo_switch_value
+        context["on_filtros_etiquetas_exclusivo"] = etiquetas_exclusivo_switch_value
 
         tags = []
         tags_objects = Etiqueta.objects.filter(
             Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
         ).order_by("etiqueta")
-        open_collapse = [etiquetas_andor_switch_value, etiquetas_inclusivo_switch_value]
+        etiquetas_elegidas = []
 
         for tag in tags_objects:
             active = ajustes.get(f"{tag.etiqueta} (etiqueta)", False)
@@ -157,12 +175,46 @@ class HomeView(LoginRequiredMixin, TemplateView):
                     "url": reverse_lazy("toggle_filtro"),
                 }
             )
-            open_collapse.append(active)
+            if active:
+                etiquetas_elegidas.append(tag.etiqueta)
+
+        if texto_palabras and etiquetas_elegidas:
+            if etiquetas_exclusivo_switch_value:
+                texto_palabras += " y sin"
+            else:
+                texto_palabras += " y con"
+            if len(etiquetas_elegidas) >= 2:
+                if etiquetas_andor_switch_value:
+                    texto_palabras += " al menos una de las etiquetas elegidas"
+                else:
+                    texto_palabras += " todas las etiquetas elegidas"
+            elif len(etiquetas_elegidas) == 1:
+                texto_palabras += " la etiqueta elegida"
+        elif etiquetas_elegidas:
+            if etiquetas_exclusivo_switch_value:
+                texto_palabras += " sin"
+            else:
+                texto_palabras += " con"
+            if len(etiquetas_elegidas) >= 2:
+                if etiquetas_andor_switch_value:
+                    texto_palabras += " al menos una de las etiquetas elegidas"
+                else:
+                    texto_palabras += " todas las etiquetas elegidas"
+            elif len(etiquetas_elegidas) == 1:
+                texto_palabras += " la etiqueta elegida"
 
         context["tags"] = tags
-        context["is_open_collapse"] = any(open_collapse)
+        context["is_open_collapse"] = bool(etiquetas_elegidas)
+        context["filtros_etiquetas_show"] = len(etiquetas_elegidas) >= 2
+        if not texto_palabras:
+            texto_palabras = " palabras sin filtrar"
+        cantidad_palabras_elegidas = len(op.get_palabras_a_estudiar(usuario, ajustes))
+        if cantidad_palabras_elegidas == 1:
+            context["texto_palabras"] = " palabra " + texto_palabras
+        else:
+            context["texto_palabras"] = " palabras " + texto_palabras
+        context["cantidad_palabras"] = cantidad_palabras_elegidas
 
-        context["cantidad_palabras"] = len(op.get_palabras_a_estudiar(usuario, ajustes))
         cantidad_grupos_elegidos = len(grupos_elegidos)
         if cantidad_grupos_elegidos == 1:
             context["cantidad_grupos"] = f"{cantidad_grupos_elegidos} elegido"

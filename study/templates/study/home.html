@@ -1,7 +1,8 @@
 {% extends "base.html" %} {% block content %}
 <div class="flex flex-col flex-auto">
-    <div class="flex flex-row gap-x-2 px-4 ">
-        <h4 class="text-start">Estudio</h4>        
+    <div class="flex flex-row gap-x-2 px-4">
+        <h4 class="text-start">Estudio</h4>  
+        <div class="flex flex-auto"></div>      
         <div class="ml-auto text-end">
             <h3 class="text-end font-bold">Palabras a estudiar</h3>
             <h3 class="text-end font-bold">{{cantidad_palabras}}</h3>
@@ -22,7 +23,7 @@
             {% include "components/input.html" with icon="components/icons/search.html" name="buscar_grupo" url=request.path method="get" type="search" value=buscar_grupo_input placeholder="Buscar grupo:"%}
             </div>   
             <div>
-                <legend class="fieldset-legend">Filtros</legend>
+                <legend class="fieldset-legend">Filtros de grupos</legend>
                 <div class="flex flex-row flex-wrap overflow-auto whitespace-nowrap gap-2">                
                     {% for filtro in filtros_grupos %}
                     {% include "components/filter_button.html" with text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
@@ -33,53 +34,66 @@
                 <legend class="fieldset-legend">Orden</legend>
                 <div class="flex flex-row items-center justify-between space-x-4">
                     {% include "components/select.html" with options=orden_opciones selected=orden_elegido url=select_orden_url%}
-                    <div class="flex flex-row space-x-2 items-center justify-between">
-                        {% include "components/icons/full_arrow_up.html" %}
-                        {% include "components/switch.html" with url=descendente_url id="descendente_id" is_selected=on_descendente %}
-                        {% include "components/icons/full_arrow_down.html" %}
-                    </div>
+                    {% include "components/switch_buttons.html" with checked=on_descendente  url=descendente_url left_icon="components/icons/full_arrow_up.html" right_icon="components/icons/full_arrow_down.html" %}            
                 </div> 
-            </div>               
+            </div>            
         </div>
 
         <div class="divider before:bg-neutral-main after:bg-neutral-main {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %}"></div>        
-        <div class="flex flex-auto flex-col min-w-1/4 px-4">
-            <div class="space-y-4">
-                <h2>Preguntas</h2>
-                {% include "components/select.html" with options=idioma_preguntas_opciones selected=idioma_preguntas_elegido legend="Idioma" url=idioma_preguntas_url%}
-                {% include "components/checkbox.html" with text="Orden aleatorio" url=aleatorio_url id="aleatorio_id" is_selected=is_aleatorio%}
-                
+        <div class="flex flex-auto flex-col min-w-1/4 px-4 gap-4">
+            <div>
+            <h2>Palabras</h2>
+            <h3>{{cantidad_palabras}} {{texto_palabras}}</h3>
             </div>
-            <div class="divider before:bg-neutral-main after:bg-neutral-main px-4"></div>
-            <div class="flex flex-col gap-2 place-content-center">
-                <h2>Palabras</h2>
-                <legend class="fieldset-legend pb-2">Filtros</legend>
-                <div class="flex flex-row gap-8 items-end">                    
-                    {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_palabras_andor_url is_selected=on_filtros_palabras_andor %}
-                    {% include "components/switch.html" with left_text="Inclusivo" right_text="Exclusivo" url=filtros_palabras_inclusivo_url is_selected=on_filtros_palabras_inclusivo %}
-                </div>
-                <div class="flex flex-row w-auto flex-wrap overflow-auto gap-2">
+            <div>
+                <legend class="fieldset-legend">Filtros de palabras</legend>
+                <div class="flex flex-row w-auto flex-wrap overflow-auto gap-2 pb-2">
                     {% for filtro in filtros_palabras %}
-                    {% include "components/filter_button.html" with text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
+                        {% if not on_filtros_palabras_exclusivo %}
+                            {% include "components/filter_button.html" with on_icon="components/icons/plus_circle.html" on_classes="button-include" text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
+                        {% else %}
+                            {% include "components/filter_button.html" with on_icon="components/icons/minus_circle.html" on_classes="button-exclude" text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
+                        {% endif %}
                     {% endfor %}
-                </div>                     
-                <div tabindex="0" class="collapser collapse-arrow my-4">
-                    <input type="checkbox" {% if is_open_collapse %} checked {% endif %}/>
-                    <h2 class="collapse-title">Etiquetas</h2>                    
-                    <div class="collapse-content space-y-4">
-                        <legend class="fieldset-legend pb-4">Filtros</legend>
-                        <div class="flex flex-row gap-8 items-end">                            
-                            {% include "components/switch.html" with left_text="Y" right_text="O" url=filtros_etiquetas_andor_url is_selected=on_filtros_etiquetas_andor %}
-                            {% include "components/switch.html" with left_text="Inclusivo" right_text="Exclusivo" url=filtros_etiquetas_inclusivo_url is_selected=on_filtros_etiquetas_inclusivo %}
-                        </div>
-                        <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2">
-                            {% for tag in tags %}
-                            {% include "components/filter_button.html" with text=tag.text id=tag.id is_active=tag.is_active url=tag.url %}         
-                            {% endfor %}
-                        </li>
-                    </div>  
-                </div> 
-            </div>
+                </div>              
+                {% include "components/switch_buttons.html" with checked=on_filtros_palabras_exclusivo url=filtros_palabras_exclusivo_url left_icon="components/icons/plus_circle.html" right_icon="components/icons/minus_circle.html" left_text="Considerar" right_text="Omitir" left_selected_classes="button-include" right_selected_classes="button-exclude"%}            
+                {% if filtros_palabras_show %}
+                    <legend class="fieldset-legend">Se deben cumplir</legend>
+                    {% include "components/switch_buttons.html" with checked=on_filtros_palabras_andor url=filtros_palabras_andor_url left_text="Todos" right_text="Al menos uno" %}                                        
+                {% endif %} 
+            </div>                                 
+            <div class="collapser collapse-arrow">
+                <input type="checkbox" {% if is_open_collapse %} checked {% endif %}/>
+                <h2 class="collapse-title">Filtros por etiqueta</h2>                    
+                <div class="collapse-content flex flex-col gap-4">
+                    <div>
+                    {% include "components/switch_buttons.html" with checked=on_filtros_etiquetas_exclusivo url=filtros_etiquetas_exclusivo_url left_icon="components/icons/plus_circle.html" right_icon="components/icons/minus_circle.html" left_text="Considerar" right_text="Omitir" left_selected_classes="button-include" right_selected_classes="button-exclude"%}                                    
+                    </div>
+                    {% if filtros_etiquetas_show %}
+                    <div>
+                        <legend class="fieldset-legend !pt-0">Se deben tener</legend>
+                        {% include "components/switch_buttons.html" with checked=on_filtros_etiquetas_andor url=filtros_etiquetas_andor_url left_text="Todas" right_text="Al menos una" %}                                        
+                    </div>
+                    {% endif %}     
+                    <div>
+                    <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2">
+                        {% for tag in tags %}
+                            {% if not on_filtros_etiquetas_exclusivo %}                                
+                                {% include "components/filter_button.html" with text=tag.text id=tag.id is_active=tag.is_active url=tag.url on_icon="components/icons/plus_circle.html" on_classes="button-include"%}         
+                            {% else %}
+                                {% include "components/filter_button.html" with text=tag.text id=tag.id is_active=tag.is_active url=tag.url on_icon="components/icons/minus_circle.html" on_classes="button-exclude"%}         
+                            {% endif %}
+                        {% endfor %}
+                    </li>
+                    </div>
+                </div>  
+            </div>  
+            <div class="space-y-4">
+            <legend class="fieldset-legend !pt-0">Preguntas</legend>                         
+            {% include "components/select.html" with options=idioma_preguntas_opciones selected=idioma_preguntas_elegido url=idioma_preguntas_url%}
+            {% include "components/switch.html" with right_text="Orden de preguntas aleatorio" url=aleatorio_url id="aleatorio_id" is_selected=is_aleatorio%}
+            </div>  
+            
         </div>
     </div>    
 </div>

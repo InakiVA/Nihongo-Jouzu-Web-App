@@ -6,17 +6,20 @@
     --color-progress-0: #9e9e9e;
     --color-progress-33: #ff2f4e;
     --color-progress-66: #fab451;  
-    --color-progress-99: #2ce36f;  
+    --color-progress-99: #46d659;  
     --color-progress-100: #5ec9ee;
 
-    --color-mydisabled: #9e9e9e;
+    --color-mydisabled: #7d7d7d;
     --color-myalert: #ff2f4e;
     --color-mywarning: #fab451;
-    --color-mysuccess: #2ce36f;
+    --color-mysuccess: #46d659;
     --color-mycomplete: #5ec9ee;
 
-    --color-correct: #2ce36f;
-    --color-incorrect: #ff2f4e;
+    --color-correct: #389c3d;
+    --color-incorrect: #bd0f0f;
+
+    --color-include: #389c3d;
+    --color-exclude: #816f82;
 
     --color-star: #fffc56;
     --color-star-dark: #8f8c04;
@@ -80,7 +83,7 @@ h4 {
 }
 
 .button-secondary {
-  @apply h-10 min-w-12 btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor font-semibold rounded-sm px-4;
+  @apply h-10 min-w-12 btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm px-4;
   @apply hover:bg-accent-main hover:border-accent-light;
 }
 
@@ -91,7 +94,27 @@ h4 {
 
 .button-icon-only{
   @apply btn btn-ghost btn-circle shadow-none border-none bg-transparent;
-  @apply hover:bg-neutral-main;
+  @apply hover:bg-accent-main;
+}
+
+.button-join-selected{
+  @apply btn btn-ghost shadow-none bg-accent-main text-textcolor rounded-none p-2;
+  @apply hover:bg-accent-dark;
+}
+
+.button-join-unselected{
+  @apply btn btn-ghost shadow-none bg-neutral-main text-textcolor rounded-none p-2;
+  @apply hover:bg-accent-main;
+}
+
+.button-include{
+  @apply btn btn-ghost shadow-none bg-include text-textcolor rounded-none p-2;
+  @apply hover:bg-exclude;
+}
+
+.button-exclude{
+  @apply btn btn-ghost shadow-none bg-exclude text-textcolor rounded-none p-2;
+  @apply hover:bg-include;
 }
 
 .link{

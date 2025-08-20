@@ -12,7 +12,7 @@ from groups.models import Grupo
 @require_POST
 @login_required
 def crear_palabra(request):
-    modal_settings = request.session.get("ajustes_modal")
+    modal_settings = request.session.get("ajustes_palabras")
     modal_settings["intentado"] = True
     palabra_value = request.POST.get("palabra_nueva")
     significado_value = request.POST.get("significado_nuevo")
@@ -23,7 +23,7 @@ def crear_palabra(request):
             [palabra_value, significado_value, lectura_value],
         ):
             modal_settings[key] = value
-        request.session["ajustes_modal"] = modal_settings
+        request.session["ajustes_palabras"] = modal_settings
         return redirect(request.META.get("HTTP_REFERER", "/"))
     for key, value in zip(
         ["palabra_valida", "significado_valido", "lectura_valida"],
@@ -39,5 +39,5 @@ def crear_palabra(request):
     )
     Lectura.objects.create(lectura=lectura_value, palabra=palabra_obj, usuario=user)
     request.session["palabra_actual"] = palabra_obj.id
-    request.session["ajustes_modal"] = modal_settings
+    request.session["ajustes_palabras"] = modal_settings
     return redirect("detalles")
