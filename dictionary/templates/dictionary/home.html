@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="flex flex-col flex-auto px-4 gap-4">
+<div class="flex flex-col flex-auto px-4 gap-4 pb-4">
   <div class="flex flex-row w-full gap-4 justify-between items-start">
     <h4 class="text-start">Palabras</h4>    
     {% include "components/button.html" with text="Nueva Palabra" icon="components/icons/add.html" url=toggle_modal_url extra_classes="button-big" %}
@@ -51,16 +51,12 @@
       </form>      
     </div>
   </dialog>
-
-  {% include "components/word_list.html" with url=palabra_url palabras_list=palabras_list%}
-
-  <div class="flex flex-row flex-auto w-full items-center justify-center gap-4">
-    {% include "components/pagination.html" with pages=pages_list %}
+  <div>
+    {% include "components/word_list.html" with url=palabra_url palabras_list=palabras_list%}
   </div>
-  <div class="flex flex-row flex-auto w-full items-center justify-center gap-4 pb-4">
-    {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=cambiar_pagina_url extra_classes="button-icon-only" %}
-    <h2>Página {{index}}</h2>      
-    {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pagina_url extra_classes="button-icon-only" %}
+
+  <div class="flex w-full items-center justify-center">
+    {% include "components/pagination.html" with pages=pages_list url=cambiar_pagina_url%}
   </div>
   
 </div>

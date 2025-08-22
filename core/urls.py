@@ -33,7 +33,13 @@ urlpatterns = [
         "switch-palabras-page",
         c_op.cambiar_pagina,
         {"pagina": "palabras"},
-        name="cambiar_pagina",
+        name="cambiar_pagina_palabras",
+    ),
+    path(
+        "switch-buscar-page",
+        c_op.cambiar_pagina,
+        {"pagina": "buscar"},
+        name="cambiar_pagina_buscar",
     ),
     # __ Checkboxes
     path(

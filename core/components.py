@@ -13,19 +13,83 @@ import core.utils as ut
 
 # __ Inputs
 @login_required
-def buscar(request, usuario):
-    search_input = request.GET.get("search")
+def buscar(request, search_input, usuario):
+    if not search_input:
+        return redirect(request.META.get("HTTP_REFERER", "/"))
     search_input_list = ut.set_alternate_inputs([search_input])
-    tipo = request.session.get("buscando_tipo", "palabra")
+    owner_q = Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
+    ajustes = request.session.get("ajustes_buscar", {})
+    ajustes.setdefault("buscando_tipo", "palabra")
+    tipo = ajustes.get("buscando_tipo")
+    exact_list = []
+    related_list = []
     if tipo == "palabra":
-        results = Palabra.objects.filter(
-            Q(usuario=usuario) | Q(usuario__perfil__rol="admin"),
-            palabra__in=search_input_list,
+        ajustes.setdefault("palabra_pasada", search_input)
+        if ajustes.get("palabra_pasada") != search_input:
+            ajustes["index_palabra"] = 0
+            ajustes["palabra_pasada"] = search_input
+        exact_results = Palabra.objects.filter(
+            owner_q,
+            Q(palabra__in=search_input_list)
+            | Q(significados__significado__in=search_input_list)
+            | Q(lecturas__lectura__in=search_input_list),
+        ).distinct()
+        related_queries = Q()
+        for term in search_input_list:
+            related_queries |= (
+                Q(palabra__istartswith=term)
+                | Q(significados__significado__istartswith=term)
+                | Q(lecturas__lectura__istartswith=term)
+            )
+        startswith_results = (
+            Palabra.objects.filter(owner_q, related_queries)
+            .exclude(id__in=exact_results)
+            .distinct()
         )
+        related_queries = Q()
+        for term in search_input_list:
+            related_queries |= (
+                Q(palabra__icontains=term)
+                | Q(significados__significado__icontains=term)
+                | Q(lecturas__lectura__icontains=term)
+            )
+        contains_results = (
+            Palabra.objects.filter(owner_q, related_queries)
+            .exclude(id__in=exact_results)
+            .exclude(id__in=startswith_results)
+            .distinct()
+        )
+
+        results = (
+            list(exact_results) + list(startswith_results) + list(contains_results)
+        )
+
+        index = ajustes.get("index_palabra", 0)
+        index = ut.bound_page_index(index, len(results))
+        ajustes["index_palabra"] = index
+
+        for i in range(index * 10, min(len(results), index * 10 + 10)):
+            palabra = results[i]
+            value = {
+                "id": palabra.id,
+                "palabra": palabra.palabra,
+                "significados": palabra.significados_str(usuario),
+                "lecturas": palabra.lecturas_str(usuario),
+                "notas": palabra.notas_str(usuario),
+                "etiquetas": palabra.etiquetas_list(usuario),
+                "grupos": palabra.grupos_str(usuario),
+                "progreso": palabra.palabra_usuarios.get(usuario=request.user).progreso,
+                "estrella": palabra.palabra_usuarios.get(usuario=request.user).estrella,
+            }
+            if i < len(exact_results):
+                exact_list.append(value)
+            else:
+                related_list.append(value)
+            request.session["ajustes_buscar"] = ajustes
     elif tipo == "grupo":
         pass
 
-    return results
+    return (exact_list, related_list, index, len(results))
 
 
 # __ Swaps

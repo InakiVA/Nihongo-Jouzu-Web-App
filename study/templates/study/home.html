@@ -58,7 +58,7 @@
                 </div>              
                 {% include "components/switch_buttons.html" with checked=on_filtros_palabras_exclusivo url=filtros_palabras_exclusivo_url left_icon="components/icons/plus_circle.html" right_icon="components/icons/minus_circle.html" left_text="Considerar" right_text="Omitir" left_selected_classes="button-include" right_selected_classes="button-exclude"%}            
                 {% if filtros_palabras_show %}
-                    <legend class="fieldset-legend">Se deben cumplir</legend>
+                    <legend class="fieldset-legend">Filtros de palabras a pasar</legend>
                     {% include "components/switch_buttons.html" with checked=on_filtros_palabras_andor url=filtros_palabras_andor_url left_text="Todos" right_text="Al menos uno" %}                                        
                 {% endif %} 
             </div>                                 
@@ -71,8 +71,8 @@
                     </div>
                     {% if filtros_etiquetas_show %}
                     <div>
-                        <legend class="fieldset-legend !pt-0">Se deben tener</legend>
-                        {% include "components/switch_buttons.html" with checked=on_filtros_etiquetas_andor url=filtros_etiquetas_andor_url left_text="Todas" right_text="Al menos una" %}                                        
+                        <legend class="fieldset-legend !pt-0">Filtros de etiquetas a pasar</legend>
+                        {% include "components/switch_buttons.html" with checked=on_filtros_etiquetas_andor url=filtros_etiquetas_andor_url left_text="Todos" right_text="Al menos uno" %}                                        
                     </div>
                     {% endif %}     
                     <div>

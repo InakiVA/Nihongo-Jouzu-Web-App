@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-import core.components as cp
 import study.operations as s_op
 
 urlpatterns = [

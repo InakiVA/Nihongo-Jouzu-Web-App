@@ -12,9 +12,31 @@ def bound_page_index(index, max_value):
 
 def create_pages_list(index, max_value):
     pages_list = []
-    for i in range(max_value):
-        pages_list.append({"text": i + 1, "current": index == i})
-    pages_list.append({})
+    # -- de 1 a index
+    if index > 3:
+        pages_list.append({"text": 1, "value": 0, "current": index == 0})
+        pages_list.append({})
+        for i in range(index - 1, index):
+            pages_list.append({"text": i + 1, "value": i, "current": index == i})
+    else:
+        for i in range(index):
+            pages_list.append({"text": i + 1, "value": i, "current": index == i})
+    # -- de index a max_value
+    if index < max_value - 3:
+        for i in range(index, index + 2):
+            pages_list.append({"text": i + 1, "value": i, "current": index == i})
+        pages_list.append({})
+        pages_list.append(
+            {
+                "text": max_value + 1,
+                "value": max_value,
+                "current": index == max_value,
+            }
+        )
+    else:
+        for i in range(index, max_value + 1):
+            pages_list.append({"text": i + 1, "value": i, "current": index == i})
+
     return pages_list
 
 

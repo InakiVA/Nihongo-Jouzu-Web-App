@@ -34,17 +34,30 @@ def toggle_modal(request):
 @require_POST
 @login_required
 def cambiar_pagina(request, pagina):
-    action = request.POST.get("action")
-    if action == "next":
-        change = 1
-    elif action == "previous":
-        change = -1
     if pagina == "palabras":
-        ajustes_palabras = request.session.get("ajustes_palabras", {})
-        index = ajustes_palabras.get("page_index", 0)
-        index += change
-        ajustes_palabras["page_index"] = index
-        request.session["ajustes_palabras"] = ajustes_palabras
+        ajustes = request.session.get("ajustes_palabras", {})
+        index_type = "page_index"
+    elif pagina == "buscar":
+        ajustes = request.session.get("ajustes_buscar", {})
+        if ajustes.get("buscando_tipo", "palabra") == "palabra":
+            index_type = "index_palabra"
+        elif ajustes.get("buscando_tipo") == "grupo":
+            index_type = "index_grupo"
+    action = request.POST.get("action")
+    if not action:
+        page = int(request.POST.get("pagination"))
+    else:
+        page = ajustes.get(index_type, 0)
+        if action == "next":
+            page += 1
+        elif action == "previous":
+            page -= 1
+    ajustes[index_type] = page
+    if pagina == "palabras":
+        request.session["ajustes_palabras"] = ajustes
+    elif pagina == "buscar":
+        request.session["ajustes_buscar"] = ajustes
+    print(dict(request.session))
 
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
@@ -115,9 +128,9 @@ def asegurar_ajustes_sesion(request):
         "idioma_preguntas": "Original",
         "aleatorio": False,
         "filtros_palabras_andor": "AND",
-        "filtros_palabras_exclusivo": True,
+        "filtros_palabras_exclusivo": False,
         "filtros_etiquetas_andor": "AND",
-        "filtros_etiquetas_exclusivo": True,
+        "filtros_etiquetas_exclusivo": False,
     }
     if "inicio_ajustes" not in request.session:
         request.session["inicio_ajustes"] = ajustes_default.copy()

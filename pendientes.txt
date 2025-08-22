@@ -85,7 +85,21 @@
     ++ CRUD
     .. omitir grupo_etiquetas hasta encontrarle propósito funcional
 
+
+
 == Vista de usuario
+    ++ Cambiar usuario (unique) y contraseña
 
 
+
+!! ojo por la moderación, mejor no. Lo dejo anotado por si
+== IMPLEMENTACIÓN DE PUBLICACIONES DE GRUPOS DE PALABRAS
+    .. En navegación se puede buscar usuarios. Al darle click aparece lista de grupos públicos del usuario. El usuario actual puede ver el grupo-detalle y elegir si guardarlo o eliminarlo (si ya está guardado)
+    .. Una vez guardado el grupo de otro usuario, se borra el registro UsuarioGrupo
+    .. NO se borran las palabras de UsuarioPalabras porque esas pueden aparecer en otros grupos no borrados
+    .. Una palabra se borra automáticamente de UsuarioPalabras si no pertenece a ningún otro grupo guardado por el usuario
+    .. SOLO se pueden publicar grupos de palabras, NO se pueden publicar palabras
+
+    -- Vista de usuario tendría switch de perfil público o privado. Todas sus contribuciones
+    
 

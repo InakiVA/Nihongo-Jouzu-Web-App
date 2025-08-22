@@ -129,7 +129,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         context["pages_list"] = ut.create_pages_list(index, max_page)
 
-        context["cambiar_pagina_url"] = reverse_lazy("cambiar_pagina")
+        context["cambiar_pagina_url"] = reverse_lazy("cambiar_pagina_palabras")
 
         context["palabra_url"] = reverse_lazy("elegir_palabra")
         context["ajustes_palabras"] = ajustes_palabras

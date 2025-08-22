@@ -109,12 +109,12 @@ h4 {
 
 .button-include{
   @apply btn btn-ghost shadow-none bg-include text-textcolor rounded-none p-2;
-  @apply hover:bg-exclude;
+  @apply hover:bg-neutral-main;
 }
 
 .button-exclude{
   @apply btn btn-ghost shadow-none bg-exclude text-textcolor rounded-none p-2;
-  @apply hover:bg-include;
+  @apply hover:bg-neutral-main;
 }
 
 .link{

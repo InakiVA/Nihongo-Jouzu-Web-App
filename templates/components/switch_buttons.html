@@ -1,15 +1,15 @@
 <form method="post" action="{{ url }}">
   {% csrf_token %}
   <input type="hidden" name="switch_button_id" value="{{ id }}">
-  <div class="flex-auto inline-flex items-center text-center justify-center overflow-clip rounded-full border gap-x-0.25 bg-neutral-light {{extra_classes}}">
+  <div class="flex-auto !h-8 inline-flex items-center text-center justify-center overflow-clip rounded-full border gap-x-0.25 bg-neutral-light {{extra_classes}}">
     <button class="
     !text-base
     {% if not checked %}
-        border-b-2 border-textcolor !underline !px-8
+        border-b-2 border-textcolor !underline !px-6
         button-join-selected
         {{ left_selected_classes }}
     {% else %} 
-        !font-light !px-4
+        !font-light !px-2
         button-join-unselected 
         {{ left_unselected_classes }}
     {% endif %}">
@@ -19,11 +19,11 @@
     <button class="
     !text-base 
     {% if checked %}
-        border-b-2 border-textcolor !underline !px-8        
+        border-b-2 border-textcolor !underline !px-6     
         button-join-selected
         {{ right_selected_classes }}         
     {% else %} 
-        !font-light !px-4         
+        !font-light !px-2         
         button-join-unselected 
         {{ right_unselected_classes }}
     {% endif %}">
