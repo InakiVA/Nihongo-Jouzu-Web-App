@@ -27,7 +27,7 @@ urlpatterns = [
     ),
     path("cambiar-progreso/", c_op.cambiar_progreso, name="cambiar_progreso"),
     # __ funcionalidades
-    path("toggle-modal", c_op.toggle_modal, name="toggle_modal"),
+    path("toggle-modal", c_cp.toggle_button, {"button": "modal"}, name="toggle_modal"),
     path("elegir-palabra", c_op.elegir_palabra, name="elegir_palabra"),
     path(
         "switch-palabras-page",

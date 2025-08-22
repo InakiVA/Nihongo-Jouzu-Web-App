@@ -18,7 +18,7 @@ class DetailView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         usuario = self.request.user
-        palabra_id = self.request.session.get("palabra_actual", "")
+        palabra_id = self.request.session.get("palabra_actual", 0)
         palabra_obj = get_object_or_404(Palabra, id=palabra_id)
 
         palabra_dict = {
@@ -78,6 +78,78 @@ class DetailView(LoginRequiredMixin, TemplateView):
         context["grupos_checks_url"] = reverse_lazy("toggle_palabra_en_grupo")
         context["estrella_url"] = reverse_lazy("toggle_estrella_palabra")
         context["cambiar_progreso_url"] = reverse_lazy("cambiar_progreso")
+        context["editar_url"] = reverse_lazy("editar")
+
+        return context
+
+
+class EditView(LoginRequiredMixin, TemplateView):
+    template_name = "dictionary/edit.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        usuario = self.request.user
+        palabra_id = self.request.session.get("palabra_actual", 0)
+        palabra_obj = get_object_or_404(Palabra, id=palabra_id)
+
+        palabra_dict = {
+            "id": palabra_id,
+            "palabra": palabra_obj.palabra,
+            "significados": palabra_obj.significados_list(usuario),
+            "lecturas": palabra_obj.lecturas_list(usuario),
+            "notas": palabra_obj.notas_list(usuario),
+            "etiquetas": palabra_obj.etiquetas_list(usuario),
+            "grupos": palabra_obj.grupos_str(usuario),
+            "progreso": palabra_obj.palabra_usuarios.get(
+                usuario=self.request.user
+            ).progreso,
+            "estrella": palabra_obj.palabra_usuarios.get(
+                usuario=self.request.user
+            ).estrella,
+        }
+        context["palabra"] = palabra_dict
+
+        palabras_relacionadas = palabra_obj.palabras_relacionadas(usuario)
+        palabras_relacionadas_dict_list = []
+        for palabra in palabras_relacionadas:
+            palabras_relacionadas_dict_list.append(
+                {
+                    "id": palabra.id,
+                    "palabra": palabra.palabra,
+                    "significados": palabra.significados_str(usuario),
+                    "lecturas": palabra.lecturas_str(usuario),
+                    "etiquetas": palabra.etiquetas_list(usuario),
+                    "notas": palabra.notas_str(usuario),
+                    "progreso": palabra.palabra_usuarios.get(
+                        usuario=self.request.user
+                    ).progreso,
+                    "estrella": palabra.palabra_usuarios.get(
+                        usuario=self.request.user
+                    ).estrella,
+                }
+            )
+        context["palabras_relacionadas"] = palabras_relacionadas_dict_list
+        context["palabras_relacionadas_url"] = reverse_lazy("elegir_palabra")
+
+        grupos_usuario = list(Grupo.objects.filter(usuario=usuario))
+        grupos_de_palabra_de_usuario = set(
+            Grupo.objects.filter(usuario=usuario, grupo_palabras__palabra=palabra_obj)
+        )
+
+        grupos_checks = []
+        for grupo in grupos_usuario:
+            grupos_checks.append(
+                {
+                    "id": grupo.id,
+                    "text": grupo.grupo,
+                    "is_selected": grupo in grupos_de_palabra_de_usuario,
+                }
+            )
+        context["grupos_checks"] = grupos_checks
+        context["grupos_checks_url"] = reverse_lazy("toggle_palabra_en_grupo")
+        context["estrella_url"] = reverse_lazy("toggle_estrella_palabra")
+        context["cambiar_progreso_url"] = reverse_lazy("cambiar_progreso")
+        context["detalles_url"] = reverse_lazy("detalles")
 
         return context
 
@@ -127,7 +199,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         max_page = len(palabras) // 10
 
-        context["pages_list"] = ut.create_pages_list(index, max_page)
+        pages_list = ut.create_pages_list(index, max_page)
+        context["show_pages_list"] = len(pages_list) > 1
+        context["pages_list"] = pages_list
 
         context["cambiar_pagina_url"] = reverse_lazy("cambiar_pagina_palabras")
 

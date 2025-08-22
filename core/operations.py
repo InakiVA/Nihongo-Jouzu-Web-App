@@ -18,18 +18,6 @@ def elegir_palabra(request):
     return redirect("detalles")
 
 
-@require_POST
-@login_required
-def toggle_modal(request):
-    print(dict(request.session))
-    modal_settings = request.session.get("ajustes_palabras", {})
-    open_modal = modal_settings.get("open_modal", False)
-    modal_settings["open_modal"] = not open_modal
-    modal_settings["intentado"] = False
-    request.session["ajustes_palabras"] = modal_settings
-    return redirect(request.META.get("HTTP_REFERER", "/"))
-
-
 # ** bound ocurre dentro de llamada de context por si negativo
 @require_POST
 @login_required

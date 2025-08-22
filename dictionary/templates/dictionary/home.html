@@ -55,9 +55,11 @@
     {% include "components/word_list.html" with url=palabra_url palabras_list=palabras_list%}
   </div>
 
-  <div class="flex w-full items-center justify-center">
-    {% include "components/pagination.html" with pages=pages_list url=cambiar_pagina_url%}
-  </div>
+  {% if show_pages_list %}
+    <div class="flex w-full items-center justify-center">
+      {% include "components/pagination.html" with pages=pages_list url=cambiar_pagina_url%}
+    </div>
+  {% endif %}
   
 </div>
 {% endblock %}

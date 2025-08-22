@@ -194,3 +194,21 @@ def toggle_select(request, select):
         request.session["idioma_preguntas_elegido"] = value
 
     return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+# __ Button: toggle
+@require_POST
+@login_required
+def toggle_button(request, button):
+    if button == "create_modal":
+        modal_settings = request.session.get("ajustes_palabras", {})
+        open_modal = modal_settings.get("open_modal", False)
+        modal_settings["open_modal"] = not open_modal
+        modal_settings["intentado"] = False
+        request.session["ajustes_palabras"] = modal_settings
+    elif button == "editar_palabra":
+        editando = request.session.get("editando", False)
+        print("editando")
+        request.session["editando"] = not editando
+
+    return redirect(request.META.get("HTTP_REFERER", "/"))

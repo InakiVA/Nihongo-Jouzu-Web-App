@@ -1,43 +1,38 @@
 {% extends "base.html" %} {% block content %}
 <div class="space-y-4 px-4">
-    <div class="border border-neutral-light rounded-xl flex flex-auto flex-col py-4">
-        <div class="flex flex-row justify-between p-8 pt-2">
+    <div class="border border-neutral-light rounded-xl flex flex-auto w-full flex-col py-4">
+        <div class="p-6 pt-2 gap-4 space-y-4 w-full">                     
+            <div class="flex justify-between">
             <h1 class="text-8xl font-light">{{palabra.palabra}}</h1>
-            {% include "components/button.html" with text="Editar" icon="components/icons/pencil.html" extra_classes="button-big button-secondary" %}
+            {% include "components/button.html" with is_navigation=True text="Editar" url=editar_url icon="components/icons/pencil.html" extra_classes="button-main" %}
+            </div>       
         </div>
         
-        <div class="pl-6 flex flex-auto flex-col gap-2">
-            <div class="border-neutral-main">
-                <div class="flex items-end gap-4">
-                    <h2>Significados</h2>              
-                    <h3>{{palabra.significados}}</h3>                           
-                </div> 
-            </div>     
-            
-            <div class="border-neutral-main">
-                <div class="flex items-end gap-4">
-                    <h2>Lecturas</h2>              
-                    <h3>{{palabra.lecturas}}</h3>                           
-                </div>
+        <div class="px-6 flex flex-auto flex-col gap-2">
+
+            <div class="flex items-center gap-4 divider divider-start before:bg-neutral-main after:bg-neutral-main px-4">
+                <h2>Significados</h2>          
+                <h3>{{palabra.significados}}</h3>                           
+            </div>                
+
+            <div class="flex items-center gap-4 divider divider-start before:bg-neutral-main after:bg-neutral-main px-4">
+                <h2>Lecturas</h2> 
+                <h3>{{palabra.lecturas}}</h3>                                             
+            </div>                           
+
+            <div class="flex items-center gap-4 divider divider-start before:bg-neutral-main after:bg-neutral-main px-4">  
+                <h2>Etiquetas</h2>              
+                <li class="flex flex-row flex-auto gap-2 font-light">
+                    {% for etiqueta in palabra.etiquetas %}
+                    {% include "components/tag.html" with text=etiqueta %}         
+                    {% endfor %}
+                </li>                         
+            </div>            
+
+            <div class="flex items-center gap-4 divider divider-start before:bg-neutral-main after:bg-neutral-main px-4">
+                <h2>Notas</h2>              
+                <h3>{{palabra.notas}}</h3>                           
             </div> 
-
-            <div class="border-neutral-main">
-                <div class="flex items-end gap-4">  
-                    <h2>Etiquetas</h2>              
-                    <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2 font-light">
-                        {% for etiqueta in palabra.etiquetas %}
-                        {% include "components/tag.html" with text=etiqueta %}         
-                        {% endfor %}
-                    </li>                         
-                </div> 
-            </div>
-
-            <div class="border-neutral-main">
-                <div class="flex items-end gap-4">
-                    <h2>Notas</h2>              
-                    <h3>{{palabra.notas}}</h3>                           
-                </div>
-            </div>             
         </div>     
     </div>
 

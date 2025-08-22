@@ -73,22 +73,27 @@ h4 {
 }
 
 .button-neutral {
-  @apply h-10 min-w-12 btn btn-ghost shadow-none border-neutral-light bg-neutral-dark text-textcolor rounded-sm px-4;
+  @apply btn btn-ghost shadow-none border-neutral-light bg-neutral-dark text-textcolor rounded-sm px-4;
   @apply hover:bg-accent-main;
 }
 
 .button-main {
-  @apply h-10 min-w-12 btn btn-ghost shadow-none border-accent-light bg-accent-main text-textcolor rounded-sm px-4;
+  @apply btn btn-ghost shadow-none border-accent-light bg-accent-main text-textcolor rounded-sm px-4;
   @apply hover:bg-accent-dark;
 }
 
 .button-secondary {
-  @apply h-10 min-w-12 btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm px-4;
+  @apply btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm px-4;
+  @apply hover:bg-accent-main hover:border-accent-light;
+}
+
+.button-alert{
+  @apply btn btn-ghost shadow-none border-neutral-light bg-myalert text-textcolor rounded-sm px-4;
   @apply hover:bg-accent-main hover:border-accent-light;
 }
 
 .button-big{
-  @apply h-10 min-w-12 btn btn-ghost shadow-none border-accent-light bg-accent-main text-textcolor rounded-sm  text-2xl font-bold p-8;
+  @apply btn btn-ghost shadow-none border-accent-light bg-accent-main text-textcolor rounded-sm  text-2xl font-bold p-8;
   @apply hover:bg-accent-dark;
 }
 
