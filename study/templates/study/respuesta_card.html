@@ -21,53 +21,10 @@
 
     <div class="divider {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %} {%if is_correct %} before:bg-correct after:bg-correct {% else %} before:bg-incorrect after:bg-incorrect {% endif %}"></div>
 
-    <div class="flex flex-auto flex-col gap-2">
-        <div class="collapser collapse-plus !border-neutral-main">
-            <input type="radio" name="value_accordion"/>
-            <div class="collapse-title flex items-end gap-4">
-                <h2>Significados</h2>              
-                <h3>{{palabra.significados}}</h3>                           
-            </div>
-            <div class="collapse-content">
-                {% include "components/input_button.html" with name="agregar_significado" icon="components/icons/add_mini.html" url=agregar_significado placeholder="Nuevo significado:" button_text="Agregar"%}        
-            </div>  
-        </div>     
-        
-        <div class="collapser collapse-plus !border-neutral-main">
-            <input type="radio" name="value_accordion"/>
-            <div class="collapse-title flex items-end gap-4">
-                <h2>Lecturas</h2>              
-                <h3>{{palabra.lecturas}}</h3>                           
-            </div>
-            <div class="collapse-content">
-                {% include "components/input_button.html" with name="agregar_lectura" icon="components/icons/add_mini.html" url=agregar_lectura placeholder="Nueva lectura:" button_text="Agregar" %}        
-            </div>  
-        </div> 
-
-        <div class="collapser collapse-plus !border-neutral-main">
-            <input type="radio" name="value_accordion"/>
-            <div class="collapse-title flex items-end gap-4">  
-                <h2>Etiquetas</h2>              
-                <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2 font-light">
-                    {% for etiqueta in palabra.etiquetas %}
-                    {% include "components/tag.html" with text=etiqueta %}         
-                    {% endfor %}
-                </li>                         
-            </div>
-            <div class="collapse-content">
-                {% include "components/select_button.html" with name="agregar_etiqueta" legend="Elige una etiqueta" icon="components/icons/add_mini.html" url=agregar_etiqueta button_text="Agregar" options=nuevas_etiquetas%}             
-            </div>  
-        </div>
-
-        <div class="collapser collapse-plus !border-neutral-main">
-            <input type="radio" name="value_accordion" checked/>
-            <div class="collapse-title flex items-end gap-4">
-                <h2>Notas</h2>              
-                <h3>{{palabra.notas}}</h3>                           
-            </div>
-            <div class="collapse-content">
-                {% include "components/input_button.html" with name="agregar_nota" icon="components/icons/add_mini.html" url=agregar_nota placeholder="Nueva nota:" button_text="Agregar" is_textarea=True%}        
-            </div>  
-        </div>             
+    <div class="flex flex-auto flex-col gap-2">  
+        {% include "study/accordion_element.html" with input_name="agregar_significado" elements=palabra.significados url=agregar_significado header="Significados" placeholder="Nuevo significado:" %}        
+        {% include "study/accordion_element.html" with input_name="agregar_lectura" elements=palabra.lecturas url=agregar_lectura header="Lecturas" placeholder="Nueva lectura:" %}
+        {% include "study/accordion_tag_element.html" with select_name="agregar_etiqueta" elements=palabra.etiquetas url=agregar_etiqueta header="Etiquetas" options=nuevas_etiquetas%}
+        {% include "study/accordion_element.html" with input_name="agregar_nota" elements=palabra.notas url=agregar_nota header="Notas" placeholder="Nueva nota:" is_textarea=True is_checked=True %}
     </div>       
 </div>

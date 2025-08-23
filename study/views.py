@@ -380,7 +380,7 @@ class SesionView(LoginRequiredMixin, TemplateView):
             "lecturas": palabra_obj.lecturas_str(usuario),
             "notas": palabra_obj.notas_str(usuario),
             "etiquetas": palabra_obj.etiquetas_list(usuario),
-            "grupos": palabra_obj.grupos_str(usuario),
+            "grupos": palabra_obj.grupos_list(usuario),
             "progreso": palabra_obj.palabra_usuarios.get(
                 usuario=self.request.user
             ).progreso,
@@ -425,14 +425,24 @@ class SesionView(LoginRequiredMixin, TemplateView):
         )
 
         grupos_checks = []
+        new_grupos_list = {}
+        new_grupos_str = []
         for grupo in grupos_usuario:
-            grupos_checks.append(
-                {
-                    "id": grupo.id,
-                    "text": grupo.grupo,
-                    "is_selected": grupo in grupos_de_palabra_de_usuario,
-                }
-            )
+            if grupo in grupos_de_palabra_de_usuario:
+                grupos_checks.append(
+                    {
+                        "id": grupo.id,
+                        "text": grupo.grupo,
+                        "is_selected": True,
+                    }
+                )
+            else:
+                new_grupos_list[grupo.grupo] = grupo.id
+                new_grupos_str.append(grupo.grupo)
+
+        context["nuevos_grupos"] = new_grupos_str
+        self.request.session["new_grupos"] = new_grupos_list
+        context["agregar_grupo"] = reverse_lazy("agregar_grupo")
         context["grupos_checks"] = grupos_checks
         context["grupos_checks_url"] = reverse_lazy("toggle_palabra_en_grupo")
 

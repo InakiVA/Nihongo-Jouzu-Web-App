@@ -2,9 +2,9 @@ shinji purple and green:
     --color-textcolor: #FFFFFF;
     --color-textcolor-dark: #c7c7c7;
 
-    --color-neutral-light: #9911fa;
+    --color-neutral-light: #c36fff;
     --color-neutral-main: #3e1669;
-    --color-neutral-dark: #170d22;
+    --color-neutral-dark: #170d21;
 
     --color-accent-light: #baffba;
     --color-accent-main: #19ba41;

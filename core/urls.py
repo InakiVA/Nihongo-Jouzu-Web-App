@@ -25,9 +25,20 @@ urlpatterns = [
         {"tipo": "Etiqueta"},
         name="agregar_etiqueta",
     ),
+    path(
+        "agregar-grupo/",
+        c_op.agregar_a_palabra,
+        {"tipo": "Grupo"},
+        name="agregar_grupo",
+    ),
     path("cambiar-progreso/", c_op.cambiar_progreso, name="cambiar_progreso"),
     # __ funcionalidades
-    path("toggle-modal", c_cp.toggle_button, {"button": "modal"}, name="toggle_modal"),
+    path(
+        "toggle-modal",
+        c_cp.toggle_button,
+        {"button": "create_modal"},
+        name="toggle_modal",
+    ),
     path("elegir-palabra", c_op.elegir_palabra, name="elegir_palabra"),
     path(
         "switch-palabras-page",

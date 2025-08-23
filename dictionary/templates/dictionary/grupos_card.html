@@ -1,0 +1,23 @@
+<div>
+    {% include "components/element_tag_header.html" with header="Grupos" elements=palabra.grupos %}
+    <div class="space-y-4 pt-2">    
+        <div class="collapser collapse-plus !border-neutral-main">
+            <input type="checkbox"/>
+            <h3 class="collapse-title font-light">Modificar grupos de palabra</h3>
+            <div class="collapse-content space-y-4">
+                {% if not nuevos_grupos and not grupos_checks%} 
+                    <h3>Favor de crear grupos primero</h3>
+                {% else %}
+                    {% if nuevos_grupos %}
+                        {% include "components/select_button.html" with has_button_left=True icon="components/icons/add_mini.html" name="agregar_grupo" url=agregar_grupo button_text="Agregar a grupo" options=nuevos_grupos%}
+                    {% endif %}
+                    {% if grupos_checks %}
+                        {% for grupo in grupos_checks %}
+                            {% include "components/checkbox.html" with text=grupo.text id=grupo.id is_selected=grupo.is_selected url=grupos_checks_url %}
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}                
+            </div>     
+        </div>
+    </div>
+</div>

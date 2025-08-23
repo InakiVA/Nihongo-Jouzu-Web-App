@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block content %}
-<div class="space-y-4 px-4">
+<div class="space-y-4 px-4 pb-4">
     <div class="border border-neutral-light rounded-xl flex flex-auto w-full flex-col py-4">
         <div class="p-6 pt-2 gap-4 space-y-4 w-full">                     
             <div class="flex justify-between">
@@ -9,64 +9,17 @@
         </div>
         
         <div class="px-6 flex flex-auto flex-col gap-2">
+            {% include "components/element_header.html" with header="Significados" elements=palabra.significados%}                  
+            {% include "components/element_header.html" with header="Lecturas" elements=palabra.lecturas%}                                                       
+            {% include "components/element_tag_header.html" with header="Etiquetas" elements=palabra.etiquetas%}                
+            {% include "components/element_header.html" with header="Notas" elements=palabra.notas%}                                                      
+        </div>   
+    </div>    
 
-            <div class="flex items-center gap-4 divider divider-start before:bg-neutral-main after:bg-neutral-main px-4">
-                <h2>Significados</h2>          
-                <h3>{{palabra.significados}}</h3>                           
-            </div>                
-
-            <div class="flex items-center gap-4 divider divider-start before:bg-neutral-main after:bg-neutral-main px-4">
-                <h2>Lecturas</h2> 
-                <h3>{{palabra.lecturas}}</h3>                                             
-            </div>                           
-
-            <div class="flex items-center gap-4 divider divider-start before:bg-neutral-main after:bg-neutral-main px-4">  
-                <h2>Etiquetas</h2>              
-                <li class="flex flex-row flex-auto gap-2 font-light">
-                    {% for etiqueta in palabra.etiquetas %}
-                    {% include "components/tag.html" with text=etiqueta %}         
-                    {% endfor %}
-                </li>                         
-            </div>            
-
-            <div class="flex items-center gap-4 divider divider-start before:bg-neutral-main after:bg-neutral-main px-4">
-                <h2>Notas</h2>              
-                <h3>{{palabra.notas}}</h3>                           
-            </div> 
-        </div>     
-    </div>
-
-    <div class="px-4">
-        {% include "components/progress_input_row.html" with progreso=palabra.progreso progress_url=cambiar_progreso_url estrella_url=estrella_url%}         
-    </div>
-
-    <div class="pb-4 space-y-4">
-        <div class="space-y-4">
-            <div class="divider divider-start before:bg-neutral-main after:bg-neutral-main pr-4 py-8">
-                <h2>Grupos</h2>
-            </div>   
-            <h3 class="px-4">{{palabra.grupos}}</h3>
-            {% if grupos_checks %}
-            <div class="collapser collapse-plus !border-neutral-main">
-                <input type="checkbox"/>
-                <h3 class="collapse-title font-light">Modificar grupos de palabra</h3>
-                <div class="collapse-content space-y-4"> 
-                    {% for grupo in grupos_checks %}
-                    {% include "components/checkbox.html" with text=grupo.text id=grupo.id is_selected=grupo.is_selected url=grupos_checks_url %}
-                    {% endfor %}                
-                </div>     
-            </div>
-            {% endif %} 
-        </div>
-            
-        {% if palabras_relacionadas %}      
-        <div class="space-y-4">
-            <div class="divider divider-start before:bg-neutral-main after:bg-neutral-main pr-4 py-8">
-                <h2>Palabras relacionadas</h2>
-            </div> 
-            {% include "components/word_list.html" with url=palabras_relacionadas_url palabras_list=palabras_relacionadas %}
-        </div>
-        {% endif %}    
+    <div class="px-4 space-y-10">
+        {% include "components/progress_input_row.html" with progreso=palabra.progreso progress_url=cambiar_progreso_url estrella_url=estrella_url%}   
+        {% include "dictionary/grupos_card.html" %}  
+        {% include "dictionary/relacionadas.html" %}             
     </div>
 </div>
 {% endblock %}

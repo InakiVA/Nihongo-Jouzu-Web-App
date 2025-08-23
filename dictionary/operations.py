@@ -40,4 +40,4 @@ def crear_palabra(request):
     Lectura.objects.create(lectura=lectura_value, palabra=palabra_obj, usuario=user)
     request.session["palabra_actual"] = palabra_obj.id
     request.session["ajustes_palabras"] = modal_settings
-    return redirect("detalles")
+    return redirect("editar")

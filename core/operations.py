@@ -52,7 +52,7 @@ def cambiar_pagina(request, pagina):
 
 @require_POST
 @login_required
-# () tipo ["Significado","Lectura","Nota","Etiqueta"]
+# () tipo ["Significado","Lectura","Nota","Etiqueta","Grupo"]
 def agregar_a_palabra(request, tipo):
     user = request.user
     palabra_id = int(request.session.get("palabra_actual"))
@@ -81,6 +81,11 @@ def agregar_a_palabra(request, tipo):
         PalabraEtiqueta.objects.create(
             etiqueta_id=etiqueta_id, palabra=palabra_obj, usuario=user
         )
+    elif tipo == "Grupo":
+        input_value = request.POST.get("agregar_grupo")
+        grupos_dict = request.session.get("new_grupos", {})
+        grupo_id = grupos_dict[input_value]
+        GrupoPalabra.objects.create(grupo_id=grupo_id, palabra=palabra_obj)
 
     return redirect(request.META.get("HTTP_REFERER", "/"))
 

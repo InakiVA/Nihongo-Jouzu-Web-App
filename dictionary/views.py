@@ -8,6 +8,7 @@ from django.views.generic import TemplateView
 from dictionary.models import Palabra, Significado, Lectura
 from progress.models import UsuarioPalabra
 from groups.models import Grupo
+from tags.models import Etiqueta
 
 import core.utils as ut
 
@@ -28,7 +29,7 @@ class DetailView(LoginRequiredMixin, TemplateView):
             "lecturas": palabra_obj.lecturas_str(usuario),
             "notas": palabra_obj.notas_str(usuario),
             "etiquetas": palabra_obj.etiquetas_list(usuario),
-            "grupos": palabra_obj.grupos_str(usuario),
+            "grupos": palabra_obj.grupos_list(usuario),
             "progreso": palabra_obj.palabra_usuarios.get(
                 usuario=self.request.user
             ).progreso,
@@ -66,14 +67,25 @@ class DetailView(LoginRequiredMixin, TemplateView):
         )
 
         grupos_checks = []
+        new_grupos_list = {}
+        new_grupos_str = []
         for grupo in grupos_usuario:
-            grupos_checks.append(
-                {
-                    "id": grupo.id,
-                    "text": grupo.grupo,
-                    "is_selected": grupo in grupos_de_palabra_de_usuario,
-                }
-            )
+            if grupo in grupos_de_palabra_de_usuario:
+                grupos_checks.append(
+                    {
+                        "id": grupo.id,
+                        "text": grupo.grupo,
+                        "is_selected": True,
+                    }
+                )
+            else:
+                new_grupos_list[grupo.grupo] = grupo.id
+                new_grupos_str.append(grupo.grupo)
+
+        context["nuevos_grupos"] = new_grupos_str
+        self.request.session["new_grupos"] = new_grupos_list
+        context["agregar_grupo"] = reverse_lazy("agregar_grupo")
+
         context["grupos_checks"] = grupos_checks
         context["grupos_checks_url"] = reverse_lazy("toggle_palabra_en_grupo")
         context["estrella_url"] = reverse_lazy("toggle_estrella_palabra")
@@ -95,11 +107,11 @@ class EditView(LoginRequiredMixin, TemplateView):
         palabra_dict = {
             "id": palabra_id,
             "palabra": palabra_obj.palabra,
-            "significados": palabra_obj.significados_list(usuario),
-            "lecturas": palabra_obj.lecturas_list(usuario),
-            "notas": palabra_obj.notas_list(usuario),
+            "significados": palabra_obj.significados_str(usuario),
+            "lecturas": palabra_obj.lecturas_str(usuario),
+            "notas": palabra_obj.notas_str(usuario),
             "etiquetas": palabra_obj.etiquetas_list(usuario),
-            "grupos": palabra_obj.grupos_str(usuario),
+            "grupos": palabra_obj.grupos_list(usuario),
             "progreso": palabra_obj.palabra_usuarios.get(
                 usuario=self.request.user
             ).progreso,
@@ -137,19 +149,46 @@ class EditView(LoginRequiredMixin, TemplateView):
         )
 
         grupos_checks = []
+        new_grupos_list = {}
+        new_grupos_str = []
         for grupo in grupos_usuario:
-            grupos_checks.append(
-                {
-                    "id": grupo.id,
-                    "text": grupo.grupo,
-                    "is_selected": grupo in grupos_de_palabra_de_usuario,
-                }
-            )
+            if grupo in grupos_de_palabra_de_usuario:
+                grupos_checks.append(
+                    {
+                        "id": grupo.id,
+                        "text": grupo.grupo,
+                        "is_selected": True,
+                    }
+                )
+            else:
+                new_grupos_list[grupo.grupo] = grupo.id
+                new_grupos_str.append(grupo.grupo)
+
+        context["nuevos_grupos"] = new_grupos_str
+        self.request.session["new_grupos"] = new_grupos_list
+        context["agregar_grupo"] = reverse_lazy("agregar_grupo")
         context["grupos_checks"] = grupos_checks
         context["grupos_checks_url"] = reverse_lazy("toggle_palabra_en_grupo")
         context["estrella_url"] = reverse_lazy("toggle_estrella_palabra")
         context["cambiar_progreso_url"] = reverse_lazy("cambiar_progreso")
         context["detalles_url"] = reverse_lazy("detalles")
+
+        etiquetas_list = palabra_obj.etiquetas_objetos(usuario)
+        etiquetas_id_list = [e.etiqueta.id for e in etiquetas_list]
+        new_etiquetas_list = Etiqueta.objects.filter(
+            (Q(usuario=usuario) | Q(usuario__perfil__rol="admin"))
+            & ~Q(id__in=etiquetas_id_list)
+        ).order_by("etiqueta")
+        new_etiquetas_str_list = [e.etiqueta for e in new_etiquetas_list]
+        new_etiquetas_id = [e.id for e in new_etiquetas_list]
+        new_etiquetas_list = dict(zip(new_etiquetas_str_list, new_etiquetas_id))
+        self.request.session["new_etiquetas"] = new_etiquetas_list
+        context["nuevas_etiquetas"] = new_etiquetas_str_list
+
+        context["agregar_significado"] = reverse_lazy("agregar_significado")
+        context["agregar_lectura"] = reverse_lazy("agregar_lectura")
+        context["agregar_nota"] = reverse_lazy("agregar_nota")
+        context["agregar_etiqueta"] = reverse_lazy("agregar_etiqueta")
 
         return context
 
@@ -208,6 +247,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["palabra_url"] = reverse_lazy("elegir_palabra")
         context["ajustes_palabras"] = ajustes_palabras
         self.request.session["ajustes_palabras"] = ajustes_palabras
+        print(dict(self.request.session))
 
         return context
 
