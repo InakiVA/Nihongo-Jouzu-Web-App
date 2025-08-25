@@ -10,7 +10,7 @@
   {% if url %}
   <form method="post" action="{{ url }}">
     {% csrf_token %}
-    <input type="hidden" name="{{name}}" value="{{value}}">
+    <input type="hidden" name="{{name}}" value="{{value}}" id="{{id}}">
     <button type="submit" class="{{extra_classes}}">
       {% if icon %}{% include icon %}{% endif %} {{ text }}
     </button>  

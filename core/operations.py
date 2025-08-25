@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.db.models import Q
+from django.contrib import messages
 
 from tags.models import Etiqueta, PalabraEtiqueta, GrupoEtiqueta
 from groups.models import Grupo, UsuarioGrupo, GrupoPalabra
@@ -64,16 +65,25 @@ def agregar_a_palabra(request, tipo):
             Significado.objects.create(
                 significado=input_value, palabra=palabra_obj, usuario=user
             )
+            messages.success(request, "Significado agregado exitosamente")
+        else:
+            messages.warning(request, "No se ingresó significado")
     elif tipo == "Lectura":
         input_value = request.POST.get("agregar_lectura")
         if input_value:
             Lectura.objects.create(
                 lectura=input_value, palabra=palabra_obj, usuario=user
             )
+            messages.success(request, "Lectura agregada exitosamente")
+        else:
+            messages.warning(request, "No se ingresó lectura")
     elif tipo == "Nota":
         input_value = request.POST.get("agregar_nota")
         if input_value:
             Nota.objects.create(nota=input_value, palabra=palabra_obj, usuario=user)
+            messages.success(request, "Nota agregada exitosamente")
+        else:
+            messages.warning(request, "No se ingresó nota")
     elif tipo == "Etiqueta":
         input_value = request.POST.get("agregar_etiqueta")
         etiquetas_dict = request.session.get("new_etiquetas", {})
@@ -81,6 +91,7 @@ def agregar_a_palabra(request, tipo):
         PalabraEtiqueta.objects.create(
             etiqueta_id=etiqueta_id, palabra=palabra_obj, usuario=user
         )
+        messages.success(request, "Etiqueta agregada exitosamente")
     elif tipo == "Grupo":
         input_value = request.POST.get("agregar_grupo")
         grupos_dict = request.session.get("new_grupos", {})
@@ -97,19 +108,7 @@ def cambiar_progreso(request):
     action = request.POST.get("action")
     palabra_id = request.session.get("palabra_actual")
     palabra_obj = get_object_or_404(UsuarioPalabra, usuario=user, palabra_id=palabra_id)
-    progreso = palabra_obj.progreso
-
-    if action == "slider":
-        try:
-            progreso = int(request.POST.get("slider_value", progreso))
-        except ValueError:
-            pass
-    else:  # plus, minus
-        progreso = ut.cambiar_progreso(progreso, action)
-
-    palabra_obj.progreso = progreso
-    palabra_obj.save()
-
+    palabra_obj.cambiar_progreso(action)
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 

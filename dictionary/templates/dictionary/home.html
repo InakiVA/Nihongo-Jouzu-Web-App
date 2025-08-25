@@ -3,43 +3,53 @@
 <div class="flex flex-col flex-auto px-4 gap-4 pb-4">
   <div class="flex flex-row w-full gap-4 justify-between items-start">
     <h4 class="text-start">Palabras</h4>    
-    {% include "components/button.html" with text="Nueva Palabra" icon="components/icons/add.html" url=toggle_modal_url extra_classes="button-big" %}
+    <button type="button" class="button-big" data-open="#crear_palabra_modal">
+      {% include "components/icons/add.html" %} Nueva Palabra
+    </button>    
   </div>
 
-  <dialog id="crear_palabra_modal" class="modal" {% if ajustes_palabras.open_modal %} open {% endif %}>
+  <dialog id="crear_palabra_modal" class="modal" {% if intentado %} open {% endif %}>
     <div class="modal-box space-y-4">
       <div class="flex flex-row justify-between items-center">
         <h2>Palabra a crear</h2>
-        {% include "components/button.html" with url=toggle_modal_url icon="components/icons/cross.html" extra_classes="button-icon-only"%}
+        <button type="button" class="button-icon-only" data-close="#crear_palabra_modal">
+          {% include "components/icons/cross.html" %}
+        </button>        
       </div>     
       
       <form action="{{ crear_palabra_url }}" method="post" class="gap-4 p-4 flex flex-auto flex-col">
         {% csrf_token %}
         <div class="flex flex-auto flex-col gap-2">
-          <legend class="fieldset-legend">Palabra</legend>
+          <div class="flex">
+            <legend class="fieldset-legend">Palabra</legend>
+            <legend class="fieldset-legend text-myalert">*</legend>          
+          </div>          
           {% if not ajustes_palabras.palabra_valida and intentado %}
           {% include "components/input.html" with placeholder="Tu palabra:" name="palabra_nueva" extra_classes="!border-myalert" %}
-          <legend class="fieldset-legend text-myalert">Favor de ingresar palabra</legend>          
           {% else %}
           {% include "components/input.html" with placeholder="Tu palabra:" name="palabra_nueva" value=ajustes_palabras.palabra_valida%}
           {% endif %}
         </div>
 
         <div class="flex flex-auto flex-col gap-2">
-          <legend class="fieldset-legend">Significado</legend>
+          <div class="flex">
+            <legend class="fieldset-legend">Significado</legend>
+            <legend class="fieldset-legend text-myalert">*</legend>          
+          </div>  
           {% if not ajustes_palabras.significado_valido and intentado %}
-          {% include "components/input.html" with placeholder="Su significado:" name="significado_nuevo" extra_classes="!border-myalert" %}
-          <legend class="fieldset-legend text-myalert">Favor de ingresar su significado</legend> 
+          {% include "components/input.html" with placeholder="Su significado:" name="significado_nuevo" extra_classes="!border-myalert" %}          
           {% else %}
           {% include "components/input.html" with placeholder="Su significado:" name="significado_nuevo" value=ajustes_palabras.significado_valido%}
           {% endif %}
         </div>
 
         <div class="flex flex-auto flex-col gap-2">
-          <legend class="fieldset-legend">Lectura</legend>
+          <div class="flex">
+            <legend class="fieldset-legend">Lectura</legend>
+            <legend class="fieldset-legend text-myalert">*</legend>          
+          </div> 
           {% if not ajustes_palabras.lectura_valida and intentado %}
-          {% include "components/input.html" with placeholder="Su lectura:" name="lectura_nueva" extra_classes="!border-myalert" %}
-          <legend class="fieldset-legend text-myalert">Favor de ingresar su lectura</legend> 
+          {% include "components/input.html" with placeholder="Su lectura:" name="lectura_nueva" extra_classes="!border-myalert" %}          
           {% else %}
           {% include "components/input.html" with placeholder="Su lectura:" name="lectura_nueva" value=ajustes_palabras.lectura_valida%}
           {% endif %}

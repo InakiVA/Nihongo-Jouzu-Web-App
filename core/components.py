@@ -102,8 +102,7 @@ def toggle_estrella(request, objeto):
         entry = get_object_or_404(UsuarioGrupo, usuario=user, grupo_id=swap_id)
     elif objeto == "palabra":
         entry = get_object_or_404(UsuarioPalabra, usuario=user, palabra_id=swap_id)
-    entry.estrella = not entry.estrella
-    entry.save()
+    entry.toggle_estrella()
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
@@ -150,6 +149,15 @@ def toggle_checkbox(request, checkbox):
             GrupoPalabra.objects.create(
                 grupo_id=grupo_id,
                 palabra_id=palabra_id,
+            )
+    elif checkbox == "etiqueta_en_palabra":
+        etiqueta_id = request.POST.get("check_id")
+        etiqueta_palabra = PalabraEtiqueta.objects.filter(id=etiqueta_id)
+        if etiqueta_palabra.exists():
+            etiqueta_palabra.delete()
+        else:
+            PalabraEtiqueta.objects.create(
+                etiqueta_id=etiqueta_id, palabra_id=palabra_id, usuario=user
             )
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
@@ -206,9 +214,7 @@ def toggle_button(request, button):
         modal_settings["open_modal"] = not open_modal
         modal_settings["intentado"] = False
         request.session["ajustes_palabras"] = modal_settings
-    elif button == "editar_palabra":
-        editando = request.session.get("editando", False)
-        print("editando")
-        request.session["editando"] = not editando
-
+    elif button == "delete_modal":
+        eliminando = request.session.get("eliminando", False)
+        request.session["eliminando"] = not eliminando
     return redirect(request.META.get("HTTP_REFERER", "/"))

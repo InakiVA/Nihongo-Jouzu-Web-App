@@ -19,6 +19,14 @@ class Grupo(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
     ultima_modificacion = models.DateTimeField(auto_now=True)
 
+    def update_grupo(self, grupo):
+        self.grupo = grupo
+        self.save()
+
+    def update_descripcion(self, descripcion):
+        self.descripcion = descripcion
+        self.save()
+
     class Meta:
         db_table = "Grupos"
 
@@ -46,6 +54,10 @@ class UsuarioGrupo(models.Model):
     def update_modificacion(self):
         self.ultima_modificacion = dt.datetime.now()
         print(self)
+
+    def toggle_estrella(self):
+        self.estrella = not self.estrella
+        self.save()
 
     @property
     def progreso(self):

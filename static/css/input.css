@@ -18,22 +18,22 @@
     --color-correct: #389c3d;
     --color-incorrect: #bd0f0f;
 
-    --color-include: #389c3d;
-    --color-exclude: #816f82;
-
     --color-star: #fffc56;
     --color-star-dark: #8f8c04;
 
     --color-textcolor: #FFFFFF;
     --color-textcolor-dark: #c7c7c7;
 
-    --color-neutral-light: #b3d0ff;
-    --color-neutral-main: #283875;
-    --color-neutral-dark: #1d2230;
+    --color-include: #389c3d;
+    --color-exclude: #816f82;
 
-    --color-accent-light: #f4ffe0;
-    --color-accent-main: #84c710;
-    --color-accent-dark: #4e780b;  
+    --color-neutral-light: #f5f5f5;
+    --color-neutral-main: #2a3c4b;
+    --color-neutral-dark: #1c2731;
+
+    --color-accent-light: #ffccd5;
+    --color-accent-main: #cc0033;
+    --color-accent-dark: #800020; 
   }
 
 nav {

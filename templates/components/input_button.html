@@ -8,11 +8,11 @@
         {% endif %}
         {% if is_textarea %}
         <div class="flex flex-1">
-            {% include "components/textarea.html" with name=name placeholder=placeholder extra_classes=input_classes %}
+            {% include "components/textarea.html" with id=id extra_classes=input_classes %}
         </div>
         {% else %}
         <div class="flex flex-1">
-            {% include "components/input.html" with icon=None name=name placeholder=placeholder extra_classes=input_classes%}
+            {% include "components/input.html" with icon=None id=id extra_classes=input_classes%}
         </div>
         {% endif %}
         {% if not has_button_left %}

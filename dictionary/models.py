@@ -47,6 +47,10 @@ class Palabra(models.Model):
                 [self.palabra] + self.lecturas_list(usuario)
             )
 
+    def update_palabra(self, palabra):
+        self.palabra = palabra
+        self.save()
+
     class Meta:
         db_table = "Palabras"
 
@@ -57,6 +61,9 @@ class Palabra(models.Model):
         return self.significados.filter(
             Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
         )
+
+    def significados_objetos_usuario(self, usuario):
+        return self.significados.filter(Q(usuario=usuario))
 
     def significados_list(self, usuario):
         significados = self.significados_objetos(usuario)
@@ -71,6 +78,9 @@ class Palabra(models.Model):
             Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
         )
 
+    def lecturas_objetos_usuario(self, usuario):
+        return self.lecturas.filter(Q(usuario=usuario))
+
     def lecturas_list(self, usuario):
         lecturas = self.lecturas_objetos(usuario)
         return [str(l.lectura) for l in lecturas]
@@ -81,6 +91,9 @@ class Palabra(models.Model):
 
     def notas_objetos(self, usuario):
         return self.notas.filter(Q(usuario=usuario) | Q(usuario__perfil__rol="admin"))
+
+    def notas_objetos_usuario(self, usuario):
+        return self.notas.filter(Q(usuario=usuario))
 
     def notas_list(self, usuario):
         notas = self.notas_objetos(usuario)
@@ -94,6 +107,9 @@ class Palabra(models.Model):
         return self.palabra_etiquetas.filter(
             Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
         )
+
+    def etiquetas_objetos_usuario(self, usuario):
+        return self.palabra_etiquetas.filter(Q(usuario=usuario))
 
     def etiquetas_list(self, usuario):
         return [str(e.etiqueta) for e in self.etiquetas_objetos(usuario)]
@@ -139,6 +155,10 @@ class Significado(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
     ultima_modificacion = models.DateTimeField(auto_now=True)
 
+    def update_significado(self, significado):
+        self.significado = significado
+        self.save()
+
     class Meta:
         db_table = "Significados"
 
@@ -161,6 +181,10 @@ class Lectura(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
     ultima_modificacion = models.DateTimeField(auto_now=True)
 
+    def update_lectura(self, lectura):
+        self.lectura = lectura
+        self.save()
+
     class Meta:
         db_table = "Lecturas"
 
@@ -182,6 +206,10 @@ class Nota(models.Model):
     )
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
     ultima_modificacion = models.DateTimeField(auto_now=True)
+
+    def update_nota(self, nota):
+        self.nota = nota
+        self.save()
 
     class Meta:
         db_table = "Notas"

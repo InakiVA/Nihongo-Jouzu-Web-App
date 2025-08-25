@@ -16,6 +16,10 @@ class Etiqueta(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
     ultima_modificacion = models.DateTimeField(auto_now=True)
 
+    def update_etiqueta(self, etiqueta):
+        self.etiqueta = etiqueta
+        self.save()
+
     class Meta:
         db_table = "Etiquetas"
 

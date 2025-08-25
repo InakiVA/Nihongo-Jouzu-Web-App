@@ -3,7 +3,8 @@ import core.operations as c_op
 import core.components as c_cp
 
 urlpatterns = [
-    # __ atributos de palabra
+    # == atributos de palabra
+    # __ create
     path(
         "agregar-significado/",
         c_op.agregar_a_palabra,
@@ -31,14 +32,9 @@ urlpatterns = [
         {"tipo": "Grupo"},
         name="agregar_grupo",
     ),
+    # __ update (están en diccionario)
     path("cambiar-progreso/", c_op.cambiar_progreso, name="cambiar_progreso"),
-    # __ funcionalidades
-    path(
-        "toggle-modal",
-        c_cp.toggle_button,
-        {"button": "create_modal"},
-        name="toggle_modal",
-    ),
+    # == funcionalidades
     path("elegir-palabra", c_op.elegir_palabra, name="elegir_palabra"),
     path(
         "switch-palabras-page",
@@ -52,7 +48,7 @@ urlpatterns = [
         {"pagina": "buscar"},
         name="cambiar_pagina_buscar",
     ),
-    # __ Checkboxes
+    # == Checkboxes
     path(
         "toggle-estudiando/",
         c_cp.toggle_checkbox,
@@ -71,7 +67,13 @@ urlpatterns = [
         {"checkbox": "palabra_en_grupo"},
         name="toggle_palabra_en_grupo",
     ),
-    # __ Switches
+    path(
+        "toggle-etiqueta-en-palabra",
+        c_cp.toggle_checkbox,
+        {"checkbox": "etiqueta_en_palabra"},
+        name="toggle_etiqueta_en_palabra",
+    ),
+    # == Switches
     path(
         "toggle-descendente/",
         c_cp.toggle_switch,
@@ -102,7 +104,7 @@ urlpatterns = [
         {"switch": "filtros_etiquetas_exclusivo"},
         name="toggle_filtros_etiquetas_exclusivo",
     ),
-    # __ Swaps
+    # == Swaps
     path(
         "toggle-estrella-grupo/",
         c_cp.toggle_estrella,
@@ -118,7 +120,7 @@ urlpatterns = [
     path(
         "toggle-filtro/", c_cp.toggle_filtro, {"view": "inicio"}, name="toggle_filtro"
     ),
-    # __ Selects
+    # == Selects
     path(
         "toggle-orden-grupos/",
         c_cp.toggle_select,

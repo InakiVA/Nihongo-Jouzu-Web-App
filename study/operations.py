@@ -23,15 +23,14 @@ def preparar_estudio(request):
     ajustes = request.session.get("inicio_ajustes", {})
     usuario = request.user
 
-    actualizar_grupos(usuario)
-
-    palabras_qs = get_palabras_a_estudiar(usuario, ajustes)
-    if not palabras_qs:
+    palabras_obj_list = get_palabras_a_estudiar(usuario, ajustes)
+    if not palabras_obj_list:
         messages.warning(
-            request, "No hay palabras que estudiar con los filtros actuales."
+            request, "No hay palabras que estudiar con los filtros actuales"
         )
         return redirect("inicio")
-    palabras_id = [str(palabra.id) for palabra in palabras_qs]
+    actualizar_grupos(usuario)
+    palabras_id = [str(palabra.id) for palabra in palabras_obj_list]
     request.session["palabras_a_estudiar"] = palabras_id
     request.session["palabra_actual"] = palabras_id[0]
     contestadas = {}
