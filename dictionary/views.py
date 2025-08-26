@@ -123,13 +123,23 @@ class EditView(LoginRequiredMixin, TemplateView):
         }
         context["palabra"] = palabra_dict
 
-        significados_list = []
-        for significado in palabra_obj.significados_objetos_usuario(usuario):
-            significados_list.append(
-                {"id": significado.id, "text": significado.significado}
-            )
+        element_list = []
+        for element in palabra_obj.significados_objetos_usuario(usuario):
+            element_list.append({"id": element.id, "text": element.significado})
 
-        context["significados_usuarios"] = significados_list
+        context["significados_usuario"] = element_list
+
+        element_list = []
+        for element in palabra_obj.lecturas_objetos_usuario(usuario):
+            element_list.append({"id": element.id, "text": element.lectura})
+
+        context["lecturas_usuario"] = element_list
+
+        element_list = []
+        for element in palabra_obj.notas_objetos_usuario(usuario):
+            element_list.append({"id": element.id, "text": element.nota})
+
+        context["notas_usuario"] = element_list
 
         etiquetas_list = palabra_obj.etiquetas_objetos(usuario)
         etiquetas_id_list = [e.etiqueta.id for e in etiquetas_list]
@@ -159,17 +169,15 @@ class EditView(LoginRequiredMixin, TemplateView):
         context["update_significado"] = reverse_lazy("update_significado")
         context["update_lectura"] = reverse_lazy("update_lectura")
         context["update_nota"] = reverse_lazy("update_nota")
-        context["etiqueta_checks_url"] = reverse_lazy("toggle_etiqueta_en_palabra")
 
         context["delete_palabra"] = reverse_lazy("delete_palabra")
-        context["update_significado"] = reverse_lazy("update_significado")
-        context["update_lectura"] = reverse_lazy("update_lectura")
-        context["update_nota"] = reverse_lazy("update_nota")
+        context["delete_significado"] = reverse_lazy("update_significado")
+        context["delete_lectura"] = reverse_lazy("update_lectura")
+        context["delete_nota"] = reverse_lazy("update_nota")
+
         context["etiqueta_checks_url"] = reverse_lazy("toggle_etiqueta_en_palabra")
 
-        context["open_modal"] = self.request.session.get("eliminando", False)
         context["detalles_url"] = reverse_lazy("detalles")
-        context["toggle_modal_url"] = reverse_lazy("toggle_delete_modal")
         return context
 
 

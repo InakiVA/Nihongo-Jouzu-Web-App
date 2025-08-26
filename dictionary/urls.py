@@ -15,6 +15,24 @@ urlpatterns = [
         {"atributo": "palabra"},
         name="update_palabra",
     ),
+    path(
+        "update-significado",
+        d_op.editar_palabra_atributos,
+        {"atributo": "significado"},
+        name="update_significado",
+    ),
+    path(
+        "update-lectura",
+        d_op.editar_palabra_atributos,
+        {"atributo": "lectura"},
+        name="update_lectura",
+    ),
+    path(
+        "update-nota",
+        d_op.editar_palabra_atributos,
+        {"atributo": "nota"},
+        name="update_nota",
+    ),
     # __ deletes
     path(
         "delete-palabra",

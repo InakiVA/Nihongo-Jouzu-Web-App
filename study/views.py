@@ -397,6 +397,7 @@ class SesionView(LoginRequiredMixin, TemplateView):
         context["palabra"] = palabra_dict
         context["palabra_contestada"] = palabras_contestadas[palabra_id]
         context["palabra_correcta"] = palabras_correctas[palabra_id]
+        context["palabras_len"] = len(palabras_ids)
         self.request.session["respuestas"] = palabra_obj.respuestas
 
         palabras_relacionadas = palabra_obj.palabras_relacionadas(usuario)
@@ -460,7 +461,6 @@ class SesionView(LoginRequiredMixin, TemplateView):
         context["agregar_nota"] = reverse_lazy("agregar_nota")
         context["agregar_etiqueta"] = reverse_lazy("agregar_etiqueta")
 
-        print(dict(self.request.session))
         return context
 
     def is_mobile(request):

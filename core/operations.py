@@ -65,7 +65,7 @@ def agregar_a_palabra(request, tipo):
             Significado.objects.create(
                 significado=input_value, palabra=palabra_obj, usuario=user
             )
-            messages.success(request, "Significado agregado exitosamente")
+            messages.success(request, "Significado agregado a palabra exitosamente")
         else:
             messages.warning(request, "No se ingresó significado")
     elif tipo == "Lectura":
@@ -74,14 +74,14 @@ def agregar_a_palabra(request, tipo):
             Lectura.objects.create(
                 lectura=input_value, palabra=palabra_obj, usuario=user
             )
-            messages.success(request, "Lectura agregada exitosamente")
+            messages.success(request, "Lectura agregada a palabra exitosamente")
         else:
             messages.warning(request, "No se ingresó lectura")
     elif tipo == "Nota":
         input_value = request.POST.get("agregar_nota")
         if input_value:
             Nota.objects.create(nota=input_value, palabra=palabra_obj, usuario=user)
-            messages.success(request, "Nota agregada exitosamente")
+            messages.success(request, "Nota agregada a palabra exitosamente")
         else:
             messages.warning(request, "No se ingresó nota")
     elif tipo == "Etiqueta":
@@ -91,7 +91,7 @@ def agregar_a_palabra(request, tipo):
         PalabraEtiqueta.objects.create(
             etiqueta_id=etiqueta_id, palabra=palabra_obj, usuario=user
         )
-        messages.success(request, "Etiqueta agregada exitosamente")
+        messages.success(request, "Etiqueta agregada a palabra exitosamente")
     elif tipo == "Grupo":
         input_value = request.POST.get("agregar_grupo")
         grupos_dict = request.session.get("new_grupos", {})

@@ -38,53 +38,27 @@
         </dialog>
         
         <div class="px-6 flex flex-auto flex-col gap-2">
-
-            {% include "components/element_header.html" with header="Significados" elements=palabra.significados%}   
-            
+            {% include "components/element_header.html" with header="Significados" elements=palabra.significados%}               
             <div class="space-y-4 gap-4 p-4">
                 {% include "components/input_button.html" with has_button_left=True icon="components/icons/add_mini.html" name="agregar_significado" url=agregar_significado placeholder="Nuevo significado" button_text="Crear significado"%}
-                {% if significados_usuarios %}
-                <div class="collapser collapse-plus">
-                    <input type="checkbox"/>
-                    <h2 class="collapse-title">Editar significados actuales</h2>
-                    <div class="collapse-content space-y-4"> 
-                        {% for significado in significados_usuarios %} 
-                        <div class="flex items-start gap-4 px-4">
-                            {% include "components/button.html" with id=significado.id icon="components/icons/trash.html" text="Eliminar" extra_classes="button-alert !rounded-xl !p-2 !px-4"%}
-                            <h3 class="px-4 max-w-1/3 flex-none whitespace-normal break-keep">{{significado.text}}</h3>
-                            {% include "components/input_button.html" with name="update_significado" id=significado.id icon="components/icons/pencil.html" placeholder="Significado" button_text="Actualizar" input_classes="!border-neutral-main" button_classes="!rounded-xl !px-4"%}                                
-                        </div>      
-                        {% endfor %}              
-                    </div>     
-                </div>  
-                {% else %}
-                    <h3 class="!text-myalert underline">No hay significados generados por ti</h2>
+                {% if significados_usuario %}
+                {% include "dictionary/edit_element_list.html" with update_url=update_significado elements=significados_usuario header="Editar significados actuales" placeholder="Significado"%}
                 {% endif %}                   
             </div>         
 
-            {% include "components/element_header.html" with header="Lecturas" elements=palabra.lecturas%}                                                         
-              
+            {% include "components/element_header.html" with header="Lecturas" elements=palabra.lecturas%}                                                                       
             <div class="space-y-4 gap-4 p-4">
                 {% include "components/input_button.html" with has_button_left=True icon="components/icons/add_mini.html" name="agregar_lectura" url=agregar_lectura placeholder="Nueva lectura" button_text="Crear lectura"%}
-                <div class="collapser collapse-plus">
-                    <input type="checkbox"/>
-                    <h2 class="collapse-title">Editar lecturas actuales</h2>
-                    <div class="collapse-content space-y-4"> 
-                        {% for lectura in palabra.lecturas %} 
-                        <div class="flex items-start gap-4 px-4">
-                            {% include "components/button.html" with icon="components/icons/trash.html" text="Eliminar" extra_classes="button-alert !rounded-xl !p-2 !px-4"%}
-                            <h3 class="px-4 max-w-1/3 flex-none whitespace-normal break-keep">{{lectura}}</h3>
-                            {% include "components/input_button.html" with name="update_lectura" icon="components/icons/pencil.html" placeholder="Lectura" button_text="Actualizar" input_classes="!border-neutral-main" button_classes="!rounded-xl !px-4"%}                                
-                        </div>      
-                        {% endfor %}              
-                    </div>     
-                </div>                     
+                {% if lecturas_usuario %}
+                {% include "dictionary/edit_element_list.html" with update_url=update_lectura elements=lecturas_usuario header="Editar lecturas actuales" placeholder="Lectura"%}
+                {% endif %}                  
             </div>                 
 
             {% include "components/element_tag_header.html" with header="Etiquetas" elements=palabra.etiquetas%}    
              
             <div class="space-y-4 gap-4 p-4">
                 {% include "components/select_button.html" with has_button_left=True icon="components/icons/add_mini.html" name="agregar_etiqueta" url=agregar_etiqueta button_text="Agregar etiqueta" options=nuevas_etiquetas%}
+                {% if current_etiquetas %}
                 <div class="collapser collapse-plus">
                     <input type="checkbox"/>
                     <h2 class="collapse-title">Editar etiquetas actuales</h2>
@@ -93,26 +67,17 @@
                         {% include "components/checkbox.html" with text=etiqueta.etiqueta id=etiqueta.id is_selected=True url=etiqueta_checks_url%}     
                         {% endfor %}              
                     </div>     
-                </div>                     
+                </div>  
+                {% endif %}                        
             </div> 
 
             {% include "components/element_header.html" with header="Notas" elements=palabra.notas%}                                                           
              
             <div class="space-y-4 gap-4 p-4">
-                    {% include "components/input_button.html" with is_textarea=True has_button_left=True icon="components/icons/add_mini.html" name="agregar_nota" url=agregar_nota placeholder="Nueva nota" button_text="Crear nota"%}
-                <div class="collapser collapse-plus">
-                    <input type="checkbox"/>
-                    <h2 class="collapse-title">Editar notas actuales</h2>
-                    <div class="collapse-content space-y-4"> 
-                        {% for nota in palabra.notas %} 
-                        <div class="flex items-start gap-4 px-4">
-                            {% include "components/button.html" with icon="components/icons/trash.html" text="Eliminar" extra_classes="button-alert !rounded-xl !p-2 !px-4"%}
-                            <h3 class="px-4 max-w-1/3 flex-none whitespace-normal break-keep">{{nota}}</h3>
-                            {% include "components/input_button.html" with is_textarea=True name="update_nota" icon="components/icons/pencil.html" placeholder="Nota" button_text="Actualizar" input_classes="!border-neutral-main" button_classes="!rounded-xl !px-4"%}                                
-                        </div>      
-                        {% endfor %}              
-                    </div>     
-                </div>                     
+                {% include "components/input_button.html" with is_textarea=True has_button_left=True icon="components/icons/add_mini.html" name="agregar_nota" url=agregar_nota placeholder="Nueva nota" button_text="Crear nota"%}
+                {% if notas_usuario %}
+                {% include "dictionary/edit_element_list.html" with is_textarea=True update_url=update_nota elements=notas_usuario header="Editar notas actuales" placeholder="Nota"%}
+                {% endif %}                       
             </div> 
         </div>     
     </div>

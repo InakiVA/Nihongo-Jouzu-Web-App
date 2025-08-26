@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.shortcuts import redirect, get_object_or_404
 from django.db.models import Q
+from django.contrib import messages
 
 from tags.models import Etiqueta, PalabraEtiqueta
 from groups.models import Grupo, UsuarioGrupo, GrupoPalabra
@@ -145,20 +146,24 @@ def toggle_checkbox(request, checkbox):
         )
         if grupo_palabra.exists():
             grupo_palabra.delete()
+            messages.success(request, "Palabra eliminada de grupo exitosamente")
         else:
             GrupoPalabra.objects.create(
                 grupo_id=grupo_id,
                 palabra_id=palabra_id,
             )
+            messages.success(request, "Palabra agregada a grupo exitosamente")
     elif checkbox == "etiqueta_en_palabra":
         etiqueta_id = request.POST.get("check_id")
         etiqueta_palabra = PalabraEtiqueta.objects.filter(id=etiqueta_id)
         if etiqueta_palabra.exists():
             etiqueta_palabra.delete()
+            messages.success(request, "Etiqueta eliminada de palabra exitosamente")
         else:
             PalabraEtiqueta.objects.create(
                 etiqueta_id=etiqueta_id, palabra_id=palabra_id, usuario=user
             )
+            messages.success(request, "Etiqueta agregada a palabra exitosamente")
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 

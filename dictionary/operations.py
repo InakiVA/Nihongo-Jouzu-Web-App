@@ -5,7 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 
-from dictionary.models import Palabra, Significado, Lectura
+from dictionary.models import Palabra, Significado, Lectura, Nota
 from progress.models import UsuarioPalabra
 from groups.models import Grupo
 
@@ -63,14 +63,34 @@ def editar_palabra_atributos(request, atributo):
     if not palabra_obj or palabra_obj.usuario != user:
         return redirect(request.META.get("HTTP_REFERER", "/"))
     if atributo == "palabra":
-        palabra_value = request.POST.get("update_palabra")
-        if palabra_value:
-            palabra_obj.update_palabra(palabra_value)
-    elif atributo == "significado":
-        # !! check de que haya al menos uno
-        palabra_value = request.POST.get("update_palabra")
-        if palabra_value:
-            palabra_obj.update_palabra(palabra_value)
+        value = request.POST.get("update_palabra")
+        if value:
+            palabra_obj.update_palabra(value)
+            messages.success(request, "Palabra actualizada exitosamente")
+        else:
+            messages.warning(
+                request, "No se ingresó información de palabra para actualizar"
+            )
+    else:
+        value = request.POST.get("input_id")
+        if value:
+            object_id = request.POST.get("input_button_id")
+            if atributo == "significado":
+                obj = get_object_or_404(Significado, id=object_id)
+                obj.update_significado(value)
+                messages.success(request, "Significado actualizado exitosamente")
+            elif atributo == "lectura":
+                obj = get_object_or_404(Lectura, id=object_id)
+                obj.update_lectura(value)
+                messages.success(request, "Lectura actualizada exitosamente")
+            elif atributo == "nota":
+                obj = get_object_or_404(Nota, id=object_id)
+                obj.update_nota(value)
+                messages.success(request, "Nota actualizada exitosamente")
+        else:
+            messages.warning(
+                request, f"No se ingresó información de {atributo} para actualizar"
+            )
 
     return redirect(request.META.get("HTTP_REFERER", "/"))
 

@@ -40,7 +40,7 @@
     << implementar que se busquen palabras, lecturas y significados
     ++ Incluir búsqueda de grupos - tab separation
     ++ Incluir búsqueda de tags - palabras o grupos que tengan como tag el input dado mejor
-    ++ Page navigation bonita hasta abajo mejor
+    << Page navigation bonita hasta abajo mejor
 
 -- CRUD:
 
@@ -50,15 +50,18 @@
         << Cambiar "Diccionario" a "Palabras" en navbar y urls
         >> lista con estrella y progreso
     ++ Filtros por etiqueta, estrella, progreso, creador
-    ++ Page navigation bonita hasta abajo mejor
+    ?? Progreso global (palabras iniciadas)
+        ?? Palabras estudiando
+        ?? Modal de lo de arriba
+    << Page navigation bonita hasta abajo mejor
 
 == Vista de palabra-detalles
     << Creada
-    $$ vista normal con un botón de editar toggle, eliminar aparece al picar editar
-    ++ Editar palabra
-    ++ Eliminar palabra
-    ++ Agregar lecturas, significados, notas, etiquetas
-    ++ Editar ""
+    << vista normal con un botón de editar toggle, eliminar aparece al picar editar
+    << Editar palabra
+    << Eliminar palabra
+    << Agregar lecturas, significados, notas, etiquetas
+    << Editar ""
     ++ Eliminar "" 
     << Agregar a grupo, eliminar de grupo
     ++ Fecha de creación
@@ -85,10 +88,9 @@
     ++ CRUD
     .. omitir grupo_etiquetas hasta encontrarle propósito funcional
 
-
-
 == Vista de usuario
     ++ Cambiar usuario (unique) y contraseña
+    ++ Sugerencias, quejas, comentarios
 
 
 
