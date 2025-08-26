@@ -1,16 +1,25 @@
 import core.traduccion as trad
 
 
+def max_page_possible(max_value):
+
+    max_page = max_value // 10
+    if max_value % 10 == 0:
+        max_page -= 1
+    return max_page
+
+
 def bound_page_index(index, max_value):
-    if index > max_value // 10:
+    max_page = max_page_possible(max_value)
+    if index > max_page:
         index = 0
     elif index < 0:
-        index = max_value // 10
-
+        index = max_page
     return index
 
 
 def create_pages_list(index, max_value):
+    max_page = max_page_possible(max_value)
     pages_list = []
     # -- de 1 a index
     if index > 3:
@@ -21,20 +30,20 @@ def create_pages_list(index, max_value):
     else:
         for i in range(index):
             pages_list.append({"text": i + 1, "value": i, "current": index == i})
-    # -- de index a max_value
-    if index < max_value - 3:
+    # -- de index a max_page
+    if index < max_page - 3:
         for i in range(index, index + 2):
             pages_list.append({"text": i + 1, "value": i, "current": index == i})
         pages_list.append({})
         pages_list.append(
             {
-                "text": max_value + 1,
-                "value": max_value,
-                "current": index == max_value,
+                "text": max_page + 1,
+                "value": max_page,
+                "current": index == max_page,
             }
         )
     else:
-        for i in range(index, max_value + 1):
+        for i in range(index, max_page + 1):
             pages_list.append({"text": i + 1, "value": i, "current": index == i})
 
     return pages_list

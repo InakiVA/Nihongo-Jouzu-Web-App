@@ -8,7 +8,7 @@
     </button>    
   </div>
 
-  <dialog id="crear_grupo_modal" class="modal" {% if intentado %} open {% endif %}>
+  <dialog id="crear_grupo_modal" class="modal">
     <div class="modal-box space-y-4">
       <div class="flex flex-row justify-between items-center">
         <h2>Grupo a crear</h2>
@@ -24,20 +24,18 @@
                 <legend class="fieldset-legend">Grupo</legend>
                 <legend class="fieldset-legend text-myalert">*</legend>          
             </div>          
-            {% if not ajustes_palabras.palabra_valida and intentado %}
-            {% include "components/input.html" with placeholder="Tu grupo:" name="grupo_nuevo" extra_classes="!border-myalert" %}
-            {% else %}
-            {% include "components/input.html" with placeholder="Tu grupo:" name="grupo_nuevo" value=ajustes_palabras.palabra_valida%}
-            {% endif %}
+
+            {% include "components/input.html" with placeholder="Tu grupo:" name="grupo_nuevo" value=ajustes_grupos.grupo_valido%}
+
         </div>
 
         <div class="flex flex-auto flex-col gap-2">
             <legend class="fieldset-legend">Descripción</legend>
-            {% include "components/textarea.html" with placeholder="Descripción:" name="descripcion_nueva" %}          
+            {% include "components/textarea.html" with placeholder="Su descripción:" name="descripcion_nueva" value=ajustes_grupos.desc_valida%}          
         </div>
 
         <div class="flex flex-auto pt-8 justify-center">
-        {% include "components/button.html" with text="Crear" icon="components/icons/add.html" extra_classes="button-big" %}
+        {% include "components/button.html" with url=crear_grupo_url text="Crear" icon="components/icons/add.html" extra_classes="button-big" %}
         </div>
       </form>      
     </div>

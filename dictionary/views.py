@@ -91,7 +91,7 @@ class DetailView(LoginRequiredMixin, TemplateView):
         context["grupos_checks_url"] = reverse_lazy("toggle_palabra_en_grupo")
         context["estrella_url"] = reverse_lazy("toggle_estrella_palabra")
         context["cambiar_progreso_url"] = reverse_lazy("cambiar_progreso")
-        context["editar_url"] = reverse_lazy("editar")
+        context["editar_url"] = reverse_lazy("editar_palabra")
 
         return context
 
@@ -177,7 +177,7 @@ class EditView(LoginRequiredMixin, TemplateView):
 
         context["etiqueta_checks_url"] = reverse_lazy("toggle_etiqueta_en_palabra")
 
-        context["detalles_url"] = reverse_lazy("detalles")
+        context["detalles_url"] = reverse_lazy("detalles_palabra")
         return context
 
 
@@ -225,9 +225,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["palabras_list"] = palabras_list
         context["palabra_url"] = reverse_lazy("elegir_palabra")
 
-        max_page = len(palabras) // 10
-
-        pages_list = ut.create_pages_list(index, max_page)
+        pages_list = ut.create_pages_list(index, len(palabras))
         context["show_pages_list"] = len(pages_list) > 1
         context["pages_list"] = pages_list
 

@@ -30,8 +30,7 @@ class SearchView(LoginRequiredMixin, TemplateView):
         palabras_list = resultados[0]
         related_list = resultados[1]
         index = resultados[2]
-        max_page = resultados[3] // 10
-        pages_list = ut.create_pages_list(index, max_page)
+        pages_list = ut.create_pages_list(index, resultados[3])
         context["show_pages_list"] = len(pages_list) > 1
         context["pages_list"] = pages_list
         context["relacionadas_buscando"] = f"Palabras que contienen {search_input}:"

@@ -6,8 +6,8 @@ import core.components as c_cp
 urlpatterns = [
     path("", views.HomeView.as_view(), name="palabras"),
     path("crear-palabra", d_op.crear_palabra, name="crear_palabra"),
-    path("detalles-palabra", views.DetailView.as_view(), name="detalles_palabra"),
-    path("editar", views.EditView.as_view(), name="editar"),
+    path("detalles-palabra/", views.DetailView.as_view(), name="detalles_palabra"),
+    path("editar-palabra/", views.EditView.as_view(), name="editar_palabra"),
     # __ updates
     path(
         "update-palabra",

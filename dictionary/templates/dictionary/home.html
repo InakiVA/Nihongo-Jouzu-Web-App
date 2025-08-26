@@ -8,7 +8,7 @@
     </button>    
   </div>
 
-  <dialog id="crear_palabra_modal" class="modal" {% if intentado %} open {% endif %}>
+  <dialog id="crear_palabra_modal" class="modal">
     <div class="modal-box space-y-4">
       <div class="flex flex-row justify-between items-center">
         <h2>Palabra a crear</h2>
@@ -23,36 +23,24 @@
           <div class="flex">
             <legend class="fieldset-legend">Palabra</legend>
             <legend class="fieldset-legend text-myalert">*</legend>          
-          </div>          
-          {% if not ajustes_palabras.palabra_valida and intentado %}
-          {% include "components/input.html" with placeholder="Tu palabra:" name="palabra_nueva" extra_classes="!border-myalert" %}
-          {% else %}
+          </div>            
           {% include "components/input.html" with placeholder="Tu palabra:" name="palabra_nueva" value=ajustes_palabras.palabra_valida%}
-          {% endif %}
         </div>
 
         <div class="flex flex-auto flex-col gap-2">
           <div class="flex">
             <legend class="fieldset-legend">Significado</legend>
             <legend class="fieldset-legend text-myalert">*</legend>          
-          </div>  
-          {% if not ajustes_palabras.significado_valido and intentado %}
-          {% include "components/input.html" with placeholder="Su significado:" name="significado_nuevo" extra_classes="!border-myalert" %}          
-          {% else %}
+          </div>           
           {% include "components/input.html" with placeholder="Su significado:" name="significado_nuevo" value=ajustes_palabras.significado_valido%}
-          {% endif %}
         </div>
 
         <div class="flex flex-auto flex-col gap-2">
           <div class="flex">
             <legend class="fieldset-legend">Lectura</legend>
             <legend class="fieldset-legend text-myalert">*</legend>          
-          </div> 
-          {% if not ajustes_palabras.lectura_valida and intentado %}
-          {% include "components/input.html" with placeholder="Su lectura:" name="lectura_nueva" extra_classes="!border-myalert" %}          
-          {% else %}
+          </div>
           {% include "components/input.html" with placeholder="Su lectura:" name="lectura_nueva" value=ajustes_palabras.lectura_valida%}
-          {% endif %}
         </div>
 
         <div class="flex flex-auto pt-8 justify-center">

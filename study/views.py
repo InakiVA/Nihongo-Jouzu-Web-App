@@ -86,9 +86,13 @@ class HomeView(LoginRequiredMixin, TemplateView):
         elif orden_elegido == "Nombre":
             grupos.sort(key=lambda g: g["text"].lower(), reverse=descendente)
         elif orden_elegido == "Creación":
-            grupos.sort(key=lambda g: g["id"], reverse=descendente)  # !! ojo
+            grupos.sort(key=lambda g: g["id"], reverse=descendente)
+        grupos_id = [g["id"] for g in grupos]
+        ajustes["grupos_filtrados"] = grupos_id
 
         context["grupos"] = grupos
+        context["seleccionar_grupos_url"] = reverse_lazy("seleccionar_grupos")
+        context["limpiar_grupos_url"] = reverse_lazy("limpiar_grupos")
 
         # __ Preguntas
         context["idioma_preguntas_url"] = reverse_lazy("toggle_idioma_preguntas")
@@ -220,6 +224,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
             context["cantidad_grupos"] = f"{cantidad_grupos_elegidos} elegido"
         else:
             context["cantidad_grupos"] = f"{cantidad_grupos_elegidos} elegidos"
+
+        self.request.session["inicio_ajustes"] = ajustes
 
         print(dict(self.request.session))
 

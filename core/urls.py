@@ -6,34 +6,32 @@ urlpatterns = [
     # == atributos de palabra
     # __ create
     path(
-        "agregar-significado/",
+        "agregar-significado",
         c_op.agregar_a_palabra,
         {"tipo": "Significado"},
         name="agregar_significado",
     ),
     path(
-        "agregar-lectura/",
+        "agregar-lectura",
         c_op.agregar_a_palabra,
         {"tipo": "Lectura"},
         name="agregar_lectura",
     ),
+    path("agregar-nota", c_op.agregar_a_palabra, {"tipo": "Nota"}, name="agregar_nota"),
     path(
-        "agregar-nota/", c_op.agregar_a_palabra, {"tipo": "Nota"}, name="agregar_nota"
-    ),
-    path(
-        "agregar-etiqueta/",
+        "agregar-etiqueta",
         c_op.agregar_a_palabra,
         {"tipo": "Etiqueta"},
         name="agregar_etiqueta",
     ),
     path(
-        "agregar-grupo/",
+        "agregar-grupo",
         c_op.agregar_a_palabra,
         {"tipo": "Grupo"},
         name="agregar_grupo",
     ),
     # __ update (están en diccionario)
-    path("cambiar-progreso/", c_op.cambiar_progreso, name="cambiar_progreso"),
+    path("cambiar-progreso", c_op.cambiar_progreso, name="cambiar_progreso"),
     # == funcionalidades
     # __ elegir elemento
     path(
@@ -68,13 +66,13 @@ urlpatterns = [
     ),
     # == Checkboxes
     path(
-        "toggle-estudiando/",
+        "toggle-estudiando",
         c_cp.toggle_checkbox,
         {"checkbox": "estudiando"},
         name="toggle_estudiando",
     ),
     path(
-        "toggle-aleatorio/",
+        "toggle-aleatorio",
         c_cp.toggle_checkbox,
         {"checkbox": "aleatorio"},
         name="toggle_aleatorio",
@@ -93,60 +91,58 @@ urlpatterns = [
     ),
     # == Switches
     path(
-        "toggle-descendente/",
+        "toggle-descendente",
         c_cp.toggle_switch,
         {"switch": "descendente"},
         name="toggle_descendente",
     ),
     path(
-        "toggle-filtros-palabras-andor/",
+        "toggle-filtros-palabras-andor",
         c_cp.toggle_switch,
         {"switch": "filtros_palabras_andor"},
         name="toggle_filtros_palabras_andor",
     ),
     path(
-        "toggle-filtros-palabras-exclusivo/",
+        "toggle-filtros-palabras-exclusivo",
         c_cp.toggle_switch,
         {"switch": "filtros_palabras_exclusivo"},
         name="toggle_filtros_palabras_exclusivo",
     ),
     path(
-        "toggle-filtros-etiquetas-andor/",
+        "toggle-filtros-etiquetas-andor",
         c_cp.toggle_switch,
         {"switch": "filtros_etiquetas_andor"},
         name="toggle_filtros_etiquetas_andor",
     ),
     path(
-        "toggle-filtros-etiquetas-exclusivo/",
+        "toggle-filtros-etiquetas-exclusivo",
         c_cp.toggle_switch,
         {"switch": "filtros_etiquetas_exclusivo"},
         name="toggle_filtros_etiquetas_exclusivo",
     ),
     # == Swaps
     path(
-        "toggle-estrella-grupo/",
+        "toggle-estrella-grupo",
         c_cp.toggle_estrella,
         {"objeto": "grupo"},
         name="toggle_estrella_grupo",
     ),
     path(
-        "toggle-estrella-palabra/",
+        "toggle-estrella-palabra",
         c_cp.toggle_estrella,
         {"objeto": "palabra"},
         name="toggle_estrella_palabra",
     ),
-    path(
-        "toggle-filtro/", c_cp.toggle_filtro, {"view": "inicio"}, name="toggle_filtro"
-    ),
+    path("toggle-filtro", c_cp.toggle_filtro, {"view": "inicio"}, name="toggle_filtro"),
     # == Selects
     path(
-        "toggle-orden-grupos/",
+        "toggle-orden-grupos",
         c_cp.toggle_select,
         {"select": "orden_elegido"},
         name="toggle_orden_grupos",
     ),
     path(
-        "toggle-idioma-preguntas/",
+        "toggle-idioma-preguntas",
         c_cp.toggle_select,
         {"select": "idioma_preguntas_elegido"},
         name="toggle_idioma_preguntas",

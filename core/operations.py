@@ -53,7 +53,6 @@ def cambiar_pagina(request, pagina):
             page -= 1
     ajustes[index_type] = page
     request.session[ajustes_tipo] = ajustes
-    print(dict(request.session))
 
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
@@ -212,7 +211,7 @@ def get_user_groups_list(usuario):
                 "checked": ug.estudiando,
                 "fecha_creacion": ug.grupo.fecha_creacion,
                 "ultima_modificacion": ug.ultima_modificacion,
-                "autor": ug.grupo.usuario.username,
+                "creador": ug.grupo.usuario,
                 "palabras": ug.grupo.cantidad_palabras,
             }
         )

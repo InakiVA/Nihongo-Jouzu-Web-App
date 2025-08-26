@@ -237,3 +237,17 @@ def get_palabras_a_estudiar(usuario, ajustes):
         random.shuffle(palabras)
 
     return palabras
+
+
+# () value puede ser true o false
+@require_POST
+@login_required
+def select_all_grupos_filtrados(request, value):
+    ajustes = request.session.get("inicio_ajustes", {})
+    usuario = request.user
+    grupos_id = ajustes.get("grupos_filtrados", [])
+    for g_id in grupos_id:
+        grupo = get_object_or_404(UsuarioGrupo, usuario=usuario, grupo_id=g_id)
+        grupo.estudiando = value
+        grupo.save()
+    return redirect(request.META.get("HTTP_REFERER", "/"))

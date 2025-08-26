@@ -24,7 +24,6 @@ def crear_palabra(request):
             [palabra_value, significado_value, lectura_value],
         ):
             ajustes_palabras[key] = value
-        ajustes_palabras["intentado"] = True
         request.session["ajustes_palabras"] = ajustes_palabras
         if not palabra_value:
             messages.error(request, "Favor de ingresar palabra")
@@ -38,7 +37,6 @@ def crear_palabra(request):
         ["", "", ""],
     ):
         ajustes_palabras[key] = value
-    ajustes_palabras["intentado"] = False
     user = request.user
     palabra_obj = Palabra.objects.create(usuario=user, palabra=palabra_value)
     UsuarioPalabra.objects.create(usuario=user, palabra=palabra_obj)

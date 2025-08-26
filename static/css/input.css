@@ -102,6 +102,11 @@ h4 {
   @apply hover:bg-accent-main;
 }
 
+.button-join{
+  @apply btn btn-ghost shadow-none bg-neutral-main text-textcolor rounded-none p-2;
+  @apply hover:bg-accent-main;
+}
+
 .button-join-selected{
   @apply btn btn-ghost shadow-none bg-accent-main text-textcolor rounded-none p-2;
   @apply hover:bg-accent-dark;
@@ -192,18 +197,6 @@ h4 {
 
 .collapse-title{
   @apply collapse-title font-light text-lg;
-}
-
-.list_header {
-  @apply text-textcolor pb-4 border-b border-neutral-light;
-}
-
-.list_title {
-  @apply  pl-4;
-}
-
-.list_subheader {
-  @apply  pl-4;
 }
 
 .element_list {

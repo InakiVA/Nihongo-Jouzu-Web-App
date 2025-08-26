@@ -23,6 +23,8 @@ class GroupsView(LoginRequiredMixin, TemplateView):
 
         ajustes_grupos = self.request.session.get("ajustes_grupos", {})
 
+        context["crear_grupo_url"] = reverse_lazy("crear_grupo")
+
         index = ajustes_grupos.get("page_index", 0)
         index = ut.bound_page_index(index, len(grupos))
         ajustes_grupos["page_index"] = index
@@ -30,13 +32,13 @@ class GroupsView(LoginRequiredMixin, TemplateView):
 
         grupos_list = grupos[index * 10 : min(len(grupos), index * 10 + 10)]
 
+        context["ajustes_grupos"] = ajustes_grupos
+
         context["grupos_list"] = grupos_list
         context["grupo_url"] = reverse_lazy("elegir_grupo")
         context["grupo_estrella_url"] = reverse_lazy("toggle_estrella_grupo")
 
-        max_page = len(grupos) // 10
-
-        pages_list = ut.create_pages_list(index, max_page)
+        pages_list = ut.create_pages_list(index, len(grupos))
         context["show_pages_list"] = len(pages_list) > 1
         context["pages_list"] = pages_list
 
@@ -44,6 +46,7 @@ class GroupsView(LoginRequiredMixin, TemplateView):
 
         context["intentado"] = ajustes_grupos.get("intentado", False)
 
+        self.request.session["ajustes_grupos"] = ajustes_grupos
         return context
 
     def is_mobile(request):
@@ -73,6 +76,7 @@ class DetailView(LoginRequiredMixin, TemplateView):
             "descripcion": ug.grupo.descripcion,
             "progreso": int(ug.progreso),
             "estrella": ug.estrella,
+            "creador": ug.grupo.usuario,
         }
 
         context["grupo"] = grupo
