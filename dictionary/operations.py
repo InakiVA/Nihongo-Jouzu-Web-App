@@ -109,13 +109,31 @@ def eliminar_palabra_atributos(request, atributo):
         return redirect(request.META.get("HTTP_REFERER", "/"))
     if atributo == "palabra":
         palabra_obj.delete()
-        print("palabra borrada")
+        messages.success(request, "Palabra eliminada exitosamente")
+        return redirect("palabras")
     elif atributo == "significado":
         # !! check de que haya al menos uno
-        palabra_value = request.POST.get("update_palabra")
-        if palabra_value:
-            palabra_obj.update_palabra(palabra_value)
-    eliminando = request.session.get("eliminando", False)
-    request.session["eliminando"] = not eliminando
-    messages.success(request, "Palabra eliminada exitosamente")
-    return redirect("palabras")
+        significados = palabra_obj.significados_objetos(user)
+        if len(significados) <= 1:
+            messages.error(request, "Debe haber mínimo un significado en la palabra")
+        else:
+            object_id = request.POST.get("delete_id")
+            obj = get_object_or_404(Significado, id=object_id)
+            obj.delete()
+            messages.success(request, "Significado eliminado exitosamente")
+    elif atributo == "lectura":
+        # !! check de que haya al menos uno
+        lecturas = palabra_obj.lecturas_objetos(user)
+        if len(lecturas) <= 1:
+            messages.error(request, "Debe haber mínimo una lectura en la palabra")
+        else:
+            object_id = request.POST.get("delete_id")
+            obj = get_object_or_404(Lectura, id=object_id)
+            obj.delete()
+            messages.success(request, "Lectura eliminada exitosamente")
+    elif atributo == "nota":
+        object_id = request.POST.get("delete_id")
+        obj = get_object_or_404(Nota, id=object_id)
+        obj.delete()
+        messages.success(request, "Nota eliminada exitosamente")
+    return redirect(request.META.get("HTTP_REFERER", "/"))

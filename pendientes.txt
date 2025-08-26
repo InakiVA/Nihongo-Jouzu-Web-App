@@ -64,8 +64,9 @@
     << Editar ""
     ++ Eliminar "" 
     << Agregar a grupo, eliminar de grupo
-    ++ Fecha de creación
-    ++ Último estudio
+    >> Fecha de creación
+    >> Último estudio
+        .. timezones son una joda, mejor no mostrar fecha de creación y modificación
     << Estrella y progreso-
     << no funciona progress bar y star
 

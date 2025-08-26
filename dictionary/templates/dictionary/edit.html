@@ -42,7 +42,7 @@
             <div class="space-y-4 gap-4 p-4">
                 {% include "components/input_button.html" with has_button_left=True icon="components/icons/add_mini.html" name="agregar_significado" url=agregar_significado placeholder="Nuevo significado" button_text="Crear significado"%}
                 {% if significados_usuario %}
-                {% include "dictionary/edit_element_list.html" with update_url=update_significado elements=significados_usuario header="Editar significados actuales" placeholder="Significado"%}
+                {% include "dictionary/edit_element_list.html" with update_url=update_significado delete_url=delete_significado elements=significados_usuario header="Editar significados actuales" placeholder="Significado"%}
                 {% endif %}                   
             </div>         
 
@@ -50,7 +50,7 @@
             <div class="space-y-4 gap-4 p-4">
                 {% include "components/input_button.html" with has_button_left=True icon="components/icons/add_mini.html" name="agregar_lectura" url=agregar_lectura placeholder="Nueva lectura" button_text="Crear lectura"%}
                 {% if lecturas_usuario %}
-                {% include "dictionary/edit_element_list.html" with update_url=update_lectura elements=lecturas_usuario header="Editar lecturas actuales" placeholder="Lectura"%}
+                {% include "dictionary/edit_element_list.html" with update_url=update_lectura delete_url=delete_lectura elements=lecturas_usuario header="Editar lecturas actuales" placeholder="Lectura"%}
                 {% endif %}                  
             </div>                 
 
@@ -76,7 +76,7 @@
             <div class="space-y-4 gap-4 p-4">
                 {% include "components/input_button.html" with is_textarea=True has_button_left=True icon="components/icons/add_mini.html" name="agregar_nota" url=agregar_nota placeholder="Nueva nota" button_text="Crear nota"%}
                 {% if notas_usuario %}
-                {% include "dictionary/edit_element_list.html" with is_textarea=True update_url=update_nota elements=notas_usuario header="Editar notas actuales" placeholder="Nota"%}
+                {% include "dictionary/edit_element_list.html" with is_textarea=True update_url=update_nota delete_url=delete_nota elements=notas_usuario header="Editar notas actuales" placeholder="Nota"%}
                 {% endif %}                       
             </div> 
         </div>     

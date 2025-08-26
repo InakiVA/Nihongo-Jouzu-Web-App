@@ -171,9 +171,9 @@ class EditView(LoginRequiredMixin, TemplateView):
         context["update_nota"] = reverse_lazy("update_nota")
 
         context["delete_palabra"] = reverse_lazy("delete_palabra")
-        context["delete_significado"] = reverse_lazy("update_significado")
-        context["delete_lectura"] = reverse_lazy("update_lectura")
-        context["delete_nota"] = reverse_lazy("update_nota")
+        context["delete_significado"] = reverse_lazy("delete_significado")
+        context["delete_lectura"] = reverse_lazy("delete_lectura")
+        context["delete_nota"] = reverse_lazy("delete_nota")
 
         context["etiqueta_checks_url"] = reverse_lazy("toggle_etiqueta_en_palabra")
 

@@ -40,4 +40,22 @@ urlpatterns = [
         {"atributo": "palabra"},
         name="delete_palabra",
     ),
+    path(
+        "delete-significado",
+        d_op.eliminar_palabra_atributos,
+        {"atributo": "significado"},
+        name="delete_significado",
+    ),
+    path(
+        "delete-lectura",
+        d_op.eliminar_palabra_atributos,
+        {"atributo": "lectura"},
+        name="delete_lectura",
+    ),
+    path(
+        "delete-nota",
+        d_op.eliminar_palabra_atributos,
+        {"atributo": "nota"},
+        name="delete_nota",
+    ),
 ]
