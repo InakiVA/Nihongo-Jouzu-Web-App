@@ -13,25 +13,35 @@ from progress.models import UsuarioPalabra
 import core.utils as ut
 
 
-def elegir_palabra(request):
-    palabra_id = request.POST.get("wordcard")
-    request.session["palabra_actual"] = palabra_id
-    return redirect("detalles")
+def elemento_detalles(request, elemento):
+    if elemento == "palabra":
+        obj_id = request.POST.get("wordcard")
+        request.session["palabra_actual"] = obj_id
+        return redirect("detalles_palabra")
+    elif elemento == "grupo":
+        obj_id = request.POST.get("groupcard")
+        request.session["grupo_actual"] = obj_id
+        return redirect("detalles_grupo")
 
 
 # ** bound ocurre dentro de llamada de context por si negativo
 @require_POST
 @login_required
 def cambiar_pagina(request, pagina):
-    if pagina == "palabras":
-        ajustes = request.session.get("ajustes_palabras", {})
-        index_type = "page_index"
-    elif pagina == "buscar":
-        ajustes = request.session.get("ajustes_buscar", {})
+    if pagina == "buscar":
+        ajustes_tipo = "ajustes_buscar"
+        ajustes = request.session.get(ajustes_tipo, {})
         if ajustes.get("buscando_tipo", "palabra") == "palabra":
             index_type = "index_palabra"
         elif ajustes.get("buscando_tipo") == "grupo":
             index_type = "index_grupo"
+    else:
+        if pagina == "palabras":
+            ajustes_tipo = "ajustes_palabras"
+        elif pagina == "grupos":
+            ajustes_tipo = "ajustes_grupos"
+        ajustes = request.session.get(ajustes_tipo, {})
+        index_type = "page_index"
     action = request.POST.get("action")
     if not action:
         page = int(request.POST.get("pagination"))
@@ -42,10 +52,7 @@ def cambiar_pagina(request, pagina):
         elif action == "previous":
             page -= 1
     ajustes[index_type] = page
-    if pagina == "palabras":
-        request.session["ajustes_palabras"] = ajustes
-    elif pagina == "buscar":
-        request.session["ajustes_buscar"] = ajustes
+    request.session[ajustes_tipo] = ajustes
     print(dict(request.session))
 
     return redirect(request.META.get("HTTP_REFERER", "/"))
@@ -198,13 +205,15 @@ def get_user_groups_list(usuario):
         grupos.append(
             {
                 "text": ug.grupo.grupo,
+                "descripcion": ug.grupo.descripcion,
                 "id": ug.grupo.id,
                 "progreso": progreso,
                 "estrella": ug.estrella,
-                "estudiando": ug.estudiando,
+                "checked": ug.estudiando,
                 "fecha_creacion": ug.grupo.fecha_creacion,
                 "ultima_modificacion": ug.ultima_modificacion,
                 "autor": ug.grupo.usuario.username,
+                "palabras": ug.grupo.cantidad_palabras,
             }
         )
     return grupos

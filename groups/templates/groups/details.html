@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block content %}
+<div class="space-y-4 px-4 pb-4">
+    <div class="border border-neutral-light rounded-xl flex flex-auto w-full flex-col py-4">
+        <div class="p-6 pt-2 gap-4 space-y-4 w-full">                     
+            <div class="flex justify-between">
+                <h1 class="text-6xl font-light">{{grupo.grupo}}</h1>
+                {% include "components/button.html" with is_navigation=True text="Editar" url=editar_url icon="components/icons/pencil.html" extra_classes="button-main" %}                    
+            </div>  
+            <div class="flex justify-between">
+                <h2>{{grupo.descripcion}}</h2>
+                <div class="flex gap-4 items-center">
+                    {% include "components/progress_donut.html" with progress=grupo.progreso extra_classes="" text=grupo.progreso%}
+                    {% include "components/icon_swap_button.html" with id=grupo.id is_active=grupo.estrella url=grupo_estrella_url on="components/icons/star.html" oncolor="star-on" off="components/icons/star_off.html" offcolor="star-off" %}                
+                </div>
+            </div>               
+        </div>          
+    </div>   
+    {% include "components/progress_list.html" with header="Palabras en grupo" subheader=len_palabras elements=palabras estrella_url=palabra_estrella_url%} 
+</div>
+{% endblock %}

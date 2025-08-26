@@ -200,8 +200,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
         )
         index = ajustes_palabras.get("page_index", 0)
         index = ut.bound_page_index(index, len(palabras))
-
         ajustes_palabras["page_index"] = index
+        context["index"] = index + 1
+
         palabras_list = []
         for palabra in palabras[index * 10 : min(len(palabras), index * 10 + 10)]:
             palabras_list.append(
@@ -222,7 +223,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
                 }
             )
         context["palabras_list"] = palabras_list
-        context["index"] = index + 1
+        context["palabra_url"] = reverse_lazy("elegir_palabra")
 
         max_page = len(palabras) // 10
 
@@ -232,7 +233,6 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         context["cambiar_pagina_url"] = reverse_lazy("cambiar_pagina_palabras")
 
-        context["palabra_url"] = reverse_lazy("elegir_palabra")
         context["ajustes_palabras"] = ajustes_palabras
         self.request.session["ajustes_palabras"] = ajustes_palabras
         print(dict(self.request.session))

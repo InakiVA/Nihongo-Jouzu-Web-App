@@ -1,11 +1,9 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
+
 from dictionary.models import Palabra
 from progress.models import UsuarioPalabra
-
-import datetime as dt
-
-# -- Atributos de grupos
 
 
 class Grupo(models.Model):
@@ -26,6 +24,10 @@ class Grupo(models.Model):
     def update_descripcion(self, descripcion):
         self.descripcion = descripcion
         self.save()
+
+    @property
+    def cantidad_palabras(self):
+        return len(self.grupo_palabras.all())
 
     class Meta:
         db_table = "Grupos"
@@ -52,7 +54,7 @@ class UsuarioGrupo(models.Model):
     ultima_modificacion = models.DateTimeField(auto_now_add=True)
 
     def update_modificacion(self):
-        self.ultima_modificacion = dt.datetime.now()
+        self.ultima_modificacion = timezone.now()
         print(self)
 
     def toggle_estrella(self):

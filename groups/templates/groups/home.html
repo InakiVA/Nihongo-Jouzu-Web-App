@@ -1,2 +1,59 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block content %}
+<div class="flex flex-col flex-auto px-4 gap-4 pb-4">
+  <div class="flex flex-row w-full gap-4 justify-between items-start">
+    <h4 class="text-start">Grupos</h4>    
+    <button type="button" class="button-big" data-open="#crear_grupo_modal">
+      {% include "components/icons/add.html" %} Nuevo Grupo
+    </button>    
+  </div>
+
+  <dialog id="crear_grupo_modal" class="modal" {% if intentado %} open {% endif %}>
+    <div class="modal-box space-y-4">
+      <div class="flex flex-row justify-between items-center">
+        <h2>Grupo a crear</h2>
+        <button type="button" class="button-icon-only" data-close="#crear_grupo_modal">
+          {% include "components/icons/cross.html" %}
+        </button>        
+      </div>     
+      
+      <form action="{{ crear_grupo_url }}" method="post" class="gap-4 p-4 flex flex-auto flex-col">
+        {% csrf_token %}
+        <div class="flex flex-auto flex-col gap-2">
+            <div class="flex">
+                <legend class="fieldset-legend">Grupo</legend>
+                <legend class="fieldset-legend text-myalert">*</legend>          
+            </div>          
+            {% if not ajustes_palabras.palabra_valida and intentado %}
+            {% include "components/input.html" with placeholder="Tu grupo:" name="grupo_nuevo" extra_classes="!border-myalert" %}
+            {% else %}
+            {% include "components/input.html" with placeholder="Tu grupo:" name="grupo_nuevo" value=ajustes_palabras.palabra_valida%}
+            {% endif %}
+        </div>
+
+        <div class="flex flex-auto flex-col gap-2">
+            <legend class="fieldset-legend">Descripción</legend>
+            {% include "components/textarea.html" with placeholder="Descripción:" name="descripcion_nueva" %}          
+        </div>
+
+        <div class="flex flex-auto pt-8 justify-center">
+        {% include "components/button.html" with text="Crear" icon="components/icons/add.html" extra_classes="button-big" %}
+        </div>
+      </form>      
+    </div>
+  </dialog>
+
+  <div class="space-y-4">
+    {% for grupo in grupos_list %}
+    {% include "components/group_card.html" with url=grupo_url estrella_url=grupo_estrella_url %}
+    {% endfor %}
+  </div>
+
+  {% if show_pages_list %}
+    <div class="flex w-full items-center justify-center">
+      {% include "components/pagination.html" with pages=pages_list url=cambiar_pagina_url%}
+    </div>
+  {% endif %}
+  
+</div>
 {% endblock %}

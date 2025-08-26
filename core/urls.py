@@ -35,12 +35,30 @@ urlpatterns = [
     # __ update (están en diccionario)
     path("cambiar-progreso/", c_op.cambiar_progreso, name="cambiar_progreso"),
     # == funcionalidades
-    path("elegir-palabra", c_op.elegir_palabra, name="elegir_palabra"),
+    # __ elegir elemento
+    path(
+        "elegir-palabra",
+        c_op.elemento_detalles,
+        {"elemento": "palabra"},
+        name="elegir_palabra",
+    ),
+    path(
+        "elegir-grupo",
+        c_op.elemento_detalles,
+        {"elemento": "grupo"},
+        name="elegir_grupo",
+    ),
     path(
         "switch-palabras-page",
         c_op.cambiar_pagina,
         {"pagina": "palabras"},
         name="cambiar_pagina_palabras",
+    ),
+    path(
+        "switch-grupos-page",
+        c_op.cambiar_pagina,
+        {"pagina": "grupos"},
+        name="cambiar_pagina_grupos",
     ),
     path(
         "switch-buscar-page",

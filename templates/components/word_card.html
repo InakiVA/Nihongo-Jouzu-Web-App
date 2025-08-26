@@ -1,54 +1,35 @@
-{% if not url %}
-<div class="wordcard collapse collapse-arrow gap-2 {{extra_classes}}"> 
-  <input type="checkbox"/>
-  <div class="collapse-title py-0 gap-2">
-    <div class="flex items-center gap-4">
-      <h4 class="!font-light">{{ palabra.palabra }}</h4>  
-      <p class="text-textcolor-dark">{{ palabra.lecturas }}</p>
-    </div> 
-    <h2 class="text-ellipsis !font-light">{{ palabra.significados }}</h2> 
-    {% if palabra.etiquetas %}
-    <div class="flex flex-row gap-2 flex-wrap pt-2">
-        {% for tag in palabra.etiquetas %}
-            {% include "components/tag.html" with text=tag %}
-        {% endfor %}
-    </div>    
-    {% endif %}
-  </div>   
-  <div class="collapse-content space-y-2 py-0">         
-    {% if palabra.notas %}
-    <p class="text-textcolor-dark">Notas: {{ palabra.notas }}</p>
-    {% endif %}  
-    <div class="flex flex-row gap-4 items-center">
-      {% if palabra.estrella %}
-      {% include "components/icons/star.html" %}
-      {% endif %}
-      {% if palabra.progreso %}
-      <h3>Progreso: {{palabra.progreso}}%</h3>
-      {% endif %}
-    </div>
-    {% if palabra.incorrectas %}
-    <p class="text-textcolor-dark">Tus intentos: {{ palabra.incorrectas }}</p>
-    {% endif %}
-  </div>
-</div>
-{% else %}
-<div></div>
-<form method="post" action="{{ url }}" class="w-full">
+{% if url %}
+  <form method="post" action="{{ url }}" class="w-full">
   {% csrf_token %}
-  <button class="wordcard p-4 gap-2 flex flex-col w-full items-start {{extra_classes}}" value="{{palabra.id}}" name="wordcard">
-    <div class="flex items-center gap-4">
-      <h4 class="!font-light">{{ palabra.palabra }}</h4>  
-      <p class="text-textcolor-dark">{{ palabra.lecturas }}</p>
-    </div> 
-    <h2 class="text-ellipsis text-start !font-light">{{ palabra.significados }}</h2> 
-    {% if palabra.etiquetas %}
-    <div class="flex flex-row gap-2 flex-wrap pt-2">
+  <button class="wordcard p-4 gap-2 flex flex-auto w-full justify-between items-start {{extra_classes}}" value="{{palabra.id}}" name="wordcard">
+{% else %}
+  <button class="wordcard-disabled p-4 gap-2 flex flex-auto w-full justify-between items-start {{extra_classes}}"> 
+{% endif %}
+    <div>
+      <div class="flex items-center gap-4">
+        <h4 class="!font-light">{{ palabra.palabra }}</h4>  
+        <p class="text-textcolor-dark">{{ palabra.lecturas }}</p>
+      </div> 
+      <h2 class="text-ellipsis text-start !font-light">{{ palabra.significados }}</h2> 
+      {% if palabra.etiquetas %}
+      <div class="flex flex-row gap-2 flex-wrap pt-2">
         {% for tag in palabra.etiquetas %}
-            {% include "components/tag.html" with text=tag %}
+          {% include "components/tag.html" with text=tag %}
         {% endfor %}
-    </div>    
-    {% endif %} 
+      </div>    
+      {% endif %} 
+    </div> 
+    <div class="items-center flex gap-4 justify-end">      
+      {% if palabra.estrella %}
+      <div class="flex justify-end">
+        {% include "components/icons/star.html" %}
+      </div>
+      {% endif %}          
+      {% include "components/progress_donut.html" with progress=palabra.progreso extra_classes="" text=palabra.progreso%}        
+    </div>
+{% if url %}
   </button>
-</form>
+  </form>
+{% else %}
+  </button>
 {% endif %}

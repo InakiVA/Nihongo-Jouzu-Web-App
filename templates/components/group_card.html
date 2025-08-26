@@ -1,0 +1,22 @@
+<form method="post" action="{{ url }}" class="w-full">
+  {% csrf_token %}
+  <button class="wordcard p-4 flex flex-auto w-full items-start justify-between {{extra_classes}}" value="{{grupo.id}}" name="groupcard">
+    <div class="space-y-4">
+        <div class="flex items-end gap-4">
+        <h4 class="!font-light">{{ grupo.text }}</h4>  
+        <p class="text-textcolor-dark">{{ grupo.palabras }} palabras</p>
+        </div> 
+        {% if grupo.descripcion %}
+        <h2 class="text-ellipsis text-start !font-light">{{ grupo.descripcion }}</h2>  
+        {% endif %} 
+    </div>
+    <div class="items-center flex gap-4 justify-end"> 
+      {% if grupo.estrella %}
+        <div class="flex justify-end">
+        {% include "components/icons/star.html" %}
+        </div> 
+        {% endif %}           
+        {% include "components/progress_donut.html" with progress=grupo.progreso extra_classes="" text=grupo.progreso%}           
+    </div>
+  </button>
+</form>
