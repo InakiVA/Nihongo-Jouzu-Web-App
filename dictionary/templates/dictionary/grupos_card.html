@@ -4,7 +4,8 @@
         <div class="collapser collapse-plus !border-neutral-main">
             <input type="checkbox"/>
             <h3 class="collapse-title font-light">Modificar grupos de palabra</h3>
-            <div class="collapse-content space-y-4">
+            <div class="collapse-content">
+                <div class="space-y-4">
                 {% if not nuevos_grupos and not grupos_checks%} 
                     <h3>Favor de crear grupos primero</h3>
                 {% else %}
@@ -16,7 +17,8 @@
                             {% include "components/checkbox.html" with text=grupo.text id=grupo.id is_selected=grupo.is_selected url=grupos_checks_url %}
                         {% endfor %}
                     {% endif %}
-                {% endif %}                
+                {% endif %}    
+                </div>            
             </div>     
         </div>
     </div>

@@ -26,7 +26,7 @@ class SearchView(LoginRequiredMixin, TemplateView):
             context["buscando"] = "No se introdujo nada para buscar"
             return context
         context["buscando"] = f"Buscando {search_input}:"
-        resultados = cp.buscar(self.request, search_input, usuario)
+        resultados = cp.buscar_header(self.request, search_input, usuario)
         palabras_list = resultados[0]
         related_list = resultados[1]
         index = resultados[2]

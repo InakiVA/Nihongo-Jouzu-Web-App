@@ -137,7 +137,7 @@ class Palabra(models.Model):
             palabra__in=palabra_chars,
             palabra_etiquetas__etiqueta__etiqueta="Kanji",
         ).exclude(id=self.id)
-        return palabras_relacionadas | kanjis_relacionados
+        return list(set(palabras_relacionadas | kanjis_relacionados))
 
 
 class Significado(models.Model):

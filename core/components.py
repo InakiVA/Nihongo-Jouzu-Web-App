@@ -12,13 +12,49 @@ from progress.models import UsuarioPalabra
 import core.utils as ut
 
 
-# __ Inputs
-@login_required
-def buscar(request, search_input, usuario):
-    if not search_input:
-        return redirect(request.META.get("HTTP_REFERER", "/"))
+def buscar_palabra(search_input, usuario):
     search_input_list = ut.set_alternate_inputs([search_input])
     owner_q = Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
+    exact_results = Palabra.objects.filter(
+        owner_q,
+        Q(palabra__in=search_input_list)
+        | Q(significados__significado__in=search_input_list)
+        | Q(lecturas__lectura__in=search_input_list),
+    ).distinct()
+    related_queries = Q()
+    for term in search_input_list:
+        related_queries |= (
+            Q(palabra__istartswith=term)
+            | Q(significados__significado__istartswith=term)
+            | Q(lecturas__lectura__istartswith=term)
+        )
+        startswith_results = (
+            Palabra.objects.filter(owner_q, related_queries)
+            .exclude(id__in=exact_results)
+            .distinct()
+        )
+    related_queries = Q()
+    for term in search_input_list:
+        related_queries |= (
+            Q(palabra__icontains=term)
+            | Q(significados__significado__icontains=term)
+            | Q(lecturas__lectura__icontains=term)
+        )
+        contains_results = (
+            Palabra.objects.filter(owner_q, related_queries)
+            .exclude(id__in=exact_results)
+            .exclude(id__in=startswith_results)
+            .distinct()
+        )
+
+    return [list(exact_results), list(startswith_results) + list(contains_results)]
+
+
+# __ Inputs
+@login_required
+def buscar_header(request, search_input, usuario):
+    if not search_input:
+        return redirect(request.META.get("HTTP_REFERER", "/"))
     ajustes = request.session.get("ajustes_buscar", {})
     ajustes.setdefault("buscando_tipo", "palabra")
     tipo = ajustes.get("buscando_tipo")
@@ -29,41 +65,10 @@ def buscar(request, search_input, usuario):
         if ajustes.get("palabra_pasada") != search_input:
             ajustes["index_palabra"] = 0
             ajustes["palabra_pasada"] = search_input
-        exact_results = Palabra.objects.filter(
-            owner_q,
-            Q(palabra__in=search_input_list)
-            | Q(significados__significado__in=search_input_list)
-            | Q(lecturas__lectura__in=search_input_list),
-        ).distinct()
-        related_queries = Q()
-        for term in search_input_list:
-            related_queries |= (
-                Q(palabra__istartswith=term)
-                | Q(significados__significado__istartswith=term)
-                | Q(lecturas__lectura__istartswith=term)
-            )
-        startswith_results = (
-            Palabra.objects.filter(owner_q, related_queries)
-            .exclude(id__in=exact_results)
-            .distinct()
-        )
-        related_queries = Q()
-        for term in search_input_list:
-            related_queries |= (
-                Q(palabra__icontains=term)
-                | Q(significados__significado__icontains=term)
-                | Q(lecturas__lectura__icontains=term)
-            )
-        contains_results = (
-            Palabra.objects.filter(owner_q, related_queries)
-            .exclude(id__in=exact_results)
-            .exclude(id__in=startswith_results)
-            .distinct()
-        )
 
-        results = (
-            list(exact_results) + list(startswith_results) + list(contains_results)
-        )
+        all_results = buscar_palabra(search_input, usuario)
+        results = all_results[0] + all_results[1]
+        exact_results = all_results[0]
 
         index = ajustes.get("index_palabra", 0)
         index = ut.bound_page_index(index, len(results))
@@ -91,6 +96,25 @@ def buscar(request, search_input, usuario):
         pass
 
     return (exact_list, related_list, index, len(results))
+
+
+@require_POST
+@login_required
+def buscar_filtrar_grupo_actual(request, usuario):
+    search_input = request.POST.get("buscar_palabra_agregar_a_grupo")
+    grupo_id = request.session["grupo_actual"]
+    exact_list, related_list = buscar_palabra(search_input, usuario)
+
+    in_group_ids = set(
+        GrupoPalabra.objects.filter(grupo_id=grupo_id).values_list(
+            "palabra_id", flat=True
+        )
+    )
+
+    exact_filtered = [p for p in exact_list if p.pk not in in_group_ids]
+    related_filtered = [p for p in related_list if p.pk not in in_group_ids]
+
+    return exact_filtered, related_filtered
 
 
 # __ Swaps
@@ -137,9 +161,17 @@ def toggle_checkbox(request, checkbox):
         entry = get_object_or_404(UsuarioGrupo, usuario=user, grupo_id=grupo_id)
         entry.estudiando = not entry.estudiando
         entry.save()
-    elif checkbox == "palabra_en_grupo":
-        grupo_id = request.POST.get("check_id")
-        palabra_id = request.session.get("palabra_actual")
+    # :: palabra_en_grupo :: las rows son grupos
+    # :: grupo_tiene_palabra :: las rows son palabras
+    elif (
+        checkbox == "palabra_en_grupo" or checkbox == "grupo_tiene_palabra"
+    ):  # rows de grupos
+        if checkbox == "palabra_en_grupo":
+            grupo_id = request.POST.get("check_id")
+            palabra_id = request.session.get("palabra_actual")
+        else:
+            palabra_id = request.POST.get("check_id")
+            grupo_id = request.session.get("grupo_actual")
         grupo_palabra = GrupoPalabra.objects.filter(
             grupo_id=grupo_id,
             palabra_id=palabra_id,

@@ -77,6 +77,7 @@ class DetailView(LoginRequiredMixin, TemplateView):
             "progreso": int(ug.progreso),
             "estrella": ug.estrella,
             "creador": ug.grupo.usuario,
+            "editable": ug.grupo.usuario == usuario,
         }
 
         context["grupo"] = grupo
@@ -92,7 +93,10 @@ class DetailView(LoginRequiredMixin, TemplateView):
             palabras.append(
                 {
                     "id": palabra.id,
-                    "text": palabra.palabra,
+                    "palabra": palabra.palabra,
+                    "lecturas": palabra.lecturas_str(usuario),
+                    "significados": palabra.significados_str(usuario),
+                    "etiquetas": palabra.etiquetas_list(usuario),
                     "progreso": usuario_palabra.progreso,
                     "estrella": usuario_palabra.estrella,
                     "checked": True,
@@ -100,8 +104,11 @@ class DetailView(LoginRequiredMixin, TemplateView):
             )
 
         context["palabras"] = palabras
-        context["palabra_estrella_url"] = reverse_lazy("toggle_estrella_palabra")
+        context["grupo_tiene_palabra_url"] = reverse_lazy("toggle_grupo_tiene_palabra")
         context["len_palabras"] = len(palabras)
+        context["palabra_url"] = reverse_lazy("elegir_palabra")
+
+        context["buscar_palabras"] = reverse_lazy("buscar_filtrar_grupo_actual")
 
         return context
 
