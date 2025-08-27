@@ -84,13 +84,14 @@ def checar_pregunta(request):
 @require_POST
 @login_required
 def todas_contestadas_correctas(request):
+    palabras_a_estudiar = request.session.get("palabras_a_estudiar", [])
     palabras_contestadas = request.session.get("palabras_contestadas", {})
-    for palabra in palabras_contestadas:
+    for palabra in palabras_a_estudiar:
         if not palabras_contestadas[palabra]:
             return False
     palabras_ids = []
     palabras_correctas = request.session.get("palabras_correctas", {})
-    for palabra in palabras_correctas:
+    for palabra in palabras_a_estudiar:
         if not palabras_correctas[palabra]:
             palabras_ids.append(palabra)
             palabras_contestadas[palabra] = False
@@ -100,42 +101,43 @@ def todas_contestadas_correctas(request):
     request.session["index_palabra_pregunta"] = 0
     request.session["palabra_actual"] = palabras_ids[0]
     request.session["palabras_contestadas"] = palabras_contestadas
-    return False
+    messages.info(request, "Repitiendo palabras con error")
+    return True
 
 
 @require_POST
 @login_required
 def cambiar_pregunta(request):
     action = request.POST.get("action")
-    if todas_contestadas_correctas(request):
-        return redirect(reverse_lazy("resultados"))
-    else:
-        palabras_ids = request.session.get("palabras_a_estudiar", [])
-        palabras_contestadas = request.session.get("palabras_contestadas")
-        index = request.session.get("index_palabra_pregunta", 0)
-        palabra_id = request.session.get("palabra_actual", palabras_ids[index])
-
-        if action == "next" or action == "next_unanswered":
-            original_id = palabra_id
-            index = (index + 1) % len(palabras_ids)  # cíclico hacia adelante
-            palabra_id = palabras_ids[index]
-            if action == "next_unanswered":
-                while palabras_contestadas[palabra_id] and palabra_id != original_id:
-                    # skip a no contestada y al loopear, break
-                    index = (index + 1) % len(palabras_ids)  # cíclico hacia adelante
-                    palabra_id = palabras_ids[index]
-        elif action == "previous" or action == "previous_unanswered":
-            original_id = palabra_id
-            index = (index - 1) % len(palabras_ids)  # cíclico hacia atrás
-            palabra_id = palabras_ids[index]
-            if action == "previous_unanswered":
-                while palabras_contestadas[palabra_id] and palabra_id != original_id:
-                    # skip a no contestada y al loopear, break
-                    index = (index - 1) % len(palabras_ids)  # cíclico hacia atrás
-                    palabra_id = palabras_ids[index]
-        request.session["index_palabra_pregunta"] = index
-        request.session["palabra_actual"] = palabra_id
+    todas_contestadas = todas_contestadas_correctas(request)
+    if todas_contestadas:
         return redirect(request.META.get("HTTP_REFERER", "/"))
+    palabras_ids = request.session.get("palabras_a_estudiar", [])
+    palabras_contestadas = request.session.get("palabras_contestadas")
+    index = request.session.get("index_palabra_pregunta", 0)
+    palabra_id = request.session.get("palabra_actual", palabras_ids[index])
+
+    if action == "next" or action == "next_unanswered":
+        original_id = palabra_id
+        index = (index + 1) % len(palabras_ids)  # cíclico hacia adelante
+        palabra_id = palabras_ids[index]
+        if action == "next_unanswered":
+            while palabras_contestadas[palabra_id] and palabra_id != original_id:
+                # skip a no contestada y al loopear, break
+                index = (index + 1) % len(palabras_ids)  # cíclico hacia adelante
+                palabra_id = palabras_ids[index]
+    elif action == "previous" or action == "previous_unanswered":
+        original_id = palabra_id
+        index = (index - 1) % len(palabras_ids)  # cíclico hacia atrás
+        palabra_id = palabras_ids[index]
+        if action == "previous_unanswered":
+            while palabras_contestadas[palabra_id] and palabra_id != original_id:
+                # skip a no contestada y al loopear, break
+                index = (index - 1) % len(palabras_ids)  # cíclico hacia atrás
+                palabra_id = palabras_ids[index]
+    request.session["index_palabra_pregunta"] = index
+    request.session["palabra_actual"] = palabra_id
+    return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
 def actualizar_grupos(usuario):
