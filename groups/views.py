@@ -54,6 +54,71 @@ class GroupsView(LoginRequiredMixin, TemplateView):
         return any(m in user_agent for m in ["mobile", "android", "iphone"])
 
 
+class EditView(LoginRequiredMixin, TemplateView):
+    template_name = "groups/edit.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        usuario = self.request.user
+
+        grupo_id = self.request.session["grupo_actual"]
+        ug = get_object_or_404(
+            UsuarioGrupo.objects.select_related("grupo").prefetch_related(
+                "grupo__grupo_palabras__palabra__palabra_usuarios"
+            ),
+            usuario=usuario,
+            grupo_id=grupo_id,
+        )
+
+        grupo = {
+            "id": grupo_id,
+            "grupo": ug.grupo.grupo,
+            "descripcion": ug.grupo.descripcion,
+            "progreso": int(ug.progreso),
+            "estrella": ug.estrella,
+            "creador": ug.grupo.usuario,
+            "editable": ug.grupo.usuario == usuario,
+        }
+
+        context["grupo"] = grupo
+        context["grupo_estrella_url"] = reverse_lazy("toggle_estrella_grupo")
+
+        palabras_obj_list = [gp.palabra for gp in ug.grupo.grupo_palabras.all()]
+
+        palabras = []
+        for palabra in palabras_obj_list:
+            usuario_palabra = get_object_or_404(
+                UsuarioPalabra, palabra_id=palabra.id, usuario=usuario
+            )
+            palabras.append(
+                {
+                    "id": palabra.id,
+                    "palabra": palabra.palabra,
+                    "lecturas": palabra.lecturas_str(usuario),
+                    "significados": palabra.significados_str(usuario),
+                    "etiquetas": palabra.etiquetas_list(usuario),
+                    "progreso": usuario_palabra.progreso,
+                    "estrella": usuario_palabra.estrella,
+                    "checked": True,
+                }
+            )
+
+        context["palabras"] = palabras
+        context["grupo_tiene_palabra_url"] = reverse_lazy("toggle_grupo_tiene_palabra")
+        context["len_palabras"] = len(palabras)
+        context["palabra_url"] = reverse_lazy("elegir_palabra")
+
+        context["detalles_url"] = reverse_lazy("detalles_grupo")
+
+        context["buscar_palabras"] = reverse_lazy("buscar_filtrar_grupo_actual")
+
+        return context
+
+    def is_mobile(request):
+        user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
+        return any(m in user_agent for m in ["mobile", "android", "iphone"])
+
+
 class DetailView(LoginRequiredMixin, TemplateView):
     template_name = "groups/details.html"
 
@@ -107,6 +172,8 @@ class DetailView(LoginRequiredMixin, TemplateView):
         context["grupo_tiene_palabra_url"] = reverse_lazy("toggle_grupo_tiene_palabra")
         context["len_palabras"] = len(palabras)
         context["palabra_url"] = reverse_lazy("elegir_palabra")
+
+        context["editar_url"] = reverse_lazy("editar_grupo")
 
         context["buscar_palabras"] = reverse_lazy("buscar_filtrar_grupo_actual")
 

@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% block content %}
+<div class="space-y-4 px-4 pb-4">
+    <div class="border border-neutral-light bg-neutral-main/10 rounded-xl flex flex-auto w-full flex-col py-4">
+        <div class="p-6 pt-2 gap-4 space-y-4 w-full">
+            <div class="flex justify-between space-y-4">
+                <h1 class="text-6xl font-light">{{grupo.grupo}}</h1>
+                <div class="flex gap-4">
+                {% if grupo.editable %}
+                    <button type="button" class="button-alert" data-open="#eliminar_grupo_modal">
+                    {% include "components/icons/trash.html" %} Eliminar
+                    </button>
+                {% endif %}
+                {% include "components/button.html" with is_navigation=True text="Regresar" url=detalles_url icon="components/icons/back.html" extra_classes="button-secondary" %}
+                </div>
+            </div>
+        </div>
+
+        <dialog id="eliminar_grupo_modal" class="modal">
+            <div class="modal-box space-y-10 flex flex-col justify-between items-center p-10">
+                <h4>¿Deseas eliminar {{ grupo.grupo }}?</h4>
+                <div class="flex justify-between gap-4">
+                <button type="button" class="btn button-secondary" data-close="#eliminar_grupo_modal">
+                    {% include "components/icons/cross.html" %} Cancelar
+                </button>
+                {% include "components/button.html" with url=delete_grupo text="Eliminar" icon="components/icons/trash.html" extra_classes="button-alert" %}
+                </div>
+            </div>
+        </dialog>
+        
+        <div class="px-6 flex flex-auto flex-col gap-2">
+            {% include "components/element_header.html" with header="Grupo" elements=grupo.grupo%}               
+            {% include "components/input_button.html" with has_button_left=True icon="components/icons/pencil.html" name="editar_grupo" url=editar_grupo placeholder="Nombre del grupo" value=grupo.grupo button_text="Actualizar"%}
+            {% include "components/element_header.html" with header="Descripción" elements=grupo.descripcion%}                                                                       
+            {% include "components/input_button.html" with is_textarea=True has_button_left=True icon="components/icons/pencil.html" name="editar_grupo" url=editar_grupo placeholder="Nombre del grupo" value=grupo.descripcion button_text="Actualizar"%}
+        </div>
+    </div>
+</div>
+{% endblock %}

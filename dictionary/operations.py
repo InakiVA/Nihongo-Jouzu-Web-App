@@ -47,7 +47,7 @@ def crear_palabra(request):
     request.session["palabra_actual"] = palabra_obj.id
     request.session["ajustes_palabras"] = ajustes_palabras
     messages.success(request, "Palabra creada exitosamente")
-    return redirect("editar")
+    return redirect("editar_palabra")
 
 
 # -- etiquetas están en checkbox operations

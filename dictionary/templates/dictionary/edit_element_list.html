@@ -5,8 +5,8 @@
         {% for element in elements %} 
         <div class="flex items-center gap-4 px-4">
             {% include "components/button.html" with name="delete_id" value=element.id url=delete_url id=element.id icon="components/icons/trash.html" text="Eliminar" extra_classes="button-alert !rounded-xl !p-2 !px-4"%}
-            <h3 class="px-4 max-w-1/3 flex-none whitespace-normal break-keep overflow-x-clip">{{element.text}}</h3>
-            {% include "components/input_button.html" with url=update_url name="input_id" id=element.id icon="components/icons/pencil.html" button_text="Actualizar" input_classes="!border-neutral-main" button_classes="!rounded-xl !px-4"%}                                
+            <h3 class="max-w-1/3 flex-none whitespace-normal break-keep overflow-x-clip">{{element.text}}</h3>
+            {% include "components/input_button.html" with value=element.text url=update_url name="input_id" id=element.id icon="components/icons/pencil.html" button_text="Actualizar" input_classes="!border-neutral-main" button_classes="!rounded-xl !px-4"%}                                
         </div>      
         {% endfor %}              
     </div>     

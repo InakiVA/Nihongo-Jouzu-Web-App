@@ -16,13 +16,13 @@
                 
         <div class="flex flex-auto min-w-1/3 px-4 h-full max-h-[75vh] overflow-auto">
             <ul class="list element_list py-2 w-auto flex flex-auto flex-col">  
-                <div class="flex flex-row items-start px-4 pb-4 pt-2 border-b text-center justify-between">
+                <div class="flex flex-row items-start px-4 pb-4 pt-2 border-b text-center justify-between gap-4">
                     <div class="flex gap-4 items-end">
                         <h2 class="list_title">Grupos</h2>
                         <h3 class="list_subheader font-light">{{cantidad_grupos}}</h3>
                     </div>
                     <div class="flex gap-0.25 border border-neutral-light bg-neutral-light rounded-lg overflow-clip h-8 items-center">
-                    {% include "components/button.html" with text="Seleccionar" url=seleccionar_grupos_url icon="components/icons/check.html" extra_classes="button-join" %}
+                    {% include "components/button.html" with text="Todos" url=seleccionar_grupos_url icon="components/icons/check.html" extra_classes="button-join" %}
                     {% include "components/button.html" with text="Limpiar" url=limpiar_grupos_url icon="components/icons/cross.html" extra_classes="button-join" %}                    
                     </div>
                 </div>

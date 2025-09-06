@@ -4,7 +4,7 @@
         <div class="flex justify-between">
             <h1 class="text-6xl font-light">{{grupo.grupo}}</h1>
             {% if grupo.editable %}
-            {% include "components/button.html" with is_navigation=True text="Editar" icon="components/icons/pencil.html" extra_classes="button-main" %}                    
+            {% include "components/button.html" with is_navigation=True text="Editar" url=editar_url icon="components/icons/pencil.html" extra_classes="button-main" %}
             {% endif %}
         </div>  
         <h2>{{grupo.descripcion}}</h2>      
@@ -23,9 +23,6 @@
             {% include "components/input.html" with icon="components/icons/search.html" name="buscar_palabra_agregar_a_grupo"%}
             </div>
         </div>
-        <form method="dialog" class="modal-backdrop">
-            <button>close</button>
-        </form>
     </dialog>      
 
     <div class="border border-neutral-light rounded-xl">
