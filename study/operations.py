@@ -88,7 +88,7 @@ def todas_contestadas_correctas(request):
     palabras_contestadas = request.session.get("palabras_contestadas", {})
     for palabra in palabras_a_estudiar:
         if not palabras_contestadas[palabra]:
-            return False
+            return [False, False]
     palabras_ids = []
     palabras_correctas = request.session.get("palabras_correctas", {})
     for palabra in palabras_a_estudiar:
@@ -96,21 +96,24 @@ def todas_contestadas_correctas(request):
             palabras_ids.append(palabra)
             palabras_contestadas[palabra] = False
     if not palabras_ids:
-        return redirect("resultados")
+        return [True, True]
     request.session["palabras_a_estudiar"] = palabras_ids
     request.session["index_palabra_pregunta"] = 0
     request.session["palabra_actual"] = palabras_ids[0]
     request.session["palabras_contestadas"] = palabras_contestadas
-    messages.info(request, "Repitiendo palabras con error")
-    return True
+    if palabras_ids:
+        messages.info(request, "Repitiendo palabras con error")
+    return [True, False]
 
 
 @require_POST
 @login_required
 def cambiar_pregunta(request):
     action = request.POST.get("action")
-    todas_contestadas = todas_contestadas_correctas(request)
-    if todas_contestadas:
+    todas_contestadas_correctas_values = todas_contestadas_correctas(request)
+    if all(todas_contestadas_correctas_values):  # todas correctas
+        return redirect("resultados")
+    if any(todas_contestadas_correctas_values):  # preguntar equivocadas
         return redirect(request.META.get("HTTP_REFERER", "/"))
     palabras_ids = request.session.get("palabras_a_estudiar", [])
     palabras_contestadas = request.session.get("palabras_contestadas")

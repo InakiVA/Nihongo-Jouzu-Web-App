@@ -62,26 +62,28 @@
     << Eliminar palabra
     << Agregar lecturas, significados, notas, etiquetas
     << Editar ""
-    ++ Eliminar "" 
+    << Eliminar "" 
     << Agregar a grupo, eliminar de grupo
     >> Fecha de creación
     >> Último estudio
         .. timezones son una joda, mejor no mostrar fecha de creación y modificación
+        ?? al llamarla creo que se puede adaptar. hacer método propoerty que la transforme
     << Estrella y progreso-
     << no funciona progress bar y star
 
 == Vista de grupos
-    ++ Crear grupo
-    ++ Lista de grupos con estrella y progreso
-        ?? cantidad de palabras en grupo
+    << Crear grupo
+    << Lista de grupos con estrella y progreso
+        << cantidad de palabras en grupo
+    ++ Filtros por estrella, progreso, creador
 
 == Vista de grupo-detalles
-    ++ Progreso, descripcion
-    ++ Lista de palabras en grupo
-    ++ Botón toggle con mismas propiedades de edición y eliminación que palabra
+    << Progreso, descripcion
+    << Lista de palabras en grupo
+    << Botón toggle con mismas propiedades de edición y eliminación que palabra
         ++ Agregar palabras
-        ++ Agregar etiquetas
-    ++ Filtros por estrella, progreso, creador
+        >> Agregar etiquetas
+    ?? Filtros por estrella, progreso, creador
     .. omitir grupo_etiquetas hasta encontrarle propósito funcional
 
 == Vista de etiquetas
@@ -95,7 +97,7 @@
 
 
 
-!! ojo por la moderación, mejor no. Lo dejo anotado por si
+!! ojo: por la moderación, mejor no. Lo dejo anotado por si
 == IMPLEMENTACIÓN DE PUBLICACIONES DE GRUPOS DE PALABRAS
     .. En navegación se puede buscar usuarios. Al darle click aparece lista de grupos públicos del usuario. El usuario actual puede ver el grupo-detalle y elegir si guardarlo o eliminarlo (si ya está guardado)
     .. Una vez guardado el grupo de otro usuario, se borra el registro UsuarioGrupo
