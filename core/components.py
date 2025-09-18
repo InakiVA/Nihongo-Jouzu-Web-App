@@ -83,7 +83,7 @@ def buscar_header(request, search_input, usuario):
                 "lecturas": palabra.lecturas_str(usuario),
                 "notas": palabra.notas_str(usuario),
                 "etiquetas": palabra.etiquetas_list(usuario),
-                "grupos": palabra.grupos_str(usuario),
+                "grupos": palabra.grupos_list(usuario),
                 "progreso": palabra.palabra_usuarios.get(usuario=request.user).progreso,
                 "estrella": palabra.palabra_usuarios.get(usuario=request.user).estrella,
             }

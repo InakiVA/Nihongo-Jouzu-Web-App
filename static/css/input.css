@@ -29,6 +29,7 @@
 
     --color-neutral-light: #f5f5f5;
     --color-neutral-main: #2a3c4b;
+    --color-neutral-secondary: #5a7891;
     --color-neutral-dark: #1c2731;
 
     --color-accent-light: #ffccd5;
@@ -164,7 +165,7 @@ h4 {
 }
 
 .tag{
-  @apply bg-neutral-main rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+  @apply bg-neutral-secondary rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
 }
 
 .check-box{

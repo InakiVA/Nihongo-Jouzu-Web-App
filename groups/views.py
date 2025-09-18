@@ -62,55 +62,23 @@ class EditView(LoginRequiredMixin, TemplateView):
         usuario = self.request.user
 
         grupo_id = self.request.session["grupo_actual"]
-        ug = get_object_or_404(
-            UsuarioGrupo.objects.select_related("grupo").prefetch_related(
-                "grupo__grupo_palabras__palabra__palabra_usuarios"
-            ),
-            usuario=usuario,
-            grupo_id=grupo_id,
-        )
+        grupo_obj = get_object_or_404(Grupo, id=grupo_id)
 
         grupo = {
             "id": grupo_id,
-            "grupo": ug.grupo.grupo,
-            "descripcion": ug.grupo.descripcion,
-            "progreso": int(ug.progreso),
-            "estrella": ug.estrella,
-            "creador": ug.grupo.usuario,
-            "editable": ug.grupo.usuario == usuario,
+            "grupo": grupo_obj.grupo,
+            "descripcion": grupo_obj.descripcion,
+            "editable": grupo_obj.usuario == usuario,
         }
 
         context["grupo"] = grupo
-        context["grupo_estrella_url"] = reverse_lazy("toggle_estrella_grupo")
-
-        palabras_obj_list = [gp.palabra for gp in ug.grupo.grupo_palabras.all()]
-
-        palabras = []
-        for palabra in palabras_obj_list:
-            usuario_palabra = get_object_or_404(
-                UsuarioPalabra, palabra_id=palabra.id, usuario=usuario
-            )
-            palabras.append(
-                {
-                    "id": palabra.id,
-                    "palabra": palabra.palabra,
-                    "lecturas": palabra.lecturas_str(usuario),
-                    "significados": palabra.significados_str(usuario),
-                    "etiquetas": palabra.etiquetas_list(usuario),
-                    "progreso": usuario_palabra.progreso,
-                    "estrella": usuario_palabra.estrella,
-                    "checked": True,
-                }
-            )
-
-        context["palabras"] = palabras
-        context["grupo_tiene_palabra_url"] = reverse_lazy("toggle_grupo_tiene_palabra")
-        context["len_palabras"] = len(palabras)
-        context["palabra_url"] = reverse_lazy("elegir_palabra")
 
         context["detalles_url"] = reverse_lazy("detalles_grupo")
 
-        context["buscar_palabras"] = reverse_lazy("buscar_filtrar_grupo_actual")
+        context["update_grupo"] = reverse_lazy("update_grupo")
+        context["update_descripcion"] = reverse_lazy("update_descripcion")
+
+        context["delete_grupo"] = reverse_lazy("delete_grupo")
 
         return context
 

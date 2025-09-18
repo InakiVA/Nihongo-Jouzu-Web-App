@@ -29,9 +29,9 @@
         
         <div class="px-6 flex flex-auto flex-col gap-2">
             {% include "components/element_header.html" with header="Grupo" elements=grupo.grupo%}               
-            {% include "components/input_button.html" with has_button_left=True icon="components/icons/pencil.html" name="editar_grupo" url=editar_grupo placeholder="Nombre del grupo" value=grupo.grupo button_text="Actualizar"%}
+            {% include "components/input_button.html" with name="update_grupo" url=update_grupo has_button_left=True icon="components/icons/pencil.html" placeholder="Nombre del grupo" value=grupo.grupo button_text="Actualizar"%}
             {% include "components/element_header.html" with header="Descripción" elements=grupo.descripcion%}                                                                       
-            {% include "components/input_button.html" with is_textarea=True has_button_left=True icon="components/icons/pencil.html" name="editar_grupo" url=editar_grupo placeholder="Nombre del grupo" value=grupo.descripcion button_text="Actualizar"%}
+            {% include "components/input_button.html" with name="update_descripcion" url=update_descripcion is_textarea=True has_button_left=True icon="components/icons/pencil.html" placeholder="Nombre del grupo" value=grupo.descripcion button_text="Actualizar"%}
         </div>
     </div>
 </div>

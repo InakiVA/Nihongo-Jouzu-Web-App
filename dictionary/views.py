@@ -57,6 +57,7 @@ class DetailView(LoginRequiredMixin, TemplateView):
                     "estrella": palabra.palabra_usuarios.get(
                         usuario=self.request.user
                     ).estrella,
+                    "grupos": palabra.grupos_list(usuario),
                 }
             )
         context["palabras_relacionadas"] = palabras_relacionadas_dict_list
@@ -213,7 +214,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
                     "lecturas": palabra.lecturas_str(usuario),
                     "notas": palabra.notas_str(usuario),
                     "etiquetas": palabra.etiquetas_list(usuario),
-                    "grupos": palabra.grupos_str(usuario),
+                    "grupos": palabra.grupos_list(usuario),
                     "progreso": palabra.palabra_usuarios.get(
                         usuario=self.request.user
                     ).progreso,

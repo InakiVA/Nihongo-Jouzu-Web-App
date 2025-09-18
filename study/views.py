@@ -422,6 +422,7 @@ class SesionView(LoginRequiredMixin, TemplateView):
                     "estrella": palabra.palabra_usuarios.get(
                         usuario=self.request.user
                     ).estrella,
+                    "grupos": palabra.grupos_list(usuario),
                 }
             )
         context["palabras_relacionadas"] = palabras_relacionadas_dict_list

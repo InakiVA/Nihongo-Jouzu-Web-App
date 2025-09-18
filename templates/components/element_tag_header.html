@@ -2,7 +2,7 @@
     <h2>{{header}}</h2>              
     <li class="flex flex-row flex-auto gap-2 font-light">
         {% for element in elements %}
-        {% include "components/tag.html" with text=element %}         
+        {% include "components/tag.html" with text=element extra_classes=tag_classes%}         
         {% endfor %}
     </li>                         
 </div>

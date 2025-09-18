@@ -26,6 +26,9 @@ class Etiqueta(models.Model):
     def __str__(self):
         return self.etiqueta
 
+    def __lt__(self, other):
+        return self.etiqueta < other.etiqueta
+
 
 class PalabraEtiqueta(models.Model):
     palabra = models.ForeignKey(
@@ -52,6 +55,9 @@ class PalabraEtiqueta(models.Model):
 
     def __str__(self):
         return f"{self.palabra.palabra} - {self.etiqueta.etiqueta} ({self.usuario})"
+
+    def __lt__(self, other):
+        return self.etiqueta < other.etiqueta
 
 
 class GrupoEtiqueta(models.Model):
