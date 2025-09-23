@@ -67,7 +67,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         if buscar_grupo_input:
             grupos = [g for g in grupos if buscar_grupo_input in g["text"].lower()]
 
-        grupos_elegidos = [g for g in grupos if g["checked"]]
+        grupos_elegidos = [g for g in grupos if g["estudiando"]]
         if ajustes.get("Creados por mí (grupos)"):
             grupos = [g for g in grupos if g["autor"] == usuario.username]
         if ajustes.get("Por completar (grupos)"):

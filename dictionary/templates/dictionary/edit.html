@@ -15,7 +15,7 @@
             </div>
 
             {% if palabra.editable %}
-                {% include "components/input_button.html" with name="update_palabra" id=palabra.id url=update_palabra has_button_left=True icon="components/icons/pencil.html" placeholder="Palabra" button_text="Actualizar" %}
+                {% include "components/input_button.html" with name="update_palabra" value=palabra.palabra id=palabra.id url=update_palabra has_button_left=True icon="components/icons/pencil.html" placeholder="Palabra" button_text="Actualizar" %}
             {% else %}
                 <h2 class="!text-myalert underline">Solo se pueden modificar atributos generados por ti</h2>
             {% endif %}

@@ -64,12 +64,7 @@ class EditView(LoginRequiredMixin, TemplateView):
         grupo_id = self.request.session["grupo_actual"]
         grupo_obj = get_object_or_404(Grupo, id=grupo_id)
 
-        grupo = {
-            "id": grupo_id,
-            "grupo": grupo_obj.grupo,
-            "descripcion": grupo_obj.descripcion,
-            "editable": grupo_obj.usuario == usuario,
-        }
+        grupo = grupo_obj.grupo_dict(usuario=usuario)
 
         context["grupo"] = grupo
 
@@ -102,16 +97,7 @@ class DetailView(LoginRequiredMixin, TemplateView):
             usuario=usuario,
             grupo_id=grupo_id,
         )
-
-        grupo = {
-            "id": grupo_id,
-            "grupo": ug.grupo.grupo,
-            "descripcion": ug.grupo.descripcion,
-            "progreso": int(ug.progreso),
-            "estrella": ug.estrella,
-            "creador": ug.grupo.usuario,
-            "editable": ug.grupo.usuario == usuario,
-        }
+        grupo = ug.grupo.grupo_dict(usuario=usuario)
 
         context["grupo"] = grupo
         context["grupo_estrella_url"] = reverse_lazy("toggle_estrella_grupo")
@@ -123,22 +109,14 @@ class DetailView(LoginRequiredMixin, TemplateView):
             usuario_palabra = get_object_or_404(
                 UsuarioPalabra, palabra_id=palabra.id, usuario=usuario
             )
-            palabras.append(
-                {
-                    "id": palabra.id,
-                    "palabra": palabra.palabra,
-                    "lecturas": palabra.lecturas_str(usuario),
-                    "significados": palabra.significados_str(usuario),
-                    "etiquetas": palabra.etiquetas_list(usuario),
-                    "progreso": usuario_palabra.progreso,
-                    "estrella": usuario_palabra.estrella,
-                    "checked": True,
-                }
-            )
+            palabra_dict = palabra.palabra_dict(usuario)
+            palabra_dict["progreso"] = usuario_palabra.progreso
+            palabra_dict["estrella"] = usuario_palabra.estrella
+            palabra_dict["checked"] = True
+            palabras.append(palabra_dict)
 
         context["palabras"] = palabras
         context["grupo_tiene_palabra_url"] = reverse_lazy("toggle_grupo_tiene_palabra")
-        context["len_palabras"] = len(palabras)
         context["palabra_url"] = reverse_lazy("elegir_palabra")
 
         context["editar_url"] = reverse_lazy("editar_grupo")

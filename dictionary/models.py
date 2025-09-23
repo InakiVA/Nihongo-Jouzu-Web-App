@@ -57,6 +57,21 @@ class Palabra(models.Model):
     def __str__(self):
         return self.palabra
 
+    def palabra_dict(self, usuario):
+        return {
+            "id": self.id,
+            "palabra": self.palabra,
+            "lecturas": self.lecturas_str(usuario),
+            "significados": self.significados_str(usuario),
+            "etiquetas": self.etiquetas_list(usuario),
+            "notas": self.notas_str(usuario),
+            "grupos": self.grupos_list(usuario),
+            "editable": self.usuario == usuario,
+            "progreso": self.palabra_usuarios.get(usuario=usuario).progreso,
+            "estrella": self.palabra_usuarios.get(usuario=usuario).estrella,
+            "creador": self.usuario,
+        }
+
     def __lt__(self, other):
         return self.palabra < other.palabra
 

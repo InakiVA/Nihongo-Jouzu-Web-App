@@ -201,18 +201,9 @@ def get_user_groups_list(usuario):
         cantidad = len(palabras)
         progreso = int(progreso_total / cantidad) if cantidad > 0 else 0
 
-        grupos.append(
-            {
-                "text": ug.grupo.grupo,
-                "descripcion": ug.grupo.descripcion,
-                "id": ug.grupo.id,
-                "progreso": progreso,
-                "estrella": ug.estrella,
-                "checked": ug.estudiando,
-                "fecha_creacion": ug.grupo.fecha_creacion,
-                "ultima_modificacion": ug.ultima_modificacion,
-                "creador": ug.grupo.usuario,
-                "palabras": ug.grupo.cantidad_palabras,
-            }
-        )
+        grupo_dict = ug.grupo.grupo_dict(usuario=usuario, get_progreso=False)
+        grupo_dict["progreso"] = progreso
+
+        grupos.append(grupo_dict)
+
     return grupos

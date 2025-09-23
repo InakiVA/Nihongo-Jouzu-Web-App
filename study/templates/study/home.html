@@ -28,8 +28,8 @@
                 </div>
                 <div class="px-4 space-y-4 pb-2 overflow-y-auto inset-shadow-2xs flex flex-auto flex-col">
                     <li>
-                    {% for element in grupos %}  
-                        {% include "components/progress_row.html" with text=element.text id=element.id progress=element.progreso is_selected=element.checked is_active=element.estrella check_url=check_url estrella_url=estrella_url%}
+                    {% for grupo in grupos %}  
+                        {% include "components/group_row.html" with check_url=check_url estrella_url=estrella_url%}
                     {% endfor %}  
                     </li>
                 </div>

@@ -63,8 +63,11 @@ def editar_palabra_atributos(request, atributo):
     if atributo == "palabra":
         value = request.POST.get("update_palabra")
         if value:
-            palabra_obj.update_palabra(value)
-            messages.success(request, "Palabra actualizada exitosamente")
+            if value == palabra_obj.palabra:
+                messages.info(request, "La palabra es la misma")
+            else:
+                palabra_obj.update_palabra(value)
+                messages.success(request, "Palabra actualizada exitosamente")
         else:
             messages.warning(
                 request, "No se ingresó información de palabra para actualizar"
@@ -75,16 +78,25 @@ def editar_palabra_atributos(request, atributo):
             object_id = request.POST.get("input_button_id")
             if atributo == "significado":
                 obj = get_object_or_404(Significado, id=object_id)
-                obj.update_significado(value)
-                messages.success(request, "Significado actualizado exitosamente")
+                if value == obj.significado:
+                    messages.info(request, "El significado es el mismo")
+                else:
+                    obj.update_significado(value)
+                    messages.success(request, "Significado actualizado exitosamente")
             elif atributo == "lectura":
                 obj = get_object_or_404(Lectura, id=object_id)
-                obj.update_lectura(value)
-                messages.success(request, "Lectura actualizada exitosamente")
+                if value == obj.lectura:
+                    messages.info(request, "La lectura es la misma")
+                else:
+                    obj.update_lectura(value)
+                    messages.success(request, "Lectura actualizada exitosamente")
             elif atributo == "nota":
                 obj = get_object_or_404(Nota, id=object_id)
-                obj.update_nota(value)
-                messages.success(request, "Nota actualizada exitosamente")
+                if value == obj.nota:
+                    messages.info(request, "La nota es la misma")
+                else:
+                    obj.update_nota(value)
+                    messages.success(request, "Nota actualizada exitosamente")
         else:
             messages.warning(
                 request, f"No se ingresó información de {atributo} para actualizar"

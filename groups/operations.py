@@ -58,21 +58,33 @@ def editar_grupo_atributos(request, atributo):
     if atributo == "grupo":
         value = request.POST.get("update_grupo")
         if value:
-            grupo_obj.update_grupo(value)
-            messages.success(request, "Nombre del grupo actualizado exitosamente")
+            existent = Grupo.objects.filter(usuario=user, grupo=value).exists()
+            if existent:
+                if value != grupo_obj.grupo:
+                    messages.warning(request, "Ya creaste un grupo con este nombre")
+                else:
+                    messages.info(request, "El nombre del grupo es el mismo")
+            else:
+                grupo_obj.update_grupo(value)
+                messages.success(request, "Nombre del grupo actualizado exitosamente")
         else:
             messages.warning(
-                request, "No se ingresó información del nombre de grupo para actualizar"
+                request, "No se ingresó el nombre de grupo para actualizar"
             )
     elif atributo == "descripcion":
         value = request.POST.get("update_descripcion")
         if value:
-            grupo_obj.update_descripcion(value)
-            messages.success(request, "Descripción del grupo actualizado exitosamente")
+            if value == grupo_obj.descripcion:
+                messages.info(request, "La descripción del grupo es la misma")
+            else:
+                grupo_obj.update_descripcion(value)
+                messages.success(
+                    request, "Descripción del grupo actualizado exitosamente"
+                )
         else:
             messages.warning(
                 request,
-                "No se ingresó información de la descripción de grupo para actualizar",
+                "No se ingresó la descripción de grupo para actualizar",
             )
 
     return redirect(request.META.get("HTTP_REFERER", "/"))

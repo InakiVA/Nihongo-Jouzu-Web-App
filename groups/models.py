@@ -29,6 +29,29 @@ class Grupo(models.Model):
     def cantidad_palabras(self):
         return len(self.grupo_palabras.all())
 
+    def grupo_dict(self, usuario="", get_progreso=True):
+        return {
+            "id": self.id,
+            "grupo": self.grupo,
+            "descripcion": self.descripcion,
+            "cantidad_palabras": self.cantidad_palabras,
+            "creador": self.usuario,
+            "editable": self.usuario == usuario,
+            "fecha_creacion": self.fecha_creacion,
+            "ultima_modificacion": self.grupo_usuarios.get(
+                usuario=usuario
+            ).ultima_modificacion,
+            "progreso": (
+                self.grupo_usuarios.get(usuario=usuario).progreso if get_progreso else 0
+            ),
+            "estrella": self.grupo_usuarios.get(usuario=usuario).estrella,
+            "estudiando": self.grupo_usuarios.get(usuario=usuario).estudiando,
+            "fecha_creacion": self.fecha_creacion,
+            "ultima_modificacion": self.grupo_usuarios.get(
+                usuario=usuario
+            ).ultima_modificacion,
+        }
+
     class Meta:
         db_table = "Grupos"
 
@@ -55,7 +78,6 @@ class UsuarioGrupo(models.Model):
 
     def update_modificacion(self):
         self.ultima_modificacion = timezone.now()
-        print(self)
 
     def toggle_estrella(self):
         self.estrella = not self.estrella
@@ -70,15 +92,11 @@ class UsuarioGrupo(models.Model):
         cantidad = 0
 
         for gp in grupo_palabras:
-            try:
-                up = UsuarioPalabra.objects.get(
-                    usuario=self.usuario, palabra=gp.palabra
-                )  # {} instancias de progreso (usuario_id, palabra_id, progreso, estrella, ...)
-                total += up.progreso
-                cantidad += 1
-            except UsuarioPalabra.DoesNotExist:
-                continue  # Si no ha estudiado esa palabra, la ignoramos
-
+            up = UsuarioPalabra.objects.get(
+                usuario=self.usuario, palabra=gp.palabra
+            )  # {} instancias de progreso (usuario_id, palabra_id, progreso, estrella, ...)
+            total += up.progreso
+            cantidad += 1
         if cantidad == 0:
             return 0
         return total / cantidad

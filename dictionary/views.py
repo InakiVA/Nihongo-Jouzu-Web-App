@@ -22,43 +22,14 @@ class DetailView(LoginRequiredMixin, TemplateView):
         palabra_id = self.request.session.get("palabra_actual", 0)
         palabra_obj = get_object_or_404(Palabra, id=palabra_id)
 
-        palabra_dict = {
-            "id": palabra_id,
-            "palabra": palabra_obj.palabra,
-            "significados": palabra_obj.significados_str(usuario),
-            "lecturas": palabra_obj.lecturas_str(usuario),
-            "notas": palabra_obj.notas_str(usuario),
-            "etiquetas": palabra_obj.etiquetas_list(usuario),
-            "grupos": palabra_obj.grupos_list(usuario),
-            "progreso": palabra_obj.palabra_usuarios.get(
-                usuario=self.request.user
-            ).progreso,
-            "estrella": palabra_obj.palabra_usuarios.get(
-                usuario=self.request.user
-            ).estrella,
-            "creador": palabra_obj.usuario,
-        }
+        palabra_dict = palabra_obj.palabra_dict(usuario=usuario)
         context["palabra"] = palabra_dict
 
         palabras_relacionadas = palabra_obj.palabras_relacionadas(usuario)
         palabras_relacionadas_dict_list = []
         for palabra in palabras_relacionadas:
             palabras_relacionadas_dict_list.append(
-                {
-                    "id": palabra.id,
-                    "palabra": palabra.palabra,
-                    "significados": palabra.significados_str(usuario),
-                    "lecturas": palabra.lecturas_str(usuario),
-                    "etiquetas": palabra.etiquetas_list(usuario),
-                    "notas": palabra.notas_str(usuario),
-                    "progreso": palabra.palabra_usuarios.get(
-                        usuario=self.request.user
-                    ).progreso,
-                    "estrella": palabra.palabra_usuarios.get(
-                        usuario=self.request.user
-                    ).estrella,
-                    "grupos": palabra.grupos_list(usuario),
-                }
+                palabra.palabra_dict(usuario=usuario)
             )
         context["palabras_relacionadas"] = palabras_relacionadas_dict_list
         context["palabras_relacionadas_url"] = reverse_lazy("elegir_palabra")
@@ -106,22 +77,7 @@ class EditView(LoginRequiredMixin, TemplateView):
         palabra_id = self.request.session.get("palabra_actual", 0)
         palabra_obj = get_object_or_404(Palabra, id=palabra_id)
 
-        palabra_dict = {
-            "id": palabra_id,
-            "palabra": palabra_obj.palabra,
-            "significados": palabra_obj.significados_str(usuario),
-            "lecturas": palabra_obj.lecturas_str(usuario),
-            "notas": palabra_obj.notas_str(usuario),
-            "etiquetas": palabra_obj.etiquetas_list(usuario),
-            "grupos": palabra_obj.grupos_list(usuario),
-            "progreso": palabra_obj.palabra_usuarios.get(
-                usuario=self.request.user
-            ).progreso,
-            "estrella": palabra_obj.palabra_usuarios.get(
-                usuario=self.request.user
-            ).estrella,
-            "editable": palabra_obj.usuario == usuario,
-        }
+        palabra_dict = palabra_obj.palabra_dict(usuario)
         context["palabra"] = palabra_dict
 
         element_list = []
@@ -206,23 +162,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         palabras_list = []
         for palabra in palabras[index * 10 : min(len(palabras), index * 10 + 10)]:
-            palabras_list.append(
-                {
-                    "id": palabra.id,
-                    "palabra": palabra.palabra,
-                    "significados": palabra.significados_str(usuario),
-                    "lecturas": palabra.lecturas_str(usuario),
-                    "notas": palabra.notas_str(usuario),
-                    "etiquetas": palabra.etiquetas_list(usuario),
-                    "grupos": palabra.grupos_list(usuario),
-                    "progreso": palabra.palabra_usuarios.get(
-                        usuario=self.request.user
-                    ).progreso,
-                    "estrella": palabra.palabra_usuarios.get(
-                        usuario=self.request.user
-                    ).estrella,
-                }
-            )
+            palabras_list.append(palabra.palabra_dict(usuario=usuario))
         context["palabras_list"] = palabras_list
         context["palabra_url"] = reverse_lazy("elegir_palabra")
 
