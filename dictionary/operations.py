@@ -18,7 +18,17 @@ def crear_palabra(request):
     palabra_value = request.POST.get("palabra_nueva")
     significado_value = request.POST.get("significado_nuevo")
     lectura_value = request.POST.get("lectura_nueva")
-    if not all([palabra_value, significado_value, lectura_value]):
+    breaker = False
+    if "<" in palabra_value or ">" in palabra_value:
+        messages.warning(request, "Palabra no puede contener '<' o '>'")
+        breaker = True
+    if "<" in significado_value or ">" in significado_value:
+        messages.warning(request, "Significado no puede contener '<' o '>'")
+        breaker = True
+    if "<" in lectura_value or ">" in lectura_value:
+        messages.warning(request, "Lectura no puede contener '<' o '>'")
+        breaker = True
+    if not all([palabra_value, significado_value, lectura_value]) or breaker:
         for key, value in zip(
             ["palabra_valida", "significado_valido", "lectura_valida"],
             [palabra_value, significado_value, lectura_value],
@@ -62,46 +72,53 @@ def editar_palabra_atributos(request, atributo):
         return redirect(request.META.get("HTTP_REFERER", "/"))
     if atributo == "palabra":
         value = request.POST.get("update_palabra")
-        if value:
-            if value == palabra_obj.palabra:
-                messages.info(request, "La palabra es la misma")
-            else:
-                palabra_obj.update_palabra(value)
-                messages.success(request, "Palabra actualizada exitosamente")
-        else:
+        if not value:
             messages.warning(
                 request, "No se ingresó información de palabra para actualizar"
             )
+            return redirect(request.META.get("HTTP_REFERER", "/"))
+        if value == palabra_obj.palabra:
+            messages.info(request, "La palabra es la misma")
+            return redirect(request.META.get("HTTP_REFERER", "/"))
+        if "<" in value or ">" in value:
+            messages.warning(request, "Palabra no puede contener '<' o '>'")
+            return redirect(request.META.get("HTTP_REFERER", "/"))
+        palabra_obj.update_palabra(value)
+        messages.success(request, "Palabra actualizada exitosamente")
     else:
         value = request.POST.get("input_id")
-        if value:
-            object_id = request.POST.get("input_button_id")
-            if atributo == "significado":
-                obj = get_object_or_404(Significado, id=object_id)
-                if value == obj.significado:
-                    messages.info(request, "El significado es el mismo")
-                else:
-                    obj.update_significado(value)
-                    messages.success(request, "Significado actualizado exitosamente")
-            elif atributo == "lectura":
-                obj = get_object_or_404(Lectura, id=object_id)
-                if value == obj.lectura:
-                    messages.info(request, "La lectura es la misma")
-                else:
-                    obj.update_lectura(value)
-                    messages.success(request, "Lectura actualizada exitosamente")
-            elif atributo == "nota":
-                obj = get_object_or_404(Nota, id=object_id)
-                if value == obj.nota:
-                    messages.info(request, "La nota es la misma")
-                else:
-                    obj.update_nota(value)
-                    messages.success(request, "Nota actualizada exitosamente")
-        else:
+        if not value:
             messages.warning(
                 request, f"No se ingresó información de {atributo} para actualizar"
             )
-
+            return redirect(request.META.get("HTTP_REFERER", "/"))
+        if "<" in value or ">" in value:
+            messages.warning(
+                request, f"{atributo.capitalize()} no puede contener '<' o '>'"
+            )
+            return redirect(request.META.get("HTTP_REFERER", "/"))
+        object_id = request.POST.get("input_button_id")
+        if atributo == "significado":
+            obj = get_object_or_404(Significado, id=object_id)
+            if value == obj.significado:
+                messages.info(request, "El significado es el mismo")
+            else:
+                obj.update_significado(value)
+                messages.success(request, "Significado actualizado exitosamente")
+        elif atributo == "lectura":
+            obj = get_object_or_404(Lectura, id=object_id)
+            if value == obj.lectura:
+                messages.info(request, "La lectura es la misma")
+            else:
+                obj.update_lectura(value)
+                messages.success(request, "Lectura actualizada exitosamente")
+        elif atributo == "nota":
+            obj = get_object_or_404(Nota, id=object_id)
+            if value == obj.nota:
+                messages.info(request, "La nota es la misma")
+            else:
+                obj.update_nota(value)
+                messages.success(request, "Nota actualizada exitosamente")
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 

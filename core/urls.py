@@ -8,26 +8,26 @@ urlpatterns = [
     path(
         "agregar-significado",
         c_op.agregar_a_palabra,
-        {"tipo": "Significado"},
+        {"tipo": "significado"},
         name="agregar_significado",
     ),
     path(
         "agregar-lectura",
         c_op.agregar_a_palabra,
-        {"tipo": "Lectura"},
+        {"tipo": "lectura"},
         name="agregar_lectura",
     ),
-    path("agregar-nota", c_op.agregar_a_palabra, {"tipo": "Nota"}, name="agregar_nota"),
+    path("agregar-nota", c_op.agregar_a_palabra, {"tipo": "nota"}, name="agregar_nota"),
     path(
         "agregar-etiqueta",
         c_op.agregar_a_palabra,
-        {"tipo": "Etiqueta"},
+        {"tipo": "etiqueta"},
         name="agregar_etiqueta",
     ),
     path(
         "agregar-grupo",
         c_op.agregar_a_palabra,
-        {"tipo": "Grupo"},
+        {"tipo": "grupo"},
         name="agregar_grupo",
     ),
     # __ update (están en diccionario)

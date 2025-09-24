@@ -59,51 +59,44 @@ def cambiar_pagina(request, pagina):
 
 @require_POST
 @login_required
-# () tipo ["Significado","Lectura","Nota","Etiqueta","Grupo"]
+# () tipo ["significado","lectura","nota","etiqueta","grupo"]
 def agregar_a_palabra(request, tipo):
     user = request.user
     palabra_id = int(request.session.get("palabra_actual"))
     palabra_obj = get_object_or_404(Palabra, id=palabra_id)
-
-    if tipo == "Significado":
-        input_value = request.POST.get("agregar_significado")
-        if input_value:
-            Significado.objects.create(
-                significado=input_value, palabra=palabra_obj, usuario=user
-            )
-            messages.success(request, "Significado agregado a palabra exitosamente")
-        else:
-            messages.warning(request, "No se ingresó significado")
-    elif tipo == "Lectura":
-        input_value = request.POST.get("agregar_lectura")
-        if input_value:
-            Lectura.objects.create(
-                lectura=input_value, palabra=palabra_obj, usuario=user
-            )
-            messages.success(request, "Lectura agregada a palabra exitosamente")
-        else:
-            messages.warning(request, "No se ingresó lectura")
-    elif tipo == "Nota":
-        input_value = request.POST.get("agregar_nota")
-        if input_value:
-            Nota.objects.create(nota=input_value, palabra=palabra_obj, usuario=user)
-            messages.success(request, "Nota agregada a palabra exitosamente")
-        else:
-            messages.warning(request, "No se ingresó nota")
-    elif tipo == "Etiqueta":
-        input_value = request.POST.get("agregar_etiqueta")
-        etiquetas_dict = request.session.get("new_etiquetas", {})
-        etiqueta_id = etiquetas_dict[input_value]
-        PalabraEtiqueta.objects.create(
-            etiqueta_id=etiqueta_id, palabra=palabra_obj, usuario=user
-        )
-        messages.success(request, "Etiqueta agregada a palabra exitosamente")
-    elif tipo == "Grupo":
+    input_value = request.POST.get(f"agregar_{tipo}")
+    if not input_value:
+        messages.warning(request, f"No se ingresó {tipo}")
+        return redirect(request.META.get("HTTP_REFERER", "/"))
+    if "<" in input_value or ">" in input_value:
+        messages.warning(request, f"{tipo.capitalize()} no puede contener '<' o '>'")
+        return redirect(request.META.get("HTTP_REFERER", "/"))
+    if tipo == "grupo":
         input_value = request.POST.get("agregar_grupo")
         grupos_dict = request.session.get("new_grupos", {})
         grupo_id = grupos_dict[input_value]
         GrupoPalabra.objects.create(grupo_id=grupo_id, palabra=palabra_obj)
+        messages.success(request, f"Se agregó palabra a grupo exitosamente")
+    else:
+        messages.success(request, f"Se agregó {tipo} a palabra exitosamente")
+        if tipo == "significado":
+            Significado.objects.create(
+                significado=input_value, palabra=palabra_obj, usuario=user
+            )
 
+        elif tipo == "lectura":
+            Lectura.objects.create(
+                lectura=input_value, palabra=palabra_obj, usuario=user
+            )
+        elif tipo == "nota":
+            Nota.objects.create(nota=input_value, palabra=palabra_obj, usuario=user)
+        elif tipo == "etiqueta":
+            input_value = request.POST.get("agregar_etiqueta")
+            etiquetas_dict = request.session.get("new_etiquetas", {})
+            etiqueta_id = etiquetas_dict[input_value]
+            PalabraEtiqueta.objects.create(
+                etiqueta_id=etiqueta_id, palabra=palabra_obj, usuario=user
+            )
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 

@@ -57,6 +57,7 @@ def checar_pregunta(request):
 
     if answer_input:
         respuestas = request.session.get("respuestas")
+        print(respuestas)
 
         is_correct = ut.check_answer(answer_input, respuestas)
         action = "plus" if is_correct else "minus"

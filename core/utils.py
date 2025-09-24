@@ -2,7 +2,6 @@ import core.traduccion as trad
 
 
 def max_page_possible(max_value):
-
     max_page = max_value // 10
     if max_value % 10 == 0:
         max_page -= 1
@@ -101,29 +100,50 @@ def clean_input(input_):
     )
 
     # Punctuation removal
-    for char in ["*", "#", "、", ",", "¿", "?", "¡", "!"]:
-        variants.add(input_.replace(char, "").strip())
+    punctuation_variants = list(variants)
+    for variant in punctuation_variants:
+        for char in ["*", "#", "、", ",", "¿", "?", "¡", "!", "<", ">"]:
+            variant_2 = variant.replace(char, "").strip()
+            if variant_2 not in variants:
+                punctuation_variants.append(variant_2)
+                variants.add(variant_2)
 
     # Accent removal
-    for a, b in [("á", "a"), ("é", "e"), ("í", "i"), ("ó", "o"), ("ú", "u")]:
-        variants.add(input_.replace(a, b).strip())
+    for variant in list(variants):
+        for a, b in [
+            ("á", "a"),
+            ("é", "e"),
+            ("í", "i"),
+            ("ó", "o"),
+            ("ú", "u"),
+            ("ñ", "n"),
+            ("Á", "A"),
+            ("É", "E"),
+            ("Í", "I"),
+            ("Ó", "O"),
+            ("Ú", "U"),
+            ("Ñ", "N"),
+        ]:
+            variants.add(variant.replace(a, b).strip())
 
     # Handle special character "・"
-    if "・" in input_:
-        i = input_.index("・")
-        variants.add(input_[:i].strip())
-        variants.add((input_[:i] + input_[i + 1 :]).strip())
+    for variant in list(variants):
+        if "・" in variant:
+            i = variant.index("・")
+            variants.add(variant[:i].strip())
+            variants.add((variant[:i] + variant[i + 1 :]).strip())
 
     # Handle parentheses
-    for l, r in [("(", ")"), ("（", "）")]:
-        if l in input_ and r in input_:
-            try:
-                i = input_.index(l)
-                j = input_.index(r)
-                variants.add((input_[:i] + input_[j + 1 :]).strip())
-                variants.add(input_.replace(l, "").replace(r, "").strip())
-            except ValueError:
-                pass  # skip malformed cases
+    for variant in list(variants):
+        for l, r in [("(", ")"), ("（", "）")]:
+            if l in variant and r in variant:
+                try:
+                    i = variant.index(l)
+                    j = variant.index(r)
+                    variants.add((variant[:i] + variant[j + 1 :]).strip())
+                    variants.add(variant.replace(l, "").replace(r, "").strip())
+                except ValueError:
+                    pass  # skip malformed cases
 
     return sorted(variants)
 

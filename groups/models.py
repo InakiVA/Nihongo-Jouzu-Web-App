@@ -99,7 +99,7 @@ class UsuarioGrupo(models.Model):
             cantidad += 1
         if cantidad == 0:
             return 0
-        return total / cantidad
+        return int(total / cantidad)
 
     class Meta:
         unique_together = ("usuario", "grupo")
