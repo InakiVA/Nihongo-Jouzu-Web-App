@@ -8,39 +8,62 @@ from django.contrib import messages
 from dictionary.models import Palabra, Significado, Lectura, Nota
 from progress.models import UsuarioPalabra
 from groups.models import Grupo
+from tags.models import Etiqueta, PalabraEtiqueta
 
 
 # && debe tener por lo menos 1 lectura y 1 significado
 @require_POST
 @login_required
-def crear_palabra(request):
+def crear_palabra(request, tipo):
     ajustes_palabras = request.session.get("ajustes_palabras")
-    palabra_value = request.POST.get("palabra_nueva")
-    significado_value = request.POST.get("significado_nuevo")
-    lectura_value = request.POST.get("lectura_nueva")
     breaker = False
+    if tipo == "vocabulario":
+        text_warning = "palabra"
+        palabra_value = request.POST.get("palabra_nueva")
+        significado_value = request.POST.get("significado_nuevo")
+        lectura_value = request.POST.get("lectura_nueva")
+    elif tipo == "kanji":
+        text_warning = "kanji"
+        palabra_value = request.POST.get("kanji_nuevo")
+        significado_value = request.POST.get("ksignificado_nuevo")
+        lectura_value = request.POST.get("klectura_nueva")
+
     if "<" in palabra_value or ">" in palabra_value:
-        messages.warning(request, "Palabra no puede contener '<' o '>'")
+        messages.warning(
+            request, f"{text_warning.capitalize()} no puede contener '<' o '>'"
+        )
         breaker = True
     if "<" in significado_value or ">" in significado_value:
-        messages.warning(request, "Significado no puede contener '<' o '>'")
+        messages.warning(
+            request, f"Significado de {text_warning} no puede contener '<' o '>'"
+        )
         breaker = True
     if "<" in lectura_value or ">" in lectura_value:
-        messages.warning(request, "Lectura no puede contener '<' o '>'")
+        messages.warning(
+            request, f"Lectura de {text_warning} no puede contener '<' o '>'"
+        )
         breaker = True
-    if not all([palabra_value, significado_value, lectura_value]) or breaker:
-        for key, value in zip(
-            ["palabra_valida", "significado_valido", "lectura_valida"],
-            [palabra_value, significado_value, lectura_value],
-        ):
-            ajustes_palabras[key] = value
+
+    if not all([palabra_value, significado_value, lectura_value]) or (breaker):
+        if tipo == "vocabulario":
+            for key, value in zip(
+                ["palabra_valida", "significado_valido", "lectura_valida"],
+                [palabra_value, significado_value, lectura_value],
+            ):
+                ajustes_palabras[key] = value
+        elif tipo == "kanji":
+            for key, value in zip(
+                ["kanji_valido", "ksignificado_valido", "klectura_valida"],
+                [palabra_value, significado_value, lectura_value],
+            ):
+                ajustes_palabras[key] = value
         request.session["ajustes_palabras"] = ajustes_palabras
         if not palabra_value:
-            messages.error(request, "Favor de ingresar palabra")
+            messages.error(request, f"Favor de ingresar {text_warning}")
         if not significado_value:
-            messages.error(request, "Favor de ingresar significado")
+            messages.error(request, f"Favor de ingresar significado de {text_warning}")
         if not lectura_value:
-            messages.error(request, "Favor de ingresar lectura")
+            messages.error(request, f"Favor de ingresar lectura de {text_warning}")
         return redirect(request.META.get("HTTP_REFERER", "/"))
     for key, value in zip(
         ["palabra_valida", "significado_valido", "lectura_valida"],
@@ -48,12 +71,36 @@ def crear_palabra(request):
     ):
         ajustes_palabras[key] = value
     user = request.user
+
+    existent = Palabra.objects.filter(
+        Q(palabra=palabra_value)
+        & (Q(usuario=request.user) | Q(usuario__perfil__rol="admin"))
+    ).all()
+
+    if tipo == "kanji":
+        existent = existent.filter(palabra_etiquetas__etiqueta__etiqueta="Kanji")
+    elif tipo == "vocabulario":
+        existent = existent.exclude(palabra_etiquetas__etiqueta__etiqueta="Kanji")
+
+    if existent.exists():
+        existent_id = existent.first().id
+        request.session["palabra_actual"] = existent_id
+        messages.info(
+            request, f"{text_warning.capitalize()} ya existe. Redirigiendo a editar..."
+        )
+        return redirect("editar_palabra")
+
     palabra_obj = Palabra.objects.create(usuario=user, palabra=palabra_value)
     UsuarioPalabra.objects.create(usuario=user, palabra=palabra_obj)
     Significado.objects.create(
         significado=significado_value, palabra=palabra_obj, usuario=user
     )
     Lectura.objects.create(lectura=lectura_value, palabra=palabra_obj, usuario=user)
+    if tipo == "kanji":
+        kanji_tag = Etiqueta.objects.filter(etiqueta="Kanji").first()
+        PalabraEtiqueta.objects.create(
+            palabra=palabra_obj, etiqueta=kanji_tag, usuario=user
+        )
     request.session["palabra_actual"] = palabra_obj.id
     request.session["ajustes_palabras"] = ajustes_palabras
     messages.success(request, "Palabra creada exitosamente")
@@ -83,6 +130,27 @@ def editar_palabra_atributos(request, atributo):
         if "<" in value or ">" in value:
             messages.warning(request, "Palabra no puede contener '<' o '>'")
             return redirect(request.META.get("HTTP_REFERER", "/"))
+        if "Kanji" in palabra_obj.etiquetas_list(user):
+            existing = Palabra.objects.filter(
+                Q(palabra=value)
+                & (Q(usuario=request.user) | Q(usuario__perfil__rol="admin"))
+                & Q(palabra_etiquetas__etiqueta__etiqueta="Kanji")
+            ).exists()
+            if existing:
+                messages.warning(request, "Este kanji ya existe. Debe ser único")
+                return redirect(request.META.get("HTTP_REFERER", "/"))
+        else:
+            existing = (
+                Palabra.objects.filter(
+                    Q(palabra=value)
+                    & (Q(usuario=request.user) | Q(usuario__perfil__rol="admin"))
+                )
+                .exclude(palabra_etiquetas__etiqueta__etiqueta="Kanji")
+                .exists()
+            )
+            if existing:
+                messages.warning(request, "Esta palabra ya existe. Debe ser única")
+                return redirect(request.META.get("HTTP_REFERER", "/"))
         palabra_obj.update_palabra(value)
         messages.success(request, "Palabra actualizada exitosamente")
     else:
