@@ -61,15 +61,16 @@
     --color-star-dark: #8f8c04;
     --color-textcolor: #FFFFFF;
     --color-textcolor-dark: #c7c7c7;
-    --color-include: #389c3d;
-    --color-exclude: #816f82;
-    --color-neutral-light: #f5f5f5;
-    --color-neutral-main: #2a3c4b;
-    --color-neutral-secondary: #5a7891;
-    --color-neutral-dark: #1c2731;
-    --color-accent-light: #ffccd5;
-    --color-accent-main: #cc0033;
-    --color-accent-dark: #800020;
+    --color-include: #a02be8;
+    --color-exclude: #f75b09;
+    --color-neutral-light: #c9f7f5;
+    --color-neutral-main: #253949;
+    --color-neutral-secondary: #5894c2;
+    --color-neutral-dark: #0d151dff;
+    --color-accent-light: #7bfff8;
+    --color-accent-main: #00b3aa;
+    --color-accent-dark: #00756f;
+    --color-secondary-main: #a02be8;
   }
 }
 @layer base {
@@ -2551,20 +2552,14 @@
   .\!bg-incorrect {
     background-color: var(--color-incorrect) !important;
   }
-  .\!bg-neutral-light {
-    background-color: var(--color-neutral-light) !important;
-  }
   .\!bg-neutral-main {
     background-color: var(--color-neutral-main) !important;
-  }
-  .\!bg-neutral-secondary {
-    background-color: var(--color-neutral-secondary) !important;
   }
   .bg-neutral-light {
     background-color: var(--color-neutral-light);
   }
   .bg-neutral-main\/10 {
-    background-color: color-mix(in srgb, #2a3c4b 10%, transparent);
+    background-color: color-mix(in srgb, #253949 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-neutral-main) 10%, transparent);
     }
@@ -5181,6 +5176,24 @@ h4 {
 .tag {
   border-radius: var(--radius-2xl);
   background-color: var(--color-neutral-secondary);
+  padding-inline: calc(var(--spacing) * 4);
+  padding-block: calc(var(--spacing) * 0.5);
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-textcolor);
+}
+.tag-kanji {
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-accent-main);
+  padding-inline: calc(var(--spacing) * 4);
+  padding-block: calc(var(--spacing) * 0.5);
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-textcolor);
+}
+.tag-level {
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-secondary-main);
   padding-inline: calc(var(--spacing) * 4);
   padding-block: calc(var(--spacing) * 0.5);
   --tw-font-weight: var(--font-weight-semibold);

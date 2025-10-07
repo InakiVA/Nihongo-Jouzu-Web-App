@@ -146,7 +146,6 @@ class HomeView(LoginRequiredMixin, TemplateView):
         usuario = self.request.user
 
         context["crear_palabra_url"] = reverse_lazy("crear_palabra")
-        context["crear_kanji_url"] = reverse_lazy("crear_kanji")
         context["toggle_modal_url"] = reverse_lazy("toggle_create_modal")
 
         ajustes_palabras = self.request.session.get("ajustes_palabras", {})

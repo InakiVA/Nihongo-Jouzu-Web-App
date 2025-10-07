@@ -78,7 +78,6 @@ def agregar_a_palabra(request, tipo):
         GrupoPalabra.objects.create(grupo_id=grupo_id, palabra=palabra_obj)
         messages.success(request, f"Se agregó palabra a grupo exitosamente")
     else:
-        messages.success(request, f"Se agregó {tipo} a palabra exitosamente")
         if tipo == "significado":
             Significado.objects.create(
                 significado=input_value, palabra=palabra_obj, usuario=user
@@ -94,9 +93,21 @@ def agregar_a_palabra(request, tipo):
             input_value = request.POST.get("agregar_etiqueta")
             etiquetas_dict = request.session.get("new_etiquetas", {})
             etiqueta_id = etiquetas_dict[input_value]
+            etiqueta_obj = Etiqueta.objects.filter(id=etiqueta_id).first()
+            # si intentas convertir a kanji algo que no es kanji, pero ese kanji nuevo ya existe
+            if etiqueta_obj.etiqueta == "Kanji":
+                existing = Palabra.objects.filter(
+                    Q(palabra=palabra_obj.palabra)
+                    & (Q(usuario=request.user) | Q(usuario__perfil__rol="admin"))
+                    & Q(palabra_etiquetas__etiqueta__etiqueta="Kanji")
+                ).exists()
+                if existing:
+                    messages.warning(request, "Este kanji ya existe. Debe ser único")
+                    return redirect(request.META.get("HTTP_REFERER", "/"))
             PalabraEtiqueta.objects.create(
                 etiqueta_id=etiqueta_id, palabra=palabra_obj, usuario=user
             )
+        messages.success(request, f"Se agregó {tipo} a palabra exitosamente")
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 

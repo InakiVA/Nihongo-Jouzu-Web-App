@@ -7,11 +7,13 @@ shinji purple and green:
 
     --color-neutral-light: #c36fff;
     --color-neutral-main: #3e1669;
+    --color-neutral-secondary: #8447c5;
     --color-neutral-dark: #170d21;
 
     --color-accent-light: #baffba;
     --color-accent-main: #19ba41;
     --color-accent-dark: #036e1d;  
+    --color-secondary-main: #f75b09;
 
 dark blue and red:
     --color-textcolor: #FFFFFF;
@@ -22,26 +24,30 @@ dark blue and red:
 
     --color-neutral-light: #f5f5f5;
     --color-neutral-main: #2a3c4b;
+    --color-neutral-secondary: #5a7891;
     --color-neutral-dark: #1c2731;
 
     --color-accent-light: #ffccd5;
     --color-accent-main: #cc0033;
     --color-accent-dark: #800020; 
+    --color-secondary-main: #2bb7e8;
 
 panoptimize aqua:
     --color-textcolor: #FFFFFF;
     --color-textcolor-dark: #c7c7c7;
 
-    --color-include: #389c3d;
+    --color-include: #a02be8;
     --color-exclude: #f75b09;
 
     --color-neutral-light: #c9f7f5;
-    --color-neutral-main: #2a3c4b;
-    --color-neutral-dark: #1c2731;
+    --color-neutral-main: #253949;
+    --color-neutral-secondary: #5894c2;
+    --color-neutral-dark: #0d151dff;
 
     --color-accent-light: #7bfff8;
     --color-accent-main: #00b3aa;
     --color-accent-dark: #00756f;
+    --color-secondary-main: #a02be8;
 
 seahawks:
     --color-textcolor: #FFFFFF;

@@ -24,17 +24,18 @@
     --color-textcolor: #FFFFFF;
     --color-textcolor-dark: #c7c7c7;
 
-    --color-include: #389c3d;
-    --color-exclude: #816f82;
+    --color-include: #a02be8;
+    --color-exclude: #f75b09;
 
-    --color-neutral-light: #f5f5f5;
-    --color-neutral-main: #2a3c4b;
-    --color-neutral-secondary: #5a7891;
-    --color-neutral-dark: #1c2731;
+    --color-neutral-light: #c9f7f5;
+    --color-neutral-main: #253949;
+    --color-neutral-secondary: #5894c2;
+    --color-neutral-dark: #0d151dff;
 
-    --color-accent-light: #ffccd5;
-    --color-accent-main: #cc0033;
-    --color-accent-dark: #800020; 
+    --color-accent-light: #7bfff8;
+    --color-accent-main: #00b3aa;
+    --color-accent-dark: #00756f;
+    --color-secondary-main: #a02be8;
   }
 
 nav {
@@ -166,6 +167,14 @@ h4 {
 
 .tag{
   @apply bg-neutral-secondary rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+}
+
+.tag-kanji{
+  @apply bg-accent-main rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+}
+
+.tag-level{
+  @apply bg-secondary-main rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
 }
 
 .check-box{

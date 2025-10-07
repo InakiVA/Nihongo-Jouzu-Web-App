@@ -51,6 +51,9 @@ class Palabra(models.Model):
         self.palabra = palabra
         self.save()
 
+    def is_kanji(self, user):
+        return "Kanji" in self.etiquetas_list(user)
+
     class Meta:
         db_table = "Palabras"
 
@@ -130,7 +133,14 @@ class Palabra(models.Model):
         return sorted(self.palabra_etiquetas.filter(Q(usuario=usuario)))
 
     def etiquetas_list(self, usuario):
-        return sorted([str(e.etiqueta) for e in self.etiquetas_objetos(usuario)])
+        etiquetas = [str(e.etiqueta) for e in self.etiquetas_objetos(usuario)]
+        return sorted(
+            etiquetas,
+            key=lambda x: (
+                0 if x == "Kanji" else 1 if x.startswith("JLPT") else 2,
+                x.lower(),  # for alphabetical sorting within each group
+            ),
+        )
 
     def grupos_objetos(self, usuario):
         return self.palabra_grupos.filter(

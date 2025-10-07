@@ -1,3 +1,4 @@
+{% if url %}
 <form method="post" action="{{ url }}">
   {% csrf_token %}
   <input type="hidden" name="check_id" value="{{ id }}">
@@ -13,3 +14,17 @@
     {% endif %}
   </div>
 </form>
+{% else %}
+<div class="flex flex-row items-center">
+  <input
+    type="checkbox"
+    class="check-box {{ extra_classes }}"
+    {% if is_selected %} checked {% endif %}
+    value="on"
+    name="{{ id }}"
+  />
+  {% if text %}
+    <h3 class="ml-2 !text-textcolor !font-light">{{ text }}</h3>
+  {% endif %}
+</div>
+{% endif %}
