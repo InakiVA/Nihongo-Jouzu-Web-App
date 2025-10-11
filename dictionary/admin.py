@@ -36,11 +36,17 @@ class LecturaAdmin(UsuarioMixin, PalabraMixin):
         "id",
         "palabra",
         "lectura",
+        "lectura_limpia",
         "usuario",
         "fecha_creacion",
         "ultima_modificacion",
     )
-    search_fields = ("lectura", "palabra__palabra", "usuario__username")
+    search_fields = (
+        "lectura",
+        "lectura_limpia",
+        "palabra__palabra",
+        "usuario__username",
+    )
     ordering = ("id", "palabra_id", "usuario__username", "lectura")
 
 

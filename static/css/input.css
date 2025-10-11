@@ -90,7 +90,7 @@ h4 {
 }
 
 .button-alert{
-  @apply btn btn-ghost shadow-none border-white bg-myalert text-textcolor rounded-sm px-4;
+  @apply btn btn-ghost shadow-none border-white bg-secondary-main text-textcolor rounded-sm px-4;
   @apply hover:bg-accent-main hover:border-accent-light;
 }
 

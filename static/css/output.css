@@ -3539,7 +3539,7 @@ h4 {
   }
   border-radius: var(--radius-sm);
   border-color: var(--color-white);
-  background-color: var(--color-myalert);
+  background-color: var(--color-secondary-main);
   padding-inline: calc(var(--spacing) * 4);
   color: var(--color-textcolor);
   --tw-shadow: 0 0 #0000;

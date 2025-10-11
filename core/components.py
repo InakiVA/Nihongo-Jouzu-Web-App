@@ -19,7 +19,8 @@ def buscar_palabra(search_input, usuario):
         owner_q,
         Q(palabra__in=search_input_list)
         | Q(significados__significado__in=search_input_list)
-        | Q(lecturas__lectura__in=search_input_list),
+        | Q(lecturas__lectura__in=search_input_list)
+        | Q(lecturas__lectura_limpia__in=search_input_list),
     ).distinct()
     related_queries = Q()
     for term in search_input_list:
@@ -27,6 +28,7 @@ def buscar_palabra(search_input, usuario):
             Q(palabra__istartswith=term)
             | Q(significados__significado__istartswith=term)
             | Q(lecturas__lectura__istartswith=term)
+            | Q(lecturas__lectura_limpia__istartswith=term)
         )
         startswith_results = (
             Palabra.objects.filter(owner_q, related_queries)
@@ -39,6 +41,7 @@ def buscar_palabra(search_input, usuario):
             Q(palabra__icontains=term)
             | Q(significados__significado__icontains=term)
             | Q(lecturas__lectura__icontains=term)
+            | Q(lecturas__lectura_limpia__icontains=term)
         )
         contains_results = (
             Palabra.objects.filter(owner_q, related_queries)

@@ -133,7 +133,7 @@ class Palabra(models.Model):
         return sorted(self.palabra_etiquetas.filter(Q(usuario=usuario)))
 
     def etiquetas_list(self, usuario):
-        etiquetas = [str(e.etiqueta) for e in self.etiquetas_objetos(usuario)]
+        etiquetas = set([str(e.etiqueta) for e in self.etiquetas_objetos(usuario)])
         return sorted(
             etiquetas,
             key=lambda x: (
@@ -196,6 +196,7 @@ class Significado(models.Model):
 
 class Lectura(models.Model):
     lectura = models.CharField(max_length=50)
+    lectura_limpia = models.CharField(max_length=50)
     palabra = models.ForeignKey(
         Palabra,
         on_delete=models.CASCADE,
@@ -211,6 +212,7 @@ class Lectura(models.Model):
 
     def update_lectura(self, lectura):
         self.lectura = lectura
+        self.lectura_limpia = lectura.replace("・", "")
         self.save()
 
     class Meta:
