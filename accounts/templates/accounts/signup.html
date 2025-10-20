@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  <div class="welcome_bg w-screen h-screen flex justify-center items-center">
+    <div class="card flex flex-col items-center text-center">
+      <h1 class="text-4xl font-bold mb-6">Crea tu cuenta</h1>
+      <div class="flex flex-row py-4 items-center">
+        <label for="{{ form.username.id_for_label }}" class="px-5 text-2xl font-semibold w-40 text-end">Usuario</label>
+        <div class="input">
+        {{ form.username }}
+        </div>
+      </div>
+      {% if form.username.errors %}
+        <ul class="text-myalert text-sm mb-4">
+          {% for error in form.username.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      <div class="flex flex-row py-4 items-center">
+        <label for="{{ form.password1.id_for_label }}" class="px-5 text-2xl font-semibold w-40 text-end">Contraseña</label>
+        <div class="input">
+        {{ form.password1 }}
+        </div>
+      </div>
+      {% if form.password1.errors %}
+        <ul class="text-myalert text-sm mb-4">
+          {% for error in form.password1.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      <div class="flex flex-row py-4 items-center">
+        <label for="{{ form.password2.id_for_label }}" class="px-5 text-xl font-semibold w-40 text-end">Confirmar contraseña</label>
+        <div class="input">
+        {{ form.password2 }}
+        </div>
+      </div>
+      {% if form.password2.errors %}
+        <ul class="text-myalert text-sm mb-4">
+          {% for error in form.password2.errors %}
+          <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      <button type="submit" class="button-main mx-4 !p-6 my-4 !text-2xl">Registrarse</button>
+      <div class="flex flex-row space-x-2 pt-4">
+        <p>Ya tienes una cuenta?</p>
+        <a href="{% url 'login' %}" class="link">Iniciar sesión</a>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,13 @@
+<form method="post" action="{{ url }}" class="flex-1">
+  {% csrf_token %}
+  {% if legend %}
+      <legend class="fieldset-legend">{{ legend }}</legend>
+    {% endif %}
+  <fieldset class="fieldset flex flex-auto w-full">    
+    <select class="select w-full flex-1 bg-darkest text-white" name="select" onchange="this.form.submit()">
+      {% for op in options %}
+        <option value="{{ op }}" {% if op == selected %} selected {% endif %}>{{ op }}</option>
+      {% endfor %}
+    </select>
+  </fieldset>
+</form>

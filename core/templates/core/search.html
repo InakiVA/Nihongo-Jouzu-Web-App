@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex flex-auto flex-col px-4 gap-4 pb-4">
+    <div class="flex flex-row gap-2  ">
+        <h4>{{buscando}}</h4>
+    </div>
+    {% if not palabras_list and not palabras_related %}
+    <h2>No se encontraron resultados</h2>
+    {% else %}
+        {% if palabras_list %}
+        {% include "components/word_list.html" with url=palabra_url palabras_list=palabras_list %}
+        {% endif %}
+        {% if palabras_related %}  
+        <div class="divider divider-start before:bg-neutral-main after:bg-neutral-main px-4">
+            <h2>{{relacionadas_buscando}}</h2>
+        </div>   
+        {% include "components/word_list.html" with url=palabra_url palabras_list=palabras_related %}    
+        {% endif %}   
+        {% if show_pages_list %}     
+        <div class="flex w-full items-center justify-center">
+            {% include "components/pagination.html" with pages=pages_list url=cambiar_pagina_url%}
+        </div>
+        {% endif %}   
+    {% endif %}    
+</div>
+{% endblock %}

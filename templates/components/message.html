@@ -1,0 +1,8 @@
+<div class="alert 
+  {% if 'success' in message.tags %}alert-success
+  {% elif 'error' in message.tags %}alert-error
+  {% elif 'warning' in message.tags %}alert-warning
+  {% else %}alert-info{% endif %}
+  animate-fadeinout">
+  <span class="font-semibold">{{ message }}</span>
+</div>

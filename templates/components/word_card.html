@@ -1,0 +1,42 @@
+{% if url %}
+  <form method="post" action="{{ url }}" class="w-full">
+  {% csrf_token %}
+  <button class="wordcard p-4 gap-2 flex flex-auto w-full justify-between items-start {{extra_classes}}" value="{{palabra.id}}" name="wordcard">
+{% else %}
+  <button class="wordcard-disabled p-4 gap-2 flex flex-auto w-full justify-between items-start {{extra_classes}}"> 
+{% endif %}
+    <div>
+      <div class="flex items-center gap-4">
+        <h4 class="!font-light">{{ palabra.palabra }}</h4>  
+        <p class="text-textcolor-dark">{{ palabra.lecturas }}</p>
+      </div> 
+      <h2 class="text-ellipsis text-start !font-light">{{ palabra.significados }}</h2> 
+      {% if palabra.etiquetas %}
+      <div class="flex flex-row gap-2 flex-wrap pt-2">
+        {% for tag in palabra.etiquetas %}
+          {% include "components/tag.html" with text=tag %}
+        {% endfor %}
+      </div>    
+      {% endif %} 
+      {% if palabra.grupos %}
+      <div class="flex flex-row gap-2 flex-wrap pt-2">
+        {% for grupo in palabra.grupos %}
+          {% include "components/tag.html" with text=grupo extra_classes="!bg-neutral-main border !border-neutral-secondary"%}
+        {% endfor %}
+      </div>    
+      {% endif %} 
+    </div> 
+    <div class="items-center flex gap-4 justify-end">      
+      {% if palabra.estrella %}
+      <div class="flex justify-end">
+        {% include "components/icons/star.html" %}
+      </div>
+      {% endif %}          
+      {% include "components/progress_donut.html" with progress=palabra.progreso extra_classes="" text=palabra.progreso%}        
+    </div>
+{% if url %}
+  </button>
+  </form>
+{% else %}
+  </button>
+{% endif %}

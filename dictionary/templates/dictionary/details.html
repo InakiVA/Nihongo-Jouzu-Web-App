@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block content %}
+<div class="space-y-4 px-4 pb-4">
+    <div class="border border-neutral-light rounded-xl flex flex-auto w-full flex-col py-4">
+        <div class="p-6 pt-2 gap-4 space-y-4 w-full">                     
+            <div class="flex justify-between">
+            <h1 class="text-8xl font-light">{{palabra.palabra}}</h1>
+            {% include "components/button.html" with is_navigation=True text="Editar" url=editar_url icon="components/icons/pencil.html" extra_classes="button-main" %}
+            </div>       
+        </div>
+        
+        <div class="px-6 flex flex-auto flex-col gap-2">
+            {% include "components/element_header.html" with header="Significados" elements=palabra.significados%}                  
+            {% include "components/element_header.html" with header="Lecturas" elements=palabra.lecturas%}                                                       
+            {% include "components/element_tag_header.html" with header="Etiquetas" elements=palabra.etiquetas%}                
+            {% include "components/element_header.html" with header="Notas" elements=palabra.notas%}                                                      
+            {% include "components/element_header.html" with header="Creador" elements=palabra.creador%}       
+        </div>   
+    </div>    
+
+    <div class="px-4 space-y-10">
+        {% include "components/progress_input_row.html" with progreso=palabra.progreso progress_url=cambiar_progreso_url estrella_url=estrella_url%}   
+        {% include "dictionary/grupos_card.html" %}  
+        {% include "dictionary/relacionadas.html" %}             
+    </div>
+</div>
+{% endblock %}

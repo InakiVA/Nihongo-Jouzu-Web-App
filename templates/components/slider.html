@@ -1,0 +1,7 @@
+<div class="w-full">
+    <form method="post" action="{{ url }}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="slider">
+        <input type="range" name="slider_value" min="0" max="100" step="5" value="{{ value|default:0 }}" class="slider" oninput="this.form.submit()">
+    </form>
+</div>

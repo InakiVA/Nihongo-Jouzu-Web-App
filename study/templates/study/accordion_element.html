@@ -1,0 +1,10 @@
+<div class="collapser collapse-plus !border-neutral-main">
+    <input type="radio" name="value_accordion" {% if is_checked %} checked {% endif %}/>
+    <div class="collapse-title flex items-end gap-4">
+        <h2>{{header}}</h2>              
+        <h3>{{elements}}</h3>                           
+    </div>
+    <div class="collapse-content">
+        {% include "components/input_button.html" with name=input_name icon="components/icons/add_mini.html" url=url placeholder=placeholder button_text="Agregar" is_textarea=is_textarea%}        
+    </div>  
+</div> 

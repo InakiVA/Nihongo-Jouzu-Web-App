@@ -1,0 +1,26 @@
+<form action="{{ url }}" method="post" class="flex w-full h-full">
+    {% csrf_token %}
+    <input type="hidden" name="input_button_id" value="{{ id }}">
+    <div class="flex flex-row w-full h-full gap-2">
+        {% if has_button_left %}
+        <div class="flex">
+            <button class="button-secondary !h-full {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>        
+        </div>
+        {% endif %}
+        {% if is_textarea %}
+        <div class="flex flex-1">
+            {% include "components/textarea.html" with extra_classes=input_classes %}
+        </div>
+        {% else %}
+        <div class="flex flex-1">
+            {% include "components/input.html" with icon=None extra_classes=input_classes%}
+        </div>
+        {% endif %}
+        {% if not has_button_left %}
+        <div class="flex">
+            <button class="button-secondary !h-full {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>            
+        </div>
+        {% endif %}
+    </div>
+</form>
+

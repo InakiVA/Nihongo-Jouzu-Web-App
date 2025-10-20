@@ -1,0 +1,27 @@
+<div>
+{% if is_navigation %}
+  <a href="{{url}}" class="{% if is_selected %} button-main {% else %} button-neutral {% endif %} {{ extra_classes }}"
+    {% if target %} target="{{ target }}" {% endif %}
+    {% if name %} name="{{ name }}" {% endif %}
+    {% if value %} value="{{ value }}" {% endif %}
+  >
+    {% if icon %}{% include icon %}{% endif %} {{ text }}
+  </a>
+{% else %}
+  {% if url %}
+  <form method="post" action="{{ url }}">
+    {% csrf_token %}
+    <input type="hidden" name="{{name}}" value="{{value}}" id="{{id}}">
+    <button type="submit" class="{{extra_classes}}" 
+      {% if name %} name="{{ name }}" {% endif %}
+      {% if value %} value="{{ value }}" {% endif %}>
+      {% if icon %}{% include icon %}{% endif %} {{ text }}
+    </button>  
+  </form>
+  {% else %}
+  <button class="{{extra_classes}}">
+    {% if icon %}{% include icon %}{% endif %} {{ text }}
+  </button> 
+  {% endif %}
+{% endif %}
+</div>

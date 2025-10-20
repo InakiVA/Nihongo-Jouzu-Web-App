@@ -1,0 +1,121 @@
+{% extends "base.html" %} {% block content %}
+<div class="flex flex-col flex-auto">
+    <div class="flex flex-row gap-x-2 px-4">
+        <h4 class="text-start">Estudio</h4>  
+        <div class="flex flex-auto"></div>      
+        <div class="ml-auto text-end">
+            <h3 class="text-end font-bold">Palabras a estudiar</h3>
+            <h3 class="text-end font-bold">{{cantidad_palabras}}</h3>
+        </div>        
+        <div>
+            {% include "components/button.html" with text="Estudiar" icon="components/icons/studyhat.html" url=estudio_url extra_classes="button-big" %}
+        </div>
+    </div>
+
+    <div class="flex flex-auto gap-4 {% if is_mobile %} flex-col {% else %} flex-row {% endif %}">
+                
+        <div class="flex flex-auto min-w-1/3 px-4 h-full max-h-[75vh] overflow-auto">
+            <ul class="list element_list py-2 w-auto flex flex-auto flex-col">  
+                <div class="flex flex-row items-start px-4 pb-4 pt-2 border-b text-center justify-between gap-4">
+                    <div class="flex gap-4 items-end">
+                        <h2 class="list_title">Grupos</h2>
+                        <h3 class="list_subheader font-light">{{cantidad_grupos}}</h3>
+                    </div>
+                    <div class="flex gap-0.25 border border-neutral-light bg-neutral-light rounded-lg overflow-clip h-8 items-center">
+                    {% include "components/button.html" with text="Todos" url=seleccionar_grupos_url icon="components/icons/check.html" extra_classes="button-join" %}
+                    {% include "components/button.html" with text="Limpiar" url=limpiar_grupos_url icon="components/icons/cross.html" extra_classes="button-join" %}                    
+                    </div>
+                </div>
+                <div class="px-4 space-y-4 pb-2 overflow-y-auto inset-shadow-2xs flex flex-auto flex-col">
+                    <li>
+                    {% for grupo in grupos %}  
+                        {% include "components/group_row.html" with check_url=check_url estrella_url=estrella_url%}
+                    {% endfor %}  
+                    </li>
+                </div>
+            </ul>
+            
+        </div>
+        <div class="divider before:bg-neutral-main after:bg-neutral-main {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %}"></div>    
+        <div class="flex flex-auto flex-col gap-4 min-w-1/4 px-2">
+            <h2>Filtros de búsqueda de grupos</h2>       
+            <div>
+            {% include "components/input.html" with icon="components/icons/search.html" name="buscar_grupo" url=request.path method="get" type="search" value=buscar_grupo_input placeholder="Buscar grupo:"%}
+            </div>   
+            <div>
+                <legend class="fieldset-legend">Filtros de grupos</legend>
+                <div class="flex flex-row flex-wrap overflow-auto whitespace-nowrap gap-2">                
+                    {% for filtro in filtros_grupos %}
+                    {% include "components/filter_button.html" with text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
+                    {% endfor %}
+                </div>
+            </div>       
+            <div>
+                <legend class="fieldset-legend">Orden</legend>
+                <div class="flex flex-row items-center justify-between space-x-4">
+                    {% include "components/select.html" with options=orden_opciones selected=orden_elegido url=select_orden_url%}
+                    {% include "components/switch_buttons.html" with checked=on_descendente  url=descendente_url left_icon="components/icons/full_arrow_up.html" right_icon="components/icons/full_arrow_down.html" %}            
+                </div> 
+            </div>            
+        </div>
+
+        <div class="divider before:bg-neutral-main after:bg-neutral-main {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %}"></div>        
+        <div class="flex flex-auto flex-col min-w-1/4 px-4 gap-4">
+            <div>
+            <h2>Palabras</h2>
+            <h3>{{cantidad_palabras}} {{texto_palabras}}</h3>
+            </div>
+            <div>
+                <legend class="fieldset-legend">Filtros de palabras</legend>
+                <div class="flex flex-row w-auto flex-wrap overflow-auto gap-2 pb-2">
+                    {% for filtro in filtros_palabras %}
+                        {% if not on_filtros_palabras_exclusivo %}
+                            {% include "components/filter_button.html" with on_icon="components/icons/plus_circle.html" on_classes="button-include" text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
+                        {% else %}
+                            {% include "components/filter_button.html" with on_icon="components/icons/minus_circle.html" on_classes="button-exclude" text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
+                        {% endif %}
+                    {% endfor %}
+                </div>              
+                {% include "components/switch_buttons.html" with checked=on_filtros_palabras_exclusivo url=filtros_palabras_exclusivo_url left_icon="components/icons/plus_circle.html" right_icon="components/icons/minus_circle.html" left_text="Considerar" right_text="Omitir" left_selected_classes="button-include" right_selected_classes="button-exclude"%}            
+                {% if filtros_palabras_show %}
+                    <legend class="fieldset-legend">Filtros de palabras a pasar</legend>
+                    {% include "components/switch_buttons.html" with checked=on_filtros_palabras_andor url=filtros_palabras_andor_url left_text="Todos" right_text="Al menos uno" %}                                        
+                {% endif %} 
+            </div>                                 
+            <div class="collapser collapse-arrow">
+                <input type="checkbox" {% if is_open_collapse %} checked {% endif %}/>
+                <h2 class="collapse-title">Filtros por etiqueta</h2>                    
+                <div class="collapse-content flex flex-col gap-4">
+                    <div>
+                    {% include "components/switch_buttons.html" with checked=on_filtros_etiquetas_exclusivo url=filtros_etiquetas_exclusivo_url left_icon="components/icons/plus_circle.html" right_icon="components/icons/minus_circle.html" left_text="Considerar" right_text="Omitir" left_selected_classes="button-include" right_selected_classes="button-exclude"%}                                    
+                    </div>
+                    {% if filtros_etiquetas_show %}
+                    <div>
+                        <legend class="fieldset-legend !pt-0">Filtros de etiquetas a pasar</legend>
+                        {% include "components/switch_buttons.html" with checked=on_filtros_etiquetas_andor url=filtros_etiquetas_andor_url left_text="Todos" right_text="Al menos uno" %}                                        
+                    </div>
+                    {% endif %}     
+                    <div>
+                    <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2">
+                        {% for tag in tags %}
+                            {% if not on_filtros_etiquetas_exclusivo %}                                
+                                {% include "components/filter_button.html" with text=tag.text id=tag.id is_active=tag.is_active url=tag.url on_icon="components/icons/plus_circle.html" on_classes="button-include"%}         
+                            {% else %}
+                                {% include "components/filter_button.html" with text=tag.text id=tag.id is_active=tag.is_active url=tag.url on_icon="components/icons/minus_circle.html" on_classes="button-exclude"%}         
+                            {% endif %}
+                        {% endfor %}
+                    </li>
+                    </div>
+                </div>  
+            </div>  
+            <div class="space-y-4">
+            <legend class="fieldset-legend !pt-0">Preguntas</legend>                         
+            {% include "components/select.html" with options=idioma_preguntas_opciones selected=idioma_preguntas_elegido url=idioma_preguntas_url%}
+            {% include "components/switch.html" with right_text="Orden de preguntas aleatorio" url=aleatorio_url id="aleatorio_id" is_selected=is_aleatorio%}
+            </div>  
+            
+        </div>
+    </div>    
+</div>
+
+{% endblock %}

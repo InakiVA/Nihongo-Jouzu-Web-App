@@ -1,0 +1,60 @@
+{% extends "base.html" %} {% block content %}
+<div class="space-y-4 px-4">
+    <div class="border space-y-2 border-neutral-light rounded-xl flex flex-auto w-full flex-col p-6">                 
+        <div class="flex justify-between">
+            <h1 class="text-6xl font-light">{{grupo.grupo}}</h1>
+            {% if grupo.editable %}
+            {% include "components/button.html" with is_navigation=True text="Editar" url=editar_url icon="components/icons/pencil.html" extra_classes="button-main" %}
+            {% endif %}
+        </div>  
+        <h2>{{grupo.descripcion}}</h2>      
+        <h3>Creador: {{grupo.creador}}</h3>    
+    </div>
+
+    <dialog id="agregar_palabra_modal" class="modal" {% if buscando %} open {% endif %}>
+        <div class="modal-box space-y-8 flex flex-col justify-between items-center p-8">
+            <div class="w-full flex items-end justify-between">
+                <h2>Busca palabra a agregar</h2>
+                <button type="button" class="button-icon-only" data-close="#agregar_palabra_modal">
+                    {% include "components/icons/cross.html" %}
+                </button>
+            </div>
+            <div class="w-full">
+            {% include "components/input.html" with icon="components/icons/search.html" name="buscar_palabra_agregar_a_grupo"%}
+            </div>
+        </div>
+    </dialog>      
+
+    <div class="border border-neutral-light rounded-xl">
+        <div class="flex flex-row items-start p-4 border-b text-center justify-between">
+            <div class="flex gap-4 items-start">
+                <div class="flex gap-4 items-end">
+                    <h2 class="list_title">Palabras en grupo</h2>
+                    <h3 class="list_subheader font-light">{{grupo.cantidad_palabras}}</h3>
+                </div>
+                {% if grupo.editable %}
+                <button type="button" class="button-main" data-open="#agregar_palabra_modal">
+                    {% include "components/icons/plus.html" %} Agregar palabras
+                </button>
+                {% endif %}
+            </div>              
+            
+            <div class="flex gap-4 items-center">
+                {% include "components/progress_donut.html" with progress=grupo.progreso extra_classes="" text=grupo.progreso%}
+                {% include "components/icon_swap_button.html" with id=grupo.id is_active=grupo.estrella url=grupo_estrella_url on="components/icons/star.html" oncolor="star-on" off="components/icons/star_off.html" offcolor="star-off" %}                
+            </div>
+        </div>
+        <div class="space-y-4 p-4">
+        {% for palabra in palabras %}
+            <div class="flex gap-4 items-center">
+                {% if grupo.editable %}
+                {% include "components/checkbox.html" with is_selected=True id=palabra.id url=grupo_tiene_palabra_url%}
+                {% endif %}
+                {% include "components/word_card.html" with palabra=palabra url=palabra_url %}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

@@ -1,0 +1,110 @@
+== Vista de Respuesta
+    << filtrar "" de palabra a solo del usuario o de admin
+        << "" significados
+            << checar que otros perfiles no la tengan bien si ponen significado de otra persona, debería hacerse esto por automático con el filtro
+        << "" lecturas
+        << "" notas
+        << hacerlo desde el fetch del modelo, lista de objetos. este debe recibir el usuario como input
+
+    << mostrar grupos a los que pertenece cada palabra en vista de respuesta
+        << estos solo deben de ser grupos del usuario, NO del admin también - nel, sí muestra los del admin pero no son modificables
+
+    << agregar palabra a grupos desde respuesta, solo creados por usuario
+
+    << agregar tags a palabra desde respuesta
+        << se debe refactorizar el modelo de PalabraEtiqueta para incluir quién hizo la relación
+        << con esto, las tags que deben aparecer filtradas deben ser las que la relación la creó o el usuario o el admin
+            << esto porque un usuario equis puede asignar una tag del admin a una palabra del admin, y no hay manera de rastrear quién hizo la relación y puede llevar a errores
+        << "" etiquetas
+
+    << incluir respuesta inputeada, abajo de la palabra
+
+    << loop: Repetición de incorrectas una vez que se completen
+    << al acabar primera vuelta, guardar cuántas se tuvieron bien para luego mostrar x/y correctas
+
+== Vista de calificación
+    << cards de palabras correctas e incorrectas
+    << rueda de calificación
+    << que mejor sea otra vista o algo, una variable que se lee en html, para evitar implementar las barras de progreso y pregunta
+    << diccionario con ids de palabras y lista de respuestas dadas, si está bien que no se agregue a la lista
+    << cards de palabras con significados y respuesta dada
+    
+    << que solo aparezca una vez que se pica finalizar (o también al todas bien)
+
+== Refactorizar modelos
+    << PalabraEtiqueta, GrupoEtiqueta: usuario que realizó relación con etiqueta
+    << UsuarioPalabra: fecha_creación, ultima_modificacion - ya estaba my g
+
+== Vista de búsqueda:
+    << Palabras con word card, hyperlink a palabra-detalles
+    << implementar que se busquen palabras, lecturas y significados
+    ++ Incluir búsqueda de grupos - tab separation
+    ++ Incluir búsqueda de tags - palabras o grupos que tengan como tag el input dado mejor
+    << Page navigation bonita hasta abajo mejor
+
+-- CRUD:
+
+== Vista de palabras
+    << Crear palabra
+    << Lista de palabras
+        << Cambiar "Diccionario" a "Palabras" en navbar y urls
+        >> lista con estrella y progreso
+    ++ Filtros por etiqueta, estrella, progreso, creador
+    ?? Progreso global (palabras iniciadas)
+        ?? Palabras estudiando
+        ?? Modal de lo de arriba
+    << Page navigation bonita hasta abajo mejor
+
+== Vista de palabra-detalles
+    << Creada
+    << vista normal con un botón de editar toggle, eliminar aparece al picar editar
+    << Editar palabra
+    << Eliminar palabra
+    << Agregar lecturas, significados, notas, etiquetas
+    << Editar ""
+    << Eliminar "" 
+    << Agregar a grupo, eliminar de grupo
+    >> Fecha de creación
+    >> Último estudio
+        .. timezones son una joda, mejor no mostrar fecha de creación y modificación
+        ?? al llamarla creo que se puede adaptar. hacer método propoerty que la transforme
+    << Estrella y progreso-
+    << no funciona progress bar y star
+
+== Vista de grupos
+    << Crear grupo
+    << Lista de grupos con estrella y progreso
+        << cantidad de palabras en grupo
+    ++ Filtros por estrella, progreso, creador
+
+== Vista de grupo-detalles
+    << Progreso, descripcion
+    << Lista de palabras en grupo
+    << Botón toggle con mismas propiedades de edición y eliminación que palabra
+        ++ Agregar palabras
+        >> Agregar etiquetas
+    ?? Filtros por estrella, progreso, creador
+    .. omitir grupo_etiquetas hasta encontrarle propósito funcional
+
+== Vista de etiquetas
+    ++ Agregar etiquetas al navbar
+    ++ CRUD
+    .. omitir grupo_etiquetas hasta encontrarle propósito funcional
+
+== Vista de usuario
+    ++ Cambiar usuario (unique) y contraseña
+    ++ Sugerencias, quejas, comentarios
+
+
+
+!! ojo: por la moderación, mejor no. Lo dejo anotado por si
+== IMPLEMENTACIÓN DE PUBLICACIONES DE GRUPOS DE PALABRAS
+    .. En navegación se puede buscar usuarios. Al darle click aparece lista de grupos públicos del usuario. El usuario actual puede ver el grupo-detalle y elegir si guardarlo o eliminarlo (si ya está guardado)
+    .. Una vez guardado el grupo de otro usuario, se borra el registro UsuarioGrupo
+    .. NO se borran las palabras de UsuarioPalabras porque esas pueden aparecer en otros grupos no borrados
+    .. Una palabra se borra automáticamente de UsuarioPalabras si no pertenece a ningún otro grupo guardado por el usuario
+    .. SOLO se pueden publicar grupos de palabras, NO se pueden publicar palabras
+
+    -- Vista de usuario tendría switch de perfil público o privado. Todas sus contribuciones
+    
+

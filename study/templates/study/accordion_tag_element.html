@@ -1,0 +1,17 @@
+<div class="collapser collapse-plus !border-neutral-main">
+    <input type="radio" name="value_accordion"/>
+    <div class="collapse-title flex items-end gap-4">  
+        <h2>{{header}}</h2>              
+        <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2 font-light">
+            {% for element in elements %}
+            {% include "components/tag.html" with text=element %}         
+            {% endfor %}
+        </li>                         
+    </div>
+    <div class="collapse-content">
+        {% include "components/select_button.html" with name=select_name icon="components/icons/add_mini.html" url=url button_text="Agregar" options=options%}             
+        {% for element in check_elements %}
+            {% include "components/checkbox.html" with text=element.text id=element.id is_selected=True url=check_url %}
+        {% endfor %}
+    </div>  
+</div>

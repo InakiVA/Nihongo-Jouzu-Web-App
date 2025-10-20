@@ -1,0 +1,8 @@
+{% if palabras_relacionadas %}      
+<div class="space-y-4">
+    <div class="divider divider-start before:bg-neutral-main after:bg-neutral-main py-4">
+        <h2>Palabras relacionadas</h2>
+    </div> 
+    {% include "components/word_list.html" with url=palabras_relacionadas_url palabras_list=palabras_relacionadas %}
+</div>
+{% endif %}
