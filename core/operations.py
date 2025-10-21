@@ -210,4 +210,6 @@ def get_user_groups_list(usuario):
 
         grupos.append(grupo_dict)
 
-    return grupos
+    sorted_groups = sorted(grupos, key=lambda group: ut.sort_key(group, "grupo"))
+
+    return sorted_groups

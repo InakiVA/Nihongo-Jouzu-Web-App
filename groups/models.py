@@ -57,6 +57,9 @@ class Grupo(models.Model):
 
     def __str__(self):
         return self.grupo
+    
+    def __lt__(self, other):
+        return self.grupo < other.grupo
 
 
 # Un usuario -> muchos grupos
