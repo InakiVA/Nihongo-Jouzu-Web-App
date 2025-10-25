@@ -1,0 +1,19 @@
+<div class="join">
+    <div class="px-4">
+    {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=url extra_classes="button-icon-only" %}
+    </div>
+    {% for page in pages %}
+        {% if not page.text %}
+            <button class="join-item button-neutral" disabled>...</button>
+        {% else %}
+        <form method="post" action="{{ url }}">
+            {% csrf_token %}
+            <input type="hidden" name="pagination" value="{{page.value}}">
+            <button class="join-item {%if page.current%} button-main underline {% else %} button-neutral {% endif %}">{{page.text}}</button>
+         </form>
+        {% endif %}
+    {% endfor %}
+    <div class="px-4">
+    {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pagina_url extra_classes="button-icon-only" %}
+    </div>
+</div>

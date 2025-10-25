@@ -12,11 +12,36 @@
   </head>
   
   <body class="flex flex-col w-screen min-h-screen h-auto space-y-4">
-    {% if user.is_authenticated %}
-    {% include "components/navbar.html" %}    
-    <div class="{% if is_mobile %} mt-26 {% else %} mt-20 {% endif %} "></div>        
-    {% endif %}
-    {% block content %} {% endblock %}
-</body>
+      {% if user.is_authenticated %}
+        {% include "components/navbar.html" %}    
+        <div class="{% if is_mobile %} mt-26 {% else %} mt-20 {% endif %}"></div>        
+      {% endif %}
 
+      {% if messages %}
+        <div class="toast toast-bottom toast-end z-[9999]">
+          {% for message in messages %}
+            {% include "components/message.html" %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+
+      {# Generic modal open/close handler — available globally #}
+      <script>
+        document.addEventListener('click', (e) => {
+          const opener = e.target.closest('[data-open]');
+          const closer = e.target.closest('[data-close]');
+          if (opener) {
+            const sel = opener.getAttribute('data-open');
+            const dlg = document.querySelector(sel);
+            if (dlg?.showModal) { e.preventDefault(); dlg.showModal(); }
+          } else if (closer) {
+            const sel = closer.getAttribute('data-close');
+            const dlg = document.querySelector(sel);
+            if (dlg?.close) { e.preventDefault(); dlg.close(); }
+          }
+        });
+      </script>
+  </body>
 </html>

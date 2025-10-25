@@ -8,9 +8,9 @@
         </div>
         <p class="text-xl">日本語の勉強のソフト</p>
         <div class="flex flex-row  space-x-4">
-          {%include "components/navigation_button.html" with text="Iniciar sesión" url="login" %}
+          {%include "components/button.html" with text="Iniciar sesión" url=login_url extra_classes="button-secondary" %}
             
-            {%include "components/navigation_button.html" with text="Crear cuenta" url="signup" extra_classes="button-main"%}
+            {%include "components/button.html" with text="Crear cuenta" url=signup_url extra_classes="button-main"%}
         </div>
     </div>
   </div>

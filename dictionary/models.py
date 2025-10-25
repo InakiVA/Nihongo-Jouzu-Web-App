@@ -42,10 +42,17 @@ class Palabra(models.Model):
                     self.lecturas_list(usuario) + self.significados_list(usuario)
                 )
         elif lenguaje_elegido == "Significados":
-            self.pregunta = self.significados_str(usuario)
+            self.pregunta = [self.significados_str(usuario)]
             self.respuestas = ut.set_alternate_inputs(
                 [self.palabra] + self.lecturas_list(usuario)
             )
+
+    def update_palabra(self, palabra):
+        self.palabra = palabra
+        self.save()
+
+    def is_kanji(self, user):
+        return "Kanji" in self.etiquetas_list(user)
 
     class Meta:
         db_table = "Palabras"
@@ -53,14 +60,35 @@ class Palabra(models.Model):
     def __str__(self):
         return self.palabra
 
+    def palabra_dict(self, usuario):
+        return {
+            "id": self.id,
+            "palabra": self.palabra,
+            "lecturas": self.lecturas_str(usuario),
+            "significados": self.significados_str(usuario),
+            "etiquetas": self.etiquetas_list(usuario),
+            "notas": self.notas_str(usuario),
+            "grupos": self.grupos_list(usuario),
+            "editable": self.usuario == usuario,
+            "progreso": self.palabra_usuarios.get(usuario=usuario).progreso,
+            "estrella": self.palabra_usuarios.get(usuario=usuario).estrella,
+            "creador": self.usuario,
+        }
+
+    def __lt__(self, other):
+        return self.palabra < other.palabra
+
     def significados_objetos(self, usuario):
         return self.significados.filter(
             Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
         )
 
+    def significados_objetos_usuario(self, usuario):
+        return self.significados.filter(Q(usuario=usuario))
+
     def significados_list(self, usuario):
         significados = self.significados_objetos(usuario)
-        return [str(s.significado) for s in significados]
+        return sorted([str(s.significado) for s in significados])
 
     def significados_str(self, usuario):
         significados = self.significados_list(usuario)
@@ -71,9 +99,12 @@ class Palabra(models.Model):
             Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
         )
 
+    def lecturas_objetos_usuario(self, usuario):
+        return self.lecturas.filter(Q(usuario=usuario))
+
     def lecturas_list(self, usuario):
         lecturas = self.lecturas_objetos(usuario)
-        return [str(l.lectura) for l in lecturas]
+        return sorted([str(l.lectura) for l in lecturas])
 
     def lecturas_str(self, usuario):
         lecturas = self.lecturas_list(usuario)
@@ -82,9 +113,12 @@ class Palabra(models.Model):
     def notas_objetos(self, usuario):
         return self.notas.filter(Q(usuario=usuario) | Q(usuario__perfil__rol="admin"))
 
+    def notas_objetos_usuario(self, usuario):
+        return self.notas.filter(Q(usuario=usuario))
+
     def notas_list(self, usuario):
         notas = self.notas_objetos(usuario)
-        return [str(n.nota) for n in notas]
+        return sorted([str(n.nota) for n in notas])
 
     def notas_str(self, usuario):
         notas = self.notas_list(usuario)
@@ -95,8 +129,18 @@ class Palabra(models.Model):
             Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
         )
 
+    def etiquetas_objetos_usuario(self, usuario):
+        return sorted(self.palabra_etiquetas.filter(Q(usuario=usuario)))
+
     def etiquetas_list(self, usuario):
-        return [str(e.etiqueta) for e in self.etiquetas_objetos(usuario)]
+        etiquetas = set([str(e.etiqueta) for e in self.etiquetas_objetos(usuario)])
+        return sorted(
+            etiquetas,
+            key=lambda x: (
+                0 if x == "Kanji" else 1 if x.startswith("JLPT") else 2,
+                x.lower(),  # for alphabetical sorting within each group
+            ),
+        )
 
     def grupos_objetos(self, usuario):
         return self.palabra_grupos.filter(
@@ -104,11 +148,24 @@ class Palabra(models.Model):
         )
 
     def grupos_list(self, usuario):
-        return [str(g.grupo) for g in self.grupos_objetos(usuario)]
+        return sorted([str(g.grupo) for g in self.grupos_objetos(usuario)])
 
     def grupos_str(self, usuario):
         grupos = self.grupos_list(usuario)
         return ", ".join(grupos)
+
+    def palabras_relacionadas(self, usuario):
+        palabras_relacionadas = Palabra.objects.filter(
+            Q(usuario=usuario) | Q(usuario__perfil__rol="admin"),
+            palabra__contains=self.palabra,
+        ).exclude(id=self.id)
+        palabra_chars = list(self.palabra)
+        kanjis_relacionados = Palabra.objects.filter(
+            Q(usuario=usuario) | Q(usuario__perfil__rol="admin"),
+            palabra__in=palabra_chars,
+            palabra_etiquetas__etiqueta__etiqueta="Kanji",
+        ).exclude(id=self.id)
+        return sorted(list(set(palabras_relacionadas | kanjis_relacionados)))
 
 
 class Significado(models.Model):
@@ -126,6 +183,10 @@ class Significado(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
     ultima_modificacion = models.DateTimeField(auto_now=True)
 
+    def update_significado(self, significado):
+        self.significado = significado
+        self.save()
+
     class Meta:
         db_table = "Significados"
 
@@ -135,6 +196,7 @@ class Significado(models.Model):
 
 class Lectura(models.Model):
     lectura = models.CharField(max_length=50)
+    lectura_limpia = models.CharField(max_length=50)
     palabra = models.ForeignKey(
         Palabra,
         on_delete=models.CASCADE,
@@ -147,6 +209,11 @@ class Lectura(models.Model):
     )
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
     ultima_modificacion = models.DateTimeField(auto_now=True)
+
+    def update_lectura(self, lectura):
+        self.lectura = lectura
+        self.lectura_limpia = lectura.replace("・", "")
+        self.save()
 
     class Meta:
         db_table = "Lecturas"
@@ -169,6 +236,10 @@ class Nota(models.Model):
     )
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
     ultima_modificacion = models.DateTimeField(auto_now=True)
+
+    def update_nota(self, nota):
+        self.nota = nota
+        self.save()
 
     class Meta:
         db_table = "Notas"

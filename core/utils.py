@@ -1,6 +1,53 @@
 import core.traduccion as trad
 
 
+def max_page_possible(max_value):
+    max_page = max_value // 10
+    if max_value % 10 == 0:
+        max_page -= 1
+    return max_page
+
+
+def bound_page_index(index, max_value):
+    max_page = max_page_possible(max_value)
+    if index > max_page:
+        index = 0
+    elif index < 0:
+        index = max_page
+    return index
+
+
+def create_pages_list(index, max_value):
+    max_page = max_page_possible(max_value)
+    pages_list = []
+    # -- de 1 a index
+    if index > 3:
+        pages_list.append({"text": 1, "value": 0, "current": index == 0})
+        pages_list.append({})
+        for i in range(index - 1, index):
+            pages_list.append({"text": i + 1, "value": i, "current": index == i})
+    else:
+        for i in range(index):
+            pages_list.append({"text": i + 1, "value": i, "current": index == i})
+    # -- de index a max_page
+    if index < max_page - 3:
+        for i in range(index, index + 2):
+            pages_list.append({"text": i + 1, "value": i, "current": index == i})
+        pages_list.append({})
+        pages_list.append(
+            {
+                "text": max_page + 1,
+                "value": max_page,
+                "current": index == max_page,
+            }
+        )
+    else:
+        for i in range(index, max_page + 1):
+            pages_list.append({"text": i + 1, "value": i, "current": index == i})
+
+    return pages_list
+
+
 def cambiar_progreso(progreso, action):
     if action == "plus":
         progreso += 5
@@ -53,29 +100,50 @@ def clean_input(input_):
     )
 
     # Punctuation removal
-    for char in ["*", "#", "、", ",", "¿", "?", "¡", "!"]:
-        variants.add(input_.replace(char, "").strip())
+    punctuation_variants = list(variants)
+    for variant in punctuation_variants:
+        for char in ["*", "#", "、", ",", "¿", "?", "¡", "!", "<", ">"]:
+            variant_2 = variant.replace(char, "").strip()
+            if variant_2 not in variants:
+                punctuation_variants.append(variant_2)
+                variants.add(variant_2)
 
     # Accent removal
-    for a, b in [("á", "a"), ("é", "e"), ("í", "i"), ("ó", "o"), ("ú", "u")]:
-        variants.add(input_.replace(a, b).strip())
+    for variant in list(variants):
+        for a, b in [
+            ("á", "a"),
+            ("é", "e"),
+            ("í", "i"),
+            ("ó", "o"),
+            ("ú", "u"),
+            ("ñ", "n"),
+            ("Á", "A"),
+            ("É", "E"),
+            ("Í", "I"),
+            ("Ó", "O"),
+            ("Ú", "U"),
+            ("Ñ", "N"),
+        ]:
+            variants.add(variant.replace(a, b).strip())
 
     # Handle special character "・"
-    if "・" in input_:
-        i = input_.index("・")
-        variants.add(input_[:i].strip())
-        variants.add((input_[:i] + input_[i + 1 :]).strip())
+    for variant in list(variants):
+        if "・" in variant:
+            i = variant.index("・")
+            variants.add(variant[:i].strip())
+            variants.add((variant[:i] + variant[i + 1 :]).strip())
 
     # Handle parentheses
-    for l, r in [("(", ")"), ("（", "）")]:
-        if l in input_ and r in input_:
-            try:
-                i = input_.index(l)
-                j = input_.index(r)
-                variants.add((input_[:i] + input_[j + 1 :]).strip())
-                variants.add(input_.replace(l, "").replace(r, "").strip())
-            except ValueError:
-                pass  # skip malformed cases
+    for variant in list(variants):
+        for l, r in [("(", ")"), ("（", "）")]:
+            if l in variant and r in variant:
+                try:
+                    i = variant.index(l)
+                    j = variant.index(r)
+                    variants.add((variant[:i] + variant[j + 1 :]).strip())
+                    variants.add(variant.replace(l, "").replace(r, "").strip())
+                except ValueError:
+                    pass  # skip malformed cases
 
     return sorted(variants)
 

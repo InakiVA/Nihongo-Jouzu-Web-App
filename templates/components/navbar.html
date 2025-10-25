@@ -17,38 +17,39 @@
           <li>
             {% url 'inicio' as url_value %}
             {% if request.path == url_value %}
-              {% include "components/navigation_button.html" with url=url_value text="Inicio" icon="components/icons/home.html" extra_classes="button-main join-item" name="navbar_home" %}
+              {% include "components/button.html" with is_navigation=True url=url_value text="Inicio" icon="components/icons/home.html" extra_classes="button-main join-item" name="navbar_home" %}
             {% else %}
-              {% include "components/navigation_button.html" with url=url_value text="Inicio" icon="components/icons/home.html" extra_classes="button-neutral join-item" name="navbar_home" %}
+              {% include "components/button.html" with is_navigation=True url=url_value text="Inicio" icon="components/icons/home.html" extra_classes="button-neutral join-item" name="navbar_home" %}
             {% endif %}
           </li>
           <li>
             {% url 'palabras' as url_value %}
             {% if request.path == url_value %}
-              {% include "components/navigation_button.html" with url=url_value text="Palabras" icon="components/icons/book.html" extra_classes="button-main join-item" name="navbar_dict" %}
+              {% include "components/button.html" with is_navigation=True url=url_value text="Palabras" icon="components/icons/book.html" extra_classes="button-main join-item" name="navbar_dict" %}
             {% else %}
-              {% include "components/navigation_button.html" with url=url_value text="Palabras" icon="components/icons/book.html" extra_classes="button-neutral join-item" name="navbar_dict" %}
+              {% include "components/button.html" with is_navigation=True url=url_value text="Palabras" icon="components/icons/book.html" extra_classes="button-neutral join-item" name="navbar_dict" %}
             {% endif %}
           </li>
           <li>
             {% url 'grupos' as url_value %}
             {% if request.path == url_value %}
-              {% include "components/navigation_button.html" with url=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="button-main join-item" name="navbar_groups" %}
+              {% include "components/button.html" with is_navigation=True url=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="button-main join-item" name="navbar_groups" %}
             {% else %}
-              {% include "components/navigation_button.html" with url=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="button-neutral join-item" name="navbar_groups" %}
+              {% include "components/button.html" with is_navigation=True url=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="button-neutral join-item" name="navbar_groups" %}
             {% endif %}
           </li>
           <li>
             {% url 'usuario' as url_value %}
             {% if request.path == url_value %}
-              {% include "components/navigation_button.html" with url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-main join-item" name="navbar_user" %}
+              {% include "components/button.html" with is_navigation=True url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-main join-item" name="navbar_user" %}
             {% else %}
-              {% include "components/navigation_button.html" with url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-neutral join-item" name="navbar_user" %}
+              {% include "components/button.html" with is_navigation=True url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-neutral join-item" name="navbar_user" %}
             {% endif %}
           </li>
         </ul>
       </div>
-      {% include "components/searchbar.html" %}
+      {% url 'buscar' as buscar_url %}
+      {% include "components/input.html" with icon="components/icons/search.html" name="search" url=buscar_url method="get"%}
     </div>
   </div>
 </nav>
@@ -58,23 +59,23 @@
     <div class="join space-x-2">
         {% url 'inicio' as url_value %}
         {% if request.path == url_value %}
-            {% include "components/navigation_button.html" with is_selected=True url=url_value text="Inicio" icon="components/icons/home.html" extra_classes="join-item" name="navbar_home" %}
+            {% include "components/button.html" with is_navigation=True is_selected=True url=url_value text="Inicio" icon="components/icons/home.html" extra_classes="join-item" name="navbar_home" %}
         {% else %}
-            {% include "components/navigation_button.html" with url=url_value text="Inicio" icon="components/icons/home.html" extra_classes="join-item" name="navbar_home" %}
+            {% include "components/button.html" with is_navigation=True url=url_value text="Inicio" icon="components/icons/home.html" extra_classes="join-item" name="navbar_home" %}
         {% endif %}
 
         {% url 'palabras' as url_value %}
         {% if request.path == url_value %}
-            {% include "components/navigation_button.html" with is_selected=True url=url_value text="Palabras" icon="components/icons/book.html" extra_classes="join-item" name="navbar_dict" %}
+            {% include "components/button.html" with is_navigation=True is_selected=True url=url_value text="Palabras" icon="components/icons/book.html" extra_classes="join-item" name="navbar_dict" %}
         {% else %}
-            {% include "components/navigation_button.html" with url=url_value text="Palabras" icon="components/icons/book.html" extra_classes="join-item" name="navbar_dict" %}
+            {% include "components/button.html" with is_navigation=True url=url_value text="Palabras" icon="components/icons/book.html" extra_classes="join-item" name="navbar_dict" %}
         {% endif %}
       
         {% url 'grupos' as url_value %}
         {% if request.path == url_value %}
-            {% include "components/navigation_button.html" with is_selected=True url=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="join-item" name="navbar_groups" %}
+            {% include "components/button.html" with is_navigation=True is_selected=True url=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="join-item" name="navbar_groups" %}
         {% else %}
-            {% include "components/navigation_button.html" with url=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="join-item" name="navbar_groups" %}
+            {% include "components/button.html" with is_navigation=True url=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="join-item" name="navbar_groups" %}
         {% endif %}
     </div>
   </div>
@@ -85,13 +86,14 @@
 
   <div class="navbar-end">  
     <div class="join space-x-2">
-        {% include "components/searchbar.html" %} 
-        {% url 'usuario' as url_value %}
-        {% if request.path == url_value %}
-            {% include "components/navigation_button.html" with url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-main join-item" name="navbar_user" %}
-        {% else %}
-            {% include "components/navigation_button.html" with url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-neutral join-item" name="navbar_user" %}
-        {% endif %}
+      {% url 'buscar' as buscar_url %}
+      {% include "components/input.html" with icon="components/icons/search.html" name="search" url=buscar_url method="get"%}
+      {% url 'usuario' as url_value %}
+      {% if request.path == url_value %}
+        {% include "components/button.html" with is_navigation=True url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-main join-item" name="navbar_user" %}
+      {% else %}
+        {% include "components/button.html" with is_navigation=True url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-neutral join-item" name="navbar_user" %}
+      {% endif %}
     </div>  
   </div>
 </nav>

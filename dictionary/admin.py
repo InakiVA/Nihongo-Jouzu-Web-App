@@ -13,7 +13,7 @@ class PalabraAdmin(UsuarioMixin):
         "ultima_modificacion",
     )
     search_fields = ("palabra", "usuario__username")
-    ordering = ("id",)
+    ordering = ("id", "palabra")
 
 
 @admin.register(Significado)
@@ -27,7 +27,7 @@ class SignificadoAdmin(UsuarioMixin, PalabraMixin):
         "ultima_modificacion",
     )
     search_fields = ("significado", "palabra__palabra", "usuario__username")
-    ordering = ("palabra_id", "usuario__username", "significado")
+    ordering = ("id", "palabra_id", "usuario__username", "significado")
 
 
 @admin.register(Lectura)
@@ -36,12 +36,18 @@ class LecturaAdmin(UsuarioMixin, PalabraMixin):
         "id",
         "palabra",
         "lectura",
+        "lectura_limpia",
         "usuario",
         "fecha_creacion",
         "ultima_modificacion",
     )
-    search_fields = ("lectura", "palabra__palabra", "usuario__username")
-    ordering = ("palabra_id", "usuario__username", "lectura")
+    search_fields = (
+        "lectura",
+        "lectura_limpia",
+        "palabra__palabra",
+        "usuario__username",
+    )
+    ordering = ("id", "palabra_id", "usuario__username", "lectura")
 
 
 @admin.register(Nota)
@@ -55,4 +61,4 @@ class NotaAdmin(UsuarioMixin, PalabraMixin):
         "ultima_modificacion",
     )
     search_fields = ("nota", "palabra__palabra", "usuario__username")
-    ordering = ("palabra_id", "usuario__username", "nota")
+    ordering = ("id", "palabra_id", "usuario__username", "nota")

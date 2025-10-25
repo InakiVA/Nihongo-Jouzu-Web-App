@@ -1,8 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
   <h2>Bienvenido, {{ usuario.username }}</h2>
-  <form method="POST" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit" class="button-main">Cerrar Sesión</button>
-    </form>
+  {% include "components/button.html" with text="Cerrar Sesión" url=logout_url extra_classes="button-big"%}
 {% endblock %}

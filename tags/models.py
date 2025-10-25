@@ -16,11 +16,18 @@ class Etiqueta(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
     ultima_modificacion = models.DateTimeField(auto_now=True)
 
+    def update_etiqueta(self, etiqueta):
+        self.etiqueta = etiqueta
+        self.save()
+
     class Meta:
         db_table = "Etiquetas"
 
     def __str__(self):
         return self.etiqueta
+
+    def __lt__(self, other):
+        return self.etiqueta < other.etiqueta
 
 
 class PalabraEtiqueta(models.Model):
@@ -48,6 +55,9 @@ class PalabraEtiqueta(models.Model):
 
     def __str__(self):
         return f"{self.palabra.palabra} - {self.etiqueta.etiqueta} ({self.usuario})"
+
+    def __lt__(self, other):
+        return self.etiqueta < other.etiqueta
 
 
 class GrupoEtiqueta(models.Model):

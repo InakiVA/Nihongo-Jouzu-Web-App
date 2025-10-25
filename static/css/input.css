@@ -4,19 +4,19 @@
 
 @theme {
     --color-progress-0: #9e9e9e;
-    --color-progress-33: #ab1212;
+    --color-progress-33: #ff2f4e;
     --color-progress-66: #fab451;  
-    --color-progress-99: #16ab4d;  
+    --color-progress-99: #46d659;  
     --color-progress-100: #5ec9ee;
 
-    --color-mydisabled: #9e9e9e;
-    --color-myalert: #ab1212;
+    --color-mydisabled: #7d7d7d;
+    --color-myalert: #ff2f4e;
     --color-mywarning: #fab451;
-    --color-mysuccess: #16ab4d;
+    --color-mysuccess: #46d659;
     --color-mycomplete: #5ec9ee;
 
-    --color-correct: #16ab4d;
-    --color-incorrect: #ab1212;
+    --color-correct: #389c3d;
+    --color-incorrect: #bd0f0f;
 
     --color-star: #fffc56;
     --color-star-dark: #8f8c04;
@@ -24,13 +24,18 @@
     --color-textcolor: #FFFFFF;
     --color-textcolor-dark: #c7c7c7;
 
-    --color-neutral-light: #f5f5f5;
-    --color-neutral-main: #2a3c4b;
-    --color-neutral-dark: #1c2731;
+    --color-include: #a02be8;
+    --color-exclude: #f75b09;
 
-    --color-accent-light: #ffccd5;
-    --color-accent-main: #cc0033;
-    --color-accent-dark: #800020; 
+    --color-neutral-light: #c9f7f5;
+    --color-neutral-main: #253949;
+    --color-neutral-secondary: #5894c2;
+    --color-neutral-dark: #0d151dff;
+
+    --color-accent-light: #7bfff8;
+    --color-accent-main: #00b3aa;
+    --color-accent-dark: #00756f;
+    --color-secondary-main: #a02be8;
   }
 
 nav {
@@ -70,23 +75,58 @@ h4 {
 }
 
 .button-neutral {
-  @apply h-10 min-w-12 btn btn-ghost shadow-none border-neutral-light bg-neutral-dark text-textcolor rounded-sm px-4;
+  @apply btn btn-ghost shadow-none border-neutral-light bg-neutral-dark text-textcolor rounded-sm px-4;
   @apply hover:bg-accent-main;
 }
 
 .button-main {
-  @apply h-10 min-w-12 btn btn-ghost shadow-none border-accent-light bg-accent-main text-textcolor rounded-sm px-4;
+  @apply btn btn-ghost shadow-none border-2 border-accent-light bg-accent-main text-textcolor rounded-sm px-4;
   @apply hover:bg-accent-dark;
 }
 
 .button-secondary {
-  @apply h-10 min-w-12 btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm px-16;
+  @apply btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm px-4;
+  @apply hover:bg-accent-main hover:border-accent-light;
+}
+
+.button-alert{
+  @apply btn btn-ghost shadow-none border-white bg-secondary-main text-textcolor rounded-sm px-4;
   @apply hover:bg-accent-main hover:border-accent-light;
 }
 
 .button-big{
-  @apply h-10 min-w-12 btn btn-ghost shadow-none border-accent-light bg-accent-main text-textcolor rounded-sm  text-2xl font-bold p-8;
+  @apply btn btn-ghost shadow-none border-2 border-accent-light bg-accent-main text-textcolor rounded-sm  text-2xl font-bold p-8;
   @apply hover:bg-accent-dark;
+}
+
+.button-icon-only{
+  @apply btn btn-ghost btn-circle shadow-none border-none bg-transparent;
+  @apply hover:bg-accent-main;
+}
+
+.button-join{
+  @apply btn btn-ghost shadow-none bg-neutral-main text-textcolor rounded-none p-2;
+  @apply hover:bg-accent-main;
+}
+
+.button-join-selected{
+  @apply btn btn-ghost shadow-none bg-accent-main text-textcolor rounded-none p-2;
+  @apply hover:bg-accent-dark;
+}
+
+.button-join-unselected{
+  @apply btn btn-ghost shadow-none bg-neutral-main text-textcolor rounded-none p-2;
+  @apply hover:bg-accent-main;
+}
+
+.button-include{
+  @apply btn btn-ghost shadow-none bg-include text-textcolor rounded-none p-2;
+  @apply hover:bg-neutral-main;
+}
+
+.button-exclude{
+  @apply btn btn-ghost shadow-none bg-exclude text-textcolor rounded-none p-2;
+  @apply hover:bg-neutral-main;
 }
 
 .link{
@@ -100,7 +140,7 @@ h4 {
 }
 
 .input {
-  @apply input input-neutral rounded-lg !font-light flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
+  @apply input input-neutral rounded-lg font-light flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
   @apply focus:bg-neutral-main hover:bg-neutral-main;
 }
 
@@ -126,7 +166,15 @@ h4 {
 }
 
 .tag{
-  @apply bg-neutral-main rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+  @apply bg-neutral-secondary rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+}
+
+.tag-kanji{
+  @apply bg-accent-main rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+}
+
+.tag-level{
+  @apply bg-secondary-main rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
 }
 
 .check-box{
@@ -153,24 +201,12 @@ h4 {
 }
 
 .collapser{
-  @apply collapse bg-transparent border-1 border-neutral-light;
+  @apply collapse bg-neutral-dark border-1 border-neutral-light;
   @apply hover:bg-neutral-main hover:shadow-sm;
 }
 
 .collapse-title{
   @apply collapse-title font-light text-lg;
-}
-
-.list_header {
-  @apply text-textcolor pb-4 border-b border-neutral-light;
-}
-
-.list_title {
-  @apply  pl-4;
-}
-
-.list_subheader {
-  @apply  pl-4;
 }
 
 .element_list {
@@ -182,5 +218,13 @@ h4 {
 }
 
 .wordcard{
-  @apply hover:bg-neutral-main bg-neutral-dark shadow-sm border-1 border-neutral-main text-textcolor;
+  @apply hover:bg-neutral-main bg-neutral-dark shadow-sm border-1 border-neutral-main text-textcolor rounded-lg;
+}
+
+.wordcard-disabled{
+  @apply  bg-neutral-dark shadow-sm border-1 border-neutral-main text-textcolor rounded-lg;
+}
+
+.modal-box{
+  @apply bg-neutral-dark border border-neutral-main;
 }

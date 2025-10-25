@@ -1,30 +1,68 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="flex flex-col flex-auto">
-  <div class="flex flex-row flex-auto gap-x-2 px-4">
-    <h4 class="text-start">Palabras</h4>
-    <div class="flex flex-auto"></div>
-    <button type="button" class="button-big"
-            onclick="document.getElementById('crear_palabra_modal').showModal()">
-      Crear Palabra
-    </button>
+<div class="flex flex-col flex-auto px-4 gap-4 pb-4">
+  <div class="flex flex-row w-full gap-4 justify-between items-start">
+    <h4 class="text-start">Palabras</h4>  
+    <div class="flex flex-row gap-4">        
+      <button type="button" class="button-big" data-open="#crear_palabra_modal">
+        {% include "components/icons/add.html" %} Nueva Palabra
+      </button>  
+    </div>    
   </div>
 
   <dialog id="crear_palabra_modal" class="modal">
-    <div class="modal-box">
-      <h3 class="text-lg font-bold">Hello!</h3>
-      <p class="py-4">Press ESC key or click the button below to close</p>
-      <div class="modal-action">
-        <!-- Works because we're inside <dialog> -->
-        <form method="dialog">
-          <button class="btn">Close</button>
-        </form>
-      </div>
+    <div class="modal-box space-y-4">
+      <div class="flex flex-row justify-between items-center">
+        <h2>Palabra a crear</h2>
+        <button type="button" class="button-icon-only" data-close="#crear_palabra_modal">
+          {% include "components/icons/cross.html" %}
+        </button>        
+      </div>     
+      
+      <form action="{{ crear_palabra_url }}" method="post" class="gap-4 p-4 flex flex-auto flex-col">
+        {% csrf_token %}
+        <div class="flex flex-auto flex-col gap-2">
+          <div class="flex">
+            <legend class="fieldset-legend">Palabra</legend>
+            <legend class="fieldset-legend text-myalert">*</legend>          
+          </div>            
+          {% include "components/input.html" with placeholder="Tu palabra:" name="palabra_nueva" value=ajustes_palabras.palabra_valida%}
+        </div>
+
+        <div class="flex flex-auto flex-col gap-2">
+          <div class="flex">
+            <legend class="fieldset-legend">Significado</legend>
+            <legend class="fieldset-legend text-myalert">*</legend>          
+          </div>           
+          {% include "components/input.html" with placeholder="Su significado:" name="significado_nuevo" value=ajustes_palabras.significado_valido%}
+        </div>
+
+        <div class="flex flex-auto flex-col gap-2">
+          <div class="flex">
+            <legend class="fieldset-legend">Lectura</legend>
+            <legend class="fieldset-legend text-myalert">*</legend>          
+          </div>
+          {% include "components/input.html" with placeholder="Su lectura:" name="lectura_nueva" value=ajustes_palabras.lectura_valida%}
+        </div>
+
+        {% include "components/checkbox.html" with text="Es un kanji" id="is_kanji" %}
+
+        <div class="flex flex-auto pt-8 justify-center">
+        {% include "components/button.html" with text="Crear" icon="components/icons/add.html" extra_classes="button-big" %}
+        </div>
+      </form>      
     </div>
-    <!-- Optional: clicking the backdrop closes the dialog -->
-    <form method="dialog" class="modal-backdrop">
-      <button>close</button>
-    </form>
   </dialog>
+  
+  <div>
+    {% include "components/word_list.html" with url=palabra_url palabras_list=palabras_list%}
+  </div>
+
+  {% if show_pages_list %}
+    <div class="flex w-full items-center justify-center">
+      {% include "components/pagination.html" with pages=pages_list url=cambiar_pagina_url%}
+    </div>
+  {% endif %}
+  
 </div>
 {% endblock %}

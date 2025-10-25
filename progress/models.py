@@ -3,6 +3,8 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from dictionary.models import Palabra
 
+import core.utils as ut
+
 # -- Seguimiento del estudio
 
 
@@ -28,6 +30,14 @@ class UsuarioPalabra(models.Model):
     class Meta:
         unique_together = ("usuario", "palabra")
         db_table = "Usuarios_Palabras"
+
+    def cambiar_progreso(self, action):
+        self.progreso = ut.cambiar_progreso(self.progreso, action)
+        self.save()
+
+    def toggle_estrella(self):
+        self.estrella = not self.estrella
+        self.save()
 
     def __str__(self):
         return f"{self.usuario.username} ↔ {self.palabra.palabra}"
