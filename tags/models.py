@@ -13,6 +13,7 @@ class Etiqueta(models.Model):
         on_delete=models.CASCADE,
         related_name="etiquetas",
     )
+    color = models.CharField(max_length=20, default="neutral")  # neutral, 1, 2, .....
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
     ultima_modificacion = models.DateTimeField(auto_now=True)
 

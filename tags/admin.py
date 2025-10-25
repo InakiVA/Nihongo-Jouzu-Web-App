@@ -8,6 +8,7 @@ class EtiquetaAdmin(UsuarioMixin):
     list_display = (
         "id",
         "etiqueta",
+        "color",
         "usuario",
         "fecha_creacion",
         "ultima_modificacion",

@@ -46,7 +46,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
             ]
         ]
         context["select_orden_url"] = reverse_lazy("toggle_orden_grupos")
-        orden_opciones = ("Creación", "Nombre", "Progreso", "Reciente")
+        orden_opciones = ("Nombre","Creación", "Progreso", "Reciente")
         context["orden_opciones"] = orden_opciones
         orden_elegido = ajustes.get("orden_elegido", orden_opciones[0])
         context["orden_elegido"] = orden_elegido
@@ -83,8 +83,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
             grupos.sort(
                 key=lambda g: g["ultima_modificacion"], reverse=not descendente
             )  # porque de más reciente a menos reciente le pongo el not
-        elif orden_elegido == "Nombre":
-            grupos.sort(key=lambda g: g["text"].lower(), reverse=descendente)
+        elif orden_elegido == "Nombre" and descendente:
+            grupos.reverse()
         elif orden_elegido == "Creación":
             grupos.sort(key=lambda g: g["id"], reverse=descendente)
         grupos_id = [g["id"] for g in grupos]

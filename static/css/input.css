@@ -21,6 +21,16 @@
     --color-star: #fffc56;
     --color-star-dark: #8f8c04;
 
+    --color-tag1: #9e9e9e;
+    --color-tag2: #e10728;
+    --color-tag3: #f75b09;  
+    --color-tag4: #e1cf05;  
+    --color-tag5: #389c3d;  
+    --color-tag6: #0b9dce;
+    --color-tag7: #1d73f5;
+    --color-tag8: #8206cf;
+    --color-tag9: #d3219e;
+
     --color-textcolor: #FFFFFF;
     --color-textcolor-dark: #c7c7c7;
 
@@ -165,16 +175,48 @@ h4 {
   @apply hover:fill-star-dark;
 }
 
-.tag{
+.tag-neutral{
   @apply bg-neutral-secondary rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
 }
 
-.tag-kanji{
-  @apply bg-accent-main rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+.tag-neutral-alt{
+  @apply bg-neutral-main rounded-2xl px-4 py-0.5 text-textcolor font-semibold border border-neutral-secondary;
 }
 
-.tag-level{
-  @apply bg-secondary-main rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+.tag-1{
+  @apply bg-tag1 rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+}
+
+.tag-2{
+  @apply bg-tag2 rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+}
+
+.tag-3{
+  @apply bg-tag3 rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+}
+
+.tag-4{
+  @apply bg-tag4 rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+}
+
+.tag-5{
+  @apply bg-tag5 rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+}
+
+.tag-6{
+  @apply bg-tag6 rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+}
+
+.tag-7{
+  @apply bg-tag7 rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+}
+
+.tag-8{
+  @apply bg-tag8 rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+}
+
+.tag-9{
+  @apply bg-tag9 rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
 }
 
 .check-box{

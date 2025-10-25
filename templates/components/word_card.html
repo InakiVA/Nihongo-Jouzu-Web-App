@@ -21,7 +21,7 @@
       {% if palabra.grupos %}
       <div class="flex flex-row gap-2 flex-wrap pt-2">
         {% for grupo in palabra.grupos %}
-          {% include "components/tag.html" with text=grupo extra_classes="!bg-neutral-main border !border-neutral-secondary"%}
+          {% include "components/tag.html" with text=grupo tag_color="neutral-alt" %}
         {% endfor %}
       </div>    
       {% endif %} 

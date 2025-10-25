@@ -63,3 +63,14 @@ seahawks:
     --color-accent-light: #f4ffe0;
     --color-accent-main: #84c710;
     --color-accent-dark: #4e780b; 
+
+-- tags
+    --color-tag1: #9e9e9e;
+    --color-tag2: #e10728;
+    --color-tag3: #f75b09;  
+    --color-tag4: #e1cf05;  
+    --color-tag5: #389c3d;  
+    --color-tag6: #0b9dce;
+    --color-tag7: #1d73f5;
+    --color-tag8: #8206cf;
+    --color-tag9: #d3219e;
