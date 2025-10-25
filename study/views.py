@@ -427,7 +427,7 @@ class SesionView(LoginRequiredMixin, TemplateView):
             )
         context["palabras_relacionadas"] = palabras_relacionadas_dict_list
 
-        grupos_usuario = list(Grupo.objects.filter(usuario=usuario))
+        grupos_usuario = c_op.get_user_groups_list(usuario)
         grupos_de_palabra_de_usuario = set(
             Grupo.objects.filter(usuario=usuario, grupo_palabras__palabra=palabra_obj)
         )
@@ -436,17 +436,17 @@ class SesionView(LoginRequiredMixin, TemplateView):
         new_grupos_list = {}
         new_grupos_str = []
         for grupo in grupos_usuario:
-            if grupo in grupos_de_palabra_de_usuario:
+            if grupo["grupo"] in grupos_de_palabra_de_usuario:
                 grupos_checks.append(
                     {
-                        "id": grupo.id,
-                        "text": grupo.grupo,
+                        "id": grupo["id"],
+                        "text": grupo["grupo"],
                         "is_selected": True,
                     }
                 )
             else:
-                new_grupos_list[grupo.grupo] = grupo.id
-                new_grupos_str.append(grupo.grupo)
+                new_grupos_list[grupo["grupo"]] = grupo["id"]
+                new_grupos_str.append(grupo["grupo"])
 
         context["nuevos_grupos"] = new_grupos_str
         self.request.session["new_grupos"] = new_grupos_list

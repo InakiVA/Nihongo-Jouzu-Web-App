@@ -13,7 +13,7 @@ class SignupView(CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect("estudio")
+            return redirect("inicio")
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -21,11 +21,11 @@ class CustomLoginView(LoginView):
     template_name = "accounts/login.html"
     authentication_form = AuthenticationForm
     redirect_authenticated_user = True
-    success_url = reverse_lazy("estudio")
+    success_url = reverse_lazy("inicio")
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect("estudio")
+            return redirect("inicio")
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -41,7 +41,7 @@ class WelcomeView(TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect("estudio")  # o la vista principal del usuario
+            return redirect("inicio")  # o la vista principal del usuario
         return super().dispatch(request, *args, **kwargs)
 
 

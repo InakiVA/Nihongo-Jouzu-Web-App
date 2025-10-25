@@ -1,5 +1,10 @@
 import core.traduccion as trad
+import re
 
+def sort_key(dictionary, key):
+    # Extract the numeric part of the string from the specified field
+    match = re.search(r'(\d+)', dictionary[key])
+    return int(match.group(1))
 
 def max_page_possible(max_value):
     max_page = max_value // 10
