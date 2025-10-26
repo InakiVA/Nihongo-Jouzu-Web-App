@@ -87,11 +87,14 @@
     .. omitir grupo_etiquetas hasta encontrarle propósito funcional
 
 == Vista de etiquetas
-    ++ Agregar etiquetas al navbar
+    << Agregar etiquetas al navbar
     ++ CRUD
+        << vista
+        ++ funcionalidad
     .. omitir grupo_etiquetas hasta encontrarle propósito funcional
-    $$ agregar 3 tiers de colores para cada etiqueta dependiendo de prioridad/tipo que elija el autor de las etiquetas
-        $$ al desplegarse, deben ir en orden 1 a 3
+    << agregar 3 tiers de colores para cada etiqueta dependiendo de prioridad/tipo que elija el autor de las etiquetas
+        << al desplegarse, deben ir en orden 1 a 3
+        << hecho con colores
 
 == Vista de usuario
     ++ Cambiar usuario (unique) y contraseña

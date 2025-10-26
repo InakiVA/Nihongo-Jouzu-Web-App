@@ -6,9 +6,8 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
 from tags.models import Etiqueta
-from groups.models import Grupo, UsuarioGrupo
+from groups.models import Grupo
 from dictionary.models import Palabra
-from progress.models import UsuarioPalabra
 
 import study.operations as op
 import core.operations as c_op

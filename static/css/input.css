@@ -152,7 +152,7 @@ h4 {
 
 .radio{
   @apply radio border-textcolor;
-  @apply hover:shadow-sm checked:border-3;
+  @apply hover:bg-textcolor checked:border-3;
 }
 
 .radio-0{ @apply bg-rainbow0 checked:text-rainbow0;}

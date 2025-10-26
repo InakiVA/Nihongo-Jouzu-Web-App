@@ -1,4 +1,4 @@
-<div class="flex flex-row flex-wrap gap-2 py-2">
+<div class="flex flex-row flex-wrap gap-2 py-2 bg-neutral-main border px-4 rounded-full">
     {% for color in tag_colors %}
         {% if color == selected %}
             {% include "components/radio.html" with is_checked=True %}

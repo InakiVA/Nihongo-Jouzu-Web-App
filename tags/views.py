@@ -11,6 +11,8 @@ from progress.models import UsuarioPalabra
 import core.operations as c_op
 import core.utils as ut
 
+from django.db.models import Q
+
 
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = "tags/home.html"
@@ -21,9 +23,9 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         tag_colors = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "neutral"]
 
-        tag_obj_list = Etiqueta.objects.filter(usuario=usuario).order_by(
-            "etiqueta", "color"
-        )
+        tag_obj_list = Etiqueta.objects.filter(
+            Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
+        ).order_by("etiqueta", "color")
         tag_list = [tag.etiqueta_dict() for tag in tag_obj_list]
         for tag_dict in tag_list:
             tag_dict["editable"] = tag_dict["creador"] == usuario
