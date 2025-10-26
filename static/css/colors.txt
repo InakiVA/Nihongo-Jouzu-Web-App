@@ -30,7 +30,6 @@ dark blue and red:
     --color-accent-light: #ffccd5;
     --color-accent-main: #cc0033;
     --color-accent-dark: #800020; 
-    --color-secondary-main: #2bb7e8;
 
 panoptimize aqua:
     --color-textcolor: #FFFFFF;
@@ -47,7 +46,6 @@ panoptimize aqua:
     --color-accent-light: #7bfff8;
     --color-accent-main: #00b3aa;
     --color-accent-dark: #00756f;
-    --color-secondary-main: #a02be8;
 
 seahawks:
     --color-textcolor: #FFFFFF;
@@ -69,7 +67,7 @@ seahawks:
     --color-tag1: #f75b09;
     --color-tag2: #d2c10d;
     --color-tag3: #389c3d;  
-    --color-tag4: #0b9dce;  
+    --color-tag4: #11b1e6;  
     --color-tag5: #271bff;  
     --color-tag6: #8206cf;
     --color-tag7: #d1219c;

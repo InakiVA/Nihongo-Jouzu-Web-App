@@ -2,52 +2,7 @@
 @config "../../tailwind.config.js";
 @plugin "daisyui";
 
-@theme {
-    --color-progress-0: #9e9e9e;
-    --color-progress-33: #ff2f4e;
-    --color-progress-66: #fab451;  
-    --color-progress-99: #46d659;  
-    --color-progress-100: #5ec9ee;
-
-    --color-mydisabled: #7d7d7d;
-    --color-myalert: #ff2f4e;
-    --color-mywarning: #fab451;
-    --color-mysuccess: #46d659;
-    --color-mycomplete: #5ec9ee;
-
-    --color-correct: #389c3d;
-    --color-incorrect: #bd0f0f;
-
-    --color-star: #fffc56;
-    --color-star-dark: #8f8c04;
-
-    --color-tag0: #e10728;
-    --color-tag1: #f75b09;
-    --color-tag2: #d2c10d;
-    --color-tag3: #389c3d;  
-    --color-tag4: #0b9dce;  
-    --color-tag5: #271bff;  
-    --color-tag6: #8206cf;
-    --color-tag7: #d1219c;
-    --color-tag8: #202020;
-    --color-tag9: #9e9e9e;
-
-    --color-textcolor: #FFFFFF;
-    --color-textcolor-dark: #c7c7c7;
-
-    --color-include: #a02be8;
-    --color-exclude: #f75b09;
-
-    --color-neutral-light: #c9f7f5;
-    --color-neutral-main: #253949;
-    --color-neutral-secondary: #5894c2;
-    --color-neutral-dark: #0d151dff;
-
-    --color-accent-light: #7bfff8;
-    --color-accent-main: #00b3aa;
-    --color-accent-dark: #00756f;
-    --color-secondary-main: #a02be8;
-  }
+@import "./themes.css";
 
 nav {
   @apply navbar bg-neutral-dark border-b border-neutral-light shadow-xl shadow-black/20;
@@ -100,11 +55,6 @@ h4 {
   @apply hover:bg-accent-main hover:border-accent-light;
 }
 
-.button-alert{
-  @apply btn btn-ghost shadow-none border-white bg-secondary-main text-textcolor rounded-sm px-4;
-  @apply hover:bg-accent-main hover:border-accent-light;
-}
-
 .button-big{
   @apply btn btn-ghost shadow-none border-2 border-accent-light bg-accent-main text-textcolor rounded-sm  text-2xl font-bold p-8;
   @apply hover:bg-accent-dark;
@@ -145,7 +95,7 @@ h4 {
 }
 
 .select{
-  @apply select select-ghost text-lg !font-light bg-neutral-dark border-neutral-light text-textcolor w-full;
+  @apply select select-ghost text-lg font-light! bg-neutral-dark border-neutral-light text-textcolor w-full;
   @apply hover:bg-neutral-main hover:shadow-sm;
   @apply focus:bg-neutral-main;
 }
@@ -161,7 +111,7 @@ h4 {
 }
 
 .textarea {
-  @apply input input-neutral rounded-lg text-lg !font-light flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
+  @apply input input-neutral rounded-lg text-lg font-light! flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
   @apply focus:bg-neutral-main hover:bg-neutral-main;
   @apply placeholder:text-textcolor-dark placeholder:italic;
 }
@@ -180,16 +130,16 @@ h4 {
   @apply rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
 }
 
-.tag-0{ @apply bg-tag0; }
-.tag-1{ @apply bg-tag1; }
-.tag-2{ @apply bg-tag2; }
-.tag-3{ @apply bg-tag3; }
-.tag-4{ @apply bg-tag4; }
-.tag-5{ @apply bg-tag5; }
-.tag-6{ @apply bg-tag6; }
-.tag-7{ @apply bg-tag7; }
-.tag-8{ @apply bg-tag8; }
-.tag-9{ @apply bg-tag9; } 
+.tag-0{ @apply bg-rainbow0; }
+.tag-1{ @apply bg-rainbow1; }
+.tag-2{ @apply bg-rainbow2; }
+.tag-3{ @apply bg-rainbow3; }
+.tag-4{ @apply bg-rainbow4; }
+.tag-5{ @apply bg-rainbow5; }
+.tag-6{ @apply bg-rainbow6; }
+.tag-7{ @apply bg-rainbow7; }
+.tag-8{ @apply bg-rainbow8; }
+.tag-9{ @apply bg-rainbow9; } 
 .tag-neutral{ @apply bg-neutral-secondary; }
 
 /* solo con grupos */
@@ -200,16 +150,16 @@ h4 {
   @apply hover:shadow-sm checked:border-3;
 }
 
-.radio-0{ @apply radio bg-tag0 checked:text-tag0;}
-.radio-1{ @apply radio bg-tag1 checked:text-tag1;}
-.radio-2{ @apply radio bg-tag2 checked:text-tag2;}
-.radio-3{ @apply radio bg-tag3 checked:text-tag3;}
-.radio-4{ @apply radio bg-tag4 checked:text-tag4;}
-.radio-5{ @apply radio bg-tag5 checked:text-tag5;}
-.radio-6{ @apply radio bg-tag6 checked:text-tag6;}
-.radio-7{ @apply radio bg-tag7 checked:text-tag7;}
-.radio-8{ @apply radio bg-tag8 checked:text-tag8;}
-.radio-9{ @apply radio bg-tag9 checked:text-tag9;}
+.radio-0{ @apply bg-rainbow0 checked:text-rainbow0;}
+.radio-1{ @apply bg-rainbow1 checked:text-rainbow1;}
+.radio-2{ @apply bg-rainbow2 checked:text-rainbow2;}
+.radio-3{ @apply bg-rainbow3 checked:text-rainbow3;}
+.radio-4{ @apply bg-rainbow4 checked:text-rainbow4;}
+.radio-5{ @apply bg-rainbow5 checked:text-rainbow5;}
+.radio-6{ @apply bg-rainbow6 checked:text-rainbow6;}
+.radio-7{ @apply bg-rainbow7 checked:text-rainbow7;}
+.radio-8{ @apply bg-rainbow8 checked:text-rainbow8;}
+.radio-9{ @apply bg-rainbow9 checked:text-rainbow9;}
 .radio-neutral{ @apply bg-neutral-secondary checked:text-neutral-secondary;}
 
 .check-box{
@@ -236,7 +186,7 @@ h4 {
 }
 
 .collapser{
-  @apply collapse bg-neutral-dark border-1 border-neutral-light;
+  @apply collapse bg-neutral-dark border border-neutral-light;
   @apply hover:bg-neutral-main hover:shadow-sm;
 }
 
@@ -245,19 +195,19 @@ h4 {
 }
 
 .element_list {
-  @apply bg-neutral-dark border-neutral-light rounded-box shadow-xl border-1;
+  @apply bg-neutral-dark border-neutral-light rounded-box shadow-xl border;
 }
 
 .element_row{
-  @apply shadow-md border-1 border-neutral-main items-center gap-4 px-4 py-4;
+  @apply shadow-md border border-neutral-main items-center gap-4 px-4 py-4;
 }
 
 .wordcard{
-  @apply hover:bg-neutral-main bg-neutral-dark shadow-sm border-1 border-neutral-main text-textcolor rounded-lg;
+  @apply hover:bg-neutral-main bg-neutral-dark shadow-sm border border-neutral-main text-textcolor rounded-lg;
 }
 
 .wordcard-disabled{
-  @apply  bg-neutral-dark shadow-sm border-1 border-neutral-main text-textcolor rounded-lg;
+  @apply  bg-neutral-dark shadow-sm border border-neutral-main text-textcolor rounded-lg;
 }
 
 .modal-box{

@@ -50,8 +50,10 @@
   </dialog>
 
   <div class="space-y-4">
-    {% for etiqueta in etiquetas_list %}
-    {% include "components/group_card.html" with url=etiqueta_url estrella_url=etiqueta_estrella_url %}
+    {% for tag in tag_list %}
+    <div class="flex">
+      {% include "components/tag.html" with color=tag.color text=tag.etiqueta extra_classes="text-2xl"%}
+    </div>
     {% endfor %}
   </div>
 

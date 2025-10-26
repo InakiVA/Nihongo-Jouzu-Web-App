@@ -59,16 +59,16 @@
     --color-incorrect: #bd0f0f;
     --color-star: #fffc56;
     --color-star-dark: #8f8c04;
-    --color-tag0: #e10728;
-    --color-tag1: #f75b09;
-    --color-tag2: #d2c10d;
-    --color-tag3: #389c3d;
-    --color-tag4: #0b9dce;
-    --color-tag5: #271bff;
-    --color-tag6: #8206cf;
-    --color-tag7: #d1219c;
-    --color-tag8: #202020;
-    --color-tag9: #9e9e9e;
+    --color-rainbow0: #e10728;
+    --color-rainbow1: #f75b09;
+    --color-rainbow2: #d2c10d;
+    --color-rainbow3: #389c3d;
+    --color-rainbow4: #11b1e6;
+    --color-rainbow5: #271bff;
+    --color-rainbow6: #8206cf;
+    --color-rainbow7: #d1219c;
+    --color-rainbow8: #202020;
+    --color-rainbow9: #9e9e9e;
     --color-textcolor: #FFFFFF;
     --color-textcolor-dark: #c7c7c7;
     --color-include: #a02be8;
@@ -80,7 +80,6 @@
     --color-accent-light: #7bfff8;
     --color-accent-main: #00b3aa;
     --color-accent-dark: #00756f;
-    --color-secondary-main: #a02be8;
   }
 }
 @layer base {
@@ -313,7 +312,8 @@
       &:is(input[type="radio"]) {
         min-width: fit-content;
         &:after {
-          content: attr(aria-label);
+          --tw-content: attr(aria-label);
+          content: var(--tw-content);
         }
       }
       &:is(label) {
@@ -557,7 +557,8 @@
         }
         top: 0.9rem;
         inset-inline-end: 1.4rem;
-        content: "+";
+        --tw-content: "+";
+        content: var(--tw-content);
         pointer-events: none;
       }
     }
@@ -659,6 +660,9 @@
         width: unset;
       }
     }
+    .prose & {
+      text-decoration-line: none;
+    }
     @layer daisyui.component {
       display: inline-flex;
       flex-shrink: 0;
@@ -710,9 +714,6 @@
       0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
       }
       --btn-noise: var(--fx-noise);
-      .prose & {
-        text-decoration-line: none;
-      }
       @media (hover: hover) {
         &:hover {
           --btn-bg: var(--btn-color, var(--color-base-200));
@@ -741,7 +742,8 @@
       &:is(input[type="checkbox"], input[type="radio"]) {
         appearance: none;
         &::after {
-          content: attr(aria-label);
+          --tw-content: attr(aria-label);
+          content: var(--tw-content);
         }
       }
       &:where(input:checked:not(.filter .btn)) {
@@ -821,15 +823,18 @@
       grid-row-start: 1;
     }
     @layer daisyui.component {
-      visibility: hidden;
+      content-visibility: hidden;
       grid-column-start: 1;
       grid-row-start: 2;
       min-height: 0;
       padding-left: 1rem;
       padding-right: 1rem;
       cursor: unset;
+      @supports not (content-visibility: hidden) {
+        visibility: hidden;
+      }
       @media (prefers-reduced-motion: no-preference) {
-        transition: visibility 0.2s, padding 0.2s ease-out, background-color 0.2s ease-out;
+        transition: content-visibility 0.2s allow-discrete, visibility 0.2s allow-discrete, padding 0.2s ease-out, background-color 0.2s ease-out;
       }
     }
   }
@@ -1971,7 +1976,7 @@
   .z-50 {
     z-index: 50;
   }
-  .z-\[9999\] {
+  .z-9999 {
     z-index: 9999;
   }
   .modal-box {
@@ -2043,7 +2048,8 @@
         &.filter-reset {
           aspect-ratio: 1 / 1;
           &::after {
-            content: "×";
+            --tw-content: "×";
+            content: var(--tw-content);
           }
         }
       }
@@ -2327,14 +2333,11 @@
     width: calc(var(--spacing) * 6);
     height: calc(var(--spacing) * 6);
   }
-  .\!h-8 {
-    height: calc(var(--spacing) * 8) !important;
-  }
-  .\!h-full {
-    height: 100% !important;
-  }
   .h-8 {
     height: calc(var(--spacing) * 8);
+  }
+  .h-8\! {
+    height: calc(var(--spacing) * 8) !important;
   }
   .h-14 {
     height: calc(var(--spacing) * 14);
@@ -2345,6 +2348,9 @@
   .h-full {
     height: 100%;
   }
+  .h-full\! {
+    height: 100% !important;
+  }
   .h-screen {
     height: 100vh;
   }
@@ -2353,9 +2359,6 @@
   }
   .min-h-screen {
     min-height: 100vh;
-  }
-  .\!w-full {
-    width: 100% !important;
   }
   .w-40 {
     width: calc(var(--spacing) * 40);
@@ -2368,6 +2371,9 @@
   }
   .w-full {
     width: 100%;
+  }
+  .w-full\! {
+    width: 100% !important;
   }
   .w-screen {
     width: 100vw;
@@ -2471,9 +2477,6 @@
   .gap-0 {
     gap: calc(var(--spacing) * 0);
   }
-  .gap-0\.25 {
-    gap: calc(var(--spacing) * 0.25);
-  }
   .gap-1 {
     gap: calc(var(--spacing) * 1);
   }
@@ -2485,6 +2488,9 @@
   }
   .gap-8 {
     gap: calc(var(--spacing) * 8);
+  }
+  .gap-px {
+    gap: 1px;
   }
   .space-y-2 {
     :where(& > :not(:last-child)) {
@@ -2514,14 +2520,14 @@
       margin-block-end: calc(calc(var(--spacing) * 10) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
-  .gap-x-0\.25 {
-    column-gap: calc(var(--spacing) * 0.25);
-  }
   .gap-x-2 {
     column-gap: calc(var(--spacing) * 2);
   }
   .gap-x-4 {
     column-gap: calc(var(--spacing) * 4);
+  }
+  .gap-x-px {
+    column-gap: 1px;
   }
   .space-x-2 {
     :where(& > :not(:last-child)) {
@@ -2563,9 +2569,6 @@
       }
     }
   }
-  .\!rounded-full {
-    border-radius: calc(infinity * 1px) !important;
-  }
   .\!rounded-xl {
     border-radius: var(--radius-xl) !important;
   }
@@ -2584,19 +2587,22 @@
   .rounded-full {
     border-radius: calc(infinity * 1px);
   }
+  .rounded-full\! {
+    border-radius: calc(infinity * 1px) !important;
+  }
   .rounded-lg {
     border-radius: var(--radius-lg);
   }
   .rounded-xl {
     border-radius: var(--radius-xl);
   }
-  .\!border {
-    border-style: var(--tw-border-style) !important;
-    border-width: 1px !important;
-  }
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
+  }
+  .border\! {
+    border-style: var(--tw-border-style) !important;
+    border-width: 1px !important;
   }
   .border-b {
     border-bottom-style: var(--tw-border-style);
@@ -2605,9 +2611,6 @@
   .border-b-2 {
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 2px;
-  }
-  .\!border-neutral-light {
-    border-color: var(--color-neutral-light) !important;
   }
   .\!border-neutral-main {
     border-color: var(--color-neutral-main) !important;
@@ -2623,6 +2626,12 @@
   }
   .border-neutral-light {
     border-color: var(--color-neutral-light);
+  }
+  .border-neutral-light\! {
+    border-color: var(--color-neutral-light) !important;
+  }
+  .border-neutral-main\! {
+    border-color: var(--color-neutral-main) !important;
   }
   .border-textcolor {
     border-color: var(--color-textcolor);
@@ -2648,9 +2657,6 @@
   .\!p-2 {
     padding: calc(var(--spacing) * 2) !important;
   }
-  .\!p-6 {
-    padding: calc(var(--spacing) * 6) !important;
-  }
   .p-2 {
     padding: calc(var(--spacing) * 2);
   }
@@ -2660,26 +2666,26 @@
   .p-6 {
     padding: calc(var(--spacing) * 6);
   }
+  .p-6\! {
+    padding: calc(var(--spacing) * 6) !important;
+  }
   .p-8 {
     padding: calc(var(--spacing) * 8);
   }
   .p-10 {
     padding: calc(var(--spacing) * 10);
   }
-  .\!px-2 {
-    padding-inline: calc(var(--spacing) * 2) !important;
-  }
   .\!px-4 {
     padding-inline: calc(var(--spacing) * 4) !important;
-  }
-  .\!px-6 {
-    padding-inline: calc(var(--spacing) * 6) !important;
   }
   .\!px-8 {
     padding-inline: calc(var(--spacing) * 8) !important;
   }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
+  }
+  .px-2\! {
+    padding-inline: calc(var(--spacing) * 2) !important;
   }
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
@@ -2689,6 +2695,9 @@
   }
   .px-6 {
     padding-inline: calc(var(--spacing) * 6);
+  }
+  .px-6\! {
+    padding-inline: calc(var(--spacing) * 6) !important;
   }
   .px-20 {
     padding-inline: calc(var(--spacing) * 20);
@@ -2702,7 +2711,7 @@
   .py-8 {
     padding-block: calc(var(--spacing) * 8);
   }
-  .\!pt-0 {
+  .pt-0\! {
     padding-top: calc(var(--spacing) * 0) !important;
   }
   .pt-2 {
@@ -2737,17 +2746,13 @@
     font-size: var(--text-3xl) !important;
     line-height: var(--tw-leading, var(--text-3xl--line-height)) !important;
   }
-  .\!text-4xl {
-    font-size: var(--text-4xl) !important;
-    line-height: var(--tw-leading, var(--text-4xl--line-height)) !important;
-  }
-  .\!text-base {
-    font-size: var(--text-base) !important;
-    line-height: var(--tw-leading, var(--text-base--line-height)) !important;
-  }
   .text-2xl {
     font-size: var(--text-2xl);
     line-height: var(--tw-leading, var(--text-2xl--line-height));
+  }
+  .text-2xl\! {
+    font-size: var(--text-2xl) !important;
+    line-height: var(--tw-leading, var(--text-2xl--line-height)) !important;
   }
   .text-3xl {
     font-size: var(--text-3xl);
@@ -2757,6 +2762,10 @@
     font-size: var(--text-4xl);
     line-height: var(--tw-leading, var(--text-4xl--line-height));
   }
+  .text-4xl\! {
+    font-size: var(--text-4xl) !important;
+    line-height: var(--tw-leading, var(--text-4xl--line-height)) !important;
+  }
   .text-6xl {
     font-size: var(--text-6xl);
     line-height: var(--tw-leading, var(--text-6xl--line-height));
@@ -2764,6 +2773,10 @@
   .text-8xl {
     font-size: var(--text-8xl);
     line-height: var(--tw-leading, var(--text-8xl--line-height));
+  }
+  .text-base\! {
+    font-size: var(--text-base) !important;
+    line-height: var(--tw-leading, var(--text-base--line-height)) !important;
   }
   .text-sm {
     font-size: var(--text-sm);
@@ -2785,10 +2798,6 @@
     --tw-font-weight: var(--font-weight-bold) !important;
     font-weight: var(--font-weight-bold) !important;
   }
-  .\!font-light {
-    --tw-font-weight: var(--font-weight-light) !important;
-    font-weight: var(--font-weight-light) !important;
-  }
   .\!font-semibold {
     --tw-font-weight: var(--font-weight-semibold) !important;
     font-weight: var(--font-weight-semibold) !important;
@@ -2801,11 +2810,19 @@
     --tw-font-weight: var(--font-weight-light);
     font-weight: var(--font-weight-light);
   }
+  .font-light\! {
+    --tw-font-weight: var(--font-weight-light) !important;
+    font-weight: var(--font-weight-light) !important;
+  }
   .font-semibold {
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
   }
-  .break-words {
+  .font-semibold\! {
+    --tw-font-weight: var(--font-weight-semibold) !important;
+    font-weight: var(--font-weight-semibold) !important;
+  }
+  .wrap-break-word {
     overflow-wrap: break-word;
   }
   .break-keep {
@@ -2848,14 +2865,11 @@
       --alert-color: var(--color-warning);
     }
   }
-  .\!text-myalert {
-    color: var(--color-myalert) !important;
-  }
-  .\!text-textcolor {
-    color: var(--color-textcolor) !important;
-  }
   .text-myalert {
     color: var(--color-myalert);
+  }
+  .text-myalert\! {
+    color: var(--color-myalert) !important;
   }
   .text-progress-0 {
     color: var(--color-progress-0);
@@ -2872,6 +2886,9 @@
   .text-progress-100 {
     color: var(--color-progress-100);
   }
+  .text-textcolor\! {
+    color: var(--color-textcolor) !important;
+  }
   .text-textcolor-dark {
     color: var(--color-textcolor-dark);
   }
@@ -2881,11 +2898,11 @@
   .lowercase {
     text-transform: lowercase;
   }
-  .\!underline {
-    text-decoration-line: underline !important;
-  }
   .underline {
     text-decoration-line: underline;
+  }
+  .underline\! {
+    text-decoration-line: underline !important;
   }
   .shadow {
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
@@ -3064,6 +3081,9 @@ h4 {
       width: unset;
     }
   }
+  .prose & {
+    text-decoration-line: none;
+  }
   @layer daisyui.component {
     display: inline-flex;
     flex-shrink: 0;
@@ -3115,9 +3135,6 @@ h4 {
       0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
     }
     --btn-noise: var(--fx-noise);
-    .prose & {
-      text-decoration-line: none;
-    }
     @media (hover: hover) {
       &:hover {
         --btn-bg: var(--btn-color, var(--color-base-200));
@@ -3146,7 +3163,8 @@ h4 {
     &:is(input[type="checkbox"], input[type="radio"]) {
       appearance: none;
       &::after {
-        content: attr(aria-label);
+        --tw-content: attr(aria-label);
+        content: var(--tw-content);
       }
     }
     &:where(input:checked:not(.filter .btn)) {
@@ -3259,6 +3277,9 @@ h4 {
       width: unset;
     }
   }
+  .prose & {
+    text-decoration-line: none;
+  }
   @layer daisyui.component {
     display: inline-flex;
     flex-shrink: 0;
@@ -3310,9 +3331,6 @@ h4 {
       0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
     }
     --btn-noise: var(--fx-noise);
-    .prose & {
-      text-decoration-line: none;
-    }
     @media (hover: hover) {
       &:hover {
         --btn-bg: var(--btn-color, var(--color-base-200));
@@ -3341,7 +3359,8 @@ h4 {
     &:is(input[type="checkbox"], input[type="radio"]) {
       appearance: none;
       &::after {
-        content: attr(aria-label);
+        --tw-content: attr(aria-label);
+        content: var(--tw-content);
       }
     }
     &:where(input:checked:not(.filter .btn)) {
@@ -3456,6 +3475,9 @@ h4 {
       width: unset;
     }
   }
+  .prose & {
+    text-decoration-line: none;
+  }
   @layer daisyui.component {
     display: inline-flex;
     flex-shrink: 0;
@@ -3507,9 +3529,6 @@ h4 {
       0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
     }
     --btn-noise: var(--fx-noise);
-    .prose & {
-      text-decoration-line: none;
-    }
     @media (hover: hover) {
       &:hover {
         --btn-bg: var(--btn-color, var(--color-base-200));
@@ -3538,7 +3557,8 @@ h4 {
     &:is(input[type="checkbox"], input[type="radio"]) {
       appearance: none;
       &::after {
-        content: attr(aria-label);
+        --tw-content: attr(aria-label);
+        content: var(--tw-content);
       }
     }
     &:where(input:checked:not(.filter .btn)) {
@@ -3650,212 +3670,15 @@ h4 {
     }
   }
 }
-.button-alert {
-  :where(&) {
-    @layer daisyui.component {
-      width: unset;
-    }
-  }
-  @layer daisyui.component {
-    display: inline-flex;
-    flex-shrink: 0;
-    cursor: pointer;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    gap: calc(0.25rem * 1.5);
-    text-align: center;
-    vertical-align: middle;
-    outline-offset: 2px;
-    webkit-user-select: none;
-    user-select: none;
-    padding-inline: var(--btn-p);
-    color: var(--btn-fg);
-    --tw-prose-links: var(--btn-fg);
-    height: var(--size);
-    font-size: var(--fontsize, 0.875rem);
-    font-weight: 600;
-    outline-color: var(--btn-color, var(--color-base-content));
-    transition-property: color, background-color, border-color, box-shadow;
-    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
-    transition-duration: 0.2s;
-    border-start-start-radius: var(--join-ss, var(--radius-field));
-    border-start-end-radius: var(--join-se, var(--radius-field));
-    border-end-start-radius: var(--join-es, var(--radius-field));
-    border-end-end-radius: var(--join-ee, var(--radius-field));
-    background-color: var(--btn-bg);
-    background-size: auto, calc(var(--noise) * 100%);
-    background-image: none, var(--btn-noise);
-    border-width: var(--border);
-    border-style: solid;
-    border-color: var(--btn-border);
-    text-shadow: 0 0.5px oklch(100% 0 0 / calc(var(--depth) * 0.15));
-    touch-action: manipulation;
-    box-shadow: 0 0.5px 0 0.5px oklch(100% 0 0 / calc(var(--depth) * 6%)) inset, var(--btn-shadow);
-    --size: calc(var(--size-field, 0.25rem) * 10);
-    --btn-bg: var(--btn-color, var(--color-base-200));
-    --btn-fg: var(--color-base-content);
-    --btn-p: 1rem;
-    --btn-border: var(--btn-bg);
-    @supports (color: color-mix(in lab, red, red)) {
-      --btn-border: color-mix(in oklab, var(--btn-bg), #000 calc(var(--depth) * 5%));
-    }
-    --btn-shadow: 0 3px 2px -2px var(--btn-bg),
-      0 4px 3px -2px var(--btn-bg);
-    @supports (color: color-mix(in lab, red, red)) {
-      --btn-shadow: 0 3px 2px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000),
-      0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
-    }
-    --btn-noise: var(--fx-noise);
-    .prose & {
-      text-decoration-line: none;
-    }
-    @media (hover: hover) {
-      &:hover {
-        --btn-bg: var(--btn-color, var(--color-base-200));
-        @supports (color: color-mix(in lab, red, red)) {
-          --btn-bg: color-mix(in oklab, var(--btn-color, var(--color-base-200)), #000 7%);
-        }
-      }
-    }
-    &:focus-visible, &:has(:focus-visible) {
-      outline-width: 2px;
-      outline-style: solid;
-      isolation: isolate;
-    }
-    &:active:not(.btn-active) {
-      translate: 0 0.5px;
-      --btn-bg: var(--btn-color, var(--color-base-200));
-      @supports (color: color-mix(in lab, red, red)) {
-        --btn-bg: color-mix(in oklab, var(--btn-color, var(--color-base-200)), #000 5%);
-      }
-      --btn-border: var(--btn-color, var(--color-base-200));
-      @supports (color: color-mix(in lab, red, red)) {
-        --btn-border: color-mix(in oklab, var(--btn-color, var(--color-base-200)), #000 7%);
-      }
-      --btn-shadow: 0 0 0 0 oklch(0% 0 0/0), 0 0 0 0 oklch(0% 0 0/0);
-    }
-    &:is(input[type="checkbox"], input[type="radio"]) {
-      appearance: none;
-      &::after {
-        content: attr(aria-label);
-      }
-    }
-    &:where(input:checked:not(.filter .btn)) {
-      --btn-color: var(--color-primary);
-      --btn-fg: var(--color-primary-content);
-      isolation: isolate;
-    }
-  }
-  &:disabled {
-    @layer daisyui.modifier {
-      &:not(.btn-link, .btn-ghost) {
-        background-color: var(--color-base-content);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
-        }
-        box-shadow: none;
-      }
-      pointer-events: none;
-      --btn-border: #0000;
-      --btn-noise: none;
-      --btn-fg: var(--color-base-content);
-      @supports (color: color-mix(in lab, red, red)) {
-        --btn-fg: color-mix(in oklch, var(--color-base-content) 20%, #0000);
-      }
-      @media (hover: hover) {
-        &:hover {
-          pointer-events: none;
-          background-color: var(--color-neutral);
-          @supports (color: color-mix(in lab, red, red)) {
-            background-color: color-mix(in oklab, var(--color-neutral) 20%, transparent);
-          }
-          --btn-border: #0000;
-          --btn-fg: var(--color-base-content);
-          @supports (color: color-mix(in lab, red, red)) {
-            --btn-fg: color-mix(in oklch, var(--color-base-content) 20%, #0000);
-          }
-        }
-      }
-    }
-  }
-  &[disabled] {
-    @layer daisyui.modifier {
-      &:not(.btn-link, .btn-ghost) {
-        background-color: var(--color-base-content);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-base-content) 10%, transparent);
-        }
-        box-shadow: none;
-      }
-      pointer-events: none;
-      --btn-border: #0000;
-      --btn-noise: none;
-      --btn-fg: var(--color-base-content);
-      @supports (color: color-mix(in lab, red, red)) {
-        --btn-fg: color-mix(in oklch, var(--color-base-content) 20%, #0000);
-      }
-      @media (hover: hover) {
-        &:hover {
-          pointer-events: none;
-          background-color: var(--color-neutral);
-          @supports (color: color-mix(in lab, red, red)) {
-            background-color: color-mix(in oklab, var(--color-neutral) 20%, transparent);
-          }
-          --btn-border: #0000;
-          --btn-fg: var(--color-base-content);
-          @supports (color: color-mix(in lab, red, red)) {
-            --btn-fg: color-mix(in oklch, var(--color-base-content) 20%, #0000);
-          }
-        }
-      }
-    }
-  }
-  border-radius: var(--radius-sm);
-  border-color: var(--color-white);
-  background-color: var(--color-secondary-main);
-  padding-inline: calc(var(--spacing) * 4);
-  color: var(--color-textcolor);
-  --tw-shadow: 0 0 #0000;
-  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  @layer daisyui.modifier {
-    &:not(.btn-active, :hover, :active:focus, :focus-visible) {
-      --btn-shadow: "";
-      --btn-bg: #0000;
-      --btn-border: #0000;
-      --btn-noise: none;
-      &:not(:disabled, [disabled], .btn-disabled) {
-        outline-color: currentcolor;
-        --btn-fg: currentColor;
-      }
-    }
-    @media (hover: none) {
-      &:hover:not(.btn-active, :active, :focus-visible, :disabled, [disabled], .btn-disabled) {
-        --btn-shadow: "";
-        --btn-bg: #0000;
-        --btn-border: #0000;
-        --btn-noise: none;
-        --btn-fg: currentColor;
-      }
-    }
-  }
-  &:hover {
-    @media (hover: hover) {
-      border-color: var(--color-accent-light);
-    }
-  }
-  &:hover {
-    @media (hover: hover) {
-      background-color: var(--color-accent-main);
-    }
-  }
-}
 .button-big {
   :where(&) {
     @layer daisyui.component {
       width: unset;
     }
   }
+  .prose & {
+    text-decoration-line: none;
+  }
   @layer daisyui.component {
     display: inline-flex;
     flex-shrink: 0;
@@ -3907,9 +3730,6 @@ h4 {
       0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
     }
     --btn-noise: var(--fx-noise);
-    .prose & {
-      text-decoration-line: none;
-    }
     @media (hover: hover) {
       &:hover {
         --btn-bg: var(--btn-color, var(--color-base-200));
@@ -3938,7 +3758,8 @@ h4 {
     &:is(input[type="checkbox"], input[type="radio"]) {
       appearance: none;
       &::after {
-        content: attr(aria-label);
+        --tw-content: attr(aria-label);
+        content: var(--tw-content);
       }
     }
     &:where(input:checked:not(.filter .btn)) {
@@ -4057,6 +3878,9 @@ h4 {
       width: unset;
     }
   }
+  .prose & {
+    text-decoration-line: none;
+  }
   @layer daisyui.component {
     display: inline-flex;
     flex-shrink: 0;
@@ -4108,9 +3932,6 @@ h4 {
       0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
     }
     --btn-noise: var(--fx-noise);
-    .prose & {
-      text-decoration-line: none;
-    }
     @media (hover: hover) {
       &:hover {
         --btn-bg: var(--btn-color, var(--color-base-200));
@@ -4139,7 +3960,8 @@ h4 {
     &:is(input[type="checkbox"], input[type="radio"]) {
       appearance: none;
       &::after {
-        content: attr(aria-label);
+        --tw-content: attr(aria-label);
+        content: var(--tw-content);
       }
     }
     &:where(input:checked:not(.filter .btn)) {
@@ -4256,6 +4078,9 @@ h4 {
       width: unset;
     }
   }
+  .prose & {
+    text-decoration-line: none;
+  }
   @layer daisyui.component {
     display: inline-flex;
     flex-shrink: 0;
@@ -4307,9 +4132,6 @@ h4 {
       0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
     }
     --btn-noise: var(--fx-noise);
-    .prose & {
-      text-decoration-line: none;
-    }
     @media (hover: hover) {
       &:hover {
         --btn-bg: var(--btn-color, var(--color-base-200));
@@ -4338,7 +4160,8 @@ h4 {
     &:is(input[type="checkbox"], input[type="radio"]) {
       appearance: none;
       &::after {
-        content: attr(aria-label);
+        --tw-content: attr(aria-label);
+        content: var(--tw-content);
       }
     }
     &:where(input:checked:not(.filter .btn)) {
@@ -4450,6 +4273,9 @@ h4 {
       width: unset;
     }
   }
+  .prose & {
+    text-decoration-line: none;
+  }
   @layer daisyui.component {
     display: inline-flex;
     flex-shrink: 0;
@@ -4501,9 +4327,6 @@ h4 {
       0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
     }
     --btn-noise: var(--fx-noise);
-    .prose & {
-      text-decoration-line: none;
-    }
     @media (hover: hover) {
       &:hover {
         --btn-bg: var(--btn-color, var(--color-base-200));
@@ -4532,7 +4355,8 @@ h4 {
     &:is(input[type="checkbox"], input[type="radio"]) {
       appearance: none;
       &::after {
-        content: attr(aria-label);
+        --tw-content: attr(aria-label);
+        content: var(--tw-content);
       }
     }
     &:where(input:checked:not(.filter .btn)) {
@@ -4644,6 +4468,9 @@ h4 {
       width: unset;
     }
   }
+  .prose & {
+    text-decoration-line: none;
+  }
   @layer daisyui.component {
     display: inline-flex;
     flex-shrink: 0;
@@ -4695,9 +4522,6 @@ h4 {
       0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
     }
     --btn-noise: var(--fx-noise);
-    .prose & {
-      text-decoration-line: none;
-    }
     @media (hover: hover) {
       &:hover {
         --btn-bg: var(--btn-color, var(--color-base-200));
@@ -4726,7 +4550,8 @@ h4 {
     &:is(input[type="checkbox"], input[type="radio"]) {
       appearance: none;
       &::after {
-        content: attr(aria-label);
+        --tw-content: attr(aria-label);
+        content: var(--tw-content);
       }
     }
     &:where(input:checked:not(.filter .btn)) {
@@ -4838,6 +4663,9 @@ h4 {
       width: unset;
     }
   }
+  .prose & {
+    text-decoration-line: none;
+  }
   @layer daisyui.component {
     display: inline-flex;
     flex-shrink: 0;
@@ -4889,9 +4717,6 @@ h4 {
       0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
     }
     --btn-noise: var(--fx-noise);
-    .prose & {
-      text-decoration-line: none;
-    }
     @media (hover: hover) {
       &:hover {
         --btn-bg: var(--btn-color, var(--color-base-200));
@@ -4920,7 +4745,8 @@ h4 {
     &:is(input[type="checkbox"], input[type="radio"]) {
       appearance: none;
       &::after {
-        content: attr(aria-label);
+        --tw-content: attr(aria-label);
+        content: var(--tw-content);
       }
     }
     &:where(input:checked:not(.filter .btn)) {
@@ -5032,6 +4858,9 @@ h4 {
       width: unset;
     }
   }
+  .prose & {
+    text-decoration-line: none;
+  }
   @layer daisyui.component {
     display: inline-flex;
     flex-shrink: 0;
@@ -5083,9 +4912,6 @@ h4 {
       0 4px 3px -2px color-mix(in oklab, var(--btn-bg) calc(var(--depth) * 30%), #0000);
     }
     --btn-noise: var(--fx-noise);
-    .prose & {
-      text-decoration-line: none;
-    }
     @media (hover: hover) {
       &:hover {
         --btn-bg: var(--btn-color, var(--color-base-200));
@@ -5114,7 +4940,8 @@ h4 {
     &:is(input[type="checkbox"], input[type="radio"]) {
       appearance: none;
       &::after {
-        content: attr(aria-label);
+        --tw-content: attr(aria-label);
+        content: var(--tw-content);
       }
     }
     &:where(input:checked:not(.filter .btn)) {
@@ -5789,34 +5616,34 @@ h4 {
   color: var(--color-textcolor);
 }
 .tag-0 {
-  background-color: var(--color-tag0);
+  background-color: var(--color-rainbow0);
 }
 .tag-1 {
-  background-color: var(--color-tag1);
+  background-color: var(--color-rainbow1);
 }
 .tag-2 {
-  background-color: var(--color-tag2);
+  background-color: var(--color-rainbow2);
 }
 .tag-3 {
-  background-color: var(--color-tag3);
+  background-color: var(--color-rainbow3);
 }
 .tag-4 {
-  background-color: var(--color-tag4);
+  background-color: var(--color-rainbow4);
 }
 .tag-5 {
-  background-color: var(--color-tag5);
+  background-color: var(--color-rainbow5);
 }
 .tag-6 {
-  background-color: var(--color-tag6);
+  background-color: var(--color-rainbow6);
 }
 .tag-7 {
-  background-color: var(--color-tag7);
+  background-color: var(--color-rainbow7);
 }
 .tag-8 {
-  background-color: var(--color-tag8);
+  background-color: var(--color-rainbow8);
 }
 .tag-9 {
-  background-color: var(--color-tag9);
+  background-color: var(--color-rainbow9);
 }
 .tag-neutral {
   background-color: var(--color-neutral-secondary);
@@ -5903,683 +5730,63 @@ h4 {
   }
 }
 .radio-0 {
-  @layer daisyui.component {
-    position: relative;
-    display: inline-block;
-    flex-shrink: 0;
-    cursor: pointer;
-    appearance: none;
-    border-radius: calc(infinity * 1px);
-    padding: calc(0.25rem * 1);
-    vertical-align: middle;
-    border: var(--border) solid var(--input-color, currentColor);
-    @supports (color: color-mix(in lab, red, red)) {
-      border: var(--border) solid var(--input-color, color-mix(in srgb, currentColor 20%, #0000));
-    }
-    box-shadow: 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset;
-    --size: calc(var(--size-selector, 0.25rem) * 6);
-    width: var(--size);
-    height: var(--size);
-    color: var(--input-color, currentColor);
-    &:before {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: calc(infinity * 1px);
-      --tw-content: "";
-      content: var(--tw-content);
-      background-size: auto, calc(var(--noise) * 100%);
-      background-image: none, var(--fx-noise);
-    }
-    &:focus-visible {
-      outline: 2px solid currentColor;
-    }
-    &:checked, &[aria-checked="true"] {
-      border-color: currentcolor;
-      background-color: var(--color-base-100);
-      @media (prefers-reduced-motion: no-preference) {
-        animation: radio 0.2s ease-out;
-      }
-      &:before {
-        background-color: currentcolor;
-        box-shadow: 0 -1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset, 0 8px 0 -4px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset, 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1));
-      }
-      @media (forced-colors: active) {
-        &:before {
-          outline-style: var(--tw-outline-style);
-          outline-width: 1px;
-          outline-offset: calc(1px * -1);
-        }
-      }
-      @media print {
-        &:before {
-          outline: 0.25rem solid;
-          outline-offset: -1rem;
-        }
-      }
-    }
-  }
-  &:disabled {
-    @layer daisyui.modifier {
-      cursor: not-allowed;
-      opacity: 20%;
-    }
-  }
-  background-color: var(--color-tag0);
+  background-color: var(--color-rainbow0);
   &:checked {
-    color: var(--color-tag0);
+    color: var(--color-rainbow0);
   }
 }
 .radio-1 {
-  @layer daisyui.component {
-    position: relative;
-    display: inline-block;
-    flex-shrink: 0;
-    cursor: pointer;
-    appearance: none;
-    border-radius: calc(infinity * 1px);
-    padding: calc(0.25rem * 1);
-    vertical-align: middle;
-    border: var(--border) solid var(--input-color, currentColor);
-    @supports (color: color-mix(in lab, red, red)) {
-      border: var(--border) solid var(--input-color, color-mix(in srgb, currentColor 20%, #0000));
-    }
-    box-shadow: 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset;
-    --size: calc(var(--size-selector, 0.25rem) * 6);
-    width: var(--size);
-    height: var(--size);
-    color: var(--input-color, currentColor);
-    &:before {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: calc(infinity * 1px);
-      --tw-content: "";
-      content: var(--tw-content);
-      background-size: auto, calc(var(--noise) * 100%);
-      background-image: none, var(--fx-noise);
-    }
-    &:focus-visible {
-      outline: 2px solid currentColor;
-    }
-    &:checked, &[aria-checked="true"] {
-      border-color: currentcolor;
-      background-color: var(--color-base-100);
-      @media (prefers-reduced-motion: no-preference) {
-        animation: radio 0.2s ease-out;
-      }
-      &:before {
-        background-color: currentcolor;
-        box-shadow: 0 -1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset, 0 8px 0 -4px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset, 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1));
-      }
-      @media (forced-colors: active) {
-        &:before {
-          outline-style: var(--tw-outline-style);
-          outline-width: 1px;
-          outline-offset: calc(1px * -1);
-        }
-      }
-      @media print {
-        &:before {
-          outline: 0.25rem solid;
-          outline-offset: -1rem;
-        }
-      }
-    }
-  }
-  &:disabled {
-    @layer daisyui.modifier {
-      cursor: not-allowed;
-      opacity: 20%;
-    }
-  }
-  background-color: var(--color-tag1);
+  background-color: var(--color-rainbow1);
   &:checked {
-    color: var(--color-tag1);
+    color: var(--color-rainbow1);
   }
 }
 .radio-2 {
-  @layer daisyui.component {
-    position: relative;
-    display: inline-block;
-    flex-shrink: 0;
-    cursor: pointer;
-    appearance: none;
-    border-radius: calc(infinity * 1px);
-    padding: calc(0.25rem * 1);
-    vertical-align: middle;
-    border: var(--border) solid var(--input-color, currentColor);
-    @supports (color: color-mix(in lab, red, red)) {
-      border: var(--border) solid var(--input-color, color-mix(in srgb, currentColor 20%, #0000));
-    }
-    box-shadow: 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset;
-    --size: calc(var(--size-selector, 0.25rem) * 6);
-    width: var(--size);
-    height: var(--size);
-    color: var(--input-color, currentColor);
-    &:before {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: calc(infinity * 1px);
-      --tw-content: "";
-      content: var(--tw-content);
-      background-size: auto, calc(var(--noise) * 100%);
-      background-image: none, var(--fx-noise);
-    }
-    &:focus-visible {
-      outline: 2px solid currentColor;
-    }
-    &:checked, &[aria-checked="true"] {
-      border-color: currentcolor;
-      background-color: var(--color-base-100);
-      @media (prefers-reduced-motion: no-preference) {
-        animation: radio 0.2s ease-out;
-      }
-      &:before {
-        background-color: currentcolor;
-        box-shadow: 0 -1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset, 0 8px 0 -4px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset, 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1));
-      }
-      @media (forced-colors: active) {
-        &:before {
-          outline-style: var(--tw-outline-style);
-          outline-width: 1px;
-          outline-offset: calc(1px * -1);
-        }
-      }
-      @media print {
-        &:before {
-          outline: 0.25rem solid;
-          outline-offset: -1rem;
-        }
-      }
-    }
-  }
-  &:disabled {
-    @layer daisyui.modifier {
-      cursor: not-allowed;
-      opacity: 20%;
-    }
-  }
-  background-color: var(--color-tag2);
+  background-color: var(--color-rainbow2);
   &:checked {
-    color: var(--color-tag2);
+    color: var(--color-rainbow2);
   }
 }
 .radio-3 {
-  @layer daisyui.component {
-    position: relative;
-    display: inline-block;
-    flex-shrink: 0;
-    cursor: pointer;
-    appearance: none;
-    border-radius: calc(infinity * 1px);
-    padding: calc(0.25rem * 1);
-    vertical-align: middle;
-    border: var(--border) solid var(--input-color, currentColor);
-    @supports (color: color-mix(in lab, red, red)) {
-      border: var(--border) solid var(--input-color, color-mix(in srgb, currentColor 20%, #0000));
-    }
-    box-shadow: 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset;
-    --size: calc(var(--size-selector, 0.25rem) * 6);
-    width: var(--size);
-    height: var(--size);
-    color: var(--input-color, currentColor);
-    &:before {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: calc(infinity * 1px);
-      --tw-content: "";
-      content: var(--tw-content);
-      background-size: auto, calc(var(--noise) * 100%);
-      background-image: none, var(--fx-noise);
-    }
-    &:focus-visible {
-      outline: 2px solid currentColor;
-    }
-    &:checked, &[aria-checked="true"] {
-      border-color: currentcolor;
-      background-color: var(--color-base-100);
-      @media (prefers-reduced-motion: no-preference) {
-        animation: radio 0.2s ease-out;
-      }
-      &:before {
-        background-color: currentcolor;
-        box-shadow: 0 -1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset, 0 8px 0 -4px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset, 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1));
-      }
-      @media (forced-colors: active) {
-        &:before {
-          outline-style: var(--tw-outline-style);
-          outline-width: 1px;
-          outline-offset: calc(1px * -1);
-        }
-      }
-      @media print {
-        &:before {
-          outline: 0.25rem solid;
-          outline-offset: -1rem;
-        }
-      }
-    }
-  }
-  &:disabled {
-    @layer daisyui.modifier {
-      cursor: not-allowed;
-      opacity: 20%;
-    }
-  }
-  background-color: var(--color-tag3);
+  background-color: var(--color-rainbow3);
   &:checked {
-    color: var(--color-tag3);
+    color: var(--color-rainbow3);
   }
 }
 .radio-4 {
-  @layer daisyui.component {
-    position: relative;
-    display: inline-block;
-    flex-shrink: 0;
-    cursor: pointer;
-    appearance: none;
-    border-radius: calc(infinity * 1px);
-    padding: calc(0.25rem * 1);
-    vertical-align: middle;
-    border: var(--border) solid var(--input-color, currentColor);
-    @supports (color: color-mix(in lab, red, red)) {
-      border: var(--border) solid var(--input-color, color-mix(in srgb, currentColor 20%, #0000));
-    }
-    box-shadow: 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset;
-    --size: calc(var(--size-selector, 0.25rem) * 6);
-    width: var(--size);
-    height: var(--size);
-    color: var(--input-color, currentColor);
-    &:before {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: calc(infinity * 1px);
-      --tw-content: "";
-      content: var(--tw-content);
-      background-size: auto, calc(var(--noise) * 100%);
-      background-image: none, var(--fx-noise);
-    }
-    &:focus-visible {
-      outline: 2px solid currentColor;
-    }
-    &:checked, &[aria-checked="true"] {
-      border-color: currentcolor;
-      background-color: var(--color-base-100);
-      @media (prefers-reduced-motion: no-preference) {
-        animation: radio 0.2s ease-out;
-      }
-      &:before {
-        background-color: currentcolor;
-        box-shadow: 0 -1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset, 0 8px 0 -4px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset, 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1));
-      }
-      @media (forced-colors: active) {
-        &:before {
-          outline-style: var(--tw-outline-style);
-          outline-width: 1px;
-          outline-offset: calc(1px * -1);
-        }
-      }
-      @media print {
-        &:before {
-          outline: 0.25rem solid;
-          outline-offset: -1rem;
-        }
-      }
-    }
-  }
-  &:disabled {
-    @layer daisyui.modifier {
-      cursor: not-allowed;
-      opacity: 20%;
-    }
-  }
-  background-color: var(--color-tag4);
+  background-color: var(--color-rainbow4);
   &:checked {
-    color: var(--color-tag4);
+    color: var(--color-rainbow4);
   }
 }
 .radio-5 {
-  @layer daisyui.component {
-    position: relative;
-    display: inline-block;
-    flex-shrink: 0;
-    cursor: pointer;
-    appearance: none;
-    border-radius: calc(infinity * 1px);
-    padding: calc(0.25rem * 1);
-    vertical-align: middle;
-    border: var(--border) solid var(--input-color, currentColor);
-    @supports (color: color-mix(in lab, red, red)) {
-      border: var(--border) solid var(--input-color, color-mix(in srgb, currentColor 20%, #0000));
-    }
-    box-shadow: 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset;
-    --size: calc(var(--size-selector, 0.25rem) * 6);
-    width: var(--size);
-    height: var(--size);
-    color: var(--input-color, currentColor);
-    &:before {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: calc(infinity * 1px);
-      --tw-content: "";
-      content: var(--tw-content);
-      background-size: auto, calc(var(--noise) * 100%);
-      background-image: none, var(--fx-noise);
-    }
-    &:focus-visible {
-      outline: 2px solid currentColor;
-    }
-    &:checked, &[aria-checked="true"] {
-      border-color: currentcolor;
-      background-color: var(--color-base-100);
-      @media (prefers-reduced-motion: no-preference) {
-        animation: radio 0.2s ease-out;
-      }
-      &:before {
-        background-color: currentcolor;
-        box-shadow: 0 -1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset, 0 8px 0 -4px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset, 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1));
-      }
-      @media (forced-colors: active) {
-        &:before {
-          outline-style: var(--tw-outline-style);
-          outline-width: 1px;
-          outline-offset: calc(1px * -1);
-        }
-      }
-      @media print {
-        &:before {
-          outline: 0.25rem solid;
-          outline-offset: -1rem;
-        }
-      }
-    }
-  }
-  &:disabled {
-    @layer daisyui.modifier {
-      cursor: not-allowed;
-      opacity: 20%;
-    }
-  }
-  background-color: var(--color-tag5);
+  background-color: var(--color-rainbow5);
   &:checked {
-    color: var(--color-tag5);
+    color: var(--color-rainbow5);
   }
 }
 .radio-6 {
-  @layer daisyui.component {
-    position: relative;
-    display: inline-block;
-    flex-shrink: 0;
-    cursor: pointer;
-    appearance: none;
-    border-radius: calc(infinity * 1px);
-    padding: calc(0.25rem * 1);
-    vertical-align: middle;
-    border: var(--border) solid var(--input-color, currentColor);
-    @supports (color: color-mix(in lab, red, red)) {
-      border: var(--border) solid var(--input-color, color-mix(in srgb, currentColor 20%, #0000));
-    }
-    box-shadow: 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset;
-    --size: calc(var(--size-selector, 0.25rem) * 6);
-    width: var(--size);
-    height: var(--size);
-    color: var(--input-color, currentColor);
-    &:before {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: calc(infinity * 1px);
-      --tw-content: "";
-      content: var(--tw-content);
-      background-size: auto, calc(var(--noise) * 100%);
-      background-image: none, var(--fx-noise);
-    }
-    &:focus-visible {
-      outline: 2px solid currentColor;
-    }
-    &:checked, &[aria-checked="true"] {
-      border-color: currentcolor;
-      background-color: var(--color-base-100);
-      @media (prefers-reduced-motion: no-preference) {
-        animation: radio 0.2s ease-out;
-      }
-      &:before {
-        background-color: currentcolor;
-        box-shadow: 0 -1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset, 0 8px 0 -4px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset, 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1));
-      }
-      @media (forced-colors: active) {
-        &:before {
-          outline-style: var(--tw-outline-style);
-          outline-width: 1px;
-          outline-offset: calc(1px * -1);
-        }
-      }
-      @media print {
-        &:before {
-          outline: 0.25rem solid;
-          outline-offset: -1rem;
-        }
-      }
-    }
-  }
-  &:disabled {
-    @layer daisyui.modifier {
-      cursor: not-allowed;
-      opacity: 20%;
-    }
-  }
-  background-color: var(--color-tag6);
+  background-color: var(--color-rainbow6);
   &:checked {
-    color: var(--color-tag6);
+    color: var(--color-rainbow6);
   }
 }
 .radio-7 {
-  @layer daisyui.component {
-    position: relative;
-    display: inline-block;
-    flex-shrink: 0;
-    cursor: pointer;
-    appearance: none;
-    border-radius: calc(infinity * 1px);
-    padding: calc(0.25rem * 1);
-    vertical-align: middle;
-    border: var(--border) solid var(--input-color, currentColor);
-    @supports (color: color-mix(in lab, red, red)) {
-      border: var(--border) solid var(--input-color, color-mix(in srgb, currentColor 20%, #0000));
-    }
-    box-shadow: 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset;
-    --size: calc(var(--size-selector, 0.25rem) * 6);
-    width: var(--size);
-    height: var(--size);
-    color: var(--input-color, currentColor);
-    &:before {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: calc(infinity * 1px);
-      --tw-content: "";
-      content: var(--tw-content);
-      background-size: auto, calc(var(--noise) * 100%);
-      background-image: none, var(--fx-noise);
-    }
-    &:focus-visible {
-      outline: 2px solid currentColor;
-    }
-    &:checked, &[aria-checked="true"] {
-      border-color: currentcolor;
-      background-color: var(--color-base-100);
-      @media (prefers-reduced-motion: no-preference) {
-        animation: radio 0.2s ease-out;
-      }
-      &:before {
-        background-color: currentcolor;
-        box-shadow: 0 -1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset, 0 8px 0 -4px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset, 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1));
-      }
-      @media (forced-colors: active) {
-        &:before {
-          outline-style: var(--tw-outline-style);
-          outline-width: 1px;
-          outline-offset: calc(1px * -1);
-        }
-      }
-      @media print {
-        &:before {
-          outline: 0.25rem solid;
-          outline-offset: -1rem;
-        }
-      }
-    }
-  }
-  &:disabled {
-    @layer daisyui.modifier {
-      cursor: not-allowed;
-      opacity: 20%;
-    }
-  }
-  background-color: var(--color-tag7);
+  background-color: var(--color-rainbow7);
   &:checked {
-    color: var(--color-tag7);
+    color: var(--color-rainbow7);
   }
 }
 .radio-8 {
-  @layer daisyui.component {
-    position: relative;
-    display: inline-block;
-    flex-shrink: 0;
-    cursor: pointer;
-    appearance: none;
-    border-radius: calc(infinity * 1px);
-    padding: calc(0.25rem * 1);
-    vertical-align: middle;
-    border: var(--border) solid var(--input-color, currentColor);
-    @supports (color: color-mix(in lab, red, red)) {
-      border: var(--border) solid var(--input-color, color-mix(in srgb, currentColor 20%, #0000));
-    }
-    box-shadow: 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset;
-    --size: calc(var(--size-selector, 0.25rem) * 6);
-    width: var(--size);
-    height: var(--size);
-    color: var(--input-color, currentColor);
-    &:before {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: calc(infinity * 1px);
-      --tw-content: "";
-      content: var(--tw-content);
-      background-size: auto, calc(var(--noise) * 100%);
-      background-image: none, var(--fx-noise);
-    }
-    &:focus-visible {
-      outline: 2px solid currentColor;
-    }
-    &:checked, &[aria-checked="true"] {
-      border-color: currentcolor;
-      background-color: var(--color-base-100);
-      @media (prefers-reduced-motion: no-preference) {
-        animation: radio 0.2s ease-out;
-      }
-      &:before {
-        background-color: currentcolor;
-        box-shadow: 0 -1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset, 0 8px 0 -4px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset, 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1));
-      }
-      @media (forced-colors: active) {
-        &:before {
-          outline-style: var(--tw-outline-style);
-          outline-width: 1px;
-          outline-offset: calc(1px * -1);
-        }
-      }
-      @media print {
-        &:before {
-          outline: 0.25rem solid;
-          outline-offset: -1rem;
-        }
-      }
-    }
-  }
-  &:disabled {
-    @layer daisyui.modifier {
-      cursor: not-allowed;
-      opacity: 20%;
-    }
-  }
-  background-color: var(--color-tag8);
+  background-color: var(--color-rainbow8);
   &:checked {
-    color: var(--color-tag8);
+    color: var(--color-rainbow8);
   }
 }
 .radio-9 {
-  @layer daisyui.component {
-    position: relative;
-    display: inline-block;
-    flex-shrink: 0;
-    cursor: pointer;
-    appearance: none;
-    border-radius: calc(infinity * 1px);
-    padding: calc(0.25rem * 1);
-    vertical-align: middle;
-    border: var(--border) solid var(--input-color, currentColor);
-    @supports (color: color-mix(in lab, red, red)) {
-      border: var(--border) solid var(--input-color, color-mix(in srgb, currentColor 20%, #0000));
-    }
-    box-shadow: 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset;
-    --size: calc(var(--size-selector, 0.25rem) * 6);
-    width: var(--size);
-    height: var(--size);
-    color: var(--input-color, currentColor);
-    &:before {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: calc(infinity * 1px);
-      --tw-content: "";
-      content: var(--tw-content);
-      background-size: auto, calc(var(--noise) * 100%);
-      background-image: none, var(--fx-noise);
-    }
-    &:focus-visible {
-      outline: 2px solid currentColor;
-    }
-    &:checked, &[aria-checked="true"] {
-      border-color: currentcolor;
-      background-color: var(--color-base-100);
-      @media (prefers-reduced-motion: no-preference) {
-        animation: radio 0.2s ease-out;
-      }
-      &:before {
-        background-color: currentcolor;
-        box-shadow: 0 -1px oklch(0% 0 0 / calc(var(--depth) * 0.1)) inset, 0 8px 0 -4px oklch(100% 0 0 / calc(var(--depth) * 0.1)) inset, 0 1px oklch(0% 0 0 / calc(var(--depth) * 0.1));
-      }
-      @media (forced-colors: active) {
-        &:before {
-          outline-style: var(--tw-outline-style);
-          outline-width: 1px;
-          outline-offset: calc(1px * -1);
-        }
-      }
-      @media print {
-        &:before {
-          outline: 0.25rem solid;
-          outline-offset: -1rem;
-        }
-      }
-    }
-  }
-  &:disabled {
-    @layer daisyui.modifier {
-      cursor: not-allowed;
-      opacity: 20%;
-    }
-  }
-  background-color: var(--color-tag9);
+  background-color: var(--color-rainbow9);
   &:checked {
-    color: var(--color-tag9);
+    color: var(--color-rainbow9);
   }
 }
 .radio-neutral {
@@ -7083,8 +6290,11 @@ h4 {
       grid-template-rows: max-content 1fr;
     }
     &:is( [open], [tabindex]:focus:not(.collapse-close), [tabindex]:focus-within:not(.collapse-close) ) > .collapse-content, &:not(.collapse-close) > :where(input:is([type="checkbox"], [type="radio"]):checked ~ .collapse-content) {
-      visibility: visible;
+      content-visibility: visible;
       min-height: fit-content;
+      @supports not (content-visibility: visible) {
+        visibility: visible;
+      }
     }
     &:focus-visible, &:has(> input:is([type="checkbox"], [type="radio"]):focus-visible), &:has(summary:focus-visible) {
       outline-color: var(--color-base-content);
@@ -7104,9 +6314,6 @@ h4 {
     }
     &:is( [open], [tabindex]:focus:not(.collapse-close), [tabindex]:focus-within:not(.collapse-close) ) > :where(.collapse-content), &:not(.collapse-close) > :where(input:is([type="checkbox"], [type="radio"]):checked ~ .collapse-content) {
       padding-bottom: 1rem;
-      @media (prefers-reduced-motion: no-preference) {
-        transition: padding 0.2s ease-out, background-color 0.2s ease-out;
-      }
     }
   }
   @layer daisyui.modifier {
@@ -7129,7 +6336,8 @@ h4 {
       }
       &.collapse-plus {
         > .collapse-title:after {
-          content: "−";
+          --tw-content: "−";
+          content: var(--tw-content);
         }
       }
     }
@@ -7146,18 +6354,21 @@ h4 {
     &[open] {
       &.collapse-plus {
         > .collapse-title:after {
-          content: "−";
+          --tw-content: "−";
+          content: var(--tw-content);
         }
       }
     }
     &[tabindex].collapse-plus:focus:not(.collapse-close) {
       > .collapse-title:after {
-        content: "−";
+        --tw-content: "−";
+        content: var(--tw-content);
       }
     }
     &.collapse-plus:not(.collapse-close) {
       > input:is([type="checkbox"], [type="radio"]):checked ~ .collapse-title:after {
-        content: "−";
+        --tw-content: "−";
+        content: var(--tw-content);
       }
     }
   }
@@ -7165,15 +6376,13 @@ h4 {
     @layer daisyui.component {
       width: 100%;
       @media (prefers-reduced-motion: no-preference) {
-        @supports (transition: content-visibility allow-discrete) and (interpolate-size: allow-keywords) {
-          &::details-content {
-            transition: content-visibility 0.2s allow-discrete, height 0.2s;
-            height: 0;
-            interpolate-size: allow-keywords;
-          }
-          &:where([open], .collapse-open)::details-content {
-            height: auto;
-          }
+        &::details-content {
+          transition: content-visibility 0.2s allow-discrete, visibility 0.2s allow-discrete, padding 0.2s ease-out, background-color 0.2s ease-out, height 0.2s;
+          height: 0;
+          interpolate-size: allow-keywords;
+        }
+        &:where([open])::details-content {
+          height: auto;
         }
       }
       & summary {
@@ -7182,6 +6391,9 @@ h4 {
         &::-webkit-details-marker {
           display: none;
         }
+      }
+      & > .collapse-content {
+        content-visibility: visible;
       }
     }
   }
@@ -7431,34 +6643,110 @@ h4 {
   }
 }
 @layer base {
-  :root:has( .modal-open, .modal[open], .modal:target, .modal-toggle:checked, .drawer:not([class*="drawer-open"]) > .drawer-toggle:checked ) {
+  :root:has(.modal-open, .modal[open], .modal:target, .modal-toggle:checked) {
     overflow: hidden;
+    --page-has-backdrop: 1;
+  }
+  :root:has(.drawer:not([class*="drawer-open"]) > .drawer-toggle:checked) {
+    overflow: hidden;
+    --page-has-backdrop: 1;
+  }
+  :root:has(.sm\:drawer-open > .drawer-toggle:checked) {
+    @media (width < 40rem) {
+      overflow: hidden;
+    }
+    @media (width < 40rem) {
+      --page-has-backdrop: 1;
+    }
+  }
+  :root:has(.md\:drawer-open > .drawer-toggle:checked) {
+    @media (width < 48rem) {
+      overflow: hidden;
+    }
+    @media (width < 48rem) {
+      --page-has-backdrop: 1;
+    }
+  }
+  :root:has(.lg\:drawer-open > .drawer-toggle:checked) {
+    @media (width < 64rem) {
+      overflow: hidden;
+    }
+    @media (width < 64rem) {
+      --page-has-backdrop: 1;
+    }
+  }
+  :root:has(.xl\:drawer-open > .drawer-toggle:checked) {
+    @media (width < 80rem) {
+      overflow: hidden;
+    }
+    @media (width < 80rem) {
+      --page-has-backdrop: 1;
+    }
+  }
+  :root:has(.\32xl\:drawer-open > .drawer-toggle:checked) {
+    @media (width < 96rem) {
+      overflow: hidden;
+    }
+    @media (width < 96rem) {
+      --page-has-backdrop: 1;
+    }
+  }
+  :root:has(.max-sm\:drawer-open > .drawer-toggle:checked) {
+    @media (width >= 40rem) {
+      overflow: hidden;
+    }
+    @media (width >= 40rem) {
+      --page-has-backdrop: 1;
+    }
+  }
+  :root:has(.max-md\:drawer-open > .drawer-toggle:checked) {
+    @media (width >= 48rem) {
+      overflow: hidden;
+    }
+    @media (width >= 48rem) {
+      --page-has-backdrop: 1;
+    }
+  }
+  :root:has(.max-lg\:drawer-open > .drawer-toggle:checked) {
+    @media (width >= 64rem) {
+      overflow: hidden;
+    }
+    @media (width >= 64rem) {
+      --page-has-backdrop: 1;
+    }
+  }
+  :root:has(.max-xl\:drawer-open > .drawer-toggle:checked) {
+    @media (width >= 80rem) {
+      overflow: hidden;
+    }
+    @media (width >= 80rem) {
+      --page-has-backdrop: 1;
+    }
+  }
+  :root:has(.max-2xl\:drawer-open > .drawer-toggle:checked) {
+    @media (width >= 96rem) {
+      overflow: hidden;
+    }
+    @media (width >= 96rem) {
+      --page-has-backdrop: 1;
+    }
   }
 }
 @layer base {
-  :where( :root:has( .modal-open, .modal[open], .modal:target, .modal-toggle:checked, .drawer:not(.drawer-open) > .drawer-toggle:checked ) ) {
-    scrollbar-gutter: stable;
-    background-image: linear-gradient(var(--color-base-100), var(--color-base-100));
-    --root-bg: var(--color-base-100);
+  :root:has( .modal-open, .modal[open], .modal:target, .modal-toggle:checked, .drawer:not(.drawer-open) > .drawer-toggle:checked ) {
+    background-image: linear-gradient(var(--root-bg), var(--root-bg));
+    background-color: var(--root-bg);
     @supports (color: color-mix(in lab, red, red)) {
-      --root-bg: color-mix(in srgb, var(--color-base-100), oklch(0% 0 0) 40%);
+      background-color: color-mix( in srgb, var(--root-bg), oklch(0% 0 0) calc(var(--page-has-backdrop, 0) * 40%) );
     }
-  }
-  :where(.modal[open], .modal-open, .modal-toggle:checked + .modal):not(.modal-start, .modal-end) {
+    animation: set-page-has-scroll forwards;
+    animation-timeline: scroll();
     scrollbar-gutter: stable;
+    scrollbar-gutter: if(style(--page-has-scroll: 1): stable; else: unset);
   }
-  @supports (width: if(else: 1px)) and (animation-timeline: scroll()) {
-    :root {
-      animation: set-page-has-scroll forwards;
-      animation-timeline: scroll();
-    }
-    @keyframes set-page-has-scroll {
-      0%, to {
-        --page-has-scroll: 1;
-      }
-    }
-    :where( :root:has( .modal-open, .modal[open], .modal:target, .modal-toggle:checked, .drawer:not(.drawer-open) > .drawer-toggle:checked ) ) {
-      scrollbar-gutter: if(style(--page-has-scroll: 1): stable; else: unset);
+  @keyframes set-page-has-scroll {
+    0%, to {
+      --page-has-scroll: 1;
     }
   }
 }
@@ -7466,6 +6754,9 @@ h4 {
   :root, [data-theme] {
     background-color: var(--root-bg, var(--color-base-100));
     color: var(--color-base-content);
+  }
+  :where(:root, [data-theme]) {
+    --root-bg: var(--color-base-100);
   }
 }
 @keyframes rating {
