@@ -21,7 +21,19 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         usuario = self.request.user
 
-        tag_colors = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "neutral"]
+        tag_colors = [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "neutral",
+        ]
 
         tag_obj_list = Etiqueta.objects.filter(
             Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
