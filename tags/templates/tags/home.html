@@ -32,12 +32,7 @@
         <div class="flex flex-auto flex-col gap-2">
             <legend class="fieldset-legend">Color</legend>
             <div class="flex flex-row flex-wrap gap-2 py-2">
-              {% for color in tag_colors %}
-                {% include "components/radio.html" with color=color group_name="radio-color" %}
-              {% endfor %}
-              {% for color in tag_colors %}
-                {% include "components/tag.html" with color=color text="Texto" %}
-              {% endfor %}
+                {% include "components/tag_color_selector.html" with selected=default_color group_name="radio-color" %}
             </div>
           
         </div>

@@ -22,7 +22,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         tag_colors = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "neutral"]
 
         tag_obj_list = Etiqueta.objects.filter(usuario=usuario).order_by(
-            "color", "etiqueta"
+            "etiqueta", "color"
         )
         tag_list = [tag.etiqueta_dict() for tag in tag_obj_list]
         for tag_dict in tag_list:
@@ -30,6 +30,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         context["tag_colors"] = tag_colors
         context["tag_list"] = tag_list
+        context["default_color"] = "neutral"
         return context
 
     def is_mobile(request):

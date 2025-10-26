@@ -1,1 +1,1 @@
-<input type="radio" name="{{group_name}}" value="{{ color }}" checked class="radio radio-{{ color }}" />
+<input type="radio" name="{{group_name}}" value="{{ color }}" {% if is_checked %}checked{% endif %} class="radio radio-{{ color }}" />

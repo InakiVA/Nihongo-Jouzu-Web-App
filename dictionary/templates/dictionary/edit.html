@@ -54,7 +54,7 @@
                 {% endif %}                  
             </div>                 
 
-            {% include "components/element_tag_header.html" with header="Etiquetas" elements=palabra.etiquetas%}    
+            {% include "components/element_tag_header.html" with header="Etiquetas" elements=palabra.etiquetas_colores%}    
              
             <div class="space-y-4 gap-4 p-4">
                 {% include "components/select_button.html" with has_button_left=True icon="components/icons/add_mini.html" name="agregar_etiqueta" url=agregar_etiqueta button_text="Agregar etiqueta" options=nuevas_etiquetas%}

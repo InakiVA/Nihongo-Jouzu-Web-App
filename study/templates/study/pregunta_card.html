@@ -2,8 +2,8 @@
   <h1 class="text-3xl font-light sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-center whitespace-normal break-keep leading-snug">
     {{ palabra.pregunta }}
   </h1>
-  {% if palabra.is_kanji %}
-      {% include "components/tag.html" with text="Kanji" %}
+  {% if palabra.kanji_data %}
+      {% include "components/tag.html" with text=palabra.kanji_data.etiqueta color=palabra.kanji_data.color %}
   {% endif %}
   {% if palabra.lecturas_pregunta %}
     <h3>{{ palabra.lecturas_pregunta }}</h3>

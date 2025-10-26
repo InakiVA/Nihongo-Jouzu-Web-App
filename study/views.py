@@ -46,7 +46,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
             ]
         ]
         context["select_orden_url"] = reverse_lazy("toggle_orden_grupos")
-        orden_opciones = ("Nombre","Creación", "Progreso", "Reciente")
+        orden_opciones = ("Nombre", "Creación", "Progreso", "Reciente")
         context["orden_opciones"] = orden_opciones
         orden_elegido = ajustes.get("orden_elegido", orden_opciones[0])
         context["orden_elegido"] = orden_elegido
@@ -288,42 +288,11 @@ class ResultadosView(LoginRequiredMixin, TemplateView):
 
         for palabra_id in palabras_incorrectas_id:
             palabra_obj = get_object_or_404(Palabra, id=palabra_id)
-            palabras_incorrectas.append(
-                {
-                    "id": palabra_obj.id,
-                    "palabra": palabra_obj.palabra,
-                    "significados": palabra_obj.significados_str(usuario),
-                    "lecturas": palabra_obj.lecturas_str(usuario),
-                    "etiquetas": palabra_obj.etiquetas_list(usuario),
-                    "notas": palabra_obj.notas_str(usuario),
-                    "progreso": palabra_obj.palabra_usuarios.get(
-                        usuario=self.request.user
-                    ).progreso,
-                    "estrella": palabra_obj.palabra_usuarios.get(
-                        usuario=self.request.user
-                    ).estrella,
-                    "incorrectas": ", ".join(palabras_inputs_dict[palabra_id]),
-                }
-            )
+            palabras_incorrectas.append(palabra_obj.palabra_dict(usuario))
 
         for palabra_id in palabras_correctas_id:
             palabra_obj = get_object_or_404(Palabra, id=palabra_id)
-            palabras_correctas.append(
-                {
-                    "id": palabra_obj.id,
-                    "palabra": palabra_obj.palabra,
-                    "significados": palabra_obj.significados_str(usuario),
-                    "lecturas": palabra_obj.lecturas_str(usuario),
-                    "etiquetas": palabra_obj.etiquetas_list(usuario),
-                    "notas": palabra_obj.notas_str(usuario),
-                    "progreso": palabra_obj.palabra_usuarios.get(
-                        usuario=self.request.user
-                    ).progreso,
-                    "estrella": palabra_obj.palabra_usuarios.get(
-                        usuario=self.request.user
-                    ).estrella,
-                }
-            )
+            palabras_correctas.append(palabra_obj.palabra_dict(usuario))
 
         context["incorrectas"] = palabras_incorrectas
         context["correctas"] = palabras_correctas
@@ -352,13 +321,18 @@ class SesionView(LoginRequiredMixin, TemplateView):
         respuestas_incorrectas = self.request.session.get("respuestas_incorrectas", {})
 
         palabra_obj = get_object_or_404(Palabra, id=palabra_id)
-        is_kanji = palabra_obj.palabra_etiquetas.filter(
-            etiqueta__etiqueta="Kanji"
-        ).exists()
+        palabra_dict = palabra_obj.palabra_dict(usuario)
+        palabra_dict["kanji_data"] = False
+        for etiqueta in palabra_dict["etiquetas_colores"]:
+            if etiqueta["etiqueta"] == "Kanji":
+                palabra_dict["kanji_data"] = etiqueta
+                break
         pregunta_lenguaje = self.request.session.get(
             "idioma_preguntas_elegido", "Original"
         )
-        palabra_obj.set_pregunta_respuesta(pregunta_lenguaje, usuario, is_kanji)
+        palabra_obj.set_pregunta_respuesta(
+            pregunta_lenguaje, usuario, bool(palabra_dict["kanji_data"])
+        )
 
         pregunta_list = palabra_obj.pregunta
         if len(pregunta_list) > 1:
@@ -378,27 +352,11 @@ class SesionView(LoginRequiredMixin, TemplateView):
         self.request.session["new_etiquetas"] = new_etiquetas_list
         context["nuevas_etiquetas"] = new_etiquetas_str_list
 
-        palabra_dict = {
-            "id": palabra_id,
-            "is_kanji": is_kanji,
-            "palabra": palabra_obj.palabra,
-            "significados": palabra_obj.significados_str(usuario),
-            "lecturas": palabra_obj.lecturas_str(usuario),
-            "notas": palabra_obj.notas_str(usuario),
-            "etiquetas": palabra_obj.etiquetas_list(usuario),
-            "grupos": palabra_obj.grupos_list(usuario),
-            "progreso": palabra_obj.palabra_usuarios.get(
-                usuario=self.request.user
-            ).progreso,
-            "estrella": palabra_obj.palabra_usuarios.get(
-                usuario=self.request.user
-            ).estrella,
-            "pregunta": str(pregunta_list[0]),
-            "lecturas_pregunta": lectura_pregunta,
-            "respuestas_incorrectas": ", ".join(
-                respuestas_incorrectas[palabra_id],
-            ),
-        }
+        palabra_dict["pregunta"] = str(pregunta_list[0])
+        palabra_dict["lecturas_pregunta"] = lectura_pregunta
+        palabra_dict["respuestas_incorrectas"] = ", ".join(
+            respuestas_incorrectas[palabra_id],
+        )
 
         context["palabra"] = palabra_dict
         context["palabra_contestada"] = palabras_contestadas[palabra_id]
@@ -409,22 +367,7 @@ class SesionView(LoginRequiredMixin, TemplateView):
         palabras_relacionadas = palabra_obj.palabras_relacionadas(usuario)
         palabras_relacionadas_dict_list = []
         for palabra in palabras_relacionadas:
-            palabras_relacionadas_dict_list.append(
-                {
-                    "palabra": palabra.palabra,
-                    "significados": palabra.significados_str(usuario),
-                    "lecturas": palabra.lecturas_str(usuario),
-                    "etiquetas": palabra.etiquetas_list(usuario),
-                    "notas": palabra.notas_str(usuario),
-                    "progreso": palabra.palabra_usuarios.get(
-                        usuario=self.request.user
-                    ).progreso,
-                    "estrella": palabra.palabra_usuarios.get(
-                        usuario=self.request.user
-                    ).estrella,
-                    "grupos": palabra.grupos_list(usuario),
-                }
-            )
+            palabras_relacionadas_dict_list.append(palabra.palabra_dict(usuario))
         context["palabras_relacionadas"] = palabras_relacionadas_dict_list
 
         grupos_usuario = c_op.get_user_groups_list(usuario)

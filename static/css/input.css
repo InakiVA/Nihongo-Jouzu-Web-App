@@ -55,6 +55,11 @@ h4 {
   @apply hover:bg-accent-main hover:border-accent-light;
 }
 
+.button-alert{
+  @apply btn btn-ghost shadow-none border-white bg-secondary-main text-textcolor rounded-sm px-4;
+  @apply hover:bg-accent-main hover:border-accent-light;
+}
+
 .button-big{
   @apply btn btn-ghost shadow-none border-2 border-accent-light bg-accent-main text-textcolor rounded-sm  text-2xl font-bold p-8;
   @apply hover:bg-accent-dark;

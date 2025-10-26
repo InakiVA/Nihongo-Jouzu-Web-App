@@ -3,8 +3,8 @@
     <div class="collapse-title flex items-end gap-4">  
         <h2>{{header}}</h2>              
         <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2 font-light">
-            {% for element in elements %}
-            {% include "components/tag.html" with text=element %}         
+            {% for tag in elements %}
+            {% include "components/tag.html" with text=tag.etiqueta color=tag.color %}         
             {% endfor %}
         </li>                         
     </div>
