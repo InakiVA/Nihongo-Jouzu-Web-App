@@ -62,14 +62,14 @@ seahawks:
     --color-accent-main: #84c710;
     --color-accent-dark: #4e780b; 
 
--- tags
-    --color-tag0: #e10728;
-    --color-tag1: #f75b09;
-    --color-tag2: #d2c10d;
-    --color-tag3: #389c3d;  
-    --color-tag4: #11b1e6;  
-    --color-tag5: #271bff;  
-    --color-tag6: #8206cf;
-    --color-tag7: #d1219c;
-    --color-tag8: #202020;
-    --color-tag9: #9e9e9e;
+-- rainbows
+    --color-rainbow0: #ad283c;
+    --color-rainbow1: #dc7036;
+    --color-rainbow2: #ceb900;
+    --color-rainbow3: #08934b;  
+    --color-rainbow4: #0472cd;  
+    --color-rainbow5: #140bbc;  
+    --color-rainbow6: #550381;
+    --color-rainbow7: #9d0f72;
+    --color-rainbow8: #a49e64;
+    --color-rainbow9: #9e9e9e;
