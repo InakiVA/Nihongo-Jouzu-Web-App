@@ -12,7 +12,6 @@ from tags.models import Etiqueta
 @login_required
 def editar_etiqueta(request, atributo):
     etiqueta_id = request.POST.get("etiqueta_id")
-    print("Etiqueta ID:", etiqueta_id)
     etiqueta_obj = get_object_or_404(Etiqueta, id=etiqueta_id)
     user = request.user
     if not etiqueta_obj or etiqueta_obj.usuario != user:
@@ -37,5 +36,7 @@ def editar_etiqueta(request, atributo):
         etiqueta_obj.update_etiqueta(value)
         messages.success(request, "Nombre de la etiqueta actualizado exitosamente")
     elif atributo == "color":
-        pass
+        value = request.POST.get("update_color")
+        etiqueta_obj.update_color(value)
+        messages.success(request, "Color de la etiqueta actualizado exitosamente")
     return redirect(request.META.get("HTTP_REFERER", "/"))

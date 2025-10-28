@@ -11,4 +11,10 @@ urlpatterns = [
         {"atributo": "etiqueta"},
         name="update_etiqueta",
     ),
+    path(
+        "update-color",
+        e_op.editar_etiqueta,
+        {"atributo": "color"},
+        name="update_color",
+    ),
 ]

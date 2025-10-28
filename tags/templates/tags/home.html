@@ -30,7 +30,7 @@
         <div class="flex flex-auto flex-col">
             <legend class="fieldset-legend">Color</legend>
             <div class="flex flex-row flex-wrap gap-2 py-2 items-center">
-                {% include "components/tag_color_selector.html" with selected=default_color group_name="radio-color" %}
+                {% include "components/tag_color_selector.html" with selected=default_color name="radio-color" %}
             </div>          
         </div>
 
@@ -62,7 +62,11 @@
           </div>
           <div>
             <legend class="fieldset-legend">Color</legend>
-            {% include "components/tag_color_selector.html" with selected=tag.color group_name=tag %} 
+            <form action="{{ editar_color_url }}" method="post" >
+              {% csrf_token %}
+              <input type="hidden" name="etiqueta_id" value="{{ tag.id }}">
+              {% include "components/tag_color_selector.html" with name="update_color" value=tag.etiqueta selected=tag.color %}
+            </form>
           </div>
         </div>
       </div>   
