@@ -45,6 +45,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["tag_colors"] = tag_colors
         context["tag_list"] = tag_list
         context["default_color"] = "neutral"
+
+        context["editar_etiqueta_url"] = reverse_lazy("update_etiqueta")
         return context
 
     def is_mobile(request):

@@ -24,7 +24,7 @@
                 <legend class="fieldset-legend">Etiqueta</legend>
                 <legend class="fieldset-legend text-myalert">*</legend>          
             </div>          
-            {% include "components/input.html" with placeholder="Tu etiqueta:" name="etiqueta_nuevo" value=ajustes_etiquetas.etiqueta_valido%}
+            {% include "components/input.html" with placeholder="Tu etiqueta:" name="etiqueta_nueva" value=ajustes_etiquetas.etiqueta_valido%}
         </div>
 
         <div class="flex flex-auto flex-col">
@@ -54,7 +54,11 @@
         <div class="collapse-content flex flex-row gap-12 justify-between">
           <div class="h-10 flex flex-auto flex-col">
             <legend class="fieldset-legend">Texto</legend>
-            {%include "components/input_button.html" with button_text="Etiqueta" value=tag.etiqueta button_classes="button-neutral"  id="etiqueta_{{ tag.id }}" icon="components/icons/pencil.html" %}
+            <form action="{{ editar_etiqueta_url }}" method="post" >
+              {% csrf_token %}
+              <input type="hidden" name="etiqueta_id" value="{{ tag.id }}">
+              {%include "components/input_button.html" with button_text="Etiqueta" value=tag.etiqueta button_classes="button-neutral"  name="update_etiqueta" icon="components/icons/pencil.html" %}
+            </form>
           </div>
           <div>
             <legend class="fieldset-legend">Color</legend>

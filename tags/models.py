@@ -38,6 +38,10 @@ class Etiqueta(models.Model):
         self.etiqueta = etiqueta
         self.save()
 
+    def update_color(self, color):
+        self.color = color
+        self.save()
+
     class Meta:
         db_table = "Etiquetas"
 
