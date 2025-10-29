@@ -28,14 +28,18 @@
         </div>
 
         <div class="flex flex-auto flex-col">
+          <div class="flex">
             <legend class="fieldset-legend">Color</legend>
-            <div class="flex flex-row flex-wrap gap-2 py-2 items-center">
-                {% include "components/tag_color_selector.html" with selected=default_color name="radio-color" %}
-            </div>          
+            <legend class="fieldset-legend text-myalert">*</legend>
+          </div>
+          <div class="flex flex-row flex-wrap gap-2 py-2 items-center">
+            <input type="hidden" name="color_nuevo" value="{{ default_color }}">
+            {% include "components/tag_color_selector.html" with name="color_nuevo" selected=default_color submit=False%}
+          </div>          
         </div>
 
         <div class="flex flex-auto pt-8 justify-center">
-        {% include "components/button.html" with url=crear_etiqueta_url text="Crear" icon="components/icons/add.html" extra_classes="button-big" %}
+          {% include "components/button.html" with url=crear_etiqueta_url text="Crear" icon="components/icons/add.html" extra_classes="button-big" %}
         </div>
       </form>      
     </div>
@@ -51,22 +55,23 @@
         {% if tag.editable %}
           <input type="checkbox" />
         {% endif %}
-        <div class="collapse-content flex flex-row gap-12 justify-between">
+        <div class="collapse-content flex flex-row gap-4 justify-between">
           <div class="h-10 flex flex-auto flex-col">
-            <legend class="fieldset-legend">Texto</legend>
-            <form action="{{ editar_etiqueta_url }}" method="post" >
+            <form action="{{ editar_etiqueta_url }}" method="post">
               {% csrf_token %}
               <input type="hidden" name="etiqueta_id" value="{{ tag.id }}">
-              {%include "components/input_button.html" with button_text="Etiqueta" value=tag.etiqueta button_classes="button-neutral"  name="update_etiqueta" icon="components/icons/pencil.html" %}
+              {%include "components/input_button.html" with button_text="Editar" value=tag.etiqueta button_classes="button-neutral"  name="update_etiqueta" icon="components/icons/pencil.html" %}
             </form>
           </div>
           <div>
-            <legend class="fieldset-legend">Color</legend>
-            <form action="{{ editar_color_url }}" method="post" >
+            <form action="{{ editar_color_url }}" method="post">
               {% csrf_token %}
               <input type="hidden" name="etiqueta_id" value="{{ tag.id }}">
-              {% include "components/tag_color_selector.html" with name="update_color" value=tag.etiqueta selected=tag.color %}
+              {% include "components/tag_color_selector.html" with name="update_color" value=tag.etiqueta selected=tag.color submit=True%}
             </form>
+          </div>
+          <div>
+            {% include "components/button.html" with name="delete_tag" value=tag.id url=eliminar_etiqueta_url text="Eliminar" icon="components/icons/trash.html" extra_classes="button-alert" %}
           </div>
         </div>
       </div>   

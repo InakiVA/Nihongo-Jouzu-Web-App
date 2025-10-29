@@ -88,9 +88,9 @@
 
 == Vista de etiquetas
     << Agregar etiquetas al navbar
-    ++ CRUD
+    << CRUD
         << vista
-        ++ funcionalidad
+        << funcionalidad
     .. omitir grupo_etiquetas hasta encontrarle propósito funcional
     << agregar 3 tiers de colores para cada etiqueta dependiendo de prioridad/tipo que elija el autor de las etiquetas
         << al desplegarse, deben ir en orden 1 a 3
