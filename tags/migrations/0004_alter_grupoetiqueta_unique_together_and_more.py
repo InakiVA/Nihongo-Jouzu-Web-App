@@ -4,8 +4,11 @@ from django.utils import timezone
 import django.db.models.deletion
 
 
+from django.utils import timezone
+from django.conf import settings
+
+
 def set_defaults(apps, schema_editor):
-    # Use lowercase app labels here
     PalabraEtiqueta = apps.get_model("tags", "PalabraEtiqueta")
     GrupoEtiqueta = apps.get_model("tags", "GrupoEtiqueta")
 
@@ -13,11 +16,18 @@ def set_defaults(apps, schema_editor):
     app_label, model_name = settings.AUTH_USER_MODEL.split(".")
     User = apps.get_model(app_label, model_name)
 
-    # Pick your backfill user
-    my_user = User.objects.get(username="japanese_manager")
+    # Evita que falle si el usuario no existe
+    my_user = User.objects.filter(username="japanese_manager").first()
+    if not my_user:
+        my_user = User.objects.create(
+            username="japanese_manager",
+            is_superuser=True,
+            is_staff=True,
+            is_active=True,
+            date_joined=timezone.now(),
+        )
 
     now = timezone.now()
-    # Only rows where usuario is NULL (new field just added)
     PalabraEtiqueta.objects.filter(usuario__isnull=True).update(
         usuario=my_user, created_at=now
     )
