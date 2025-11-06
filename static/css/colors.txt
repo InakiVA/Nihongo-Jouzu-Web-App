@@ -46,6 +46,9 @@ panoptimize aqua:
     --color-accent-light: #7bfff8;
     --color-accent-main: #00b3aa;
     --color-accent-dark: #00756f;
+    --color-secondary-main: #a02be8;
+    --color-secondary-dark: #6a1cae;
+    --color-secondary-light: #e39bff;
 
 seahawks:
     --color-textcolor: #FFFFFF;

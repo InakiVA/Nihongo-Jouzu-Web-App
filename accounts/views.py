@@ -1,9 +1,16 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
+from django.contrib import messages
+from django.views.generic import CreateView, TemplateView
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import (
+    UserCreationForm,
+    AuthenticationForm,
+)
+
+from .forms import CustomPasswordChangeForm
 
 
 class SignupView(CreateView):
@@ -52,4 +59,22 @@ class UserView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["usuario"] = self.request.user
         context["logout_url"] = reverse("logout")
+        context["form"] = CustomPasswordChangeForm(user=self.request.user)
         return context
+
+    def post(self, request, *args, **kwargs):
+        """Handle password change submission."""
+        form = CustomPasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Keeps user logged in
+            messages.success(request, "Se cambió tu contraseña exitosamente.")
+            return redirect("usuario")
+        else:
+            messages.error(
+                request, "No se pudo cambiar la contraseña. Favor de corregir errores."
+            )
+
+        context = self.get_context_data()
+        context["form"] = form
+        return self.render_to_response(context)

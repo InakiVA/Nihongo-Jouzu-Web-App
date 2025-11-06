@@ -1,6 +1,6 @@
 # accounts/models.py
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User as Usuario
 
 
 class RolPerfil(models.TextChoices):
@@ -11,7 +11,7 @@ class RolPerfil(models.TextChoices):
 
 class Perfil(models.Model):
     usuario = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="perfil"
+        Usuario, on_delete=models.CASCADE, related_name="perfil"
     )
     rol = models.CharField(
         max_length=10,

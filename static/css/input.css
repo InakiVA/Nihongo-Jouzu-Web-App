@@ -5,134 +5,139 @@
 @import "./themes.css";
 
 nav {
-  @apply navbar bg-neutral-dark border-b border-neutral-light shadow-xl shadow-black/20;
+ @apply navbar bg-neutral-dark border-b border-neutral-light shadow-xl shadow-black/20;
 }
 
 body {
-  @apply bg-neutral-dark text-textcolor;
+ @apply bg-neutral-dark text-textcolor;
 }
 
 h2{
-  @apply text-textcolor font-normal text-2xl;
+ @apply text-textcolor font-normal text-2xl;
 }
 
 h3{
-  @apply text-textcolor-dark text-lg;
+ @apply text-textcolor-dark text-lg;
 }
 
 h4 {
-  @apply text-textcolor font-semibold text-4xl;
+ @apply text-textcolor font-semibold text-4xl;
 }
 
 #title1 {
-  @apply text-4xl text-neutral-light font-extrabold;
+ @apply text-4xl text-neutral-light font-extrabold;
 }
 
 #title2 {
-  @apply text-4xl text-accent-main font-extrabold;
+ @apply text-4xl text-accent-main font-extrabold;
 }
 
 .welcome_bg{
-  @apply bg-radial from-neutral-dark to-neutral-main;
+ @apply bg-radial from-neutral-dark to-neutral-main;
 }
 
 .welcome_bg .card {
-  @apply bg-neutral-dark p-12 rounded-2xl shadow-2xl border-4 border-accent-main hover:border-accent-light;
+ @apply bg-neutral-dark p-12 rounded-2xl shadow-2xl border-4 border-accent-main hover:border-accent-light;
 }
 
 .button-neutral {
-  @apply btn btn-ghost shadow-none border-neutral-light bg-neutral-dark text-textcolor rounded-sm px-4;
-  @apply hover:bg-accent-main;
+ @apply btn btn-ghost shadow-none border-neutral-light bg-neutral-dark text-textcolor rounded-sm px-4;
+ @apply hover:bg-accent-main;
 }
 
 .button-main {
-  @apply btn btn-ghost shadow-none border-2 border-accent-light bg-accent-main text-textcolor rounded-sm px-4;
-  @apply hover:bg-accent-dark;
+ @apply btn btn-ghost shadow-none border-2 border-accent-light bg-accent-main text-textcolor rounded-sm px-4;
+ @apply hover:bg-accent-dark;
 }
 
 .button-secondary {
-  @apply btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm px-4;
-  @apply hover:bg-accent-main hover:border-accent-light;
+ @apply btn btn-ghost shadow-none border-neutral-light bg-neutral-main text-textcolor rounded-sm px-4;
+ @apply hover:bg-accent-main hover:border-accent-light;
 }
 
 .button-alert{
-  @apply btn btn-ghost shadow-none border-white bg-secondary-main text-textcolor rounded-sm px-4;
-  @apply hover:bg-accent-main hover:border-accent-light;
+ @apply btn btn-ghost shadow-none border-secondary-light bg-secondary-main text-textcolor rounded-sm px-4;
+ @apply hover:bg-secondary-dark;
 }
 
 .button-big{
-  @apply btn btn-ghost shadow-none border-2 border-accent-light bg-accent-main text-textcolor rounded-sm  text-2xl font-bold p-8;
-  @apply hover:bg-accent-dark;
+ @apply btn btn-ghost shadow-none border-2 border-accent-light bg-accent-main text-textcolor rounded-sm text-2xl font-bold p-8;
+ @apply hover:bg-accent-dark;
+}
+
+.button-big-alert{
+ @apply btn btn-ghost shadow-none border-2 border-secondary-light bg-secondary-main text-textcolor rounded-sm text-2xl font-bold p-8;
+ @apply hover:bg-secondary-dark;
 }
 
 .button-icon-only{
-  @apply btn btn-ghost btn-circle shadow-none border-none bg-transparent;
-  @apply hover:bg-accent-main;
+ @apply btn btn-ghost btn-circle shadow-none border-none bg-transparent;
+ @apply hover:bg-accent-main;
 }
 
 .button-join{
-  @apply btn btn-ghost shadow-none bg-neutral-main text-textcolor rounded-none p-2;
-  @apply hover:bg-accent-main;
+ @apply btn btn-ghost shadow-none bg-neutral-main text-textcolor rounded-none p-2;
+ @apply hover:bg-accent-main;
 }
 
 .button-join-selected{
-  @apply btn btn-ghost shadow-none bg-accent-main text-textcolor rounded-none p-2;
-  @apply hover:bg-accent-dark;
+ @apply btn btn-ghost shadow-none bg-accent-main text-textcolor rounded-none p-2;
+ @apply hover:bg-accent-dark;
 }
 
 .button-join-unselected{
-  @apply btn btn-ghost shadow-none bg-neutral-main text-textcolor rounded-none p-2;
-  @apply hover:bg-accent-main;
+ @apply btn btn-ghost shadow-none bg-neutral-main text-textcolor rounded-none p-2;
+ @apply hover:bg-accent-main;
 }
 
 .button-include{
-  @apply btn btn-ghost shadow-none bg-include text-textcolor rounded-none p-2;
-  @apply hover:bg-neutral-main;
+ @apply btn btn-ghost shadow-none bg-include text-textcolor rounded-none p-2;
+ @apply hover:bg-neutral-main;
 }
 
 .button-exclude{
-  @apply btn btn-ghost shadow-none bg-exclude text-textcolor rounded-none p-2;
-  @apply hover:bg-neutral-main;
+ @apply btn btn-ghost shadow-none bg-exclude text-textcolor rounded-none p-2;
+ @apply hover:bg-neutral-main;
 }
 
 .link{
-  @apply underline text-accent-main hover:text-accent-light transition;
+ @apply underline text-accent-main hover:text-accent-light transition;
 }
 
 .select{
-  @apply select select-ghost text-lg font-light! bg-neutral-dark border-neutral-light text-textcolor w-full;
-  @apply hover:bg-neutral-main hover:shadow-sm;
-  @apply focus:bg-neutral-main;
+ @apply select select-ghost text-lg font-light! bg-neutral-dark border-neutral-light text-textcolor w-full;
+ @apply hover:bg-neutral-main hover:shadow-sm;
+ @apply focus:bg-neutral-main;
 }
 
 .input {
-  @apply input input-neutral rounded-lg font-light flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
-  @apply focus:bg-neutral-main hover:bg-neutral-main;
+ @apply input input-neutral rounded-lg font-light flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
+ @apply focus:bg-neutral-main hover:bg-neutral-main;
 }
 
 .input_text {
-  @apply text-lg text-textcolor wrap-break-word;
-  @apply placeholder:text-textcolor-dark placeholder:italic;
+ @apply text-lg text-textcolor wrap-break-word;
+ @apply placeholder:text-textcolor-dark placeholder:italic;
 }
 
 .textarea {
-  @apply input input-neutral rounded-lg text-lg font-light! flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
-  @apply focus:bg-neutral-main hover:bg-neutral-main;
-  @apply placeholder:text-textcolor-dark placeholder:italic;
+ @apply input input-neutral rounded-lg text-lg font-light! flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
+ @apply focus:bg-neutral-main hover:bg-neutral-main;
+ @apply placeholder:text-textcolor-dark placeholder:italic;
 }
 
 .star-on{
-  @apply fill-star;
-  @apply hover:fill-star-dark;
+ @apply fill-star;
+ @apply hover:fill-star-dark;
 }
 
 .star-off{
-  @apply text-star;
-  @apply hover:fill-star-dark;
+ @apply text-star;
+ @apply hover:fill-star-dark;
 }
 
 .tag {
-  @apply rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+ @apply rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
 }
 
 .tag-0{ @apply bg-rainbow0; }
@@ -151,8 +156,8 @@ h4 {
 .tag-neutral-alt{ @apply bg-neutral-dark border border-neutral-secondary; }
 
 .radio{
-  @apply radio border-textcolor;
-  @apply hover:bg-textcolor checked:border-3;
+ @apply radio border-textcolor;
+ @apply hover:bg-textcolor checked:border-3;
 }
 
 .radio-0{ @apply bg-rainbow0 checked:text-rainbow0;}
@@ -168,53 +173,53 @@ h4 {
 .radio-neutral{ @apply bg-neutral-secondary checked:text-neutral-secondary;}
 
 .check-box{
-  @apply checkbox text-neutral-light bg-neutral-dark  checked:bg-accent-main border-neutral-light border;
-  @apply hover:bg-neutral-main hover:shadow-sm;
-  @apply checked:bg-accent-main checked:text-textcolor checked:border-accent-light;
-  @apply hover:checked:bg-accent-dark;
+ @apply checkbox text-neutral-light bg-neutral-dark checked:bg-accent-main border-neutral-light border;
+ @apply hover:bg-neutral-main hover:shadow-sm;
+ @apply checked:bg-accent-main checked:text-textcolor checked:border-accent-light;
+ @apply hover:checked:bg-accent-dark;
 }
 
 .progreso {
-  @apply progress w-full bg-neutral-main text-accent-main ;
+ @apply progress w-full bg-neutral-main text-accent-main ;
 }
 
 .slider{
-  @apply range range-sm range-neutral [--range-thumb:white] w-full text-accent-main bg-neutral-dark;
-  @apply hover:text-accent-dark hover:shadow-sm hover:bg-neutral-dark;
+ @apply range range-sm range-neutral [--range-thumb:white] w-full text-accent-main bg-neutral-dark;
+ @apply hover:text-accent-dark hover:shadow-sm hover:bg-neutral-dark;
 }
 
 .switch{
-  @apply toggle text-neutral-light bg-neutral-dark border-neutral-light border;
-  @apply hover:bg-neutral-main hover:shadow-sm;
-  @apply checked:bg-accent-main checked:text-textcolor checked:border-accent-light;
-  @apply hover:checked:bg-accent-dark;
+ @apply toggle text-neutral-light bg-neutral-dark border-neutral-light border;
+ @apply hover:bg-neutral-main hover:shadow-sm;
+ @apply checked:bg-accent-main checked:text-textcolor checked:border-accent-light;
+ @apply hover:checked:bg-accent-dark;
 }
 
 .collapser{
-  @apply collapse bg-neutral-dark border border-neutral-light;
-  @apply hover:bg-neutral-main hover:shadow-sm;
+ @apply collapse bg-neutral-dark border border-neutral-light;
+ @apply hover:bg-neutral-main hover:shadow-sm;
 }
 
 .collapse-title{
-  @apply collapse-title font-light text-lg;
+ @apply collapse-title font-light text-lg;
 }
 
 .element_list {
-  @apply bg-neutral-dark border-neutral-light rounded-box shadow-xl border;
+ @apply bg-neutral-dark border-neutral-light rounded-box shadow-xl border;
 }
 
 .element_row{
-  @apply shadow-md border border-neutral-main items-center gap-4 px-4 py-4;
+ @apply shadow-md border border-neutral-main items-center gap-4 px-4 py-4;
 }
 
 .wordcard{
-  @apply hover:bg-neutral-main bg-neutral-dark shadow-sm border border-neutral-main text-textcolor rounded-lg;
+ @apply hover:bg-neutral-main bg-neutral-dark shadow-sm border border-neutral-main text-textcolor rounded-lg;
 }
 
 .wordcard-disabled{
-  @apply  bg-neutral-dark shadow-sm border border-neutral-main text-textcolor rounded-lg;
+ @apply bg-neutral-dark shadow-sm border border-neutral-main text-textcolor rounded-lg;
 }
 
 .modal-box{
-  @apply bg-neutral-dark border border-neutral-main;
+ @apply bg-neutral-dark border border-neutral-main;
 }
