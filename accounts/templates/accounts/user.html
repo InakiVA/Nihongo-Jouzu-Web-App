@@ -30,7 +30,7 @@
             {% endfor %}
         </div>
             <button type="submit" name="username_submit" class="button-big">
-                {% include "components/icons/check.html" %} Actualizar Usuario
+                {% include "components/icons/check.html" %} Cambiar Nombre de Usuario
             </button>
         </form>
       </div>
@@ -40,9 +40,8 @@
     <div>
       <button type="button" class="button-big" data-open="#change_password_modal">
         {% include "components/icons/lock.html" %} Cambiar Contraseña
-      </button>
+      </button>    
     </div>
-
 
     <!-- Password Modal -->
     <dialog id="change_password_modal" class="modal">
@@ -60,35 +59,34 @@
 
           <!-- OLD PASSWORD -->
           <div class="flex flex-col gap-1">
-            <label for="{{ form.old_password.id_for_label }}" class="font-semibold">Contraseña actual</label>
-            <input type="password" name="{{ form.old_password.html_name }}" id="{{ form.old_password.id_for_label }}" class="input" required>
-            {% if form.old_password.errors %}
-              <p class="text-myalert text-sm">{{ form.old_password.errors.0 }}</p>
-            {% endif %}
+            <label for="{{ password_form.old_password.id_for_label }}" class="font-semibold">Contraseña actual</label>
+            <input type="password" name="{{ password_form.old_password.html_name }}" id="{{ password_form.old_password.id_for_label }}" class="input" required>
+            {% for error in password_form.old_password.errors %}
+              <p class="text-myalert text-sm">{{ error }}</p>
+            {% endfor %}
           </div>
 
           <!-- NEW PASSWORD 1 -->
           <div class="flex flex-col gap-1">
-            <label for="{{ form.new_password1.id_for_label }}" class="font-semibold">Nueva contraseña</label>
-            <input type="password" name="{{ form.new_password1.html_name }}" id="{{ form.new_password1.id_for_label }}" class="input" required>
-            {% if form.new_password1.errors %}
-              <p class="text-myalert text-sm">{{ form.new_password1.errors.0 }}</p>
-            {% endif %}
+            <label for="{{ password_form.new_password1.id_for_label }}" class="font-semibold">Nueva contraseña</label>
+            <input type="password" name="{{ password_form.new_password1.html_name }}" id="{{ password_form.new_password1.id_for_label }}" class="input" required>
+            {% for error in password_form.new_password1.errors %}
+              <p class="text-myalert text-sm">{{ error }}</p>
+            {% endfor %}
           </div>
 
           <!-- NEW PASSWORD 2 -->
           <div class="flex flex-col gap-1">
-            <label for="{{ form.new_password2.id_for_label }}" class="font-semibold">Confirmar nueva contraseña</label>
-            <input type="password" name="{{ form.new_password2.html_name }}" id="{{ form.new_password2.id_for_label }}" class="input" required>
-            <p id="password-match-msg" class="text-sm"></p>
-            {% if form.new_password2.errors %}
-              <p class="text-myalert text-sm">{{ form.new_password2.errors.0 }}</p>
-            {% endif %}
+            <label for="{{ password_form.new_password2.id_for_label }}" class="font-semibold">Confirmar nueva contraseña</label>
+            <input type="password" name="{{ password_form.new_password2.html_name }}" id="{{ password_form.new_password2.id_for_label }}" class="input" required>
+            {% for error in password_form.new_password2.errors %}
+              <p class="text-myalert text-sm">{{ error }}</p>
+            {% endfor %}
           </div>
 
-          <div class="flex justify-center pt-4">
-            {% include "components/button.html" with text="Actualizar Contraseña" icon="components/icons/check.html" extra_classes="button-big button-primary" %}
-          </div>
+          <button type="submit" name="password_submit" class="button-big">
+            {% include "components/icons/check.html" %} Cambiar Contraseña
+          </button>
         </form>
       </div>
     </dialog>

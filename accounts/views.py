@@ -73,30 +73,31 @@ class UserView(LoginRequiredMixin, TemplateView):
                 messages.success(
                     request, "Nombre de usuario actualizado correctamente."
                 )
-                return redirect("usuario")
+                return redirect(request.META.get("HTTP_REFERER", "/"))
             elif not username_form.has_changed():
                 messages.info(
                     request, "No se realizaron cambios en el nombre de usuario."
                 )
-                return redirect("usuario")
             else:
                 messages.error(
                     request,
-                    "No se pudo cambiar el nombre de usuario. Corrige los errores.",
+                    "Ya existe un usuario con ese nombre. Favor de elegir otro.",
                 )
-                return redirect("usuario")
+                return redirect(request.META.get("HTTP_REFERER", "/"))
 
         elif "password_submit" in request.POST:
             if password_form.is_valid():
+                print("Password form is valid")
                 user = password_form.save()
-                update_session_auth_hash(request, user)
-                messages.success(request, "Contraseña cambiada exitosamente.")
-                return redirect("usuario")
+                update_session_auth_hash(request, user)  # Keeps user logged in
+                messages.success(request, "Se cambió tu contraseña exitosamente.")
+                return redirect(request.META.get("HTTP_REFERER", "/"))
             else:
+                print("Password form is invalid")
                 messages.error(
-                    request, "No se pudo cambiar la contraseña. Corrige los errores."
+                    request,
+                    "No se pudo cambiar la contraseña. Favor de corregir errores.",
                 )
-                return redirect("usuario")
 
         # Pass the submitted forms (with errors) back to the template
         context = super().get_context_data()
