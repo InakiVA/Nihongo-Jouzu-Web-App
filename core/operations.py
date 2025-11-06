@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.db.models import Q
 from django.contrib import messages
 
-from tags.models import Etiqueta, PalabraEtiqueta, GrupoEtiqueta
+from tags.models import Etiqueta, PalabraEtiqueta
 from groups.models import Grupo, UsuarioGrupo, GrupoPalabra
 from dictionary.models import Palabra, Significado, Lectura, Nota
 from progress.models import UsuarioPalabra

@@ -41,3 +41,4 @@ def valid_repeat_password_messages(form):
     password2 = form.cleaned_data.get("new_password2")
     if password1 and password2 and password1 != password2:
         raise ValidationError("Las contraseñas nuevas no coinciden.")
+    return password2
