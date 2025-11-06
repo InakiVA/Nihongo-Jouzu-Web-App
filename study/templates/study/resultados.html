@@ -3,10 +3,10 @@
     <h4 class="text-start">Resultados de la sesión</h4> 
     <div class="flex flex-auto {% if is_mobile %} flex-col {% else %} flex-row {% endif %} mt-4">        
         <div class="flex flex-col items-start justify-center text-start space-y-4 p-4">
-            <h2 class="!text-4xl">Calificación</h2>
+            <h2 class="text-4xl!">Calificación</h2>
             <div class="flex flex-auto flex-col text-center items-center justify-start gap-8 py-8">
             {% include "components/progress_donut.html" with progress=calificacion text=calificacion size="12" extra_classes="!text-3xl font-semibold"%}
-            <h2 class="!text-4xl">{{balance}}</h2>
+            <h2 class="text-4xl!">{{balance}}</h2>
             </div>
         </div>  
         

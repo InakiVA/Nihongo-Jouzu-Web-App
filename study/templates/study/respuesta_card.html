@@ -24,7 +24,7 @@
     <div class="flex flex-auto flex-col gap-2">  
         {% include "study/accordion_element.html" with input_name="agregar_significado" elements=palabra.significados url=agregar_significado header="Significados" placeholder="Nuevo significado:" %}        
         {% include "study/accordion_element.html" with input_name="agregar_lectura" elements=palabra.lecturas url=agregar_lectura header="Lecturas" placeholder="Nueva lectura:" %}
-        {% include "study/accordion_tag_element.html" with select_name="agregar_etiqueta" elements=palabra.etiquetas url=agregar_etiqueta header="Etiquetas" options=nuevas_etiquetas%}
+        {% include "study/accordion_tag_element.html" with select_name="agregar_etiqueta" elements=palabra.etiquetas_colores url=agregar_etiqueta header="Etiquetas" options=nuevas_etiquetas%}
         {% include "study/accordion_element.html" with input_name="agregar_nota" elements=palabra.notas url=agregar_nota header="Notas" placeholder="Nueva nota:" is_textarea=True is_checked=True %}
     </div>       
 </div>

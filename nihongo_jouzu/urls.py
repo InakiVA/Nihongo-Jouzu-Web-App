@@ -22,10 +22,11 @@ import core.views as core
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("core/", include("core.urls"), name="core"),
     path("inicio/", include("study.urls"), name="inicio"),
     path("palabras/", include("dictionary.urls"), name="palabras"),
     path("grupos/", include("groups.urls"), name="grupos"),
+    path("etiquetas/", include("tags.urls"), name="etiquetas"),
     path("", include("accounts.urls"), name="usuario"),
     path("buscar/", core.SearchView.as_view(), name="buscar"),
-    path("core/", include("core.urls"), name=core),
 ]

@@ -42,14 +42,13 @@
     ++ Incluir búsqueda de tags - palabras o grupos que tengan como tag el input dado mejor
     << Page navigation bonita hasta abajo mejor
 
--- CRUD:
-
 == Vista de palabras
     << Crear palabra
     << Lista de palabras
         << Cambiar "Diccionario" a "Palabras" en navbar y urls
         >> lista con estrella y progreso
-    ++ Filtros por etiqueta, estrella, progreso, creador
+    ++ Filtros por search, etiqueta (multi select), estrella, progreso, creador
+    ++ Orden por abcd palabra, significado, creación
     ?? Progreso global (palabras iniciadas)
         ?? Palabras estudiando
         ?? Modal de lo de arriba
@@ -75,7 +74,8 @@
     << Crear grupo
     << Lista de grupos con estrella y progreso
         << cantidad de palabras en grupo
-    ++ Filtros por estrella, progreso, creador
+    ++ Filtros por search, estrella, progreso, creador
+    ++ Orden por abcd, creación
 
 == Vista de grupo-detalles
     << Progreso, descripcion
@@ -87,15 +87,28 @@
     .. omitir grupo_etiquetas hasta encontrarle propósito funcional
 
 == Vista de etiquetas
-    ++ Agregar etiquetas al navbar
-    ++ CRUD
+    << Agregar etiquetas al navbar
+    << CRUD
+        << vista
+        << funcionalidad
     .. omitir grupo_etiquetas hasta encontrarle propósito funcional
-    $$ agregar 3 tiers de colores para cada etiqueta dependiendo de prioridad/tipo que elija el autor de las etiquetas
-        $$ al desplegarse, deben ir en orden 1 a 3
+    << agregar 3 tiers de colores para cada etiqueta dependiendo de prioridad/tipo que elija el autor de las etiquetas
+        << al desplegarse, deben ir en orden 1 a 3
+        << hecho con colores
+    ++ Filtros por search, color, creador
+    ++ Orden por abcd, color, creación
 
 == Vista de usuario
     ++ Cambiar usuario (unique) y contraseña
     ++ Sugerencias, quejas, comentarios
+
+== CONSIDERAR USUARIOS - al picar botón de actualización
+    .. Si un usuario crea palabra/grupo/etiqueta "Mosco", y luego admin la crea,
+        $$ pasar atributos enteros de usuario a "Mosco" si son adicionales, eliminar si no
+            .. si de significado el usuario puso "Mosquito" y el admin no, agregar "Mosquito" como significado DEL USUARIO
+            .. pasar progreso, estrella, grupos
+        >> editar atributos de usuario para que digan (yo) o Mi-
+        $$ nada, y que se duplique, se haga bolas el usuario viendo qué palabras escribió y qué el admin. Mantener integridad de usuario y sus inputs
 
 
 

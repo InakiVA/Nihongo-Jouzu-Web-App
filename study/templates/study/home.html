@@ -21,7 +21,7 @@
                         <h2 class="list_title">Grupos</h2>
                         <h3 class="list_subheader font-light">{{cantidad_grupos}}</h3>
                     </div>
-                    <div class="flex gap-0.25 border border-neutral-light bg-neutral-light rounded-lg overflow-clip h-8 items-center">
+                    <div class="flex gap-px border border-neutral-light bg-neutral-light rounded-lg overflow-clip h-8 items-center">
                     {% include "components/button.html" with text="Todos" url=seleccionar_grupos_url icon="components/icons/check.html" extra_classes="button-join" %}
                     {% include "components/button.html" with text="Limpiar" url=limpiar_grupos_url icon="components/icons/cross.html" extra_classes="button-join" %}                    
                     </div>
@@ -91,7 +91,7 @@
                     </div>
                     {% if filtros_etiquetas_show %}
                     <div>
-                        <legend class="fieldset-legend !pt-0">Filtros de etiquetas a pasar</legend>
+                        <legend class="fieldset-legend pt-0!">Filtros de etiquetas a pasar</legend>
                         {% include "components/switch_buttons.html" with checked=on_filtros_etiquetas_andor url=filtros_etiquetas_andor_url left_text="Todos" right_text="Al menos uno" %}                                        
                     </div>
                     {% endif %}     
@@ -109,7 +109,7 @@
                 </div>  
             </div>  
             <div class="space-y-4">
-            <legend class="fieldset-legend !pt-0">Preguntas</legend>                         
+            <legend class="fieldset-legend pt-0!">Preguntas</legend>                         
             {% include "components/select.html" with options=idioma_preguntas_opciones selected=idioma_preguntas_elegido url=idioma_preguntas_url%}
             {% include "components/switch.html" with right_text="Orden de preguntas aleatorio" url=aleatorio_url id="aleatorio_id" is_selected=is_aleatorio%}
             </div>  

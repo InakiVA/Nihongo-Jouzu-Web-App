@@ -1,7 +1,1 @@
-{% if text == "Kanji" %}
-<div class="tag-kanji flex items-center text-center gap-2 {{extra_classes}}">{% if icon %}{% include icon %}{% endif %}{{text}}</div>
-{% elif "JLPT" in text %}
-<div class="tag-level flex items-center text-center gap-2 {{extra_classes}}">{% if icon %}{% include icon %}{% endif %}{{text}}</div>
-{% else %}
-<div class="tag flex items-center text-center gap-2 {{extra_classes}}">{% if icon %}{% include icon %}{% endif %}{{text}}</div>
-{% endif %}
+<div class="tag tag-{{color|default:'neutral'}} {{extra_classes}}">{{text}}</div>

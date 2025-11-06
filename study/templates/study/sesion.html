@@ -10,7 +10,7 @@
     <div class="flex flex-row justify-center gap-x-4 w-full">
       {% include "components/button.html" with icon="components/icons/arrow_left_double.html" name="action" value="previous_unanswered" url=cambiar_pregunta_url extra_classes="button-icon-only" %}
       {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=cambiar_pregunta_url extra_classes="button-icon-only" %}
-      <h2 class="!text-4xl">Pregunta {{index}}/{{palabras_len}}</h2>      
+      <h2 class="text-4xl!">Pregunta {{index}}/{{palabras_len}}</h2>      
       {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pregunta_url extra_classes="button-icon-only" %}
       {% include "components/button.html" with icon="components/icons/arrow_right_double.html" name="action" value="next_unanswered" url=cambiar_pregunta_url extra_classes="button-icon-only" %}
     </div>

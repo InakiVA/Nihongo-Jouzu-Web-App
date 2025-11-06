@@ -5,19 +5,9 @@
     {% if not method or method == "post" %}
       {% csrf_token %}
     {% endif %}
-    <input 
-      type="{{ type|default:'text' }}" 
-      name="{{ name }}" 
-      class="input_text {{ extra_classes }}" 
-      placeholder="{{ placeholder|default:'Buscar:' }}" 
-      value="{{ value|default:'' }}"/>
+    <input type="{{ type|default:'text' }}" name="{{ name }}" class="input_text {{ extra_classes }}" placeholder="{{ placeholder|default:'Buscar:' }}" value="{{ value|default:'' }}" {% if required %} required {% endif %}/>
   </form>
   {% else %}
-  <input 
-    type="{{ type|default:'text' }}" 
-    name="{{ name }}" 
-    class="input_text {{ extra_classes }}" 
-    placeholder="{{ placeholder|default:'Buscar:' }}" 
-    value="{{ value|default:'' }}"/>
+  <input type="{{ type|default:'text' }}" name="{{ name }}" class="input_text {{ extra_classes }}" placeholder="{{ placeholder|default:'Buscar:' }}" value="{{ value|default:'' }}" {% if required %} required {% endif %}/>
   {% endif %}
 </div>

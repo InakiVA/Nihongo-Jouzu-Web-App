@@ -14,11 +14,11 @@
   <body class="flex flex-col w-screen min-h-screen h-auto space-y-4">
       {% if user.is_authenticated %}
         {% include "components/navbar.html" %}    
-        <div class="{% if is_mobile %} mt-26 {% else %} mt-20 {% endif %}"></div>        
+        <div class="{% if is_mobile %} mt-26 {% endif %}"></div>        
       {% endif %}
 
       {% if messages %}
-        <div class="toast toast-bottom toast-end z-[9999]">
+        <div class="toast toast-bottom toast-end z-9999">
           {% for message in messages %}
             {% include "components/message.html" %}
           {% endfor %}

@@ -7,8 +7,8 @@
       onchange="this.form.submit()"
       {% if is_active %}checked{% endif %}
     />
-    <div class="swap-on {%if on_classes %} {{on_classes}} {% else %} button-main {% endif %} !border !border-neutral-light !rounded-full !h-8">
-      <div class="flex flex-row items-center justify-center gap-1 !text-base underline">
+    <div class="swap-on {%if on_classes %} {{on_classes}} {% else %} button-main {% endif %} border! border-neutral-light! rounded-full! h-8!">
+      <div class="flex flex-row items-center justify-center gap-1 text-base! underline">
         {% if on_icon %} 
           {% include on_icon %}
         {% else %}
@@ -17,6 +17,6 @@
       {{text}}
       </div>
     </div>
-    <div class="swap-off {%if off_classes %} {{off_classes}} {% else %} button-secondary {% endif %} !rounded-full !h-8 !text-base !font-light">{{text}}</div>
+    <div class="swap-off {%if off_classes %} {{off_classes}} {% else %} button-secondary {% endif %} rounded-full! h-8! text-base! font-light!">{{text}}</div>
   </label>
 </form>

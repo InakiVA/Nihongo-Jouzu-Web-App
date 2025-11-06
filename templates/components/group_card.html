@@ -3,11 +3,11 @@
   <button class="wordcard p-4 flex flex-auto w-full items-start justify-between {{extra_classes}}" value="{{grupo.id}}" name="groupcard">
     <div class="space-y-4">
         <div class="flex items-end gap-4">
-        <h4 class="!font-light">{{ grupo.grupo }}</h4>  
+        <h4 class="font-light!">{{ grupo.grupo }}</h4>  
         <p class="text-textcolor-dark">{{ grupo.cantidad_palabras }} palabras</p>
         </div> 
         {% if grupo.descripcion %}
-        <h2 class="text-ellipsis text-start !font-light">{{ grupo.descripcion }}</h2>  
+        <h2 class="text-ellipsis text-start font-light!">{{ grupo.descripcion }}</h2>  
         {% endif %} 
     </div>
     <div class="items-center flex gap-4 justify-end"> 

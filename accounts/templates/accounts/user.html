@@ -1,5 +1,121 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>Bienvenido, {{ usuario.username }}</h2>
-  {% include "components/button.html" with text="Cerrar Sesión" url=logout_url extra_classes="button-big"%}
+<div class="flex flex-col flex-auto px-4 gap-4 pb-4">
+    <h4 class="text-start">Usuario: {{ usuario.username }}</h4>
+
+    <!-- Username Change Button -->
+    <div>
+      <button type="button" class="button-big" data-open="#change_username_modal">
+        {% include "components/icons/pencil.html" %} Cambiar Nombre de Usuario
+      </button>
+    </div>
+    
+    <!-- Username Modal -->
+    <dialog id="change_username_modal" class="modal">
+      <div class="modal-box space-y-4">
+        <div class="flex flex-row justify-between items-center">
+          <h2>Cambiar Nombre de Usuario</h2>
+          <button type="button" class="button-icon-only" data-close="#change_username_modal">
+            {% include "components/icons/cross.html" %}
+          </button>
+        </div>
+
+        <form method="post" class="gap-4 p-4 flex flex-col" id="username-change-form">
+            {% csrf_token %}
+            <div class="flex flex-col gap-1">
+            <label for="{{ username_form.username.id_for_label }}" class="font-semibold">Nuevo nombre de usuario</label>
+            {{ username_form.username }}
+            {% for error in username_form.username.errors %}
+                <p class="text-myalert text-sm">{{ error }}</p>
+            {% endfor %}
+        </div>
+            <button type="submit" name="username_submit" class="button-big">
+                {% include "components/icons/check.html" %} Actualizar Usuario
+            </button>
+        </form>
+      </div>
+    </dialog>
+
+    <!-- Password Change Button -->
+    <div>
+      <button type="button" class="button-big" data-open="#change_password_modal">
+        {% include "components/icons/lock.html" %} Cambiar Contraseña
+      </button>
+    </div>
+
+
+    <!-- Password Modal -->
+    <dialog id="change_password_modal" class="modal">
+      <div class="modal-box space-y-4">
+        <div class="flex flex-row justify-between items-center">
+          <h2>Cambiar Contraseña</h2>
+          <button type="button" class="button-icon-only" data-close="#change_password_modal">
+            {% include "components/icons/cross.html" %}
+          </button>
+        </div>
+
+        <!-- Clean password form -->
+        <form method="post" class="gap-4 p-4 flex flex-col" id="password-change-form">
+          {% csrf_token %}
+
+          <!-- OLD PASSWORD -->
+          <div class="flex flex-col gap-1">
+            <label for="{{ form.old_password.id_for_label }}" class="font-semibold">Contraseña actual</label>
+            <input type="password" name="{{ form.old_password.html_name }}" id="{{ form.old_password.id_for_label }}" class="input" required>
+            {% if form.old_password.errors %}
+              <p class="text-myalert text-sm">{{ form.old_password.errors.0 }}</p>
+            {% endif %}
+          </div>
+
+          <!-- NEW PASSWORD 1 -->
+          <div class="flex flex-col gap-1">
+            <label for="{{ form.new_password1.id_for_label }}" class="font-semibold">Nueva contraseña</label>
+            <input type="password" name="{{ form.new_password1.html_name }}" id="{{ form.new_password1.id_for_label }}" class="input" required>
+            {% if form.new_password1.errors %}
+              <p class="text-myalert text-sm">{{ form.new_password1.errors.0 }}</p>
+            {% endif %}
+          </div>
+
+          <!-- NEW PASSWORD 2 -->
+          <div class="flex flex-col gap-1">
+            <label for="{{ form.new_password2.id_for_label }}" class="font-semibold">Confirmar nueva contraseña</label>
+            <input type="password" name="{{ form.new_password2.html_name }}" id="{{ form.new_password2.id_for_label }}" class="input" required>
+            <p id="password-match-msg" class="text-sm"></p>
+            {% if form.new_password2.errors %}
+              <p class="text-myalert text-sm">{{ form.new_password2.errors.0 }}</p>
+            {% endif %}
+          </div>
+
+          <div class="flex justify-center pt-4">
+            {% include "components/button.html" with text="Actualizar Contraseña" icon="components/icons/check.html" extra_classes="button-big button-primary" %}
+          </div>
+        </form>
+      </div>
+    </dialog>
+
+    <!-- Logout Button -->
+    <div>
+      <button type="button" class="button-big button-big-alert" data-open="#logout_modal">
+        {% include "components/icons/end.html" %} Cerrar Sesión
+      </button>
+    </div>
+
+    <!-- Logout Modal -->
+    <dialog id="logout_modal" class="modal">
+        <div class="modal-box space-y-10 flex flex-col justify-between items-center p-10">
+            <h4>¿Deseas cerrar sesión?</h4>
+            <h2>Todos tus cambios no guardados se perderán</h2>
+            <div class="flex justify-between gap-4">
+            <button type="button" class="btn button-secondary" data-close="#logout_modal">
+                {% include "components/icons/cross.html" %} Cancelar
+            </button>
+            {% include "components/button.html" with url=logout_url text="Cerrar Sesión" icon="components/icons/end.html" extra_classes="button-alert" %}
+            </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
+
+</div>
 {% endblock %}

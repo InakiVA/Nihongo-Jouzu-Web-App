@@ -7,21 +7,21 @@
 {% endif %}
     <div>
       <div class="flex items-center gap-4">
-        <h4 class="!font-light">{{ palabra.palabra }}</h4>  
+        <h4 class="font-light!">{{ palabra.palabra }}</h4>  
         <p class="text-textcolor-dark">{{ palabra.lecturas }}</p>
       </div> 
-      <h2 class="text-ellipsis text-start !font-light">{{ palabra.significados }}</h2> 
+      <h2 class="text-ellipsis text-start font-light!">{{ palabra.significados }}</h2> 
       {% if palabra.etiquetas %}
       <div class="flex flex-row gap-2 flex-wrap pt-2">
-        {% for tag in palabra.etiquetas %}
-          {% include "components/tag.html" with text=tag %}
+        {% for tag in palabra.etiquetas_colores %}
+          {% include "components/tag.html" with text=tag.etiqueta color=tag.color %}
         {% endfor %}
       </div>    
       {% endif %} 
       {% if palabra.grupos %}
       <div class="flex flex-row gap-2 flex-wrap pt-2">
         {% for grupo in palabra.grupos %}
-          {% include "components/tag.html" with text=grupo extra_classes="!bg-neutral-main border !border-neutral-secondary"%}
+          {% include "components/tag.html" with text=grupo color="neutral-alt" %}
         {% endfor %}
       </div>    
       {% endif %} 

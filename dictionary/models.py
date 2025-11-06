@@ -67,6 +67,7 @@ class Palabra(models.Model):
             "lecturas": self.lecturas_str(usuario),
             "significados": self.significados_str(usuario),
             "etiquetas": self.etiquetas_list(usuario),
+            "etiquetas_colores": self.etiquetas_colores(usuario),
             "notas": self.notas_str(usuario),
             "grupos": self.grupos_list(usuario),
             "editable": self.usuario == usuario,
@@ -129,18 +130,19 @@ class Palabra(models.Model):
             Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
         )
 
+    def etiquetas_colores(self, usuario):
+        etiquetas_list = self.etiquetas_objetos(usuario)
+        return sorted(
+            [e.etiqueta.etiqueta_dict() for e in etiquetas_list],
+            key=lambda x: (x["color"].lower(), x["etiqueta"].lower()),
+        )
+
     def etiquetas_objetos_usuario(self, usuario):
         return sorted(self.palabra_etiquetas.filter(Q(usuario=usuario)))
 
     def etiquetas_list(self, usuario):
         etiquetas = set([str(e.etiqueta) for e in self.etiquetas_objetos(usuario)])
-        return sorted(
-            etiquetas,
-            key=lambda x: (
-                0 if x == "Kanji" else 1 if x.startswith("JLPT") else 2,
-                x.lower(),  # for alphabetical sorting within each group
-            ),
-        )
+        return sorted(etiquetas, key=lambda x: (x.lower()))
 
     def grupos_objetos(self, usuario):
         return self.palabra_grupos.filter(

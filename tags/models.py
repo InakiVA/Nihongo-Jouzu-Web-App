@@ -3,7 +3,20 @@ from django.conf import settings
 from dictionary.models import Palabra
 from groups.models import Grupo
 
+
 # -- Etiquetado global, escalabe y flexible a futuro
+class ColorOptions(models.TextChoices):
+    COLOR_0 = "0", "Rojo"
+    COLOR_1 = "1", "Naranja"
+    COLOR_2 = "2", "Amarillo"
+    COLOR_3 = "3", "Verde"
+    COLOR_4 = "4", "Azul"
+    COLOR_5 = "5", "Indigo"
+    COLOR_6 = "6", "Morado"
+    COLOR_7 = "7", "Rosa"
+    COLOR_8 = "8", "Negro"
+    COLOR_9 = "9", "Gris"
+    COLOR_NEUTRAL = "neutral", "Neutral"
 
 
 class Etiqueta(models.Model):
@@ -13,6 +26,11 @@ class Etiqueta(models.Model):
         on_delete=models.CASCADE,
         related_name="etiquetas",
     )
+    color = models.CharField(
+        max_length=10,
+        choices=ColorOptions.choices,
+        default=ColorOptions.COLOR_NEUTRAL,
+    )
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
     ultima_modificacion = models.DateTimeField(auto_now=True)
 
@@ -20,8 +38,22 @@ class Etiqueta(models.Model):
         self.etiqueta = etiqueta
         self.save()
 
+    def update_color(self, color):
+        self.color = color
+        self.save()
+
     class Meta:
         db_table = "Etiquetas"
+
+    def etiqueta_dict(self):
+        return {
+            "id": self.id,
+            "etiqueta": self.etiqueta,
+            "color": self.color,
+            "creador": self.usuario,
+            "fecha_creacion": self.fecha_creacion,
+            "ultima_modificacion": self.ultima_modificacion,
+        }
 
     def __str__(self):
         return self.etiqueta

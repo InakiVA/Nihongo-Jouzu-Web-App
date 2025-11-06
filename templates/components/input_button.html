@@ -4,7 +4,7 @@
     <div class="flex flex-row w-full h-full gap-2">
         {% if has_button_left %}
         <div class="flex">
-            <button class="button-secondary !h-full {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>        
+            <button class="button-secondary h-full! {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>        
         </div>
         {% endif %}
         {% if is_textarea %}
@@ -18,7 +18,7 @@
         {% endif %}
         {% if not has_button_left %}
         <div class="flex">
-            <button class="button-secondary !h-full {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>            
+            <button class="button-secondary h-full! {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>            
         </div>
         {% endif %}
     </div>

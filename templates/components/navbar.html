@@ -39,6 +39,14 @@
             {% endif %}
           </li>
           <li>
+            {% url 'etiquetas' as url_value %}
+            {% if request.path == url_value %}
+              {% include "components/button.html" with is_navigation=True url=url_value text="Etiquetas" icon="components/icons/tag.html" extra_classes="button-main join-item" name="navbar_tags" %}
+            {% else %}
+              {% include "components/button.html" with is_navigation=True url=url_value text="Etiquetas" icon="components/icons/tag.html" extra_classes="button-neutral join-item" name="navbar_tags" %}
+            {% endif %}
+          </li>
+          <li>
             {% url 'usuario' as url_value %}
             {% if request.path == url_value %}
               {% include "components/button.html" with is_navigation=True url=url_value text="Usuario" icon="components/icons/user.html" extra_classes="button-main join-item" name="navbar_user" %}
@@ -76,6 +84,13 @@
             {% include "components/button.html" with is_navigation=True is_selected=True url=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="join-item" name="navbar_groups" %}
         {% else %}
             {% include "components/button.html" with is_navigation=True url=url_value text="Grupos" icon="components/icons/groups.html" extra_classes="join-item" name="navbar_groups" %}
+        {% endif %}
+
+        {% url 'etiquetas' as url_value %}
+        {% if request.path == url_value %}
+            {% include "components/button.html" with is_navigation=True is_selected=True url=url_value text="Etiquetas" icon="components/icons/tag.html" extra_classes="join-item" name="navbar_tags" %}
+        {% else %}
+            {% include "components/button.html" with is_navigation=True url=url_value text="Etiquetas" icon="components/icons/tag.html" extra_classes="join-item" name="navbar_tags" %}
         {% endif %}
     </div>
   </div>

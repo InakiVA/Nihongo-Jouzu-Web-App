@@ -17,7 +17,9 @@ def crear_grupo(request):
     grupo_value = request.POST.get("grupo_nuevo")
     desc_value = request.POST.get("descripcion_nueva")
     user = request.user
-    existent = Grupo.objects.filter(usuario=user, grupo=grupo_value).exists()
+    existent = Grupo.objects.filter(
+        Q(usuario=user) | Q(usuario__perfil__rol="admin"), grupo=grupo_value
+    ).exists()
     breaker = False
     if "<" in grupo_value or ">" in grupo_value:
         breaker = True
@@ -35,7 +37,7 @@ def crear_grupo(request):
         if not grupo_value:
             messages.error(request, "Favor de ingresar nombre de grupo")
         if existent:
-            messages.error(request, "Ya creaste un grupo con este nombre")
+            messages.error(request, "Ya existe un grupo con este nombre")
         return redirect(request.META.get("HTTP_REFERER", "/"))
     for key, value in zip(
         ["grupo_valido", "desc_valida"],
