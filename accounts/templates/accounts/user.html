@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="flex flex-col flex-auto px-4 gap-4 pb-4">
-    <h4 class="text-start">Vista de usuario: {{ usuario.username }}</h4>
+    <h4 class="text-start">Usuario: {{ usuario.username }}</h4>
 
     <!-- Username Change Button -->
     <div>
@@ -21,21 +21,17 @@
         </div>
 
         <form method="post" class="gap-4 p-4 flex flex-col" id="username-change-form">
-          {% csrf_token %}
-
-          <div class="flex flex-col gap-1">
-            <label for="id_username" class="font-semibold">Nuevo nombre de usuario</label>
-            <input type="text" name="username" id="id_username" class="input" value="{{ usuario.username }}" required>
-            {% if username_error %}
-              <p class="text-myalert text-sm">{{ username_error }}</p>
-              <p class="text-myalert text-sm">perrito {{ username_error }}</p>
-            {% endif %}
-          </div>
-
-          <button type="submit" name="username_submit" class="button-big">
-              {% include "components/icons/check.html" %} Actualizar Usuario
-          </button>
-
+            {% csrf_token %}
+            <div class="flex flex-col gap-1">
+            <label for="{{ username_form.username.id_for_label }}" class="font-semibold">Nuevo nombre de usuario</label>
+            {{ username_form.username }}
+            {% for error in username_form.username.errors %}
+                <p class="text-myalert text-sm">{{ error }}</p>
+            {% endfor %}
+        </div>
+            <button type="submit" name="username_submit" class="button-big">
+                {% include "components/icons/check.html" %} Actualizar Usuario
+            </button>
         </form>
       </div>
     </dialog>

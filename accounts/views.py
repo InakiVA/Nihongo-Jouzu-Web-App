@@ -1,16 +1,13 @@
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.views.generic import CreateView, TemplateView
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.forms import (
-    UserCreationForm,
-    AuthenticationForm,
-)
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-from .forms import CustomPasswordChangeForm
+from .forms import CustomPasswordChangeForm, CustomUsernameChangeForm
 
 
 class SignupView(CreateView):
@@ -48,7 +45,7 @@ class WelcomeView(TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect("inicio")  # o la vista principal del usuario
+            return redirect("inicio")
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -59,22 +56,52 @@ class UserView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["usuario"] = self.request.user
         context["logout_url"] = reverse("logout")
-        context["form"] = CustomPasswordChangeForm(user=self.request.user)
+        context["username_form"] = CustomUsernameChangeForm(instance=self.request.user)
+        context["password_form"] = CustomPasswordChangeForm(user=self.request.user)
         return context
 
     def post(self, request, *args, **kwargs):
-        """Handle password change submission."""
-        form = CustomPasswordChangeForm(user=request.user, data=request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)  # Keeps user logged in
-            messages.success(request, "Se cambió tu contraseña exitosamente.")
-            return redirect("usuario")
-        else:
-            messages.error(
-                request, "No se pudo cambiar la contraseña. Favor de corregir errores."
-            )
+        """Handle both username and password change submissions."""
+        username_form = CustomUsernameChangeForm(
+            instance=request.user, data=request.POST
+        )
+        password_form = CustomPasswordChangeForm(user=request.user, data=request.POST)
 
-        context = self.get_context_data()
-        context["form"] = form
+        if "username_submit" in request.POST:
+            if username_form.is_valid() and username_form.has_changed():
+                username_form.save()
+                messages.success(
+                    request, "Nombre de usuario actualizado correctamente."
+                )
+                return redirect("usuario")
+            elif not username_form.has_changed():
+                messages.info(
+                    request, "No se realizaron cambios en el nombre de usuario."
+                )
+                return redirect("usuario")
+            else:
+                messages.error(
+                    request,
+                    "No se pudo cambiar el nombre de usuario. Corrige los errores.",
+                )
+                return redirect("usuario")
+
+        elif "password_submit" in request.POST:
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)
+                messages.success(request, "Contraseña cambiada exitosamente.")
+                return redirect("usuario")
+            else:
+                messages.error(
+                    request, "No se pudo cambiar la contraseña. Corrige los errores."
+                )
+                return redirect("usuario")
+
+        # Pass the submitted forms (with errors) back to the template
+        context = super().get_context_data()
+        context["usuario"] = request.user
+        context["logout_url"] = reverse("logout")
+        context["username_form"] = username_form
+        context["password_form"] = password_form
         return self.render_to_response(context)
