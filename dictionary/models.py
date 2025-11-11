@@ -134,7 +134,11 @@ class Palabra(models.Model):
         etiquetas_list = self.etiquetas_objetos(usuario)
         return sorted(
             [e.etiqueta.etiqueta_dict() for e in etiquetas_list],
-            key=lambda x: (x["color"].lower(), x["etiqueta"].lower()),
+            key=lambda x: (
+                x["color"].lower() != "main",
+                x["color"].lower(),
+                x["etiqueta"].lower(),
+            ),
         )
 
     def etiquetas_objetos_usuario(self, usuario):

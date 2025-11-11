@@ -5,6 +5,7 @@ from dictionary.models import Palabra
 
 # -- Etiquetado global, escalabe y flexible a futuro
 class ColorOptions(models.TextChoices):
+    COLOR_MAIN = "main", "Main"
     COLOR_0 = "0", "Rojo"
     COLOR_1 = "1", "Naranja"
     COLOR_2 = "2", "Amarillo"

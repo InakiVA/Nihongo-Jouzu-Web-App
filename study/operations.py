@@ -222,20 +222,27 @@ def get_palabras_a_estudiar(usuario, ajustes):
         if not filtros_etiquetas_exclusivo:
             if filtros_etiquetas_or:
                 palabras = palabras.filter(
-                    palabra_etiquetas__etiqueta__in=etiquetas_obj
+                    palabra_etiquetas__etiqueta__in=etiquetas_obj,
+                    palabra_etiquetas__usuario=usuario,
                 ).distinct()
             else:
                 for etiqueta in etiquetas_obj:
-                    palabras = palabras.filter(palabra_etiquetas__etiqueta=etiqueta)
+                    palabras = palabras.filter(
+                        palabra_etiquetas__etiqueta=etiqueta,
+                        palabra_etiquetas__usuario=usuario,
+                    )
         else:
             if filtros_etiquetas_or:
                 palabras = palabras.exclude(
-                    palabra_etiquetas__etiqueta__in=etiquetas_obj
+                    palabra_etiquetas__etiqueta__in=etiquetas_obj,
+                    palabra_etiquetas__usuario=usuario,
                 ).distinct()
             else:
                 for etiqueta in etiquetas_obj:
-                    palabras = palabras.exclude(palabra_etiquetas__etiqueta=etiqueta)
-
+                    palabras = palabras.exclude(
+                        palabra_etiquetas__etiqueta=etiqueta,
+                        palabra_etiquetas__usuario=usuario,
+                    )
     palabras = list(palabras)
 
     # 4. Aleatorizar si corresponde

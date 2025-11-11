@@ -62,7 +62,7 @@
     --color-star-dark: #8f8c04;
     --color-rainbow0: #c70724;
     --color-rainbow1: #c85010;
-    --color-rainbow2: #ceb900;
+    --color-rainbow2: #ccab06;
     --color-rainbow3: #08934b;
     --color-rainbow4: #0472cd;
     --color-rainbow5: #140bbc;
@@ -72,18 +72,18 @@
     --color-rainbow9: #9e9e9e;
     --color-textcolor: #FFFFFF;
     --color-textcolor-dark: #c7c7c7;
-    --color-include: #a02be8;
-    --color-exclude: #f75b09;
-    --color-neutral-light: #c9f7f5;
-    --color-neutral-main: #253949;
-    --color-neutral-secondary: #5894c2;
-    --color-neutral-dark: #0d151dff;
-    --color-accent-light: #7bfff8;
-    --color-accent-main: #00b3aa;
-    --color-accent-dark: #00756f;
-    --color-secondary-main: #a02be8;
-    --color-secondary-dark: #6a1cae;
-    --color-secondary-light: #e39bff;
+    --color-include: #53c13a;
+    --color-exclude: #ff3c00;
+    --color-neutral-light: #def4ff;
+    --color-neutral-main: #1e3643;
+    --color-neutral-secondary: #2e4c5b;
+    --color-neutral-dark: #000508;
+    --color-accent-light: #9affff;
+    --color-accent-main: #3087b2;
+    --color-accent-dark: #28badf;
+    --color-secondary-light: #ffb347;
+    --color-secondary-main: #b34700;
+    --color-secondary-dark: #7f3402;
   }
 }
 @layer base {
@@ -2007,6 +2007,9 @@
       }
     }
   }
+  .absolute {
+    position: absolute;
+  }
   .fixed {
     position: fixed;
   }
@@ -2816,7 +2819,7 @@
     background-color: var(--color-neutral-main);
   }
   .bg-neutral-main\/10 {
-    background-color: color-mix(in srgb, #253949 10%, transparent);
+    background-color: color-mix(in srgb, #1e3643 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-neutral-main) 10%, transparent);
     }
@@ -6177,6 +6180,9 @@ h4 {
   font-weight: var(--font-weight-semibold);
   color: var(--color-textcolor);
 }
+.tag-main {
+  background-color: var(--color-accent-main);
+}
 .tag-0 {
   background-color: var(--color-rainbow0);
 }
@@ -6288,6 +6294,12 @@ h4 {
     @media (hover: hover) {
       background-color: var(--color-textcolor);
     }
+  }
+}
+.radio-main {
+  background-color: var(--color-accent-main);
+  &:checked {
+    color: var(--color-accent-main);
   }
 }
 .radio-0 {
