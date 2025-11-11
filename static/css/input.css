@@ -140,6 +140,7 @@ h4 {
  @apply rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
 }
 
+.tag-main{ @apply bg-accent-main; }
 .tag-0{ @apply bg-rainbow0; }
 .tag-1{ @apply bg-rainbow1; }
 .tag-2{ @apply bg-rainbow2; }
@@ -160,6 +161,7 @@ h4 {
  @apply hover:bg-textcolor checked:border-3;
 }
 
+.radio-main{ @apply bg-accent-main checked:text-accent-main;}
 .radio-0{ @apply bg-rainbow0 checked:text-rainbow0;}
 .radio-1{ @apply bg-rainbow1 checked:text-rainbow1;}
 .radio-2{ @apply bg-rainbow2 checked:text-rainbow2;}

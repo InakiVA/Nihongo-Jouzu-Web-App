@@ -22,6 +22,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         usuario = self.request.user
 
         tag_colors = [
+            "main",
             "0",
             "1",
             "2",

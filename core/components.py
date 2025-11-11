@@ -79,17 +79,7 @@ def buscar_header(request, search_input, usuario):
 
         for i in range(index * 10, min(len(results), index * 10 + 10)):
             palabra = results[i]
-            value = {
-                "id": palabra.id,
-                "palabra": palabra.palabra,
-                "significados": palabra.significados_str(usuario),
-                "lecturas": palabra.lecturas_str(usuario),
-                "notas": palabra.notas_str(usuario),
-                "etiquetas": palabra.etiquetas_list(usuario),
-                "grupos": palabra.grupos_list(usuario),
-                "progreso": palabra.palabra_usuarios.get(usuario=request.user).progreso,
-                "estrella": palabra.palabra_usuarios.get(usuario=request.user).estrella,
-            }
+            value = palabra.palabra_dict(usuario)
             if i < len(exact_results):
                 exact_list.append(value)
             else:
