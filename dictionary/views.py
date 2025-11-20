@@ -37,14 +37,17 @@ class DetailView(LoginRequiredMixin, TemplateView):
 
         grupos_usuario = c_op.get_user_groups_list(usuario)
         grupos_de_palabra_de_usuario = set(
-            Grupo.objects.filter(usuario=usuario, grupo_palabras__palabra=palabra_obj)
+            Grupo.objects.filter(
+                usuario=usuario, grupo_palabras__palabra=palabra_obj
+            ).values_list("grupo", flat=True)
         )
 
         grupos_checks = []
         new_grupos_list = {}
         new_grupos_str = []
         for grupo in grupos_usuario:
-            if grupo["grupo"] in grupos_de_palabra_de_usuario:
+            grupo_str = grupo["grupo"]
+            if grupo_str in grupos_de_palabra_de_usuario:
                 grupos_checks.append(
                     {
                         "id": grupo["id"],

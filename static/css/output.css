@@ -72,16 +72,16 @@
     --color-rainbow9: #9e9e9e;
     --color-textcolor: #FFFFFF;
     --color-textcolor-dark: #c7c7c7;
-    --color-include: #53c13a;
-    --color-exclude: #ff3c00;
-    --color-neutral-light: #def4ff;
-    --color-neutral-main: #1e3643;
-    --color-neutral-secondary: #2e4c5b;
-    --color-neutral-dark: #000508;
-    --color-accent-light: #9affff;
-    --color-accent-main: #3087b2;
-    --color-accent-dark: #28badf;
-    --color-secondary-light: #ffb347;
+    --color-include: #389c3d;
+    --color-exclude: #816f82;
+    --color-neutral-light: #f5f5f5;
+    --color-neutral-main: #2a3c4b;
+    --color-neutral-secondary: #3c5265;
+    --color-neutral-dark: #0f181f;
+    --color-accent-light: #ff91a5;
+    --color-accent-main: #cc0033;
+    --color-accent-dark: #800020;
+    --color-secondary-light: #ffc97d;
     --color-secondary-main: #b34700;
     --color-secondary-dark: #7f3402;
   }
@@ -2819,7 +2819,7 @@
     background-color: var(--color-neutral-main);
   }
   .bg-neutral-main\/10 {
-    background-color: color-mix(in srgb, #1e3643 10%, transparent);
+    background-color: color-mix(in srgb, #2a3c4b 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-neutral-main) 10%, transparent);
     }
@@ -6174,6 +6174,8 @@ h4 {
 }
 .tag {
   border-radius: var(--radius-2xl);
+  border-style: var(--tw-border-style);
+  border-width: 2px;
   padding-inline: calc(var(--spacing) * 4);
   padding-block: calc(var(--spacing) * 0.5);
   --tw-font-weight: var(--font-weight-semibold);
@@ -6181,46 +6183,95 @@ h4 {
   color: var(--color-textcolor);
 }
 .tag-main {
-  background-color: var(--color-accent-main);
+  border-color: var(--color-accent-light);
+  background-color: color-mix(in srgb, #ff91a5 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-accent-light) 20%, transparent);
+  }
 }
 .tag-0 {
-  background-color: var(--color-rainbow0);
+  border-color: var(--color-rainbow0);
+  background-color: color-mix(in srgb, #c70724 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbow0) 20%, transparent);
+  }
 }
 .tag-1 {
-  background-color: var(--color-rainbow1);
+  border-color: var(--color-rainbow1);
+  background-color: color-mix(in srgb, #c85010 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbow1) 20%, transparent);
+  }
 }
 .tag-2 {
-  background-color: var(--color-rainbow2);
+  border-color: var(--color-rainbow2);
+  background-color: color-mix(in srgb, #ccab06 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbow2) 20%, transparent);
+  }
 }
 .tag-3 {
-  background-color: var(--color-rainbow3);
+  border-color: var(--color-rainbow3);
+  background-color: color-mix(in srgb, #08934b 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbow3) 20%, transparent);
+  }
 }
 .tag-4 {
-  background-color: var(--color-rainbow4);
+  border-color: var(--color-rainbow4);
+  background-color: color-mix(in srgb, #0472cd 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbow4) 20%, transparent);
+  }
 }
 .tag-5 {
-  background-color: var(--color-rainbow5);
+  border-color: var(--color-rainbow5);
+  background-color: color-mix(in srgb, #140bbc 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbow5) 20%, transparent);
+  }
 }
 .tag-6 {
-  background-color: var(--color-rainbow6);
+  border-color: var(--color-rainbow6);
+  background-color: color-mix(in srgb, #550381 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbow6) 20%, transparent);
+  }
 }
 .tag-7 {
-  background-color: var(--color-rainbow7);
+  border-color: var(--color-rainbow7);
+  background-color: color-mix(in srgb, #9d0f72 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbow7) 20%, transparent);
+  }
 }
 .tag-8 {
-  background-color: var(--color-rainbow8);
+  border-color: var(--color-rainbow8);
+  background-color: color-mix(in srgb, #a49e64 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbow8) 20%, transparent);
+  }
 }
 .tag-9 {
-  background-color: var(--color-rainbow9);
+  border-color: var(--color-rainbow9);
+  background-color: color-mix(in srgb, #9e9e9e 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbow9) 20%, transparent);
+  }
 }
 .tag-neutral {
-  background-color: var(--color-neutral-secondary);
+  border-color: var(--color-accent-dark);
+  background-color: color-mix(in srgb, #800020 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-accent-dark) 20%, transparent);
+  }
 }
-.tag-neutral-alt {
-  border-style: var(--tw-border-style);
-  border-width: 1px;
+.tag-group {
   border-color: var(--color-neutral-secondary);
-  background-color: var(--color-neutral-dark);
+  background-color: color-mix(in srgb, #3c5265 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-neutral-secondary) 20%, transparent);
+  }
 }
 .radio {
   @layer daisyui.component {

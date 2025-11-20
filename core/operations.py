@@ -125,7 +125,7 @@ def cambiar_progreso(request):
 @login_required
 def asegurar_ajustes_sesion(request):
     ajustes_default = {
-        "orden_elegido": "Creación",
+        "orden_elegido": "Nombre",
         "descendente": False,
         "idioma_preguntas": "Original",
         "aleatorio": False,

@@ -39,7 +39,7 @@ dark blue and red:
     --color-neutral-secondary: #5a7891;
     --color-neutral-dark: #1c2731;
 
-    --color-accent-light: #ffccd5;
+    --color-accent-light: #ff91a5;
     --color-accent-main: #cc0033;
     --color-accent-dark: #800020; 
 
@@ -50,13 +50,13 @@ panoptimize aqua:
     --color-include: #a02be8;
     --color-exclude: #f75b09;
 
-    --color-neutral-light: #c9f7f5;
+    --color-neutral-light: #c0f8f5;
     --color-neutral-main: #253949;
-    --color-neutral-secondary: #5894c2;
+    --color-neutral-secondary: #3d5970;
     --color-neutral-dark: #0d151dff;
 
     --color-accent-light: #7bfff8;
-    --color-accent-main: #00b3aa;
+    --color-accent-main: #009e96;
     --color-accent-dark: #00756f;
     --color-secondary-main: #a02be8;
     --color-secondary-dark: #6a1cae;
@@ -69,18 +69,18 @@ tron:
     --color-include: #53c13a;   /* Neon cyan — bright, glowing blue */
     --color-exclude: #ff3c00;   /* Tron orange/red — strong contrast */
 
-    --color-neutral-light: #def4ff;
+    --color-neutral-light: #bfe7fc;
     --color-neutral-main: #1e3643; /* borders */
-    --color-neutral-secondary: #2e4c5b; /* secondary tag */
+    --color-neutral-secondary: #46768e; /* secondary tag */
     --color-neutral-dark: #000508; /* absolute bg */
 
-    --color-accent-light: #9affff;
-    --color-accent-main: #2e4c5b;    
+    --color-accent-light: #aceeff;
+    --color-accent-main: #3796c5;    
     --color-accent-dark: #28badf;    
 
-    --color-secondary-light: #ffb347;
+    --color-secondary-light: #ffc97d;
     --color-secondary-main: #b34700;  
-    --color-secondary-dark: #7f3402; 
+    --color-secondary-dark: #7f3402;  
 
 seahawks:
     --color-textcolor: #FFFFFF;

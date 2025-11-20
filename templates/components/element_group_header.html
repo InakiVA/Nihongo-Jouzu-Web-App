@@ -1,0 +1,8 @@
+<div class="flex items-center gap-4 divider divider-start before:bg-neutral-main after:bg-neutral-main">  
+    <h2>{{header}}</h2>              
+    <li class="flex flex-row flex-auto gap-2 font-light">
+        {% for group in groups %}
+        {% include "components/tag.html" with text=group color="group" %}         
+        {% endfor %}
+    </li>                         
+</div>

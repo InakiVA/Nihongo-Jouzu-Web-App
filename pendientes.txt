@@ -38,8 +38,8 @@
 == Vista de búsqueda:
     << Palabras con word card, hyperlink a palabra-detalles
     << implementar que se busquen palabras, lecturas y significados
-    ++ Incluir búsqueda de grupos - tab separation
-    ++ Incluir búsqueda de tags - palabras o grupos que tengan como tag el input dado mejor
+    ?? Incluir búsqueda de grupos - tab separation
+    ?? Incluir búsqueda de tags - palabras o grupos que tengan como tag el input dado mejor
     << Page navigation bonita hasta abajo mejor
 
 == Vista de palabras
@@ -47,8 +47,8 @@
     << Lista de palabras
         << Cambiar "Diccionario" a "Palabras" en navbar y urls
         >> lista con estrella y progreso
-    ++ Filtros por search, etiqueta (multi select), estrella, progreso, creador
-    ++ Orden por abcd palabra, significado, creación
+    $$ Filtros por search, etiqueta (multi select), estrella, progreso, creador
+    $$ Orden por abcd palabra, significado, creación
     ?? Progreso global (palabras iniciadas)
         ?? Palabras estudiando
         ?? Modal de lo de arriba
@@ -74,14 +74,14 @@
     << Crear grupo
     << Lista de grupos con estrella y progreso
         << cantidad de palabras en grupo
-    ++ Filtros por search, estrella, progreso, creador
-    ++ Orden por abcd, creación
+    ?? Filtros por search, estrella, progreso, creador
+    ?? Orden por abcd, creación
 
 == Vista de grupo-detalles
     << Progreso, descripcion
     << Lista de palabras en grupo
     << Botón toggle con mismas propiedades de edición y eliminación que palabra
-        ++ Agregar palabras
+        $$ Agregar palabras
         >> Agregar etiquetas
     ?? Filtros por estrella, progreso, creador
     .. omitir grupo_etiquetas hasta encontrarle propósito funcional
@@ -95,12 +95,13 @@
     << agregar 3 tiers de colores para cada etiqueta dependiendo de prioridad/tipo que elija el autor de las etiquetas
         << al desplegarse, deben ir en orden 1 a 3
         << hecho con colores
-    ++ Filtros por search, color, creador
-    ++ Orden por abcd, color, creación
+    ?? Filtros por search, color, creador
+    ?? Orden por abcd, color, creación
 
 == Vista de usuario
-    ++ Cambiar usuario (unique) y contraseña
-    ++ Sugerencias, quejas, comentarios
+    << Cambiar usuario (unique) y contraseña
+    ++ Eliminar usuario
+    ?? Sugerencias, quejas, comentarios
 
 == CONSIDERAR USUARIOS - al picar botón de actualización
     .. Si un usuario crea palabra/grupo/etiqueta "Mosco", y luego admin la crea,

@@ -137,24 +137,24 @@ h4 {
 }
 
 .tag {
- @apply rounded-2xl px-4 py-0.5 text-textcolor font-semibold;
+ @apply rounded-2xl px-4 py-0.5 text-textcolor font-semibold border-2;
 }
 
-.tag-main{ @apply bg-accent-main; }
-.tag-0{ @apply bg-rainbow0; }
-.tag-1{ @apply bg-rainbow1; }
-.tag-2{ @apply bg-rainbow2; }
-.tag-3{ @apply bg-rainbow3; }
-.tag-4{ @apply bg-rainbow4; }
-.tag-5{ @apply bg-rainbow5; }
-.tag-6{ @apply bg-rainbow6; }
-.tag-7{ @apply bg-rainbow7; }
-.tag-8{ @apply bg-rainbow8; }
-.tag-9{ @apply bg-rainbow9; } 
-.tag-neutral{ @apply bg-neutral-secondary; }
+.tag-main{ @apply bg-accent-light/20 border-accent-light; }
+.tag-0{ @apply bg-rainbow0/20 border-rainbow0; }
+.tag-1{ @apply bg-rainbow1/20 border-rainbow1; }
+.tag-2{ @apply bg-rainbow2/20 border-rainbow2; }
+.tag-3{ @apply bg-rainbow3/20 border-rainbow3; }
+.tag-4{ @apply bg-rainbow4/20 border-rainbow4; }
+.tag-5{ @apply bg-rainbow5/20 border-rainbow5; }
+.tag-6{ @apply bg-rainbow6/20 border-rainbow6; }
+.tag-7{ @apply bg-rainbow7/20 border-rainbow7; }
+.tag-8{ @apply bg-rainbow8/20 border-rainbow8; }
+.tag-9{ @apply bg-rainbow9/20 border-rainbow9; } 
+.tag-neutral{ @apply bg-accent-dark/20 border-accent-dark; }
 
 /* solo con grupos */
-.tag-neutral-alt{ @apply bg-neutral-dark border border-neutral-secondary; }
+.tag-group{ @apply bg-neutral-secondary/20 border-neutral-secondary; }
 
 .radio{
  @apply radio border-textcolor;
