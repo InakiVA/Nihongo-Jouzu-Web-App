@@ -8,15 +8,15 @@
   </div>  
   <div class="flex {% if is_mobile %} flex-col {% else %} flex-row {% endif %} items-center justify-between w-full gap-x-4">     
     <div class="flex flex-row justify-center gap-x-4 w-full">
-      {% include "components/button.html" with icon="components/icons/arrow_left_double.html" name="action" value="previous_unanswered" url=cambiar_pregunta_url extra_classes="button-icon-only" %}
-      {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=cambiar_pregunta_url extra_classes="button-icon-only" %}
+      {% include "components/button.html" with icon="components/icons/arrow_left_double.html" name="action" value="previous_unanswered" url=cambiar_pregunta_url extra_classes="button-icon-only rounded-l-xl!" %}
+      {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=cambiar_pregunta_url extra_classes="button-icon-only rounded-l-xl!" %}
       <h2 class="text-4xl!">Pregunta {{index}}/{{palabras_len}}</h2>      
-      {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pregunta_url extra_classes="button-icon-only" %}
-      {% include "components/button.html" with icon="components/icons/arrow_right_double.html" name="action" value="next_unanswered" url=cambiar_pregunta_url extra_classes="button-icon-only" %}
+      {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pregunta_url extra_classes="button-icon-only rounded-r-xl!" %}
+      {% include "components/button.html" with icon="components/icons/arrow_right_double.html" name="action" value="next_unanswered" url=cambiar_pregunta_url extra_classes="button-icon-only rounded-r-xl!" %}
     </div>
   </div> 
   {% include "components/progress_input_row.html" with progreso=palabra.progreso progress_url=cambiar_progreso_url estrella_url=estrella_url%}
-  <div class="flex flex-col flex-auto p-4 border border-neutral-light rounded-2xl gap-4">
+  <div class="flex flex-col flex-auto p-4 border border-neutral-light rounded-t-4xl gap-4">
     {% if palabra_contestada %}
       {% include "study/respuesta_card.html" with palabra=palabra is_correct=palabra_correcta is_mobile=is_mobile %}
     {% else %}

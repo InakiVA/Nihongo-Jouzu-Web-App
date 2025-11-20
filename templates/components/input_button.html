@@ -4,21 +4,29 @@
     <div class="flex flex-row w-full h-full gap-2">
         {% if has_button_left %}
         <div class="flex">
-            <button class="button-secondary h-full! {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>        
+            <button class="button-secondary h-full! rounded-none! rounded-tl-xl! {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>        
         </div>
         {% endif %}
         {% if is_textarea %}
         <div class="flex flex-1">
-            {% include "components/textarea.html" with extra_classes=input_classes %}
+            {% if has_button_left %}
+                {% include "components/textarea.html" with extra_classes="rounded-none! rounded-tr-2xl!" %}
+            {% else %}
+                {% include "components/textarea.html" with extra_classes="rounded-none! rounded-tl-2xl!" %}
+            {% endif %}
         </div>
         {% else %}
         <div class="flex flex-1">
-            {% include "components/input.html" with icon=None extra_classes=input_classes%}
+            {% if has_button_left %}
+                {% include "components/input.html" with icon=None extra_classes="rounded-none! rounded-tr-2xl!" %}
+            {% else %}
+                {% include "components/input.html" with icon=None extra_classes="rounded-none! rounded-tl-2xl!" %}
+            {% endif %}
         </div>
         {% endif %}
         {% if not has_button_left %}
         <div class="flex">
-            <button class="button-secondary h-full! {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>            
+            <button class="button-secondary h-full! rounded-none! rounded-tr-xl! {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>            
         </div>
         {% endif %}
     </div>

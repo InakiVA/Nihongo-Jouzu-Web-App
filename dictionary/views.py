@@ -115,10 +115,24 @@ class EditView(LoginRequiredMixin, TemplateView):
         context["nuevas_etiquetas"] = new_etiquetas_str_list
         current_etiquetas_list = []
         etiquetas_user_list = palabra_obj.etiquetas_objetos_usuario(usuario)
-        for etiqueta in etiquetas_user_list:
-            current_etiquetas_list.append(
-                {"id": etiqueta.id, "etiqueta": etiqueta.etiqueta}
-            )
+        current_etiquetas_list = [
+            {
+                "id": etiqueta.id,
+                "etiqueta": etiqueta.etiqueta.etiqueta,
+                "color": etiqueta.etiqueta.color,
+            }
+            for etiqueta in etiquetas_user_list
+        ]
+
+        current_etiquetas_list = sorted(
+            current_etiquetas_list,
+            key=lambda x: (
+                x["color"].lower() != "main",  # False → True, so "main" is first
+                x["color"].lower(),  # then sort colors alphabetically
+                x["etiqueta"].lower(),  # then etiqueta
+            ),
+        )
+
         context["current_etiquetas"] = current_etiquetas_list
 
         context["agregar_significado"] = reverse_lazy("agregar_significado")

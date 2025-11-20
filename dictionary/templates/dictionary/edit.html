@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block content %}
 <div class="space-y-4 px-4 pb-4">
-    <div class="border border-neutral-light bg-neutral-main/10 rounded-xl flex flex-auto w-full flex-col py-4">
+    <div class="border border-neutral-light bg-neutral-main/10 rounded-t-4xl flex flex-auto w-full flex-col py-4">
         <div class="p-6 pt-2 gap-4 space-y-4 w-full">
             <div class="flex justify-between space-y-4">
                 <h1 class="text-8xl font-light">{{ palabra.palabra }}</h1>
@@ -15,7 +15,7 @@
             </div>
 
             {% if palabra.editable %}
-                {% include "components/input_button.html" with name="update_palabra" value=palabra.palabra id=palabra.id url=update_palabra has_button_left=True icon="components/icons/pencil.html" placeholder="Palabra" button_text="Actualizar" %}
+                {% include "components/input_button.html" with name="update_palabra" value=palabra.palabra id=palabra.id url=update_palabra has_button_left=True icon="components/icons/pencil.html" placeholder="Palabra" button_text="Actualizar"%}
             {% else %}
                 <h2 class="text-myalert! underline">Solo se pueden modificar atributos generados por ti</h2>
             {% endif %}
@@ -40,7 +40,7 @@
         <div class="px-6 flex flex-auto flex-col gap-2">
             {% include "components/element_header.html" with header="Significados" elements=palabra.significados%}               
             <div class="space-y-4 gap-4 p-4">
-                {% include "components/input_button.html" with has_button_left=True icon="components/icons/add_mini.html" name="agregar_significado" url=agregar_significado placeholder="Nuevo significado" button_text="Crear significado"%}
+                {% include "components/input_button.html" with has_button_left=True icon="components/icons/add_mini.html" name="agregar_significado" url=agregar_significado placeholder="Nuevo significado" button_text="Crear significado" %}
                 {% if significados_usuario %}
                 {% include "dictionary/edit_element_list.html" with update_url=update_significado delete_url=delete_significado elements=significados_usuario header="Editar significados actuales" placeholder="Significado"%}
                 {% endif %}                   
@@ -48,7 +48,7 @@
 
             {% include "components/element_header.html" with header="Lecturas" elements=palabra.lecturas%}                                                                       
             <div class="space-y-4 gap-4 p-4">
-                {% include "components/input_button.html" with has_button_left=True icon="components/icons/add_mini.html" name="agregar_lectura" url=agregar_lectura placeholder="Nueva lectura" button_text="Crear lectura"%}
+                {% include "components/input_button.html" with has_button_left=True icon="components/icons/add_mini.html" name="agregar_lectura" url=agregar_lectura placeholder="Nueva lectura" button_text="Crear lectura" %}
                 {% if lecturas_usuario %}
                 {% include "dictionary/edit_element_list.html" with update_url=update_lectura delete_url=delete_lectura elements=lecturas_usuario header="Editar lecturas actuales" placeholder="Lectura"%}
                 {% endif %}                  
@@ -64,7 +64,7 @@
                     <h2 class="collapse-title">Editar etiquetas actuales</h2>
                     <div class="collapse-content space-y-4"> 
                         {% for etiqueta in current_etiquetas %}
-                        {% include "components/checkbox.html" with text=etiqueta.etiqueta id=etiqueta.id is_selected=True url=etiqueta_checks_url%}     
+                        {% include "components/checkbox.html" with text=etiqueta.etiqueta id=etiqueta.id color=etiqueta.color is_selected=True url=etiqueta_checks_url%}     
                         {% endfor %}              
                     </div>     
                 </div>  
@@ -74,7 +74,7 @@
             {% include "components/element_header.html" with header="Notas" elements=palabra.notas%}                                                           
              
             <div class="space-y-4 gap-4 p-4">
-                {% include "components/input_button.html" with is_textarea=True has_button_left=True icon="components/icons/add_mini.html" name="agregar_nota" url=agregar_nota placeholder="Nueva nota" button_text="Crear nota"%}
+                {% include "components/input_button.html" with is_textarea=True has_button_left=True icon="components/icons/add_mini.html" name="agregar_nota" url=agregar_nota placeholder="Nueva nota" button_text="Crear nota" %}
                 {% if notas_usuario %}
                 {% include "dictionary/edit_element_list.html" with is_textarea=True update_url=update_nota delete_url=delete_nota elements=notas_usuario header="Editar notas actuales" placeholder="Nota"%}
                 {% endif %}                       

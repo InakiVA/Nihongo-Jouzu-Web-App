@@ -3,20 +3,24 @@
     <fieldset class="flex flex-auto gap-2">
     {% if has_button_left %}
     <div class="flex">
-        <button type="submit" class="button-secondary font-semibold! {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>
+        <button type="submit" class="button-secondary font-semibold! rounded-none! rounded-tl-xl! {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>
     </div>
     {% endif %}
     {% if legend %}
     <legend class="fieldset-legend">{{ legend }}</legend>
     {% endif %}
-    <select class="select w-full! flex-1 bg-darkest text-white" name="{{name}}">
+    {% if has_button_left %}
+    <select class="select w-full! flex-1 bg-darkest text-white rounded-none! rounded-tr-2xl!" name="{{name}}">
+    {% else %}
+    <select class="select w-full! flex-1 bg-darkest text-white rounded-none! rounded-tl-2xl!" name="{{name}}">
+    {% endif %}
     {% for op in options %}
         <option value="{{ op }}" {% if op == selected %} selected {% endif %}>{{ op }}</option>
     {% endfor %}
     </select>
     {% if not has_button_left %}
     <div class="flex">
-        <button type="submit" class="button-secondary font-semibold! {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>
+        <button type="submit" class="button-secondary font-semibold! rounded-none! rounded-tr-xl! {{button_classes}}">{% if icon %}{% include icon %}{% endif %}{{button_text}}</button>
     </div>
     {% endif %}
     </fieldset>

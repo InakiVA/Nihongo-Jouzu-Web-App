@@ -5,9 +5,9 @@
             {{ palabra.palabra }}
         </h1>
         {% if is_correct %}
-            {% include "components/tag.html" with text="Correcta" icon="components/icons/check_mini.html" extra_classes="!bg-correct !font-semibold" %}
+            {% include "components/tag.html" with text="Correcta" icon="components/icons/check_mini.html" extra_classes="!bg-correct/50 !border-correct !font-semibold" %}
         {% else %}
-            {% include "components/tag.html" with text="Incorrecta" icon="components/icons/cross_mini.html" extra_classes="!bg-incorrect !font-semibold" %}
+            {% include "components/tag.html" with text="Incorrecta" icon="components/icons/cross_mini.html" extra_classes="!bg-incorrect/50 !border-incorrect !font-semibold" %}
         {% endif %}
         <div class="w-full items-start">
             <div class="py-4 flex-col space-y-2 text-start justify-start overflow-clip w-100">

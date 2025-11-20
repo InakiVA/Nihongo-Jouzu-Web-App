@@ -5,7 +5,7 @@
   <div class="flex flex-row items-center">
     <input
       type="checkbox"
-      class="check-box {{ extra_classes }}"
+      class="check-box {% if color %}check-box-{{ color }}{% endif %} {{ extra_classes }}"
       onchange="this.form.submit()"
       {% if is_selected %} checked {% endif %}
     />
@@ -18,7 +18,7 @@
 <div class="flex flex-row items-center">
   <input
     type="checkbox"
-    class="check-box {{ extra_classes }}"
+    class="check-box {% if color %}check-box-{{ color }}{% endif %} {{ extra_classes }}"
     {% if is_selected %} checked {% endif %}
     value="on"
     name="{{ id }}"

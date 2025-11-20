@@ -3,8 +3,8 @@
     <h2 class="whitespace-nowrap">Progreso:</h2>  
     {% include "components/progress_donut.html" with progress=progreso text=progreso%}
     <div class="flex flex-row items-center justify-end gap-x-4 flex-auto">
-        {% include "components/button.html" with icon="components/icons/minus.html" name="action" value="minus" url=progress_url extra_classes="button-icon-only" %}
+        {% include "components/button.html" with icon="components/icons/minus.html" name="action" value="minus" url=progress_url extra_classes="button-icon-only rounded-l-xl!" %}
         {% include "components/progreso.html" with value=progreso%}
-        {% include "components/button.html" with icon="components/icons/plus.html" name="action" value="plus" url=progress_url extra_classes="button-icon-only" %}
+        {% include "components/button.html" with icon="components/icons/plus.html" name="action" value="plus" url=progress_url extra_classes="button-icon-only rounded-r-xl!" %}
     </div>         
 </div>

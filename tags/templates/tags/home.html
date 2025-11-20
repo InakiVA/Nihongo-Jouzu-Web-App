@@ -47,7 +47,7 @@
 
   <div class="space-y-4">
     {% for tag in tag_list %}  
-      <div class="collapse border border-neutral-main">
+      <div class="collapse border rounded-none! rounded-tl-3xl! rounded-br-3xl! border-neutral-main">
         <div class="collapse-title flex flex-row gap-4 justify-between">
           {% include "components/tag.html" with color=tag.color text=tag.etiqueta extra_classes="text-2xl"%}
           <h3>{{ tag.creador }}</h3>

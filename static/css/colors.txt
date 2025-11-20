@@ -1,14 +1,14 @@
 == rainbow colors
-    --color-rainbow0: #ad283c;
-    --color-rainbow1: #dc7036;
-    --color-rainbow2: #ccab06;
-    --color-rainbow3: #08934b;  
-    --color-rainbow4: #0472cd;  
-    --color-rainbow5: #140bbc;  
-    --color-rainbow6: #550381;
-    --color-rainbow7: #9d0f72;
-    --color-rainbow8: #a49e64;
-    --color-rainbow9: #9e9e9e;
+    --color-rainbow0: #ff0e32;
+    --color-rainbow1: #fb610f;
+    --color-rainbow2: #fdd820;
+    --color-rainbow3: #11db73;  
+    --color-rainbow4: #2095f5;  
+    --color-rainbow5: #392fff;  
+    --color-rainbow6: #950cdf;
+    --color-rainbow7: #eb1eae;
+    --color-rainbow8: #d2c97e;
+    --color-rainbow9: #b9b9b9;
 
 shinji purple and green:
     --color-textcolor: #FFFFFF;
@@ -39,9 +39,13 @@ dark blue and red:
     --color-neutral-secondary: #5a7891;
     --color-neutral-dark: #1c2731;
 
-    --color-accent-light: #ff91a5;
+    --color-accent-light: #ff6c87;
     --color-accent-main: #cc0033;
     --color-accent-dark: #800020; 
+
+    --color-secondary-light: #ffc97d;
+    --color-secondary-main: #b34700;  
+    --color-secondary-dark: #7f3402; 
 
 panoptimize aqua:
     --color-textcolor: #FFFFFF;

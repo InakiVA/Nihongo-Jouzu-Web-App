@@ -1,6 +1,6 @@
 <div class="join">
     <div class="px-4">
-    {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=url extra_classes="button-icon-only" %}
+    {% include "components/button.html" with icon="components/icons/arrow_left.html" name="action" value="previous" url=url extra_classes="button-icon-only rounded-l-xl!" %}
     </div>
     {% for page in pages %}
         {% if not page.text %}
@@ -14,6 +14,6 @@
         {% endif %}
     {% endfor %}
     <div class="px-4">
-    {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pagina_url extra_classes="button-icon-only" %}
+    {% include "components/button.html" with icon="components/icons/arrow_right.html" name="action" value="next" url=cambiar_pagina_url extra_classes="button-icon-only rounded-r-xl!" %}
     </div>
 </div>
