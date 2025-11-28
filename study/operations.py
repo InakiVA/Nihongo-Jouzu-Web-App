@@ -12,6 +12,7 @@ from tags.models import Etiqueta
 from groups.models import UsuarioGrupo, GrupoPalabra
 from dictionary.models import Palabra
 from progress.models import UsuarioPalabra
+from accounts.models import Usuario
 
 
 # __ Botones
@@ -219,30 +220,35 @@ def get_palabras_a_estudiar(usuario, ajustes):
         etiquetas_obj = Etiqueta.objects.filter(etiqueta__in=etiquetas_activas)
         filtros_etiquetas_exclusivo = ajustes.get("filtros_etiquetas_exclusivo", True)
         filtros_etiquetas_or = ajustes.get("filtros_etiquetas_andor") == "OR"
+        # get admin users
+        admin_users = Usuario.objects.filter(perfil__rol="admin")
+        usuarios_permitidos = [usuario] + list(admin_users)
+
         if not filtros_etiquetas_exclusivo:
             if filtros_etiquetas_or:
                 palabras = palabras.filter(
                     palabra_etiquetas__etiqueta__in=etiquetas_obj,
-                    palabra_etiquetas__usuario=usuario,
+                    palabra_etiquetas__usuario__in=usuarios_permitidos,
                 ).distinct()
             else:
                 for etiqueta in etiquetas_obj:
                     palabras = palabras.filter(
                         palabra_etiquetas__etiqueta=etiqueta,
-                        palabra_etiquetas__usuario=usuario,
+                        palabra_etiquetas__usuario__in=usuarios_permitidos,
                     )
         else:
             if filtros_etiquetas_or:
                 palabras = palabras.exclude(
                     palabra_etiquetas__etiqueta__in=etiquetas_obj,
-                    palabra_etiquetas__usuario=usuario,
+                    palabra_etiquetas__usuario__in=usuarios_permitidos,
                 ).distinct()
             else:
                 for etiqueta in etiquetas_obj:
                     palabras = palabras.exclude(
                         palabra_etiquetas__etiqueta=etiqueta,
-                        palabra_etiquetas__usuario=usuario,
+                        palabra_etiquetas__usuario__in=usuarios_permitidos,
                     )
+
     palabras = list(palabras)
 
     # 4. Aleatorizar si corresponde

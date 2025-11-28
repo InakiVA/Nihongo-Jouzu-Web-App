@@ -135,8 +135,7 @@ class Palabra(models.Model):
         return sorted(
             [e.etiqueta.etiqueta_dict() for e in etiquetas_list],
             key=lambda x: (
-                x["color"].lower() != "main",
-                x["color"].lower(),
+                x["color"],
                 x["etiqueta"].lower(),
             ),
         )
@@ -216,10 +215,13 @@ class Lectura(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
     ultima_modificacion = models.DateTimeField(auto_now=True)
 
+    def clean_lectura(self):
+        self.lectura_limpia = self.lectura.replace("・", "")
+        self.save()
+
     def update_lectura(self, lectura):
         self.lectura = lectura
-        self.lectura_limpia = lectura.replace("・", "")
-        self.save()
+        self.clean_lectura()
 
     class Meta:
         db_table = "Lecturas"

@@ -10,6 +10,8 @@ from progress.models import UsuarioPalabra
 from groups.models import Grupo
 from tags.models import Etiqueta, PalabraEtiqueta
 
+from core.operations import crear_lectura, crear_significado
+
 
 # && debe tener por lo menos 1 lectura y 1 significado
 @require_POST
@@ -25,7 +27,6 @@ def crear_palabra(request):
         text_warning = "Kanji"
     else:
         text_warning = "Palabra"
-
     if "<" in palabra_value or ">" in palabra_value:
         messages.warning(request, f"{text_warning} no puede contener '<' o '>'")
         breaker = True
@@ -75,10 +76,8 @@ def crear_palabra(request):
 
     palabra_obj = Palabra.objects.create(usuario=user, palabra=palabra_value)
     UsuarioPalabra.objects.create(usuario=user, palabra=palabra_obj)
-    Significado.objects.create(
-        significado=significado_value, palabra=palabra_obj, usuario=user
-    )
-    Lectura.objects.create(lectura=lectura_value, palabra=palabra_obj, usuario=user)
+    crear_significado(significado_value, palabra_obj, user)
+    crear_lectura(lectura_value, palabra_obj, user)
     if is_kanji:
         kanji_tag = Etiqueta.objects.filter(etiqueta="Kanji").first()
         PalabraEtiqueta.objects.create(

@@ -60,30 +60,30 @@
     --color-incorrect: #bd0f0f;
     --color-star: #fffc56;
     --color-star-dark: #8f8c04;
-    --color-rainbow0: #ff0e32;
-    --color-rainbow1: #fb610f;
-    --color-rainbow2: #fdd820;
-    --color-rainbow3: #11db73;
-    --color-rainbow4: #2095f5;
-    --color-rainbow5: #392fff;
-    --color-rainbow6: #950cdf;
-    --color-rainbow7: #eb1eae;
-    --color-rainbow8: #d2c97e;
-    --color-rainbow9: #b9b9b9;
+    --color-rainbowA: #ff0e32;
+    --color-rainbowB: #fb610f;
+    --color-rainbowC: #fdd820;
+    --color-rainbowD: #11db73;
+    --color-rainbowE: #2095f5;
+    --color-rainbowF: #392fff;
+    --color-rainbowG: #950cdf;
+    --color-rainbowH: #eb1eae;
+    --color-rainbowI: #d2c97e;
+    --color-rainbowJ: #b9b9b9;
     --color-textcolor: #FFFFFF;
     --color-textcolor-dark: #c7c7c7;
-    --color-include: #53c13a;
-    --color-exclude: #ff3c00;
-    --color-neutral-light: #bfe7fc;
-    --color-neutral-main: #1e3643;
-    --color-neutral-secondary: #46768e;
-    --color-neutral-dark: #000508;
-    --color-accent-light: #aceeff;
-    --color-accent-main: #3796c5;
-    --color-accent-dark: #28badf;
-    --color-secondary-light: #ffc97d;
-    --color-secondary-main: #b34700;
-    --color-secondary-dark: #7f3402;
+    --color-include: #a02be8;
+    --color-exclude: #f75b09;
+    --color-neutral-light: #c0f8f5;
+    --color-neutral-main: #253949;
+    --color-neutral-secondary: #3d5970;
+    --color-neutral-dark: #0d151dff;
+    --color-accent-light: #7bfff8;
+    --color-accent-main: #009e96;
+    --color-accent-dark: #00756f;
+    --color-secondary-main: #a02be8;
+    --color-secondary-dark: #6a1cae;
+    --color-secondary-light: #e39bff;
   }
 }
 @layer base {
@@ -2542,6 +2542,9 @@
   .max-w-7\/8 {
     max-width: calc(7/8 * 100%);
   }
+  .max-w-full {
+    max-width: 100%;
+  }
   .min-w-1\/3 {
     min-width: calc(1/3 * 100%);
   }
@@ -2602,6 +2605,12 @@
   .resize-none {
     resize: none;
   }
+  .columns-1 {
+    columns: 1;
+  }
+  .columns-3 {
+    columns: 3;
+  }
   .flex-col {
     flex-direction: column;
   }
@@ -2628,9 +2637,6 @@
   }
   .justify-end {
     justify-content: flex-end;
-  }
-  .justify-evenly {
-    justify-content: space-evenly;
   }
   .justify-start {
     justify-content: flex-start;
@@ -2751,11 +2757,18 @@
   .rounded-full\! {
     border-radius: calc(infinity * 1px) !important;
   }
+  .rounded-none {
+    border-radius: 0;
+  }
   .rounded-none\! {
     border-radius: 0 !important;
   }
   .rounded-xl {
     border-radius: var(--radius-xl);
+  }
+  .rounded-t-3xl {
+    border-top-left-radius: var(--radius-3xl);
+    border-top-right-radius: var(--radius-3xl);
   }
   .rounded-t-4xl {
     border-top-left-radius: var(--radius-4xl);
@@ -2772,8 +2785,8 @@
   .rounded-tl-2xl\! {
     border-top-left-radius: var(--radius-2xl) !important;
   }
-  .rounded-tl-3xl\! {
-    border-top-left-radius: var(--radius-3xl) !important;
+  .rounded-tl-3xl {
+    border-top-left-radius: var(--radius-3xl);
   }
   .rounded-tl-xl\! {
     border-top-left-radius: var(--radius-xl) !important;
@@ -2792,8 +2805,12 @@
     border-bottom-right-radius: var(--radius-3xl);
     border-bottom-left-radius: var(--radius-3xl);
   }
-  .rounded-br-3xl\! {
-    border-bottom-right-radius: var(--radius-3xl) !important;
+  .rounded-b-none {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .rounded-br-3xl {
+    border-bottom-right-radius: var(--radius-3xl);
   }
   .border {
     border-style: var(--tw-border-style);
@@ -2863,7 +2880,7 @@
     background-color: var(--color-neutral-main);
   }
   .bg-neutral-main\/10 {
-    background-color: color-mix(in srgb, #1e3643 10%, transparent);
+    background-color: color-mix(in srgb, #253949 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-neutral-main) 10%, transparent);
     }
@@ -2988,6 +3005,10 @@
   .text-base\! {
     font-size: var(--text-base) !important;
     line-height: var(--tw-leading, var(--text-base--line-height)) !important;
+  }
+  .text-lg {
+    font-size: var(--text-lg);
+    line-height: var(--tw-leading, var(--text-lg--line-height));
   }
   .text-sm {
     font-size: var(--text-sm);
@@ -3166,6 +3187,13 @@
       background-color: var(--color-neutral-main);
     }
   }
+  .hover\:bg-neutral-main {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-neutral-main);
+      }
+    }
+  }
   .focus\:ring-2 {
     &:focus {
       --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
@@ -3178,10 +3206,20 @@
       outline-style: none;
     }
   }
+  .sm\:columns-2 {
+    @media (width >= 40rem) {
+      columns: 2;
+    }
+  }
   .sm\:text-5xl {
     @media (width >= 40rem) {
       font-size: var(--text-5xl);
       line-height: var(--tw-leading, var(--text-5xl--line-height));
+    }
+  }
+  .md\:columns-3 {
+    @media (width >= 48rem) {
+      columns: 3;
     }
   }
   .md\:text-6xl {
@@ -6243,100 +6281,297 @@ h4 {
   border-width: 2px;
   padding-inline: calc(var(--spacing) * 4);
   padding-block: calc(var(--spacing) * 0.5);
-  --tw-font-weight: var(--font-weight-semibold);
-  font-weight: var(--font-weight-semibold);
   color: var(--color-textcolor);
 }
-.tag-main {
-  border-color: var(--color-accent-light);
-  background-color: color-mix(in srgb, #aceeff 20%, transparent);
+.tag-A {
+  border-color: var(--color-rainbowA);
+  background-color: color-mix(in srgb, #ff0e32 70%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
-    background-color: color-mix(in oklab, var(--color-accent-light) 20%, transparent);
+    background-color: color-mix(in oklab, var(--color-rainbowA) 70%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  text-decoration-line: underline;
+}
+.tag-AA {
+  border-color: var(--color-rainbowA);
+  background-color: color-mix(in srgb, #ff0e32 40%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowA) 40%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+.tag-Aa {
+  border-color: var(--color-rainbowA);
+  background-color: color-mix(in srgb, #ff0e32 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowA) 20%, transparent);
+  }
+}
+.tag-B {
+  border-color: var(--color-rainbowB);
+  background-color: color-mix(in srgb, #fb610f 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowB) 70%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  text-decoration-line: underline;
+}
+.tag-BB {
+  border-color: var(--color-rainbowB);
+  background-color: color-mix(in srgb, #fb610f 40%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowB) 40%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+.tag-Bb {
+  border-color: var(--color-rainbowB);
+  background-color: color-mix(in srgb, #fb610f 10%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowB) 10%, transparent);
+  }
+}
+.tag-C {
+  border-color: var(--color-rainbowC);
+  background-color: color-mix(in srgb, #fdd820 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowC) 70%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  text-decoration-line: underline;
+}
+.tag-CC {
+  border-color: var(--color-rainbowC);
+  background-color: color-mix(in srgb, #fdd820 40%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowC) 40%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+.tag-Cc {
+  border-color: var(--color-rainbowC);
+  background-color: color-mix(in srgb, #fdd820 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowC) 20%, transparent);
+  }
+}
+.tag-D {
+  border-color: var(--color-rainbowD);
+  background-color: color-mix(in srgb, #11db73 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowD) 70%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  text-decoration-line: underline;
+}
+.tag-DD {
+  border-color: var(--color-rainbowD);
+  background-color: color-mix(in srgb, #11db73 40%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowD) 40%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+.tag-Dd {
+  border-color: var(--color-rainbowD);
+  background-color: color-mix(in srgb, #11db73 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowD) 20%, transparent);
+  }
+}
+.tag-E {
+  border-color: var(--color-rainbowE);
+  background-color: color-mix(in srgb, #2095f5 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowE) 70%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  text-decoration-line: underline;
+}
+.tag-EE {
+  border-color: var(--color-rainbowE);
+  background-color: color-mix(in srgb, #2095f5 40%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowE) 40%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+.tag-Ee {
+  border-color: var(--color-rainbowE);
+  background-color: color-mix(in srgb, #2095f5 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowE) 20%, transparent);
+  }
+}
+.tag-F {
+  border-color: var(--color-rainbowF);
+  background-color: color-mix(in srgb, #392fff 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowF) 70%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  text-decoration-line: underline;
+}
+.tag-FF {
+  border-color: var(--color-rainbowF);
+  background-color: color-mix(in srgb, #392fff 40%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowF) 40%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+.tag-Ff {
+  border-color: var(--color-rainbowF);
+  background-color: color-mix(in srgb, #392fff 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowF) 20%, transparent);
+  }
+}
+.tag-G {
+  border-color: var(--color-rainbowG);
+  background-color: color-mix(in srgb, #950cdf 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowG) 70%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  text-decoration-line: underline;
+}
+.tag-GG {
+  border-color: var(--color-rainbowG);
+  background-color: color-mix(in srgb, #950cdf 40%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowG) 40%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+.tag-Gg {
+  border-color: var(--color-rainbowG);
+  background-color: color-mix(in srgb, #950cdf 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowG) 20%, transparent);
+  }
+}
+.tag-H {
+  border-color: var(--color-rainbowH);
+  background-color: color-mix(in srgb, #eb1eae 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowH) 70%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  text-decoration-line: underline;
+}
+.tag-HH {
+  border-color: var(--color-rainbowH);
+  background-color: color-mix(in srgb, #eb1eae 40%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowH) 40%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+.tag-Hh {
+  border-color: var(--color-rainbowH);
+  background-color: color-mix(in srgb, #eb1eae 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowH) 20%, transparent);
+  }
+}
+.tag-I {
+  border-color: var(--color-rainbowI);
+  background-color: color-mix(in srgb, #d2c97e 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowI) 70%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  text-decoration-line: underline;
+}
+.tag-II {
+  border-color: var(--color-rainbowI);
+  background-color: color-mix(in srgb, #d2c97e 40%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowI) 40%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+.tag-Ii {
+  border-color: var(--color-rainbowI);
+  background-color: color-mix(in srgb, #d2c97e 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowI) 20%, transparent);
+  }
+}
+.tag-J {
+  border-color: var(--color-rainbowJ);
+  background-color: color-mix(in srgb, #b9b9b9 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowJ) 70%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  text-decoration-line: underline;
+}
+.tag-JJ {
+  border-color: var(--color-rainbowJ);
+  background-color: color-mix(in srgb, #b9b9b9 40%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowJ) 40%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+.tag-Jj {
+  border-color: var(--color-rainbowJ);
+  background-color: color-mix(in srgb, #b9b9b9 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowJ) 20%, transparent);
   }
 }
 .tag-0 {
-  border-color: var(--color-rainbow0);
-  background-color: color-mix(in srgb, #ff0e32 20%, transparent);
+  border-color: var(--color-accent-light);
+  background-color: color-mix(in srgb, #7bfff8 70%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
-    background-color: color-mix(in oklab, var(--color-rainbow0) 20%, transparent);
+    background-color: color-mix(in oklab, var(--color-accent-light) 70%, transparent);
   }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  text-decoration-line: underline;
 }
-.tag-1 {
-  border-color: var(--color-rainbow1);
-  background-color: color-mix(in srgb, #fb610f 20%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background-color: color-mix(in oklab, var(--color-rainbow1) 20%, transparent);
-  }
-}
-.tag-2 {
-  border-color: var(--color-rainbow2);
-  background-color: color-mix(in srgb, #fdd820 20%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background-color: color-mix(in oklab, var(--color-rainbow2) 20%, transparent);
-  }
-}
-.tag-3 {
-  border-color: var(--color-rainbow3);
-  background-color: color-mix(in srgb, #11db73 20%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background-color: color-mix(in oklab, var(--color-rainbow3) 20%, transparent);
-  }
-}
-.tag-4 {
-  border-color: var(--color-rainbow4);
-  background-color: color-mix(in srgb, #2095f5 20%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background-color: color-mix(in oklab, var(--color-rainbow4) 20%, transparent);
-  }
-}
-.tag-5 {
-  border-color: var(--color-rainbow5);
-  background-color: color-mix(in srgb, #392fff 20%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background-color: color-mix(in oklab, var(--color-rainbow5) 20%, transparent);
-  }
-}
-.tag-6 {
-  border-color: var(--color-rainbow6);
-  background-color: color-mix(in srgb, #950cdf 20%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background-color: color-mix(in oklab, var(--color-rainbow6) 20%, transparent);
-  }
-}
-.tag-7 {
-  border-color: var(--color-rainbow7);
-  background-color: color-mix(in srgb, #eb1eae 20%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background-color: color-mix(in oklab, var(--color-rainbow7) 20%, transparent);
-  }
-}
-.tag-8 {
-  border-color: var(--color-rainbow8);
-  background-color: color-mix(in srgb, #d2c97e 20%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background-color: color-mix(in oklab, var(--color-rainbow8) 20%, transparent);
-  }
-}
-.tag-9 {
-  border-color: var(--color-rainbow9);
-  background-color: color-mix(in srgb, #b9b9b9 20%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background-color: color-mix(in oklab, var(--color-rainbow9) 20%, transparent);
-  }
-}
-.tag-neutral {
+.tag-z {
   border-color: var(--color-accent-dark);
-  background-color: color-mix(in srgb, #28badf 20%, transparent);
+  background-color: color-mix(in srgb, #00756f 40%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
-    background-color: color-mix(in oklab, var(--color-accent-dark) 20%, transparent);
+    background-color: color-mix(in oklab, var(--color-accent-dark) 40%, transparent);
   }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+}
+.tag-zz {
+  border-color: var(--color-white);
+  background-color: var(--color-black);
 }
 .tag-group {
   border-radius: 0;
   border-top-right-radius: var(--radius-xl);
   border-bottom-left-radius: var(--radius-xl);
   border-color: var(--color-neutral-secondary);
-  background-color: color-mix(in srgb, #46768e 20%, transparent);
+  background-color: color-mix(in srgb, #3d5970 20%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-neutral-secondary) 20%, transparent);
   }
@@ -6404,87 +6639,412 @@ h4 {
       opacity: 20%;
     }
   }
+  border-style: var(--tw-border-style);
+  border-width: 2px;
   border-color: var(--color-textcolor);
   &:checked {
-    border-style: var(--tw-border-style);
-    border-width: 3px;
+    color: var(--color-textcolor);
   }
   &:hover {
     @media (hover: hover) {
-      background-color: var(--color-textcolor);
+      color: var(--color-textcolor);
     }
   }
 }
-.radio-main {
-  background-color: var(--color-accent-main);
-  &:checked {
-    color: var(--color-accent-main);
+.radio-A {
+  border-color: var(--color-rainbowA);
+  background-color: color-mix(in srgb, #ff0e32 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowA) 70%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowA);
+    }
+  }
+}
+.radio-AA {
+  border-color: var(--color-rainbowA);
+  background-color: color-mix(in srgb, #ff0e32 50%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowA) 50%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowA);
+    }
+  }
+}
+.radio-Aa {
+  border-color: var(--color-rainbowA);
+  background-color: color-mix(in srgb, #ff0e32 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowA) 20%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowA);
+    }
+  }
+}
+.radio-B {
+  border-color: var(--color-rainbowB);
+  background-color: color-mix(in srgb, #fb610f 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowB) 70%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowB);
+    }
+  }
+}
+.radio-BB {
+  border-color: var(--color-rainbowB);
+  background-color: color-mix(in srgb, #fb610f 50%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowB) 50%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowB);
+    }
+  }
+}
+.radio-Bb {
+  border-color: var(--color-rainbowB);
+  background-color: color-mix(in srgb, #fb610f 10%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowB) 10%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowB);
+    }
+  }
+}
+.radio-C {
+  border-color: var(--color-rainbowC);
+  background-color: color-mix(in srgb, #fdd820 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowC) 70%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowC);
+    }
+  }
+}
+.radio-CC {
+  border-color: var(--color-rainbowC);
+  background-color: color-mix(in srgb, #fdd820 50%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowC) 50%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowC);
+    }
+  }
+}
+.radio-Cc {
+  border-color: var(--color-rainbowC);
+  background-color: color-mix(in srgb, #fdd820 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowC) 20%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowC);
+    }
+  }
+}
+.radio-D {
+  border-color: var(--color-rainbowD);
+  background-color: color-mix(in srgb, #11db73 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowD) 70%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowD);
+    }
+  }
+}
+.radio-DD {
+  border-color: var(--color-rainbowD);
+  background-color: color-mix(in srgb, #11db73 50%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowD) 50%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowD);
+    }
+  }
+}
+.radio-Dd {
+  border-color: var(--color-rainbowD);
+  background-color: color-mix(in srgb, #11db73 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowD) 20%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowD);
+    }
+  }
+}
+.radio-E {
+  border-color: var(--color-rainbowE);
+  background-color: color-mix(in srgb, #2095f5 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowE) 70%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowE);
+    }
+  }
+}
+.radio-EE {
+  border-color: var(--color-rainbowE);
+  background-color: color-mix(in srgb, #2095f5 50%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowE) 50%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowE);
+    }
+  }
+}
+.radio-Ee {
+  border-color: var(--color-rainbowE);
+  background-color: color-mix(in srgb, #2095f5 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowE) 20%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowE);
+    }
+  }
+}
+.radio-F {
+  border-color: var(--color-rainbowF);
+  background-color: color-mix(in srgb, #392fff 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowF) 70%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowF);
+    }
+  }
+}
+.radio-FF {
+  border-color: var(--color-rainbowF);
+  background-color: color-mix(in srgb, #392fff 50%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowF) 50%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowF);
+    }
+  }
+}
+.radio-Ff {
+  border-color: var(--color-rainbowF);
+  background-color: color-mix(in srgb, #392fff 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowF) 20%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowF);
+    }
+  }
+}
+.radio-G {
+  border-color: var(--color-rainbowG);
+  background-color: color-mix(in srgb, #950cdf 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowG) 70%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowG);
+    }
+  }
+}
+.radio-GG {
+  border-color: var(--color-rainbowG);
+  background-color: color-mix(in srgb, #950cdf 50%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowG) 50%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowG);
+    }
+  }
+}
+.radio-Gg {
+  border-color: var(--color-rainbowG);
+  background-color: color-mix(in srgb, #950cdf 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowG) 20%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowG);
+    }
+  }
+}
+.radio-H {
+  border-color: var(--color-rainbowH);
+  background-color: color-mix(in srgb, #eb1eae 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowH) 70%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowH);
+    }
+  }
+}
+.radio-HH {
+  border-color: var(--color-rainbowH);
+  background-color: color-mix(in srgb, #eb1eae 50%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowH) 50%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowH);
+    }
+  }
+}
+.radio-Hh {
+  border-color: var(--color-rainbowH);
+  background-color: color-mix(in srgb, #eb1eae 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowH) 20%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowH);
+    }
+  }
+}
+.radio-I {
+  border-color: var(--color-rainbowI);
+  background-color: color-mix(in srgb, #d2c97e 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowI) 70%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowI);
+    }
+  }
+}
+.radio-II {
+  border-color: var(--color-rainbowI);
+  background-color: color-mix(in srgb, #d2c97e 50%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowI) 50%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowI);
+    }
+  }
+}
+.radio-Ii {
+  border-color: var(--color-rainbowI);
+  background-color: color-mix(in srgb, #d2c97e 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowI) 20%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowI);
+    }
+  }
+}
+.radio-J {
+  border-color: var(--color-rainbowJ);
+  background-color: color-mix(in srgb, #b9b9b9 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowJ) 70%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowJ);
+    }
+  }
+}
+.radio-JJ {
+  border-color: var(--color-rainbowJ);
+  background-color: color-mix(in srgb, #b9b9b9 50%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowJ) 50%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowJ);
+    }
+  }
+}
+.radio-Jj {
+  border-color: var(--color-rainbowJ);
+  background-color: color-mix(in srgb, #b9b9b9 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-rainbowJ) 20%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-rainbowJ);
+    }
   }
 }
 .radio-0 {
-  background-color: var(--color-rainbow0);
-  &:checked {
-    color: var(--color-rainbow0);
+  border-color: var(--color-accent-light);
+  background-color: color-mix(in srgb, #7bfff8 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-accent-light) 70%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-accent-light);
+    }
   }
 }
-.radio-1 {
-  background-color: var(--color-rainbow1);
-  &:checked {
-    color: var(--color-rainbow1);
+.radio-z {
+  border-color: var(--color-accent-dark);
+  background-color: color-mix(in srgb, #00756f 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-accent-dark) 70%, transparent);
+  }
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-accent-dark);
+    }
   }
 }
-.radio-2 {
-  background-color: var(--color-rainbow2);
-  &:checked {
-    color: var(--color-rainbow2);
+.radio-zz {
+  border-color: var(--color-white);
+  background-color: color-mix(in srgb, #000 70%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-black) 70%, transparent);
   }
-}
-.radio-3 {
-  background-color: var(--color-rainbow3);
-  &:checked {
-    color: var(--color-rainbow3);
-  }
-}
-.radio-4 {
-  background-color: var(--color-rainbow4);
-  &:checked {
-    color: var(--color-rainbow4);
-  }
-}
-.radio-5 {
-  background-color: var(--color-rainbow5);
-  &:checked {
-    color: var(--color-rainbow5);
-  }
-}
-.radio-6 {
-  background-color: var(--color-rainbow6);
-  &:checked {
-    color: var(--color-rainbow6);
-  }
-}
-.radio-7 {
-  background-color: var(--color-rainbow7);
-  &:checked {
-    color: var(--color-rainbow7);
-  }
-}
-.radio-8 {
-  background-color: var(--color-rainbow8);
-  &:checked {
-    color: var(--color-rainbow8);
-  }
-}
-.radio-9 {
-  background-color: var(--color-rainbow9);
-  &:checked {
-    color: var(--color-rainbow9);
-  }
-}
-.radio-neutral {
-  background-color: var(--color-neutral-secondary);
-  &:checked {
-    color: var(--color-neutral-secondary);
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-white);
+    }
   }
 }
 .check-box {
@@ -6602,229 +7162,529 @@ h4 {
     }
   }
 }
-.check-box-main {
-  border-color: var(--color-accent-main);
+.check-box-A {
+  border-color: var(--color-rainbowA);
   &:checked {
-    background-color: color-mix(in srgb, #3796c5 20%, transparent);
+    background-color: color-mix(in srgb, #ff0e32 70%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-accent-main) 20%, transparent);
+      background-color: color-mix(in oklab, var(--color-rainbowA) 70%, transparent);
     }
   }
   &:hover {
     @media (hover: hover) {
       &:checked {
-        background-color: color-mix(in srgb, #3796c5 80%, transparent);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-accent-main) 80%, transparent);
-        }
+        background-color: var(--color-rainbowA);
+      }
+    }
+  }
+}
+.check-box-AA {
+  border-color: var(--color-rainbowA);
+  &:checked {
+    background-color: color-mix(in srgb, #ff0e32 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowA) 50%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowA);
+      }
+    }
+  }
+}
+.check-box-Aa {
+  border-color: var(--color-rainbowA);
+  &:checked {
+    background-color: color-mix(in srgb, #ff0e32 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowA) 20%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowA);
+      }
+    }
+  }
+}
+.check-box-B {
+  border-color: var(--color-rainbowB);
+  &:checked {
+    background-color: color-mix(in srgb, #fb610f 70%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowB) 70%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowB);
+      }
+    }
+  }
+}
+.check-box-BB {
+  border-color: var(--color-rainbowB);
+  &:checked {
+    background-color: color-mix(in srgb, #fb610f 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowB) 50%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowB);
+      }
+    }
+  }
+}
+.check-box-Bb {
+  border-color: var(--color-rainbowB);
+  &:checked {
+    background-color: color-mix(in srgb, #fb610f 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowB) 20%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowB);
+      }
+    }
+  }
+}
+.check-box-C {
+  border-color: var(--color-rainbowC);
+  &:checked {
+    background-color: color-mix(in srgb, #fdd820 70%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowC) 70%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowC);
+      }
+    }
+  }
+}
+.check-box-CC {
+  border-color: var(--color-rainbowC);
+  &:checked {
+    background-color: color-mix(in srgb, #fdd820 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowC) 50%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowC);
+      }
+    }
+  }
+}
+.check-box-Cc {
+  border-color: var(--color-rainbowC);
+  &:checked {
+    background-color: color-mix(in srgb, #fdd820 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowC) 20%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowC);
+      }
+    }
+  }
+}
+.check-box-D {
+  border-color: var(--color-rainbowD);
+  &:checked {
+    background-color: color-mix(in srgb, #11db73 70%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowD) 70%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowD);
+      }
+    }
+  }
+}
+.check-box-DD {
+  border-color: var(--color-rainbowD);
+  &:checked {
+    background-color: color-mix(in srgb, #11db73 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowD) 50%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowD);
+      }
+    }
+  }
+}
+.check-box-Dd {
+  border-color: var(--color-rainbowD);
+  &:checked {
+    background-color: color-mix(in srgb, #11db73 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowD) 20%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowD);
+      }
+    }
+  }
+}
+.check-box-E {
+  border-color: var(--color-rainbowE);
+  &:checked {
+    background-color: color-mix(in srgb, #2095f5 70%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowE) 70%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowE);
+      }
+    }
+  }
+}
+.check-box-EE {
+  border-color: var(--color-rainbowE);
+  &:checked {
+    background-color: color-mix(in srgb, #2095f5 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowE) 50%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowE);
+      }
+    }
+  }
+}
+.check-box-Ee {
+  border-color: var(--color-rainbowE);
+  &:checked {
+    background-color: color-mix(in srgb, #2095f5 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowE) 20%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowE);
+      }
+    }
+  }
+}
+.check-box-F {
+  border-color: var(--color-rainbowF);
+  &:checked {
+    background-color: color-mix(in srgb, #392fff 70%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowF) 70%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowF);
+      }
+    }
+  }
+}
+.check-box-FF {
+  border-color: var(--color-rainbowF);
+  &:checked {
+    background-color: color-mix(in srgb, #392fff 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowF) 50%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowF);
+      }
+    }
+  }
+}
+.check-box-Ff {
+  border-color: var(--color-rainbowF);
+  &:checked {
+    background-color: color-mix(in srgb, #392fff 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowF) 20%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowF);
+      }
+    }
+  }
+}
+.check-box-G {
+  border-color: var(--color-rainbowG);
+  &:checked {
+    background-color: color-mix(in srgb, #950cdf 70%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowG) 70%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowG);
+      }
+    }
+  }
+}
+.check-box-GG {
+  border-color: var(--color-rainbowG);
+  &:checked {
+    background-color: color-mix(in srgb, #950cdf 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowG) 50%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowG);
+      }
+    }
+  }
+}
+.check-box-Gg {
+  border-color: var(--color-rainbowG);
+  &:checked {
+    background-color: color-mix(in srgb, #950cdf 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowG) 20%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowG);
+      }
+    }
+  }
+}
+.check-box-H {
+  border-color: var(--color-rainbowH);
+  &:checked {
+    background-color: color-mix(in srgb, #eb1eae 70%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowH) 70%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowH);
+      }
+    }
+  }
+}
+.check-box-HH {
+  border-color: var(--color-rainbowH);
+  &:checked {
+    background-color: color-mix(in srgb, #eb1eae 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowH) 50%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowH);
+      }
+    }
+  }
+}
+.check-box-Hh {
+  border-color: var(--color-rainbowH);
+  &:checked {
+    background-color: color-mix(in srgb, #eb1eae 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowH) 20%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowH);
+      }
+    }
+  }
+}
+.check-box-I {
+  border-color: var(--color-rainbowI);
+  &:checked {
+    background-color: color-mix(in srgb, #d2c97e 70%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowI) 70%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowI);
+      }
+    }
+  }
+}
+.check-box-II {
+  border-color: var(--color-rainbowI);
+  &:checked {
+    background-color: color-mix(in srgb, #d2c97e 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowI) 50%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowI);
+      }
+    }
+  }
+}
+.check-box-Ii {
+  border-color: var(--color-rainbowI);
+  &:checked {
+    background-color: color-mix(in srgb, #d2c97e 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowI) 20%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowI);
+      }
+    }
+  }
+}
+.check-box-J {
+  border-color: var(--color-rainbowJ);
+  &:checked {
+    background-color: color-mix(in srgb, #b9b9b9 70%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowJ) 70%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowJ);
+      }
+    }
+  }
+}
+.check-box-JJ {
+  border-color: var(--color-rainbowJ);
+  &:checked {
+    background-color: color-mix(in srgb, #b9b9b9 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowJ) 50%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowJ);
+      }
+    }
+  }
+}
+.check-box-Jj {
+  border-color: var(--color-rainbowJ);
+  &:checked {
+    background-color: color-mix(in srgb, #b9b9b9 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rainbowJ) 20%, transparent);
+    }
+  }
+  &:hover {
+    @media (hover: hover) {
+      &:checked {
+        background-color: var(--color-rainbowJ);
       }
     }
   }
 }
 .check-box-0 {
-  border-color: var(--color-rainbow0);
+  border-color: var(--color-accent-light);
   &:checked {
-    background-color: color-mix(in srgb, #ff0e32 20%, transparent);
+    background-color: color-mix(in srgb, #7bfff8 70%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-rainbow0) 20%, transparent);
+      background-color: color-mix(in oklab, var(--color-accent-light) 70%, transparent);
     }
   }
   &:hover {
     @media (hover: hover) {
       &:checked {
-        background-color: color-mix(in srgb, #ff0e32 80%, transparent);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-rainbow0) 80%, transparent);
-        }
+        background-color: var(--color-accent-light);
       }
     }
   }
 }
-.check-box-1 {
-  border-color: var(--color-rainbow1);
+.check-box-z {
+  border-color: var(--color-accent-dark);
   &:checked {
-    background-color: color-mix(in srgb, #fb610f 20%, transparent);
+    background-color: color-mix(in srgb, #00756f 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-rainbow1) 20%, transparent);
+      background-color: color-mix(in oklab, var(--color-accent-dark) 50%, transparent);
     }
   }
   &:hover {
     @media (hover: hover) {
       &:checked {
-        background-color: color-mix(in srgb, #fb610f 80%, transparent);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-rainbow1) 80%, transparent);
-        }
+        background-color: var(--color-accent-dark);
       }
     }
   }
 }
-.check-box-2 {
-  border-color: var(--color-rainbow2);
+.check-box-zz {
+  border-color: var(--color-white);
   &:checked {
-    background-color: color-mix(in srgb, #fdd820 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-rainbow2) 20%, transparent);
-    }
+    background-color: var(--color-black);
   }
   &:hover {
     @media (hover: hover) {
       &:checked {
-        background-color: color-mix(in srgb, #fdd820 80%, transparent);
+        background-color: color-mix(in srgb, #fff 80%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-rainbow2) 80%, transparent);
-        }
-      }
-    }
-  }
-}
-.check-box-3 {
-  border-color: var(--color-rainbow3);
-  &:checked {
-    background-color: color-mix(in srgb, #11db73 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-rainbow3) 20%, transparent);
-    }
-  }
-  &:hover {
-    @media (hover: hover) {
-      &:checked {
-        background-color: color-mix(in srgb, #11db73 80%, transparent);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-rainbow3) 80%, transparent);
-        }
-      }
-    }
-  }
-}
-.check-box-4 {
-  border-color: var(--color-rainbow4);
-  &:checked {
-    background-color: color-mix(in srgb, #2095f5 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-rainbow4) 20%, transparent);
-    }
-  }
-  &:hover {
-    @media (hover: hover) {
-      &:checked {
-        background-color: color-mix(in srgb, #2095f5 80%, transparent);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-rainbow4) 80%, transparent);
-        }
-      }
-    }
-  }
-}
-.check-box-5 {
-  border-color: var(--color-rainbow5);
-  &:checked {
-    background-color: color-mix(in srgb, #392fff 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-rainbow5) 20%, transparent);
-    }
-  }
-  &:hover {
-    @media (hover: hover) {
-      &:checked {
-        background-color: color-mix(in srgb, #392fff 80%, transparent);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-rainbow5) 80%, transparent);
-        }
-      }
-    }
-  }
-}
-.check-box-6 {
-  border-color: var(--color-rainbow6);
-  &:checked {
-    background-color: color-mix(in srgb, #950cdf 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-rainbow6) 20%, transparent);
-    }
-  }
-  &:hover {
-    @media (hover: hover) {
-      &:checked {
-        background-color: color-mix(in srgb, #950cdf 80%, transparent);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-rainbow6) 80%, transparent);
-        }
-      }
-    }
-  }
-}
-.check-box-7 {
-  border-color: var(--color-rainbow7);
-  &:checked {
-    background-color: color-mix(in srgb, #eb1eae 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-rainbow7) 20%, transparent);
-    }
-  }
-  &:hover {
-    @media (hover: hover) {
-      &:checked {
-        background-color: color-mix(in srgb, #eb1eae 80%, transparent);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-rainbow7) 80%, transparent);
-        }
-      }
-    }
-  }
-}
-.check-box-8 {
-  border-color: var(--color-rainbow8);
-  &:checked {
-    background-color: color-mix(in srgb, #d2c97e 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-rainbow8) 20%, transparent);
-    }
-  }
-  &:hover {
-    @media (hover: hover) {
-      &:checked {
-        background-color: color-mix(in srgb, #d2c97e 80%, transparent);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-rainbow8) 80%, transparent);
-        }
-      }
-    }
-  }
-}
-.check-box-9 {
-  border-color: var(--color-rainbow9);
-  &:checked {
-    background-color: color-mix(in srgb, #b9b9b9 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-rainbow9) 20%, transparent);
-    }
-  }
-  &:hover {
-    @media (hover: hover) {
-      &:checked {
-        background-color: color-mix(in srgb, #b9b9b9 80%, transparent);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-rainbow9) 80%, transparent);
-        }
-      }
-    }
-  }
-}
-.check-box-neutral {
-  border-color: var(--color-neutral-secondary);
-  &:checked {
-    background-color: color-mix(in srgb, #46768e 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-neutral-secondary) 20%, transparent);
-    }
-  }
-  &:hover {
-    @media (hover: hover) {
-      &:checked {
-        background-color: color-mix(in srgb, #46768e 80%, transparent);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-neutral-secondary) 80%, transparent);
+          background-color: color-mix(in oklab, var(--color-white) 80%, transparent);
         }
       }
     }

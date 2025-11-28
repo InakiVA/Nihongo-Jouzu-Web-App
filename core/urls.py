@@ -89,6 +89,18 @@ urlpatterns = [
         {"checkbox": "etiqueta_en_palabra"},
         name="toggle_etiqueta_en_palabra",
     ),
+    path(
+        "toggle-filtro-palabras",
+        c_cp.toggle_checkbox,
+        {"checkbox": "palabras_filtros"},
+        name="toggle_filtro_palabras",
+    ),
+    path(
+        "toggle-filtro-palabras-con-etiqueta",
+        c_cp.toggle_checkbox,
+        {"checkbox": "palabras_con_etiqueta"},
+        name="toggle_filtro_palabras_con_etiqueta",
+    ),
     # == Switches
     path(
         "toggle-descendente",

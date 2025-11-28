@@ -13,6 +13,21 @@ from progress.models import UsuarioPalabra
 import core.utils as ut
 
 
+def crear_lectura(input_value, palabra_obj, user):
+    lectura = Lectura.objects.create(
+        lectura=input_value, palabra=palabra_obj, usuario=user
+    )
+    lectura.clean_lectura()
+    return lectura
+
+
+def crear_significado(input_value, palabra_obj, user):
+    significado = Significado.objects.create(
+        significado=input_value, palabra=palabra_obj, usuario=user
+    )
+    return significado
+
+
 def elemento_detalles(request, elemento):
     if elemento == "palabra":
         obj_id = request.POST.get("wordcard")
@@ -79,14 +94,9 @@ def agregar_a_palabra(request, tipo):
         messages.success(request, f"Se agregó palabra a grupo exitosamente")
     else:
         if tipo == "significado":
-            Significado.objects.create(
-                significado=input_value, palabra=palabra_obj, usuario=user
-            )
-
+            crear_significado(input_value, palabra_obj, user)
         elif tipo == "lectura":
-            Lectura.objects.create(
-                lectura=input_value, palabra=palabra_obj, usuario=user
-            )
+            crear_lectura(input_value, palabra_obj, user)
         elif tipo == "nota":
             Nota.objects.create(nota=input_value, palabra=palabra_obj, usuario=user)
         elif tipo == "etiqueta":

@@ -137,42 +137,86 @@ h4 {
 }
 
 .tag {
- @apply rounded-tl-xl rounded-br-xl px-4 py-0.5 text-textcolor font-semibold border-2;
+ @apply rounded-tl-xl rounded-br-xl px-4 py-0.5 text-textcolor border-2;
 }
 
-.tag-main{ @apply bg-accent-light/20 border-accent-light; }
-.tag-0{ @apply bg-rainbow0/20 border-rainbow0; }
-.tag-1{ @apply bg-rainbow1/20 border-rainbow1; }
-.tag-2{ @apply bg-rainbow2/20 border-rainbow2; }
-.tag-3{ @apply bg-rainbow3/20 border-rainbow3; }
-.tag-4{ @apply bg-rainbow4/20 border-rainbow4; }
-.tag-5{ @apply bg-rainbow5/20 border-rainbow5; }
-.tag-6{ @apply bg-rainbow6/20 border-rainbow6; }
-.tag-7{ @apply bg-rainbow7/20 border-rainbow7; }
-.tag-8{ @apply bg-rainbow8/20 border-rainbow8; }
-.tag-9{ @apply bg-rainbow9/20 border-rainbow9; } 
-.tag-neutral{ @apply bg-accent-dark/20 border-accent-dark; }
+.tag-A{ @apply bg-rainbowA/70 border-rainbowA underline font-semibold; }
+.tag-AA{ @apply bg-rainbowA/40 border-rainbowA font-semibold; }
+.tag-Aa{ @apply bg-rainbowA/20 border-rainbowA; }
+.tag-B{ @apply bg-rainbowB/70 border-rainbowB underline font-semibold; }
+.tag-BB{ @apply bg-rainbowB/40 border-rainbowB font-semibold; }
+.tag-Bb{ @apply bg-rainbowB/10 border-rainbowB; }
+.tag-C{ @apply bg-rainbowC/70 border-rainbowC underline font-semibold; }
+.tag-CC{ @apply bg-rainbowC/40 border-rainbowC font-semibold; }
+.tag-Cc{ @apply bg-rainbowC/20 border-rainbowC; }
+.tag-D{ @apply bg-rainbowD/70 border-rainbowD underline font-semibold; }
+.tag-DD{ @apply bg-rainbowD/40 border-rainbowD font-semibold; }
+.tag-Dd{ @apply bg-rainbowD/20 border-rainbowD; }
+.tag-E{ @apply bg-rainbowE/70 border-rainbowE underline font-semibold; }
+.tag-EE{ @apply bg-rainbowE/40 border-rainbowE font-semibold; }
+.tag-Ee{ @apply bg-rainbowE/20 border-rainbowE; }
+.tag-F{ @apply bg-rainbowF/70 border-rainbowF underline font-semibold; }
+.tag-FF{ @apply bg-rainbowF/40 border-rainbowF font-semibold; }
+.tag-Ff{ @apply bg-rainbowF/20 border-rainbowF; }
+.tag-G{ @apply bg-rainbowG/70 border-rainbowG underline font-semibold; }
+.tag-GG{ @apply bg-rainbowG/40 border-rainbowG font-semibold; }
+.tag-Gg{ @apply bg-rainbowG/20 border-rainbowG; }
+.tag-H{ @apply bg-rainbowH/70 border-rainbowH underline font-semibold; }
+.tag-HH{ @apply bg-rainbowH/40 border-rainbowH font-semibold; }
+.tag-Hh{ @apply bg-rainbowH/20 border-rainbowH; }
+.tag-I{ @apply bg-rainbowI/70 border-rainbowI underline font-semibold; }
+.tag-II{ @apply bg-rainbowI/40 border-rainbowI font-semibold; }
+.tag-Ii{ @apply bg-rainbowI/20 border-rainbowI; }
+.tag-J{ @apply bg-rainbowJ/70 border-rainbowJ underline font-semibold; }   
+.tag-JJ{ @apply bg-rainbowJ/40 border-rainbowJ font-semibold; }
+.tag-Jj{ @apply bg-rainbowJ/20 border-rainbowJ; }
+
+.tag-0{ @apply bg-accent-light/70 border-accent-light underline font-semibold; }
+.tag-z{ @apply bg-accent-dark/40 border-accent-dark font-semibold; }
+.tag-zz{ @apply bg-black border-white; }
 
 /* solo con grupos */
 .tag-group{ @apply rounded-none rounded-tr-xl rounded-bl-xl bg-neutral-secondary/20 border-neutral-secondary; }
 
 .radio{
- @apply radio border-textcolor;
- @apply hover:bg-textcolor checked:border-3;
+ @apply radio border-textcolor border-2;
+ @apply checked:text-textcolor hover:text-textcolor;
 }
 
-.radio-main{ @apply bg-accent-main checked:text-accent-main;}
-.radio-0{ @apply bg-rainbow0 checked:text-rainbow0;}
-.radio-1{ @apply bg-rainbow1 checked:text-rainbow1;}
-.radio-2{ @apply bg-rainbow2 checked:text-rainbow2;}
-.radio-3{ @apply bg-rainbow3 checked:text-rainbow3;}
-.radio-4{ @apply bg-rainbow4 checked:text-rainbow4;}
-.radio-5{ @apply bg-rainbow5 checked:text-rainbow5;}
-.radio-6{ @apply bg-rainbow6 checked:text-rainbow6;}
-.radio-7{ @apply bg-rainbow7 checked:text-rainbow7;}
-.radio-8{ @apply bg-rainbow8 checked:text-rainbow8;}
-.radio-9{ @apply bg-rainbow9 checked:text-rainbow9;}
-.radio-neutral{ @apply bg-neutral-secondary checked:text-neutral-secondary;}
+.radio-A{ @apply border-rainbowA bg-rainbowA/70 hover:bg-rainbowA;}
+.radio-AA{ @apply border-rainbowA bg-rainbowA/50 hover:bg-rainbowA;}
+.radio-Aa{ @apply border-rainbowA bg-rainbowA/20 hover:bg-rainbowA;}
+.radio-B{ @apply border-rainbowB bg-rainbowB/70 hover:bg-rainbowB;}
+.radio-BB{ @apply border-rainbowB bg-rainbowB/50 hover:bg-rainbowB;}
+.radio-Bb{ @apply border-rainbowB bg-rainbowB/10 hover:bg-rainbowB;}
+.radio-C{ @apply border-rainbowC bg-rainbowC/70 hover:bg-rainbowC;}
+.radio-CC{ @apply border-rainbowC bg-rainbowC/50 hover:bg-rainbowC;}
+.radio-Cc{ @apply border-rainbowC bg-rainbowC/20 hover:bg-rainbowC;}
+.radio-D{ @apply border-rainbowD bg-rainbowD/70 hover:bg-rainbowD;}
+.radio-DD{ @apply border-rainbowD bg-rainbowD/50 hover:bg-rainbowD;}
+.radio-Dd{ @apply border-rainbowD bg-rainbowD/20 hover:bg-rainbowD;}
+.radio-E{ @apply border-rainbowE bg-rainbowE/70 hover:bg-rainbowE;}
+.radio-EE{ @apply border-rainbowE bg-rainbowE/50 hover:bg-rainbowE;}
+.radio-Ee{ @apply border-rainbowE bg-rainbowE/20 hover:bg-rainbowE;}
+.radio-F{ @apply border-rainbowF bg-rainbowF/70 hover:bg-rainbowF;}
+.radio-FF{ @apply border-rainbowF bg-rainbowF/50 hover:bg-rainbowF;}
+.radio-Ff{ @apply border-rainbowF bg-rainbowF/20 hover:bg-rainbowF;}
+.radio-G{ @apply border-rainbowG bg-rainbowG/70 hover:bg-rainbowG;}
+.radio-GG{ @apply border-rainbowG bg-rainbowG/50 hover:bg-rainbowG;}
+.radio-Gg{ @apply border-rainbowG bg-rainbowG/20 hover:bg-rainbowG;}
+.radio-H{ @apply border-rainbowH bg-rainbowH/70 hover:bg-rainbowH;}
+.radio-HH{ @apply border-rainbowH bg-rainbowH/50 hover:bg-rainbowH;}
+.radio-Hh{ @apply border-rainbowH bg-rainbowH/20 hover:bg-rainbowH;}
+.radio-I{ @apply border-rainbowI bg-rainbowI/70 hover:bg-rainbowI;}
+.radio-II{ @apply border-rainbowI bg-rainbowI/50 hover:bg-rainbowI;}
+.radio-Ii{ @apply border-rainbowI bg-rainbowI/20 hover:bg-rainbowI;}
+.radio-J{ @apply border-rainbowJ bg-rainbowJ/70 hover:bg-rainbowJ;}
+.radio-JJ{ @apply border-rainbowJ bg-rainbowJ/50 hover:bg-rainbowJ;}
+.radio-Jj{ @apply border-rainbowJ bg-rainbowJ/20 hover:bg-rainbowJ;}
+.radio-0{ @apply border-accent-light bg-accent-light/70 hover:bg-accent-light;}
+.radio-z{ @apply border-accent-dark bg-accent-dark/70 hover:bg-accent-dark;}
+.radio-zz{ @apply border-white bg-black/70 hover:bg-white;}
+
 
 .check-box{
  @apply checkbox rounded-none rounded-l-lg text-textcolor bg-neutral-dark border-neutral-light border-2;
@@ -181,18 +225,40 @@ h4 {
  @apply hover:checked:bg-accent-dark;
 }
 
-.check-box-main { @apply checked:bg-accent-main/20 hover:checked:bg-accent-main/80 border-accent-main; }
-.check-box-0 { @apply checked:bg-rainbow0/20 hover:checked:bg-rainbow0/80 border-rainbow0; }
-.check-box-1 { @apply checked:bg-rainbow1/20 hover:checked:bg-rainbow1/80 border-rainbow1; }
-.check-box-2 { @apply checked:bg-rainbow2/20 hover:checked:bg-rainbow2/80 border-rainbow2; }
-.check-box-3 { @apply checked:bg-rainbow3/20 hover:checked:bg-rainbow3/80 border-rainbow3; }
-.check-box-4 { @apply checked:bg-rainbow4/20 hover:checked:bg-rainbow4/80 border-rainbow4; }
-.check-box-5 { @apply checked:bg-rainbow5/20 hover:checked:bg-rainbow5/80 border-rainbow5; }
-.check-box-6 { @apply checked:bg-rainbow6/20 hover:checked:bg-rainbow6/80 border-rainbow6; }
-.check-box-7 { @apply checked:bg-rainbow7/20 hover:checked:bg-rainbow7/80 border-rainbow7; }
-.check-box-8 { @apply checked:bg-rainbow8/20 hover:checked:bg-rainbow8/80 border-rainbow8; }
-.check-box-9 { @apply checked:bg-rainbow9/20 hover:checked:bg-rainbow9/80 border-rainbow9; }
-.check-box-neutral { @apply checked:bg-neutral-secondary/20 hover:checked:bg-neutral-secondary/80 border-neutral-secondary; }
+.check-box-A { @apply checked:bg-rainbowA/70 hover:checked:bg-rainbowA border-rainbowA; }
+.check-box-AA { @apply checked:bg-rainbowA/50 hover:checked:bg-rainbowA border-rainbowA; }
+.check-box-Aa { @apply checked:bg-rainbowA/20 hover:checked:bg-rainbowA border-rainbowA; }
+.check-box-B { @apply checked:bg-rainbowB/70 hover:checked:bg-rainbowB border-rainbowB; }
+.check-box-BB { @apply checked:bg-rainbowB/50 hover:checked:bg-rainbowB border-rainbowB; }
+.check-box-Bb { @apply checked:bg-rainbowB/20 hover:checked:bg-rainbowB border-rainbowB; }
+.check-box-C { @apply checked:bg-rainbowC/70 hover:checked:bg-rainbowC border-rainbowC; }
+.check-box-CC { @apply checked:bg-rainbowC/50 hover:checked:bg-rainbowC border-rainbowC; }
+.check-box-Cc { @apply checked:bg-rainbowC/20 hover:checked:bg-rainbowC border-rainbowC; }
+.check-box-D { @apply checked:bg-rainbowD/70 hover:checked:bg-rainbowD border-rainbowD; }
+.check-box-DD { @apply checked:bg-rainbowD/50 hover:checked:bg-rainbowD border-rainbowD; }
+.check-box-Dd { @apply checked:bg-rainbowD/20 hover:checked:bg-rainbowD border-rainbowD; }
+.check-box-E { @apply checked:bg-rainbowE/70 hover:checked:bg-rainbowE border-rainbowE; }
+.check-box-EE { @apply checked:bg-rainbowE/50 hover:checked:bg-rainbowE border-rainbowE; }
+.check-box-Ee { @apply checked:bg-rainbowE/20 hover:checked:bg-rainbowE border-rainbowE; }
+.check-box-F { @apply checked:bg-rainbowF/70 hover:checked:bg-rainbowF border-rainbowF; }
+.check-box-FF { @apply checked:bg-rainbowF/50 hover:checked:bg-rainbowF border-rainbowF; }
+.check-box-Ff { @apply checked:bg-rainbowF/20 hover:checked:bg-rainbowF border-rainbowF; }
+.check-box-G { @apply checked:bg-rainbowG/70 hover:checked:bg-rainbowG border-rainbowG; }
+.check-box-GG { @apply checked:bg-rainbowG/50 hover:checked:bg-rainbowG border-rainbowG; }
+.check-box-Gg { @apply checked:bg-rainbowG/20 hover:checked:bg-rainbowG border-rainbowG; }
+.check-box-H { @apply checked:bg-rainbowH/70 hover:checked:bg-rainbowH border-rainbowH; }
+.check-box-HH { @apply checked:bg-rainbowH/50 hover:checked:bg-rainbowH border-rainbowH; }
+.check-box-Hh { @apply checked:bg-rainbowH/20 hover:checked:bg-rainbowH border-rainbowH; }
+.check-box-I { @apply checked:bg-rainbowI/70 hover:checked:bg-rainbowI border-rainbowI; }
+.check-box-II { @apply checked:bg-rainbowI/50 hover:checked:bg-rainbowI border-rainbowI; }
+.check-box-Ii { @apply checked:bg-rainbowI/20 hover:checked:bg-rainbowI border-rainbowI; }
+.check-box-J { @apply checked:bg-rainbowJ/70 hover:checked:bg-rainbowJ border-rainbowJ; }
+.check-box-JJ { @apply checked:bg-rainbowJ/50 hover:checked:bg-rainbowJ border-rainbowJ; }
+.check-box-Jj { @apply checked:bg-rainbowJ/20 hover:checked:bg-rainbowJ border-rainbowJ; }
+
+.check-box-0 { @apply checked:bg-accent-light/70 hover:checked:bg-accent-light border-accent-light; }
+.check-box-z { @apply checked:bg-accent-dark/50 hover:checked:bg-accent-dark border-accent-dark; }
+.check-box-zz { @apply checked:bg-black hover:checked:bg-white/80 border-white; }
 
 .progreso {
  @apply progress w-full bg-neutral-main text-accent-main ;

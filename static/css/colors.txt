@@ -78,7 +78,7 @@ tron:
     --color-neutral-secondary: #46768e; /* secondary tag */
     --color-neutral-dark: #000508; /* absolute bg */
 
-    --color-accent-light: #aceeff;
+    --color-accent-light: #91e9ff;
     --color-accent-main: #3796c5;    
     --color-accent-dark: #28badf;    
 

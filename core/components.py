@@ -189,6 +189,25 @@ def toggle_checkbox(request, checkbox):
                 etiqueta_id=etiqueta_id, palabra_id=palabra_id, usuario=user
             )
             messages.success(request, "Etiqueta agregada a palabra exitosamente")
+    elif checkbox == "palabras_con_etiqueta":
+        ajustes = request.session.get("ajustes_palabras", {})
+        filtros_por_etiqueta = ajustes.get("filtros_por_etiqueta", [])
+        filtro = request.POST.get("check_id")
+
+        if filtro in filtros_por_etiqueta:
+            filtros_por_etiqueta.remove(filtro)
+        else:
+            filtros_por_etiqueta.append(filtro)
+
+        ajustes["page_index"] = 0
+        ajustes["filtros_por_etiqueta"] = filtros_por_etiqueta
+        request.session["ajustes_palabras"] = ajustes
+    elif checkbox == "palabras_filtros":
+        ajustes = request.session.get("ajustes_palabras", {})
+        filtro = request.POST.get("check_id")
+        ajustes[filtro] = not ajustes.get(filtro, False)
+        ajustes["page_index"] = 0
+        request.session["ajustes_palabras"] = ajustes
     return redirect(request.META.get("HTTP_REFERER", "/"))
 
 

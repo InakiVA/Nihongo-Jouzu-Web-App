@@ -17,33 +17,32 @@
     --color-star: #fffc56;
     --color-star-dark: #8f8c04;
 
-    --color-rainbow0: #ff0e32;
-    --color-rainbow1: #fb610f;
-    --color-rainbow2: #fdd820;
-    --color-rainbow3: #11db73;  
-    --color-rainbow4: #2095f5;  
-    --color-rainbow5: #392fff;  
-    --color-rainbow6: #950cdf;
-    --color-rainbow7: #eb1eae;
-    --color-rainbow8: #d2c97e;
-    --color-rainbow9: #b9b9b9;
+    --color-rainbowA: #ff0e32;
+    --color-rainbowB: #fb610f;
+    --color-rainbowC: #fdd820;
+    --color-rainbowD: #11db73;  
+    --color-rainbowE: #2095f5;  
+    --color-rainbowF: #392fff;  
+    --color-rainbowG: #950cdf;
+    --color-rainbowH: #eb1eae;
+    --color-rainbowI: #d2c97e;
+    --color-rainbowJ: #b9b9b9;
 
     --color-textcolor: #FFFFFF;
     --color-textcolor-dark: #c7c7c7;
 
-    --color-include: #53c13a;   /* Neon cyan — bright, glowing blue */
-    --color-exclude: #ff3c00;   /* Tron orange/red — strong contrast */
+    --color-include: #a02be8;
+    --color-exclude: #f75b09;
 
-    --color-neutral-light: #bfe7fc;
-    --color-neutral-main: #1e3643; /* borders */
-    --color-neutral-secondary: #46768e; /* secondary tag */
-    --color-neutral-dark: #000508; /* absolute bg */
+    --color-neutral-light: #c0f8f5;
+    --color-neutral-main: #253949;
+    --color-neutral-secondary: #3d5970;
+    --color-neutral-dark: #0d151dff;
 
-    --color-accent-light: #aceeff;
-    --color-accent-main: #3796c5;    
-    --color-accent-dark: #28badf;    
-
-    --color-secondary-light: #ffc97d;
-    --color-secondary-main: #b34700;  
-    --color-secondary-dark: #7f3402; 
+    --color-accent-light: #7bfff8;
+    --color-accent-main: #009e96;
+    --color-accent-dark: #00756f;
+    --color-secondary-main: #a02be8;
+    --color-secondary-dark: #6a1cae;
+    --color-secondary-light: #e39bff;
   }

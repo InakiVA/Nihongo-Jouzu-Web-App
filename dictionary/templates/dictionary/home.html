@@ -2,7 +2,7 @@
 {% block content %}
 <div class="flex flex-col flex-auto px-4 gap-4 pb-4">
   <div class="flex flex-row w-full gap-4 justify-between items-start">
-    <h4 class="text-start">Palabras</h4>  
+    <h4 class="text-start">Palabras: {{range}}</h4>  
     <div class="flex flex-row gap-4">        
       <button type="button" class="button-big" data-open="#crear_palabra_modal">
         {% include "components/icons/add.html" %} Nueva Palabra
@@ -54,6 +54,31 @@
     </div>
   </dialog>
   
+  
+  <div class="collapse border rounded-t-3xl rounded-b-none border-neutral-main hover:bg-neutral-main">
+    <div class="collapse-title flex flex-row gap-4 items-center">
+      {% include "components/icons/funnel.html" %}
+      <h2>Filtrar</h2>
+      {% if filtros_cantidad > 0 %}
+      <h3>Filtros aplicados: {{ filtros_cantidad }}</h3>
+      {% endif %}
+    </div>
+    <input type="checkbox" />
+    <div class="collapse-content space-y-8">
+      <div class="columns-3">
+        {% include "components/checkbox.html" with url=filtrar_url text="Creadas por mí" id="de_usuario" is_selected=de_usuario extra_classes="text-lg"%}
+        {% include "components/checkbox.html" with url=filtrar_url text="Por completar" id="por_completar" is_selected=por_completar extra_classes="text-lg"%}
+        {% include "components/checkbox.html" with url=filtrar_url text="Con estrella" id="con_estrella" is_selected=con_estrella extra_classes="text-lg"%}
+      </div>
+      {% include "components/element_header.html" with header="Etiquetas" extra_classes="mt-4"%}
+      <div class="columns-1 sm:columns-2 md:columns-3 gap-4 space-y-2">
+        {% for tag in tag_list %}  
+          {% include "components/checkbox.html" with url=filtrar_tag_url color=tag.color text=tag.etiqueta id=tag.id is_selected=tag.is_selected extra_classes="text-lg"%}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
   <div>
     {% include "components/word_list.html" with url=palabra_url palabras_list=palabras_list%}
   </div>

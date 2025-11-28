@@ -9,6 +9,7 @@ from dictionary.models import Palabra, Significado, Lectura
 from progress.models import UsuarioPalabra
 from groups.models import Grupo
 from tags.models import Etiqueta
+from accounts.models import Usuario
 
 import core.utils as ut
 import core.operations as c_op
@@ -167,12 +168,62 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["toggle_modal_url"] = reverse_lazy("toggle_create_modal")
 
         ajustes_palabras = self.request.session.get("ajustes_palabras", {})
+        filtros_por_etiqueta = ajustes_palabras.get("filtros_por_etiqueta", [])
+        filtros_por_etiqueta = set(filtros_por_etiqueta)
 
         context["intentado"] = ajustes_palabras.get("intentado", False)
 
-        palabras = Palabra.objects.filter(
-            (Q(usuario=usuario) | Q(usuario__perfil__rol="admin"))
-        )
+        filtrar_palabras_por_completar = ajustes_palabras.get("por_completar", False)
+        context["por_completar"] = filtrar_palabras_por_completar
+
+        filtrar_palabras_con_estrella = ajustes_palabras.get("con_estrella", False)
+        context["con_estrella"] = filtrar_palabras_con_estrella
+
+        filtrar_palabras_de_usuario = ajustes_palabras.get("de_usuario", False)
+        context["de_usuario"] = filtrar_palabras_de_usuario
+
+        context["filtrar_url"] = reverse_lazy("toggle_filtro_palabras")
+
+        tags = []
+        etiquetas_obj = Etiqueta.objects.filter(
+            Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
+        ).order_by("etiqueta")
+        for etiqueta in etiquetas_obj:
+            tag_dict = etiqueta.etiqueta_dict()
+            tag_dict["is_selected"] = str(etiqueta.id) in filtros_por_etiqueta
+            tags.append(tag_dict)
+
+        context["tag_list"] = tags
+        context["filtrar_tag_url"] = reverse_lazy("toggle_filtro_palabras_con_etiqueta")
+
+        admin_users = Usuario.objects.filter(perfil__rol="admin")
+        usuarios_permitidos = [usuario] + list(admin_users)
+
+        condiciones = []
+        palabras = Palabra.objects.filter(Q(usuario__in=usuarios_permitidos))
+
+        if filtrar_palabras_de_usuario:
+            condiciones.append(Q(usuario=usuario))
+        if filtrar_palabras_por_completar:
+            condiciones.append(
+                Q(palabra_usuarios__usuario=usuario)
+                & ~Q(palabra_usuarios__progreso=100)
+            )
+        if filtrar_palabras_con_estrella:
+            condiciones.append(
+                Q(palabra_usuarios__usuario=usuario)
+                & Q(palabra_usuarios__estrella=True)
+            )
+        palabras = palabras.filter(*condiciones)
+        context["filtros_cantidad"] = len(condiciones) + len(filtros_por_etiqueta)
+        if filtros_por_etiqueta:
+            etiquetas_on = Etiqueta.objects.filter(id__in=filtros_por_etiqueta)
+            for etiqueta in etiquetas_on:
+                palabras = palabras.filter(
+                    palabra_etiquetas__etiqueta=etiqueta,
+                    palabra_etiquetas__usuario__in=usuarios_permitidos,
+                )
+        palabras = palabras.distinct().order_by("id")
         index = ajustes_palabras.get("page_index", 0)
         index = ut.bound_page_index(index, len(palabras))
         ajustes_palabras["page_index"] = index
@@ -181,6 +232,12 @@ class HomeView(LoginRequiredMixin, TemplateView):
         palabras_list = []
         for palabra in palabras[index * 10 : min(len(palabras), index * 10 + 10)]:
             palabras_list.append(palabra.palabra_dict(usuario=usuario))
+        if len(palabras) == 0:
+            context["range"] = "No hay palabras para mostrar"
+        else:
+            context["range"] = (
+                f"{index * 10 + 1} - {min(len(palabras), index * 10 + 10)} de {len(palabras)}"
+            )
         context["palabras_list"] = palabras_list
         context["palabra_url"] = reverse_lazy("elegir_palabra")
 
@@ -192,7 +249,6 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         context["ajustes_palabras"] = ajustes_palabras
         self.request.session["ajustes_palabras"] = ajustes_palabras
-        print(dict(self.request.session))
 
         return context
 

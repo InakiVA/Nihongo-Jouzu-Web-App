@@ -40,6 +40,7 @@
     << implementar que se busquen palabras, lecturas y significados
     ?? Incluir búsqueda de grupos - tab separation
     ?? Incluir búsqueda de tags - palabras o grupos que tengan como tag el input dado mejor
+    << Checar por qué ciertas palabras no se buscan con su lectura con ・ 果たす （は・たす）, no se debe estar creando la lectura limpia
     << Page navigation bonita hasta abajo mejor
 
 == Vista de palabras
@@ -47,8 +48,19 @@
     << Lista de palabras
         << Cambiar "Diccionario" a "Palabras" en navbar y urls
         >> lista con estrella y progreso
-    $$ Filtros por search, etiqueta (multi select), estrella, progreso, creador
-    $$ Orden por abcd palabra, significado, creación
+    << Filtros por
+        <<etiqueta
+        >>search
+        <<estrella
+        <<progreso
+        <<creador
+    $$ Orden por (asc des)
+        ++abcd en japonés
+        ++lectura en romaji
+        <<palabra id (default) 
+        ++significado
+        ++creación
+        ?? progreso
     ?? Progreso global (palabras iniciadas)
         ?? Palabras estudiando
         ?? Modal de lo de arriba
@@ -66,7 +78,8 @@
     >> Fecha de creación
     >> Último estudio
         .. timezones son una joda, mejor no mostrar fecha de creación y modificación
-        ?? al llamarla creo que se puede adaptar. hacer método propoerty que la transforme
+        ?? al llamarla creo que se puede adaptar. hacer método property que la transforme
+        .. necesita middleware
     << Estrella y progreso-
     << no funciona progress bar y star
 
@@ -74,14 +87,22 @@
     << Crear grupo
     << Lista de grupos con estrella y progreso
         << cantidad de palabras en grupo
-    ?? Filtros por search, estrella, progreso, creador
-    ?? Orden por abcd, creación
+    ?? Filtros por 
+        >>search
+        ?? estrella
+        ?? progreso
+        ?? creador
+    ?? Orden por (asc des)
+        ?? abcd
+        ?? creación
+        ?? cantidad de palabras ??
+        ?? progreso
 
 == Vista de grupo-detalles
     << Progreso, descripcion
     << Lista de palabras en grupo
     << Botón toggle con mismas propiedades de edición y eliminación que palabra
-        $$ Agregar palabras
+        >> Agregar palabras
         >> Agregar etiquetas
     ?? Filtros por estrella, progreso, creador
     .. omitir grupo_etiquetas hasta encontrarle propósito funcional
@@ -95,13 +116,14 @@
     << agregar 3 tiers de colores para cada etiqueta dependiendo de prioridad/tipo que elija el autor de las etiquetas
         << al desplegarse, deben ir en orden 1 a 3
         << hecho con colores
-    ?? Filtros por search, color, creador
-    ?? Orden por abcd, color, creación
+    >> Filtros por search, color, creador
+    >> Orden por abcd, color, creación
 
 == Vista de usuario
     << Cambiar usuario (unique) y contraseña
     ++ Eliminar usuario
     ?? Sugerencias, quejas, comentarios
+    ?? Progreso global
 
 == CONSIDERAR USUARIOS - al picar botón de actualización
     .. Si un usuario crea palabra/grupo/etiqueta "Mosco", y luego admin la crea,

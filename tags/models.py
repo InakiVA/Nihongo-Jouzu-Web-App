@@ -5,18 +5,39 @@ from dictionary.models import Palabra
 
 # -- Etiquetado global, escalabe y flexible a futuro
 class ColorOptions(models.TextChoices):
-    COLOR_MAIN = "main", "Main"
-    COLOR_0 = "0", "Rojo"
-    COLOR_1 = "1", "Naranja"
-    COLOR_2 = "2", "Amarillo"
-    COLOR_3 = "3", "Verde"
-    COLOR_4 = "4", "Azul"
-    COLOR_5 = "5", "Indigo"
-    COLOR_6 = "6", "Morado"
-    COLOR_7 = "7", "Rosa"
-    COLOR_8 = "8", "Negro"
-    COLOR_9 = "9", "Gris"
-    COLOR_NEUTRAL = "neutral", "Neutral"
+    COLOR_MAIN = "0", "Main"
+    COLOR_A = "A", "Rojo Subrayado"
+    COLOR_AA = "AA", "Rojo"
+    COLOR_Aa = "Aa", "Rojo Oscuro"
+    COLOR_B = "B", "Naranja Subrayado"
+    COLOR_BB = "BB", "Naranja"
+    COLOR_Bb = "Bb", "Naranja Oscuro"
+    COLOR_C = "C", "Amarillo Subrayado"
+    COLOR_CC = "CC", "Amarillo"
+    COLOR_Cc = "Cc", "Amarillo Oscuro"
+    COLOR_D = "D", "Verde Subrayado"
+    COLOR_DD = "DD", "Verde"
+    COLOR_Dd = "Dd", "Verde Oscuro"
+    COLOR_E = "E", "Azul Subrayado"
+    COLOR_EE = "EE", "Azul"
+    COLOR_Ee = "Ee", "Azul Oscuro"
+    COLOR_F = "F", "Indigo Subrayado"
+    COLOR_FF = "FF", "Indigo"
+    COLOR_Ff = "Ff", "Indigo Oscuro"
+    COLOR_G = "G", "Morado Subrayado"
+    COLOR_GG = "GG", "Morado"
+    COLOR_Gg = "Gg", "Morado Oscuro"
+    COLOR_H = "H", "Rosa Subrayado"
+    COLOR_HH = "HH", "Rosa"
+    COLOR_Hh = "Hh", "Rosa Oscuro"
+    COLOR_I = "I", "Dorado Subrayado"
+    COLOR_II = "II", "Dorado"
+    COLOR_Ii = "Ii", "Dorado Oscuro"
+    COLOR_J = "J", "Gris Subrayado"
+    COLOR_JJ = "JJ", "Gris"
+    COLOR_Jj = "Jj", "Gris Oscuro"
+    COLOR_Z = "z", "Neutral"
+    COLOR_ZZ = "zz", "Negro"
 
 
 class Etiqueta(models.Model):
@@ -29,7 +50,7 @@ class Etiqueta(models.Model):
     color = models.CharField(
         max_length=10,
         choices=ColorOptions.choices,
-        default=ColorOptions.COLOR_NEUTRAL,
+        default=ColorOptions.COLOR_Z,
     )
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # solo al crear
     ultima_modificacion = models.DateTimeField(auto_now=True)
