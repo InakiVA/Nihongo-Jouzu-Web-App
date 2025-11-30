@@ -3,6 +3,30 @@
 <div class="flex flex-col flex-auto px-4 gap-4 pb-4">
     <h4 class="text-start">Usuario: {{ usuario.username }}</h4>
 
+      <button id="theme-toggle" class="button-secondary">
+        Cambiar Tema
+      </button>
+
+      <script>
+        const toggleBtn = document.getElementById("theme-toggle");
+
+        toggleBtn?.addEventListener("click", () => {
+          const root = document.documentElement;
+
+          const current = root.getAttribute("data-theme");
+          const next = current === "ben" ? "evangelion" : "ben";
+
+          root.setAttribute("data-theme", next);
+          localStorage.setItem("theme", next);
+        });
+
+        // Al cargar, aplicar el tema guardado (si existe)
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+          document.documentElement.setAttribute("data-theme", savedTheme);
+        }
+      </script>
+
     <!-- Username Change Button -->
     <div>
       <button type="button" class="button-big" data-open="#change_username_modal">
