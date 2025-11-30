@@ -72,18 +72,18 @@
     --color-rainbowJ: #b9b9b9;
     --color-textcolor: #FFFFFF;
     --color-textcolor-dark: #c7c7c7;
-    --color-include: #a02be8;
-    --color-exclude: #f75b09;
-    --color-neutral-light: #c0f8f5;
-    --color-neutral-main: #253949;
-    --color-neutral-secondary: #3d5970;
-    --color-neutral-dark: #0d151dff;
-    --color-accent-light: #7bfff8;
-    --color-accent-main: #009e96;
-    --color-accent-dark: #00756f;
-    --color-secondary-main: #a02be8;
-    --color-secondary-dark: #6a1cae;
-    --color-secondary-light: #e39bff;
+    --color-include: #389c3d;
+    --color-exclude: #816f82;
+    --color-neutral-light: #f5f5f5;
+    --color-neutral-main: #192732;
+    --color-neutral-secondary: #5a7891;
+    --color-neutral-dark: #0b0f14;
+    --color-accent-light: #ff6c87;
+    --color-accent-main: #cc0033;
+    --color-accent-dark: #800020;
+    --color-secondary-light: #ffac7f;
+    --color-secondary-main: #f75b09;
+    --color-secondary-dark: #5d2a0f;
   }
 }
 @layer base {
@@ -2007,9 +2007,6 @@
       }
     }
   }
-  .absolute {
-    position: absolute;
-  }
   .fixed {
     position: fixed;
   }
@@ -2880,7 +2877,7 @@
     background-color: var(--color-neutral-main);
   }
   .bg-neutral-main\/10 {
-    background-color: color-mix(in srgb, #253949 10%, transparent);
+    background-color: color-mix(in srgb, #192732 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-neutral-main) 10%, transparent);
     }
@@ -3140,10 +3137,6 @@
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
-  .inset-shadow-2xs {
-    --tw-inset-shadow: inset 0 1px var(--tw-inset-shadow-color, rgb(0 0 0 / 0.05));
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
   .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
@@ -3300,7 +3293,7 @@ h4 {
   line-height: var(--tw-leading, var(--text-4xl--line-height));
   --tw-font-weight: var(--font-weight-extrabold);
   font-weight: var(--font-weight-extrabold);
-  color: var(--color-accent-main);
+  color: var(--color-accent-light);
 }
 .welcome_bg {
   --tw-gradient-position: in oklab;
@@ -6545,7 +6538,7 @@ h4 {
 }
 .tag-0 {
   border-color: var(--color-accent-light);
-  background-color: color-mix(in srgb, #7bfff8 70%, transparent);
+  background-color: color-mix(in srgb, #ff6c87 70%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-accent-light) 70%, transparent);
   }
@@ -6555,15 +6548,18 @@ h4 {
 }
 .tag-z {
   border-color: var(--color-accent-dark);
-  background-color: color-mix(in srgb, #00756f 40%, transparent);
+  background-color: color-mix(in srgb, #800020 50%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
-    background-color: color-mix(in oklab, var(--color-accent-dark) 40%, transparent);
+    background-color: color-mix(in oklab, var(--color-accent-dark) 50%, transparent);
   }
   --tw-font-weight: var(--font-weight-semibold);
   font-weight: var(--font-weight-semibold);
 }
 .tag-zz {
-  border-color: var(--color-white);
+  border-color: color-mix(in srgb, #fff 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    border-color: color-mix(in oklab, var(--color-white) 20%, transparent);
+  }
   background-color: var(--color-black);
 }
 .tag-group {
@@ -6571,7 +6567,7 @@ h4 {
   border-top-right-radius: var(--radius-xl);
   border-bottom-left-radius: var(--radius-xl);
   border-color: var(--color-neutral-secondary);
-  background-color: color-mix(in srgb, #3d5970 20%, transparent);
+  background-color: color-mix(in srgb, #5a7891 20%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-neutral-secondary) 20%, transparent);
   }
@@ -7013,7 +7009,7 @@ h4 {
 }
 .radio-0 {
   border-color: var(--color-accent-light);
-  background-color: color-mix(in srgb, #7bfff8 70%, transparent);
+  background-color: color-mix(in srgb, #ff6c87 70%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-accent-light) 70%, transparent);
   }
@@ -7025,9 +7021,9 @@ h4 {
 }
 .radio-z {
   border-color: var(--color-accent-dark);
-  background-color: color-mix(in srgb, #00756f 70%, transparent);
+  background-color: color-mix(in srgb, #800020 50%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
-    background-color: color-mix(in oklab, var(--color-accent-dark) 70%, transparent);
+    background-color: color-mix(in oklab, var(--color-accent-dark) 50%, transparent);
   }
   &:hover {
     @media (hover: hover) {
@@ -7036,14 +7032,17 @@ h4 {
   }
 }
 .radio-zz {
-  border-color: var(--color-white);
-  background-color: color-mix(in srgb, #000 70%, transparent);
+  border-color: color-mix(in srgb, #fff 20%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
-    background-color: color-mix(in oklab, var(--color-black) 70%, transparent);
+    border-color: color-mix(in oklab, var(--color-white) 20%, transparent);
   }
+  background-color: var(--color-black);
   &:hover {
     @media (hover: hover) {
-      background-color: var(--color-white);
+      background-color: color-mix(in srgb, #fff 20%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-white) 20%, transparent);
+      }
     }
   }
 }
@@ -7152,6 +7151,9 @@ h4 {
     }
   }
   &:checked {
+    border-color: var(--color-accent-light);
+  }
+  &:checked {
     background-color: var(--color-accent-main);
   }
   &:hover {
@@ -7164,6 +7166,9 @@ h4 {
 }
 .check-box-A {
   border-color: var(--color-rainbowA);
+  &:checked {
+    border-color: var(--color-rainbowA);
+  }
   &:checked {
     background-color: color-mix(in srgb, #ff0e32 70%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7181,6 +7186,9 @@ h4 {
 .check-box-AA {
   border-color: var(--color-rainbowA);
   &:checked {
+    border-color: var(--color-rainbowA);
+  }
+  &:checked {
     background-color: color-mix(in srgb, #ff0e32 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rainbowA) 50%, transparent);
@@ -7196,6 +7204,9 @@ h4 {
 }
 .check-box-Aa {
   border-color: var(--color-rainbowA);
+  &:checked {
+    border-color: var(--color-rainbowA);
+  }
   &:checked {
     background-color: color-mix(in srgb, #ff0e32 20%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7213,6 +7224,9 @@ h4 {
 .check-box-B {
   border-color: var(--color-rainbowB);
   &:checked {
+    border-color: var(--color-rainbowB);
+  }
+  &:checked {
     background-color: color-mix(in srgb, #fb610f 70%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rainbowB) 70%, transparent);
@@ -7228,6 +7242,9 @@ h4 {
 }
 .check-box-BB {
   border-color: var(--color-rainbowB);
+  &:checked {
+    border-color: var(--color-rainbowB);
+  }
   &:checked {
     background-color: color-mix(in srgb, #fb610f 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7245,6 +7262,9 @@ h4 {
 .check-box-Bb {
   border-color: var(--color-rainbowB);
   &:checked {
+    border-color: var(--color-rainbowB);
+  }
+  &:checked {
     background-color: color-mix(in srgb, #fb610f 20%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rainbowB) 20%, transparent);
@@ -7260,6 +7280,9 @@ h4 {
 }
 .check-box-C {
   border-color: var(--color-rainbowC);
+  &:checked {
+    border-color: var(--color-rainbowC);
+  }
   &:checked {
     background-color: color-mix(in srgb, #fdd820 70%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7277,6 +7300,9 @@ h4 {
 .check-box-CC {
   border-color: var(--color-rainbowC);
   &:checked {
+    border-color: var(--color-rainbowC);
+  }
+  &:checked {
     background-color: color-mix(in srgb, #fdd820 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rainbowC) 50%, transparent);
@@ -7292,6 +7318,9 @@ h4 {
 }
 .check-box-Cc {
   border-color: var(--color-rainbowC);
+  &:checked {
+    border-color: var(--color-rainbowC);
+  }
   &:checked {
     background-color: color-mix(in srgb, #fdd820 20%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7309,6 +7338,9 @@ h4 {
 .check-box-D {
   border-color: var(--color-rainbowD);
   &:checked {
+    border-color: var(--color-rainbowD);
+  }
+  &:checked {
     background-color: color-mix(in srgb, #11db73 70%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rainbowD) 70%, transparent);
@@ -7324,6 +7356,9 @@ h4 {
 }
 .check-box-DD {
   border-color: var(--color-rainbowD);
+  &:checked {
+    border-color: var(--color-rainbowD);
+  }
   &:checked {
     background-color: color-mix(in srgb, #11db73 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7341,6 +7376,9 @@ h4 {
 .check-box-Dd {
   border-color: var(--color-rainbowD);
   &:checked {
+    border-color: var(--color-rainbowD);
+  }
+  &:checked {
     background-color: color-mix(in srgb, #11db73 20%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rainbowD) 20%, transparent);
@@ -7356,6 +7394,9 @@ h4 {
 }
 .check-box-E {
   border-color: var(--color-rainbowE);
+  &:checked {
+    border-color: var(--color-rainbowE);
+  }
   &:checked {
     background-color: color-mix(in srgb, #2095f5 70%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7373,6 +7414,9 @@ h4 {
 .check-box-EE {
   border-color: var(--color-rainbowE);
   &:checked {
+    border-color: var(--color-rainbowE);
+  }
+  &:checked {
     background-color: color-mix(in srgb, #2095f5 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rainbowE) 50%, transparent);
@@ -7388,6 +7432,9 @@ h4 {
 }
 .check-box-Ee {
   border-color: var(--color-rainbowE);
+  &:checked {
+    border-color: var(--color-rainbowE);
+  }
   &:checked {
     background-color: color-mix(in srgb, #2095f5 20%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7405,6 +7452,9 @@ h4 {
 .check-box-F {
   border-color: var(--color-rainbowF);
   &:checked {
+    border-color: var(--color-rainbowF);
+  }
+  &:checked {
     background-color: color-mix(in srgb, #392fff 70%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rainbowF) 70%, transparent);
@@ -7420,6 +7470,9 @@ h4 {
 }
 .check-box-FF {
   border-color: var(--color-rainbowF);
+  &:checked {
+    border-color: var(--color-rainbowF);
+  }
   &:checked {
     background-color: color-mix(in srgb, #392fff 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7437,6 +7490,9 @@ h4 {
 .check-box-Ff {
   border-color: var(--color-rainbowF);
   &:checked {
+    border-color: var(--color-rainbowF);
+  }
+  &:checked {
     background-color: color-mix(in srgb, #392fff 20%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rainbowF) 20%, transparent);
@@ -7452,6 +7508,9 @@ h4 {
 }
 .check-box-G {
   border-color: var(--color-rainbowG);
+  &:checked {
+    border-color: var(--color-rainbowG);
+  }
   &:checked {
     background-color: color-mix(in srgb, #950cdf 70%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7469,6 +7528,9 @@ h4 {
 .check-box-GG {
   border-color: var(--color-rainbowG);
   &:checked {
+    border-color: var(--color-rainbowG);
+  }
+  &:checked {
     background-color: color-mix(in srgb, #950cdf 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rainbowG) 50%, transparent);
@@ -7484,6 +7546,9 @@ h4 {
 }
 .check-box-Gg {
   border-color: var(--color-rainbowG);
+  &:checked {
+    border-color: var(--color-rainbowG);
+  }
   &:checked {
     background-color: color-mix(in srgb, #950cdf 20%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7501,6 +7566,9 @@ h4 {
 .check-box-H {
   border-color: var(--color-rainbowH);
   &:checked {
+    border-color: var(--color-rainbowH);
+  }
+  &:checked {
     background-color: color-mix(in srgb, #eb1eae 70%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rainbowH) 70%, transparent);
@@ -7516,6 +7584,9 @@ h4 {
 }
 .check-box-HH {
   border-color: var(--color-rainbowH);
+  &:checked {
+    border-color: var(--color-rainbowH);
+  }
   &:checked {
     background-color: color-mix(in srgb, #eb1eae 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7533,6 +7604,9 @@ h4 {
 .check-box-Hh {
   border-color: var(--color-rainbowH);
   &:checked {
+    border-color: var(--color-rainbowH);
+  }
+  &:checked {
     background-color: color-mix(in srgb, #eb1eae 20%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rainbowH) 20%, transparent);
@@ -7548,6 +7622,9 @@ h4 {
 }
 .check-box-I {
   border-color: var(--color-rainbowI);
+  &:checked {
+    border-color: var(--color-rainbowI);
+  }
   &:checked {
     background-color: color-mix(in srgb, #d2c97e 70%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7565,6 +7642,9 @@ h4 {
 .check-box-II {
   border-color: var(--color-rainbowI);
   &:checked {
+    border-color: var(--color-rainbowI);
+  }
+  &:checked {
     background-color: color-mix(in srgb, #d2c97e 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rainbowI) 50%, transparent);
@@ -7580,6 +7660,9 @@ h4 {
 }
 .check-box-Ii {
   border-color: var(--color-rainbowI);
+  &:checked {
+    border-color: var(--color-rainbowI);
+  }
   &:checked {
     background-color: color-mix(in srgb, #d2c97e 20%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7597,6 +7680,9 @@ h4 {
 .check-box-J {
   border-color: var(--color-rainbowJ);
   &:checked {
+    border-color: var(--color-rainbowJ);
+  }
+  &:checked {
     background-color: color-mix(in srgb, #b9b9b9 70%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rainbowJ) 70%, transparent);
@@ -7612,6 +7698,9 @@ h4 {
 }
 .check-box-JJ {
   border-color: var(--color-rainbowJ);
+  &:checked {
+    border-color: var(--color-rainbowJ);
+  }
   &:checked {
     background-color: color-mix(in srgb, #b9b9b9 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7629,6 +7718,9 @@ h4 {
 .check-box-Jj {
   border-color: var(--color-rainbowJ);
   &:checked {
+    border-color: var(--color-rainbowJ);
+  }
+  &:checked {
     background-color: color-mix(in srgb, #b9b9b9 20%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rainbowJ) 20%, transparent);
@@ -7645,7 +7737,10 @@ h4 {
 .check-box-0 {
   border-color: var(--color-accent-light);
   &:checked {
-    background-color: color-mix(in srgb, #7bfff8 70%, transparent);
+    border-color: var(--color-accent-light);
+  }
+  &:checked {
+    background-color: color-mix(in srgb, #ff6c87 70%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-accent-light) 70%, transparent);
     }
@@ -7661,7 +7756,10 @@ h4 {
 .check-box-z {
   border-color: var(--color-accent-dark);
   &:checked {
-    background-color: color-mix(in srgb, #00756f 50%, transparent);
+    border-color: var(--color-accent-dark);
+  }
+  &:checked {
+    background-color: color-mix(in srgb, #800020 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-accent-dark) 50%, transparent);
     }
@@ -7675,16 +7773,25 @@ h4 {
   }
 }
 .check-box-zz {
-  border-color: var(--color-white);
+  border-color: color-mix(in srgb, #fff 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    border-color: color-mix(in oklab, var(--color-white) 20%, transparent);
+  }
+  &:checked {
+    border-color: color-mix(in srgb, #fff 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-white) 20%, transparent);
+    }
+  }
   &:checked {
     background-color: var(--color-black);
   }
   &:hover {
     @media (hover: hover) {
       &:checked {
-        background-color: color-mix(in srgb, #fff 80%, transparent);
+        background-color: color-mix(in srgb, #fff 20%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-white) 80%, transparent);
+          background-color: color-mix(in oklab, var(--color-white) 20%, transparent);
         }
       }
     }

@@ -1,14 +1,14 @@
 == rainbow colors
-    --color-rainbow0: #ff0e32;
-    --color-rainbow1: #fb610f;
-    --color-rainbow2: #fdd820;
-    --color-rainbow3: #11db73;  
-    --color-rainbow4: #2095f5;  
-    --color-rainbow5: #392fff;  
-    --color-rainbow6: #950cdf;
-    --color-rainbow7: #eb1eae;
-    --color-rainbow8: #d2c97e;
-    --color-rainbow9: #b9b9b9;
+    --color-rainbowA: #ff0e32;
+    --color-rainbowB: #fb610f;
+    --color-rainbowC: #fdd820;
+    --color-rainbowD: #11db73;  
+    --color-rainbowE: #2095f5;  
+    --color-rainbowF: #392fff;  
+    --color-rainbowG: #950cdf;
+    --color-rainbowH: #eb1eae;
+    --color-rainbowI: #d2c97e;
+    --color-rainbowJ: #b9b9b9;
 
 shinji purple and green:
     --color-textcolor: #FFFFFF;
@@ -20,12 +20,15 @@ shinji purple and green:
     --color-neutral-light: #c36fff;
     --color-neutral-main: #3e1669;
     --color-neutral-secondary: #8447c5;
-    --color-neutral-dark: #170d21;
+    --color-neutral-dark: #08040d;
 
     --color-accent-light: #baffba;
     --color-accent-main: #19ba41;
     --color-accent-dark: #036e1d;  
-    --color-secondary-main: #f75b09;
+
+    --color-secondary-light: #ff6c87;
+    --color-secondary-main: #cc0033;
+    --color-secondary-dark: #800020; 
 
 dark blue and red:
     --color-textcolor: #FFFFFF;
@@ -35,17 +38,17 @@ dark blue and red:
     --color-exclude: #816f82;
 
     --color-neutral-light: #f5f5f5;
-    --color-neutral-main: #2a3c4b;
+    --color-neutral-main: #192732;
     --color-neutral-secondary: #5a7891;
-    --color-neutral-dark: #1c2731;
+    --color-neutral-dark: #0b0f14;
 
     --color-accent-light: #ff6c87;
     --color-accent-main: #cc0033;
     --color-accent-dark: #800020; 
 
-    --color-secondary-light: #ffc97d;
-    --color-secondary-main: #b34700;  
-    --color-secondary-dark: #7f3402; 
+    --color-secondary-light: #ffac7f;
+    --color-secondary-main: #f75b09;  
+    --color-secondary-dark: #5d2a0f;   
 
 panoptimize aqua:
     --color-textcolor: #FFFFFF;
@@ -62,6 +65,7 @@ panoptimize aqua:
     --color-accent-light: #7bfff8;
     --color-accent-main: #009e96;
     --color-accent-dark: #00756f;
+
     --color-secondary-main: #a02be8;
     --color-secondary-dark: #6a1cae;
     --color-secondary-light: #e39bff;
@@ -70,13 +74,13 @@ tron:
     --color-textcolor: #FFFFFF;
     --color-textcolor-dark: #c7c7c7;
 
-    --color-include: #53c13a;   /* Neon cyan — bright, glowing blue */
-    --color-exclude: #ff3c00;   /* Tron orange/red — strong contrast */
+    --color-include: #53c13a;
+    --color-exclude: #ff3c00;
 
     --color-neutral-light: #bfe7fc;
-    --color-neutral-main: #1e3643; /* borders */
-    --color-neutral-secondary: #46768e; /* secondary tag */
-    --color-neutral-dark: #000508; /* absolute bg */
+    --color-neutral-main: #1e3643;
+    --color-neutral-secondary: #46768e;
+    --color-neutral-dark: #000508;
 
     --color-accent-light: #91e9ff;
     --color-accent-main: #3796c5;    
@@ -86,17 +90,22 @@ tron:
     --color-secondary-main: #b34700;  
     --color-secondary-dark: #7f3402;  
 
-seahawks:
+Cowboy Bebop:
     --color-textcolor: #FFFFFF;
     --color-textcolor-dark: #c7c7c7;
 
-    --color-include: #1d73f5;
-    --color-exclude: #f75b09;
+    --color-include: #4fa77b;
+    --color-exclude: #c684fc;
 
-    --color-neutral-light: #b3d0ff;
-    --color-neutral-main: #374063;
-    --color-neutral-dark: #1d2230;
+    --color-neutral-light: #9fb6ff;
+    --color-neutral-main: #3a4d7c;
+    --color-neutral-secondary: #5a6c7c;
+    --color-neutral-dark: #000508;
 
-    --color-accent-light: #f4ffe0;
-    --color-accent-main: #84c710;
-    --color-accent-dark: #4e780b; 
+    --color-accent-light: #f1e6b4;
+    --color-accent-main: #756936;
+    --color-accent-dark: #423c20;
+
+    --color-secondary-light: #ffa3b4;
+    --color-secondary-main: #e43858;
+    --color-secondary-dark: #7c182b;

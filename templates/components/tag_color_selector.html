@@ -1,4 +1,4 @@
-<div class="bg-neutral-main border rounded-b-3xl items-center p-4">
+<div class="bg-neutral-main border rounded-b-3xl items-center p-4 gap-4">
     {% for color in tag_colors %}
         {% if color == selected %}
             {% include "components/radio.html" with name=name value=color color=color is_checked=True %}

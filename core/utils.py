@@ -1,10 +1,25 @@
 import core.traduccion as trad
 import re
 
-def sort_key(dictionary, key):
-    # Extract the numeric part of the string from the specified field
-    match = re.search(r'(\d+)', dictionary[key])
-    return int(match.group(1))
+
+# Para ordenar considerando números 1, 2, 10, A, B, etc.
+def custom_key(value):
+    # Match "Text", "Text 1", "Text A", etc.
+    match = re.match(r"^(.*?)(?:\s+(.*))?$", value)
+    base = match.group(1)
+    suffix = match.group(2)
+
+    if suffix is None:
+        # "Text" → goes first
+        return (0, 0, "")
+
+    # Check if suffix is a number
+    if suffix.isdigit():
+        return (1, int(suffix), "")
+
+    # Non-numeric suffix → goes last, sorted alphabetically
+    return (2, 0, suffix)
+
 
 def max_page_possible(max_value):
     max_page = max_value // 10

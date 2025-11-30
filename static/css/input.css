@@ -29,7 +29,7 @@ h4 {
 }
 
 #title2 {
- @apply text-4xl text-accent-main font-extrabold;
+ @apply text-4xl text-accent-light font-extrabold;
 }
 
 .welcome_bg{
@@ -172,8 +172,8 @@ h4 {
 .tag-Jj{ @apply bg-rainbowJ/20 border-rainbowJ; }
 
 .tag-0{ @apply bg-accent-light/70 border-accent-light underline font-semibold; }
-.tag-z{ @apply bg-accent-dark/40 border-accent-dark font-semibold; }
-.tag-zz{ @apply bg-black border-white; }
+.tag-z{ @apply bg-accent-dark/50 border-accent-dark font-semibold; }
+.tag-zz{ @apply bg-black border-white/20; }
 
 /* solo con grupos */
 .tag-group{ @apply rounded-none rounded-tr-xl rounded-bl-xl bg-neutral-secondary/20 border-neutral-secondary; }
@@ -214,51 +214,51 @@ h4 {
 .radio-JJ{ @apply border-rainbowJ bg-rainbowJ/50 hover:bg-rainbowJ;}
 .radio-Jj{ @apply border-rainbowJ bg-rainbowJ/20 hover:bg-rainbowJ;}
 .radio-0{ @apply border-accent-light bg-accent-light/70 hover:bg-accent-light;}
-.radio-z{ @apply border-accent-dark bg-accent-dark/70 hover:bg-accent-dark;}
-.radio-zz{ @apply border-white bg-black/70 hover:bg-white;}
+.radio-z{ @apply border-accent-dark bg-accent-dark/50 hover:bg-accent-dark;}
+.radio-zz{ @apply border-white/20 bg-black hover:bg-white/20;}
 
 
 .check-box{
  @apply checkbox rounded-none rounded-l-lg text-textcolor bg-neutral-dark border-neutral-light border-2;
  @apply hover:bg-neutral-main hover:shadow-sm;
- @apply checked:bg-accent-main;
+ @apply checked:bg-accent-main checked:border-accent-light;
  @apply hover:checked:bg-accent-dark;
 }
 
-.check-box-A { @apply checked:bg-rainbowA/70 hover:checked:bg-rainbowA border-rainbowA; }
-.check-box-AA { @apply checked:bg-rainbowA/50 hover:checked:bg-rainbowA border-rainbowA; }
-.check-box-Aa { @apply checked:bg-rainbowA/20 hover:checked:bg-rainbowA border-rainbowA; }
-.check-box-B { @apply checked:bg-rainbowB/70 hover:checked:bg-rainbowB border-rainbowB; }
-.check-box-BB { @apply checked:bg-rainbowB/50 hover:checked:bg-rainbowB border-rainbowB; }
-.check-box-Bb { @apply checked:bg-rainbowB/20 hover:checked:bg-rainbowB border-rainbowB; }
-.check-box-C { @apply checked:bg-rainbowC/70 hover:checked:bg-rainbowC border-rainbowC; }
-.check-box-CC { @apply checked:bg-rainbowC/50 hover:checked:bg-rainbowC border-rainbowC; }
-.check-box-Cc { @apply checked:bg-rainbowC/20 hover:checked:bg-rainbowC border-rainbowC; }
-.check-box-D { @apply checked:bg-rainbowD/70 hover:checked:bg-rainbowD border-rainbowD; }
-.check-box-DD { @apply checked:bg-rainbowD/50 hover:checked:bg-rainbowD border-rainbowD; }
-.check-box-Dd { @apply checked:bg-rainbowD/20 hover:checked:bg-rainbowD border-rainbowD; }
-.check-box-E { @apply checked:bg-rainbowE/70 hover:checked:bg-rainbowE border-rainbowE; }
-.check-box-EE { @apply checked:bg-rainbowE/50 hover:checked:bg-rainbowE border-rainbowE; }
-.check-box-Ee { @apply checked:bg-rainbowE/20 hover:checked:bg-rainbowE border-rainbowE; }
-.check-box-F { @apply checked:bg-rainbowF/70 hover:checked:bg-rainbowF border-rainbowF; }
-.check-box-FF { @apply checked:bg-rainbowF/50 hover:checked:bg-rainbowF border-rainbowF; }
-.check-box-Ff { @apply checked:bg-rainbowF/20 hover:checked:bg-rainbowF border-rainbowF; }
-.check-box-G { @apply checked:bg-rainbowG/70 hover:checked:bg-rainbowG border-rainbowG; }
-.check-box-GG { @apply checked:bg-rainbowG/50 hover:checked:bg-rainbowG border-rainbowG; }
-.check-box-Gg { @apply checked:bg-rainbowG/20 hover:checked:bg-rainbowG border-rainbowG; }
-.check-box-H { @apply checked:bg-rainbowH/70 hover:checked:bg-rainbowH border-rainbowH; }
-.check-box-HH { @apply checked:bg-rainbowH/50 hover:checked:bg-rainbowH border-rainbowH; }
-.check-box-Hh { @apply checked:bg-rainbowH/20 hover:checked:bg-rainbowH border-rainbowH; }
-.check-box-I { @apply checked:bg-rainbowI/70 hover:checked:bg-rainbowI border-rainbowI; }
-.check-box-II { @apply checked:bg-rainbowI/50 hover:checked:bg-rainbowI border-rainbowI; }
-.check-box-Ii { @apply checked:bg-rainbowI/20 hover:checked:bg-rainbowI border-rainbowI; }
-.check-box-J { @apply checked:bg-rainbowJ/70 hover:checked:bg-rainbowJ border-rainbowJ; }
-.check-box-JJ { @apply checked:bg-rainbowJ/50 hover:checked:bg-rainbowJ border-rainbowJ; }
-.check-box-Jj { @apply checked:bg-rainbowJ/20 hover:checked:bg-rainbowJ border-rainbowJ; }
+.check-box-A { @apply checked:bg-rainbowA/70 hover:checked:bg-rainbowA border-rainbowA checked:border-rainbowA; }
+.check-box-AA { @apply checked:bg-rainbowA/50 hover:checked:bg-rainbowA border-rainbowA checked:border-rainbowA; }
+.check-box-Aa { @apply checked:bg-rainbowA/20 hover:checked:bg-rainbowA border-rainbowA checked:border-rainbowA; }
+.check-box-B { @apply checked:bg-rainbowB/70 hover:checked:bg-rainbowB border-rainbowB checked:border-rainbowB; }
+.check-box-BB { @apply checked:bg-rainbowB/50 hover:checked:bg-rainbowB border-rainbowB checked:border-rainbowB; }
+.check-box-Bb { @apply checked:bg-rainbowB/20 hover:checked:bg-rainbowB border-rainbowB checked:border-rainbowB; }
+.check-box-C { @apply checked:bg-rainbowC/70 hover:checked:bg-rainbowC border-rainbowC checked:border-rainbowC; }
+.check-box-CC { @apply checked:bg-rainbowC/50 hover:checked:bg-rainbowC border-rainbowC checked:border-rainbowC; }
+.check-box-Cc { @apply checked:bg-rainbowC/20 hover:checked:bg-rainbowC border-rainbowC checked:border-rainbowC; }
+.check-box-D { @apply checked:bg-rainbowD/70 hover:checked:bg-rainbowD border-rainbowD checked:border-rainbowD; }
+.check-box-DD { @apply checked:bg-rainbowD/50 hover:checked:bg-rainbowD border-rainbowD checked:border-rainbowD; }
+.check-box-Dd { @apply checked:bg-rainbowD/20 hover:checked:bg-rainbowD border-rainbowD checked:border-rainbowD; }
+.check-box-E { @apply checked:bg-rainbowE/70 hover:checked:bg-rainbowE border-rainbowE checked:border-rainbowE; }
+.check-box-EE { @apply checked:bg-rainbowE/50 hover:checked:bg-rainbowE border-rainbowE checked:border-rainbowE; }
+.check-box-Ee { @apply checked:bg-rainbowE/20 hover:checked:bg-rainbowE border-rainbowE checked:border-rainbowE; }
+.check-box-F { @apply checked:bg-rainbowF/70 hover:checked:bg-rainbowF border-rainbowF checked:border-rainbowF; }
+.check-box-FF { @apply checked:bg-rainbowF/50 hover:checked:bg-rainbowF border-rainbowF checked:border-rainbowF; }
+.check-box-Ff { @apply checked:bg-rainbowF/20 hover:checked:bg-rainbowF border-rainbowF checked:border-rainbowF; }
+.check-box-G { @apply checked:bg-rainbowG/70 hover:checked:bg-rainbowG border-rainbowG checked:border-rainbowG; }
+.check-box-GG { @apply checked:bg-rainbowG/50 hover:checked:bg-rainbowG border-rainbowG checked:border-rainbowG; }
+.check-box-Gg { @apply checked:bg-rainbowG/20 hover:checked:bg-rainbowG border-rainbowG checked:border-rainbowG; }
+.check-box-H { @apply checked:bg-rainbowH/70 hover:checked:bg-rainbowH border-rainbowH checked:border-rainbowH; }
+.check-box-HH { @apply checked:bg-rainbowH/50 hover:checked:bg-rainbowH border-rainbowH checked:border-rainbowH; }
+.check-box-Hh { @apply checked:bg-rainbowH/20 hover:checked:bg-rainbowH border-rainbowH checked:border-rainbowH; }
+.check-box-I { @apply checked:bg-rainbowI/70 hover:checked:bg-rainbowI border-rainbowI checked:border-rainbowI; }
+.check-box-II { @apply checked:bg-rainbowI/50 hover:checked:bg-rainbowI border-rainbowI checked:border-rainbowI; }
+.check-box-Ii { @apply checked:bg-rainbowI/20 hover:checked:bg-rainbowI border-rainbowI checked:border-rainbowI; }
+.check-box-J { @apply checked:bg-rainbowJ/70 hover:checked:bg-rainbowJ border-rainbowJ checked:border-rainbowJ; }
+.check-box-JJ { @apply checked:bg-rainbowJ/50 hover:checked:bg-rainbowJ border-rainbowJ checked:border-rainbowJ; }
+.check-box-Jj { @apply checked:bg-rainbowJ/20 hover:checked:bg-rainbowJ border-rainbowJ checked:border-rainbowJ; }
 
-.check-box-0 { @apply checked:bg-accent-light/70 hover:checked:bg-accent-light border-accent-light; }
-.check-box-z { @apply checked:bg-accent-dark/50 hover:checked:bg-accent-dark border-accent-dark; }
-.check-box-zz { @apply checked:bg-black hover:checked:bg-white/80 border-white; }
+.check-box-0 { @apply checked:bg-accent-light/70 hover:checked:bg-accent-light border-accent-light checked:border-accent-light; }
+.check-box-z { @apply checked:bg-accent-dark/50 hover:checked:bg-accent-dark border-accent-dark checked:border-accent-dark; }
+.check-box-zz { @apply checked:bg-black hover:checked:bg-white/20 border-white/20 checked:border-white/20; }
 
 .progreso {
  @apply progress w-full bg-neutral-main text-accent-main ;

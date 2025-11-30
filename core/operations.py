@@ -90,6 +90,12 @@ def agregar_a_palabra(request, tipo):
         input_value = request.POST.get("agregar_grupo")
         grupos_dict = request.session.get("new_grupos", {})
         grupo_id = grupos_dict[input_value]
+        count = GrupoPalabra.objects.filter(grupo_id=grupo_id).count()
+        if count >= 1000:
+            messages.warning(
+                request, "No se puede agregar más palabras a este grupo (límite 500)"
+            )
+            return redirect(request.META.get("HTTP_REFERER", "/"))
         GrupoPalabra.objects.create(grupo_id=grupo_id, palabra=palabra_obj)
         messages.success(request, f"Se agregó palabra a grupo exitosamente")
     else:
@@ -220,6 +226,5 @@ def get_user_groups_list(usuario):
 
         grupos.append(grupo_dict)
 
-    sorted_groups = sorted(grupos, key=lambda group: ut.sort_key(group, "grupo"))
-
+    sorted_groups = sorted(grupos, key=lambda group: ut.custom_key(group["grupo"]))
     return sorted_groups

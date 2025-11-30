@@ -7,7 +7,7 @@ from django.contrib import messages
 
 from dictionary.models import Palabra, Significado, Lectura, Nota
 from progress.models import UsuarioPalabra
-from groups.models import Grupo
+from groups.models import Grupo, GrupoPalabra
 from tags.models import Etiqueta, PalabraEtiqueta
 
 from core.operations import crear_lectura, crear_significado
@@ -78,11 +78,13 @@ def crear_palabra(request):
     UsuarioPalabra.objects.create(usuario=user, palabra=palabra_obj)
     crear_significado(significado_value, palabra_obj, user)
     crear_lectura(lectura_value, palabra_obj, user)
+
     if is_kanji:
         kanji_tag = Etiqueta.objects.filter(etiqueta="Kanji").first()
         PalabraEtiqueta.objects.create(
             palabra=palabra_obj, etiqueta=kanji_tag, usuario=user
         )
+
     request.session["palabra_actual"] = palabra_obj.id
     request.session["ajustes_palabras"] = ajustes_palabras
     messages.success(request, "Palabra creada exitosamente")
