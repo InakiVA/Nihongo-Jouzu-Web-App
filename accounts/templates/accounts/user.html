@@ -1,36 +1,72 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="flex flex-col flex-auto px-4 gap-4 pb-4">
+<div class="flex flex-col flex-auto px-4">
+  <div class="flex flex-row w-full justify-between items-start">
     <h4 class="text-start">Usuario: {{ usuario.username }}</h4>
+    <button type="button" class="button-big-alert" data-open="#logout_modal">
+      {% include "components/icons/end.html" %} Cerrar Sesión
+    </button>
 
-      <button id="theme-toggle" class="button-secondary">
-        Cambiar Tema
+    <!-- Logout Modal -->
+    <dialog id="logout_modal" class="modal">
+        <div class="modal-box space-y-4">
+          <div class="flex flex-row-reverse">
+            <button type="button" class="button-exit-cross" data-close="#logout_modal">
+              {% include "components/icons/cross.html" %}
+            </button>   
+          </div>
+          <div class="gap-10 p-4 flex flex-auto flex-col items-center text-center">
+            <h4>¿Deseas cerrar sesión?</h4>
+            <div class="flex flex-col justify-between gap-4">              
+              {% include "components/button.html" with url=logout_url text="Cerrar Sesión" icon="components/icons/end.html" extra_classes="button-big-alert" %}
+              <button type="button" class="btn button-secondary" data-close="#logout_modal">
+                  {% include "components/icons/cross.html" %} Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
+  </div>
+
+  <div class="flex flex-col gap-6">
+    <!-- Theme Change Button -->
+    <div>
+      <button type="button" class="button-big" data-open="#change_theme_modal">
+        {% include "components/icons/paintbrush.html" %} Cambiar Tema: {{ current_theme }}
       </button>
+    </div>
 
-      <script>
-        const toggleBtn = document.getElementById("theme-toggle");
+    <!-- Theme Modal -->
+    <dialog id="change_theme_modal" class="modal">
+      <div class="modal-box space-y-4">
+        <div class="flex flex-row justify-between items-center">
+          <h2>Cambiar Tema</h2>
+          <button type="button" class="button-exit-cross" data-close="#change_theme_modal">
+            {% include "components/icons/cross.html" %}
+          </button>
+        </div>
 
-        toggleBtn?.addEventListener("click", () => {
-          const root = document.documentElement;
+        <div class="flex flex-auto flex-col gap-2">
+          {% for theme in themes %}
+            <form method="post" action="{% url 'cambiar_tema' %}" class="flex">
+              {% csrf_token %}
+              <input type="hidden" name="theme" value="{{ theme }}">
+              <button class="button-secondary flex flex-auto">{{ theme }}</button>
+            </form>                      
+          {% endfor %}
+        </div>
+      </div>
+    </dialog>
 
-          const current = root.getAttribute("data-theme");
-          const next = current === "ben" ? "evangelion" : "ben";
-
-          root.setAttribute("data-theme", next);
-          localStorage.setItem("theme", next);
-        });
-
-        // Al cargar, aplicar el tema guardado (si existe)
-        const savedTheme = localStorage.getItem("theme");
-        if (savedTheme) {
-          document.documentElement.setAttribute("data-theme", savedTheme);
-        }
-      </script>
+    <h2>Cambiar información de la cuenta</h2>
 
     <!-- Username Change Button -->
     <div>
-      <button type="button" class="button-big" data-open="#change_username_modal">
-        {% include "components/icons/pencil.html" %} Cambiar Nombre de Usuario
+      <button type="button" class="button-neutral" data-open="#change_username_modal">
+        {% include "components/icons/pencil.html" %} Nombre de Usuario
       </button>
     </div>
     
@@ -39,7 +75,7 @@
       <div class="modal-box space-y-4">
         <div class="flex flex-row justify-between items-center">
           <h2>Cambiar Nombre de Usuario</h2>
-          <button type="button" class="button-icon-only" data-close="#change_username_modal">
+          <button type="button" class="button-exit-cross" data-close="#change_username_modal">
             {% include "components/icons/cross.html" %}
           </button>
         </div>
@@ -47,14 +83,14 @@
         <form method="post" class="gap-4 p-4 flex flex-col" id="username-change-form">
             {% csrf_token %}
             <div class="flex flex-col gap-1">
-            <label for="{{ username_form.username.id_for_label }}" class="font-semibold">Nuevo nombre de usuario</label>
-            {{ username_form.username }}
-            {% for error in username_form.username.errors %}
-                <p class="text-myalert text-sm">{{ error }}</p>
-            {% endfor %}
-        </div>
-            <button type="submit" name="username_submit" class="button-big">
-                {% include "components/icons/check.html" %} Cambiar Nombre de Usuario
+              <label for="{{ username_form.username.id_for_label }}" class="font-semibold">Nuevo nombre de usuario</label>
+              {{ username_form.username }}
+              {% for error in username_form.username.errors %}
+                  <p class="text-myalert text-sm">{{ error }}</p>
+              {% endfor %}
+            </div>
+            <button type="submit" name="username_submit" class="button-main">
+              {% include "components/icons/check.html" %} Cambiar Nombre de Usuario
             </button>
         </form>
       </div>
@@ -62,8 +98,8 @@
 
     <!-- Password Change Button -->
     <div>
-      <button type="button" class="button-big" data-open="#change_password_modal">
-        {% include "components/icons/lock.html" %} Cambiar Contraseña
+      <button type="button" class="button-neutral" data-open="#change_password_modal">
+        {% include "components/icons/lock.html" %} Contraseña
       </button>    
     </div>
 
@@ -72,7 +108,7 @@
       <div class="modal-box space-y-4">
         <div class="flex flex-row justify-between items-center">
           <h2>Cambiar Contraseña</h2>
-          <button type="button" class="button-icon-only" data-close="#change_password_modal">
+          <button type="button" class="button-exit-cross" data-close="#change_password_modal">
             {% include "components/icons/cross.html" %}
           </button>
         </div>
@@ -108,36 +144,12 @@
             {% endfor %}
           </div>
 
-          <button type="submit" name="password_submit" class="button-big">
+          <button type="submit" name="password_submit" class="button-main">
             {% include "components/icons/check.html" %} Cambiar Contraseña
           </button>
         </form>
       </div>
     </dialog>
-
-    <!-- Logout Button -->
-    <div>
-      <button type="button" class="button-big-alert" data-open="#logout_modal">
-        {% include "components/icons/end.html" %} Cerrar Sesión
-      </button>
-    </div>
-
-    <!-- Logout Modal -->
-    <dialog id="logout_modal" class="modal">
-        <div class="modal-box space-y-10 flex flex-col justify-between items-center p-10">
-            <h4>¿Deseas cerrar sesión?</h4>
-            <h2>Todos tus cambios no guardados se perderán</h2>
-            <div class="flex justify-between gap-4">
-            <button type="button" class="btn button-secondary" data-close="#logout_modal">
-                {% include "components/icons/cross.html" %} Cancelar
-            </button>
-            {% include "components/button.html" with url=logout_url text="Cerrar Sesión" icon="components/icons/end.html" extra_classes="button-alert" %}
-            </div>
-        </div>
-        <form method="dialog" class="modal-backdrop">
-            <button>close</button>
-        </form>
-    </dialog>
-
+  </div>
 </div>
 {% endblock %}

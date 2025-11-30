@@ -54,6 +54,18 @@ class UserView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        themes = sorted(
+            [
+                "Jouzu",
+                "Marinate",
+                "Tronology",
+                "Space Cowboy",
+                "Green Tea",
+                "Cruel Angel",
+            ]
+        )
+        context["themes"] = themes
+        context["current_theme"] = self.request.user.perfil.tema
         context["usuario"] = self.request.user
         context["logout_url"] = reverse("logout")
         context["username_form"] = CustomUsernameChangeForm(instance=self.request.user)

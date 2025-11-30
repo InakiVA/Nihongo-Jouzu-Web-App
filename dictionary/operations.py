@@ -184,9 +184,7 @@ def eliminar_palabra_atributos(request, atributo):
     palabra_id = request.session.get("palabra_actual", None)
     palabra_obj = get_object_or_404(Palabra, id=palabra_id)
     user = request.user
-    if not palabra_obj or palabra_obj.usuario != user:
-        return redirect(request.META.get("HTTP_REFERER", "/"))
-    if atributo == "palabra":
+    if atributo == "palabra" and palabra_obj.usuario == user:
         palabra_obj.delete()
         messages.success(request, "Palabra eliminada exitosamente")
         return redirect("palabras")

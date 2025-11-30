@@ -12,8 +12,7 @@
         </div>
     </div>
 
-    <div class="flex flex-auto gap-4 {% if is_mobile %} flex-col {% else %} flex-row {% endif %}">
-                
+    <div class="flex flex-auto gap-4 {% if is_mobile %} flex-col {% else %} flex-row {% endif %}">                
         <div class="flex flex-auto min-w-1/3 px-4 h-full max-h-[75vh] overflow-auto">
             <ul class="list element_list py-2 w-auto flex flex-auto flex-col">  
                 <div class="flex flex-row items-start px-4 pb-4 pt-2 border-b border-neutral-light text-center justify-between gap-4">
@@ -33,17 +32,18 @@
                     {% endfor %}  
                     </li>
                 </div>
-            </ul>
-            
+            </ul>            
         </div>
+
         <div class="divider before:bg-neutral-main after:bg-neutral-main {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %}"></div>    
+
         <div class="flex flex-auto flex-col gap-4 min-w-1/4 px-2">
             <h2>Filtros de búsqueda de grupos</h2>       
             <div>
             {% include "components/input.html" with icon="components/icons/search.html" name="buscar_grupo" url=request.path method="get" type="search" value=buscar_grupo_input placeholder="Buscar grupo:"%}
             </div>   
             <div>
-                <legend class="fieldset-legend">Filtros de grupos</legend>
+                <label class="font-semibold">Filtros de grupos</label>
                 <div class="flex flex-row flex-wrap overflow-auto whitespace-nowrap gap-2">                
                     {% for filtro in filtros_grupos %}
                     {% include "components/filter_button.html" with text=filtro.text id=filtro.id is_active=filtro.is_active url=filtro.url %}
@@ -51,7 +51,7 @@
                 </div>
             </div>       
             <div>
-                <legend class="fieldset-legend">Orden</legend>
+                <label class="font-semibold">Orden</label>
                 <div class="flex flex-row items-center justify-between space-x-4">
                     {% include "components/select.html" with options=orden_opciones selected=orden_elegido url=select_orden_url%}
                     {% include "components/switch_buttons.html" with checked=on_descendente  url=descendente_url left_icon="components/icons/full_arrow_up.html" right_icon="components/icons/full_arrow_down.html" %}            
@@ -59,14 +59,15 @@
             </div>            
         </div>
 
-        <div class="divider before:bg-neutral-main after:bg-neutral-main {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %}"></div>        
+        <div class="divider before:bg-neutral-main after:bg-neutral-main {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %}"></div>
+
         <div class="flex flex-auto flex-col min-w-1/4 px-4 gap-4">
             <div>
-            <h2>Palabras</h2>
-            <h3>{{cantidad_palabras}} {{texto_palabras}}</h3>
-            </div>
+                <h2>Palabras</h2>
+                <h3>{{cantidad_palabras}} {{texto_palabras}}</h3>
+                </div>
             <div>
-                <legend class="fieldset-legend">Filtros de palabras</legend>
+                <label class="font-semibold">Filtros de palabras</label>
                 <div class="flex flex-row w-auto flex-wrap overflow-auto gap-2 pb-2">
                     {% for filtro in filtros_palabras %}
                         {% if not on_filtros_palabras_exclusivo %}
@@ -78,7 +79,7 @@
                 </div>              
                 {% include "components/switch_buttons.html" with checked=on_filtros_palabras_exclusivo url=filtros_palabras_exclusivo_url left_icon="components/icons/plus_circle.html" right_icon="components/icons/minus_circle.html" left_text="Considerar" right_text="Omitir" left_selected_classes="button-include" right_selected_classes="button-exclude"%}            
                 {% if filtros_palabras_show %}
-                    <legend class="fieldset-legend">Filtros de palabras a pasar</legend>
+                    <label class="font-semibold">Filtros de palabras a pasar</label>
                     {% include "components/switch_buttons.html" with checked=on_filtros_palabras_andor url=filtros_palabras_andor_url left_text="Todos" right_text="Al menos uno" %}                                        
                 {% endif %} 
             </div>                                 
@@ -91,7 +92,7 @@
                     </div>
                     {% if filtros_etiquetas_show %}
                     <div>
-                        <legend class="fieldset-legend pt-0!">Filtros de etiquetas a pasar</legend>
+                        <label class="font-semibold pt-0!">Filtros de etiquetas a pasar</label>
                         {% include "components/switch_buttons.html" with checked=on_filtros_etiquetas_andor url=filtros_etiquetas_andor_url left_text="Todos" right_text="Al menos uno" %}                                        
                     </div>
                     {% endif %}     
@@ -108,14 +109,12 @@
                     </div>
                 </div>  
             </div>  
-            <div class="space-y-4">
-            <legend class="fieldset-legend pt-0!">Preguntas</legend>                         
-            {% include "components/select.html" with options=idioma_preguntas_opciones selected=idioma_preguntas_elegido url=idioma_preguntas_url%}
-            {% include "components/switch.html" with right_text="Orden de preguntas aleatorio" url=aleatorio_url id="aleatorio_id" is_selected=is_aleatorio%}
-            </div>  
-            
+                <div class="space-y-4">
+                <label class="font-semibold pt-0!">Preguntas</label>                         
+                {% include "components/select.html" with options=idioma_preguntas_opciones selected=idioma_preguntas_elegido url=idioma_preguntas_url%}
+                {% include "components/switch.html" with right_text="Orden de preguntas aleatorio" url=aleatorio_url id="aleatorio_id" is_selected=is_aleatorio%}
+            </div>              
         </div>
     </div>    
 </div>
-
 {% endblock %}

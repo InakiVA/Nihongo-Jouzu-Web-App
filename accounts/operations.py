@@ -1,5 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 
 # () password_number se refiere a si es el primero para input o segundo para verificar que sean iguales
@@ -42,3 +45,12 @@ def valid_repeat_password_messages(form):
     if password1 and password2 and password1 != password2:
         raise ValidationError("Las contraseñas nuevas no coinciden.")
     return password2
+
+
+@require_POST
+@login_required
+def cambiar_tema(request):
+    nuevo_tema = request.POST.get("theme")
+    request.user.perfil.tema = nuevo_tema
+    request.user.perfil.save()
+    return redirect(request.META.get("HTTP_REFERER", "/"))

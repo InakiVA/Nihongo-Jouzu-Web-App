@@ -76,6 +76,11 @@ h4 {
  @apply hover:bg-accent-main;
 }
 
+.button-exit-cross{
+ @apply btn btn-ghost btn-circle shadow-none border-none rounded-tr-xl bg-transparent rounded-none p-2;
+ @apply hover:bg-accent-main;
+}
+
 .button-join{
  @apply btn btn-ghost shadow-none bg-neutral-main text-textcolor rounded-none p-2;
  @apply hover:bg-accent-main;

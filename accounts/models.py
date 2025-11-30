@@ -9,6 +9,14 @@ class RolPerfil(models.TextChoices):
     MODERATOR = "moderator", "Moderator"
 
 
+class ThemeChoice(models.TextChoices):
+    JOUZU = "Jouzu", "Jouzu"
+    MARINATE = "Marinate", "Marinate"
+    TECHNO_PUNK = "Techno Punk", "Techno Punk"
+    SPACE_COWBOY = "Space Cowboy", "Space Cowboy"
+    CYBER_CLOCK = "Cyber Clock", "Cyber Clock"
+
+
 class Perfil(models.Model):
     usuario = models.OneToOneField(
         Usuario, on_delete=models.CASCADE, related_name="perfil"
@@ -17,6 +25,11 @@ class Perfil(models.Model):
         max_length=10,
         choices=RolPerfil.choices,
         default=RolPerfil.USER,
+    )
+    tema = models.CharField(
+        max_length=20,
+        choices=ThemeChoice.choices,
+        default=ThemeChoice.JOUZU,
     )
 
     def __str__(self):

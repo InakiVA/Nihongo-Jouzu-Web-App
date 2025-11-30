@@ -1,4 +1,4 @@
-[data-theme='japanese'] {
+[data-theme='Jouzu'] {
     --color-include: #389c3d;
     --color-exclude: #816f82;
 
@@ -16,7 +16,7 @@
     --color-secondary-dark: #5d2a0f;   
 }
 
-[data-theme='evangelion'] {
+[data-theme='Cruel Angel'] {
     --color-include: #20b8c7;
     --color-exclude: #f75b09;
 
@@ -34,7 +34,7 @@
     --color-secondary-dark: #800020;   
 }
 
-[data-theme='aqua'] {
+[data-theme='Marinate'] {
     --color-include: #a02be8;
     --color-exclude: #f75b09;
 
@@ -52,8 +52,8 @@
     --color-secondary-light: #e39bff;
 }
 
-[data-theme='cyber'] {
-      --color-include: #53c13a;
+[data-theme='Tronology'] {
+    --color-include: #53c13a;
     --color-exclude: #ff3c00;
 
     --color-neutral-light: #bfe7fc;
@@ -70,7 +70,7 @@
     --color-secondary-dark: #7f3402;  
 }
 
-[data-theme='jazz'] {
+[data-theme='Space Cowboy'] {
     --color-include: #4fa77b;
     --color-exclude: #c684fc;
 
@@ -88,7 +88,7 @@
     --color-secondary-dark: #7c182b;
 }
 
-[data-theme='ben'] {
+[data-theme='Green Tea'] {
     --color-include: #46d659;
     --color-exclude: #ff2f4e;
 
