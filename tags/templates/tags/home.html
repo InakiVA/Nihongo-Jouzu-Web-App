@@ -47,6 +47,18 @@
 
   <div class="space-y-4">
     {% for tag in tag_list %}  
+      <dialog id="eliminar_etiqueta_modal_{{ tag.id }}" class="modal">
+          <div class="modal-box space-y-10 flex flex-col justify-between items-center p-10">
+            <h4>¿Deseas eliminar esta etiqueta?</h4>
+            <div class="flex justify-between gap-4">
+            <button type="button" class="btn button-secondary" data-close="#eliminar_etiqueta_modal_{{ tag.id }}">
+              {% include "components/icons/cross.html" %} Cancelar
+            </button>
+              {% include "components/button.html" with name="delete_tag" value=tag.id url=eliminar_etiqueta_url text="Eliminar" icon="components/icons/trash.html" extra_classes="button-alert" %}
+            </div>
+          </div>
+        </dialog>
+
       <div class="collapse border rounded-none rounded-tl-3xl rounded-br-3xl border-neutral-main hover:bg-neutral-main">
         <div class="collapse-title flex flex-row gap-4 justify-between">
           {% include "components/tag.html" with color=tag.color text=tag.etiqueta extra_classes="text-2xl"%}
@@ -70,23 +82,11 @@
               {% include "components/tag_color_selector.html" with name="update_color" value=tag.etiqueta selected=tag.color submit=True%}
             </form>
           </div>
-          <button type="button" class="button-alert" data-open="#eliminar_etiqueta_modal">
+          <button type="button" class="button-alert" data-open="#eliminar_etiqueta_modal_{{ tag.id }}">
             {% include "components/icons/trash.html" %} Eliminar
           </button>
         </div>
       </div>   
-
-      <dialog id="eliminar_etiqueta_modal" class="modal">
-        <div class="modal-box space-y-10 flex flex-col justify-between items-center p-10">
-          <h4>¿Deseas eliminar esta etiqueta?</h4>
-          <div class="flex justify-between gap-4">
-          <button type="button" class="btn button-secondary" data-close="#eliminar_etiqueta_modal">
-            {% include "components/icons/cross.html" %} Cancelar
-          </button>
-            {% include "components/button.html" with name="delete_tag" value=tag.id url=eliminar_etiqueta_url text="Eliminar" icon="components/icons/trash.html" extra_classes="button-alert" %}
-          </div>
-        </div>
-      </dialog>
     {% endfor %}
   </div>
 
