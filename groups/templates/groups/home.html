@@ -21,8 +21,8 @@
         {% csrf_token %}
         <div class="flex flex-auto flex-col gap-2">
             <div class="flex">
-                <legend class="fieldset-legend">Grupo</legend>
-                <legend class="fieldset-legend text-myalert">*</legend>          
+                <label class="font-semibold">Grupo</label>
+                <label class="font-semibold text-myalert">*</label>          
             </div>          
 
             {% include "components/input.html" with placeholder="Tu grupo:" name="grupo_nuevo" value=ajustes_grupos.grupo_valido%}
@@ -30,7 +30,7 @@
         </div>
 
         <div class="flex flex-auto flex-col gap-2">
-            <legend class="fieldset-legend">Descripción</legend>
+            <label class="font-semibold">Descripción</label>
             {% include "components/textarea.html" with placeholder="Su descripción:" name="descripcion_nueva" value=ajustes_grupos.desc_valida%}          
         </div>
 

@@ -23,24 +23,24 @@
         {% csrf_token %}
         <div class="flex flex-auto flex-col gap-2">
           <div class="flex">
-            <legend class="fieldset-legend">Palabra</legend>
-            <legend class="fieldset-legend text-myalert">*</legend>          
+            <label class="font-semibold">Palabra</label>
+            <label class="font-semibold text-myalert">*</label>          
           </div>            
           {% include "components/input.html" with placeholder="Tu palabra:" name="palabra_nueva" value=ajustes_palabras.palabra_valida%}
         </div>
 
         <div class="flex flex-auto flex-col gap-2">
           <div class="flex">
-            <legend class="fieldset-legend">Significado</legend>
-            <legend class="fieldset-legend text-myalert">*</legend>          
+            <label class="font-semibold">Significado</label>
+            <label class="font-semibold text-myalert">*</label>          
           </div>           
           {% include "components/input.html" with placeholder="Su significado:" name="significado_nuevo" value=ajustes_palabras.significado_valido%}
         </div>
 
         <div class="flex flex-auto flex-col gap-2">
           <div class="flex">
-            <legend class="fieldset-legend">Lectura</legend>
-            <legend class="fieldset-legend text-myalert">*</legend>          
+            <label class="font-semibold">Lectura</label>
+            <label class="font-semibold text-myalert">*</label>          
           </div>
           {% include "components/input.html" with placeholder="Su lectura:" name="lectura_nueva" value=ajustes_palabras.lectura_valida%}
         </div>
