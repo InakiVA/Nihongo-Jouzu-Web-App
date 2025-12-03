@@ -50,6 +50,9 @@ class Grupo(models.Model):
             "ultima_modificacion": self.grupo_usuarios.get(
                 usuario=usuario
             ).ultima_modificacion,
+            "by_admin": self.usuario.perfil.rol == "admin",
+            "color": "group",
+            "text": self.grupo,
         }
 
     class Meta:
@@ -57,7 +60,7 @@ class Grupo(models.Model):
 
     def __str__(self):
         return self.grupo
-    
+
     def __lt__(self, other):
         return self.grupo < other.grupo
 

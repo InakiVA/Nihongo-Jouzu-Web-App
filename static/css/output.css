@@ -2822,12 +2822,6 @@
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 2px;
   }
-  .\!border-correct {
-    border-color: var(--color-correct) !important;
-  }
-  .\!border-incorrect {
-    border-color: var(--color-incorrect) !important;
-  }
   .\!border-neutral-secondary {
     border-color: var(--color-neutral-secondary) !important;
   }
@@ -2851,18 +2845,6 @@
   }
   .border-textcolor {
     border-color: var(--color-textcolor);
-  }
-  .\!bg-correct\/50 {
-    background-color: color-mix(in srgb, #389c3d 50%, transparent) !important;
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-correct) 50%, transparent) !important;
-    }
-  }
-  .\!bg-incorrect\/50 {
-    background-color: color-mix(in srgb, #bd0f0f 50%, transparent) !important;
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-incorrect) 50%, transparent) !important;
-    }
   }
   .\!bg-neutral-main {
     background-color: var(--color-neutral-main) !important;
@@ -3027,10 +3009,6 @@
   .\!font-bold {
     --tw-font-weight: var(--font-weight-bold) !important;
     font-weight: var(--font-weight-bold) !important;
-  }
-  .\!font-semibold {
-    --tw-font-weight: var(--font-weight-semibold) !important;
-    font-weight: var(--font-weight-semibold) !important;
   }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
@@ -6570,9 +6548,8 @@ h4 {
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-rainbowA) 70%, transparent);
   }
-  --tw-font-weight: var(--font-weight-semibold);
-  font-weight: var(--font-weight-semibold);
-  text-decoration-line: underline;
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
 }
 .tag-AA {
   border-color: var(--color-rainbowA);
@@ -6596,9 +6573,8 @@ h4 {
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-rainbowB) 70%, transparent);
   }
-  --tw-font-weight: var(--font-weight-semibold);
-  font-weight: var(--font-weight-semibold);
-  text-decoration-line: underline;
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
 }
 .tag-BB {
   border-color: var(--color-rainbowB);
@@ -6622,9 +6598,8 @@ h4 {
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-rainbowC) 70%, transparent);
   }
-  --tw-font-weight: var(--font-weight-semibold);
-  font-weight: var(--font-weight-semibold);
-  text-decoration-line: underline;
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
 }
 .tag-CC {
   border-color: var(--color-rainbowC);
@@ -6648,9 +6623,8 @@ h4 {
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-rainbowD) 70%, transparent);
   }
-  --tw-font-weight: var(--font-weight-semibold);
-  font-weight: var(--font-weight-semibold);
-  text-decoration-line: underline;
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
 }
 .tag-DD {
   border-color: var(--color-rainbowD);
@@ -6674,9 +6648,8 @@ h4 {
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-rainbowE) 70%, transparent);
   }
-  --tw-font-weight: var(--font-weight-semibold);
-  font-weight: var(--font-weight-semibold);
-  text-decoration-line: underline;
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
 }
 .tag-EE {
   border-color: var(--color-rainbowE);
@@ -6700,9 +6673,8 @@ h4 {
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-rainbowF) 70%, transparent);
   }
-  --tw-font-weight: var(--font-weight-semibold);
-  font-weight: var(--font-weight-semibold);
-  text-decoration-line: underline;
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
 }
 .tag-FF {
   border-color: var(--color-rainbowF);
@@ -6726,9 +6698,8 @@ h4 {
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-rainbowG) 70%, transparent);
   }
-  --tw-font-weight: var(--font-weight-semibold);
-  font-weight: var(--font-weight-semibold);
-  text-decoration-line: underline;
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
 }
 .tag-GG {
   border-color: var(--color-rainbowG);
@@ -6752,9 +6723,8 @@ h4 {
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-rainbowH) 70%, transparent);
   }
-  --tw-font-weight: var(--font-weight-semibold);
-  font-weight: var(--font-weight-semibold);
-  text-decoration-line: underline;
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
 }
 .tag-HH {
   border-color: var(--color-rainbowH);
@@ -6778,9 +6748,8 @@ h4 {
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-rainbowI) 70%, transparent);
   }
-  --tw-font-weight: var(--font-weight-semibold);
-  font-weight: var(--font-weight-semibold);
-  text-decoration-line: underline;
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
 }
 .tag-II {
   border-color: var(--color-rainbowI);
@@ -6804,9 +6773,8 @@ h4 {
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-rainbowJ) 70%, transparent);
   }
-  --tw-font-weight: var(--font-weight-semibold);
-  font-weight: var(--font-weight-semibold);
-  text-decoration-line: underline;
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
 }
 .tag-JJ {
   border-color: var(--color-rainbowJ);
@@ -6830,9 +6798,8 @@ h4 {
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-accent-light) 70%, transparent);
   }
-  --tw-font-weight: var(--font-weight-semibold);
-  font-weight: var(--font-weight-semibold);
-  text-decoration-line: underline;
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
 }
 .tag-z {
   border-color: var(--color-accent-dark);
@@ -6859,6 +6826,28 @@ h4 {
   @supports (color: color-mix(in lab, red, red)) {
     background-color: color-mix(in oklab, var(--color-neutral-secondary) 20%, transparent);
   }
+}
+.tag-correct {
+  border-color: var(--color-correct);
+  background-color: color-mix(in srgb, #389c3d 50%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-correct) 50%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  font-style: italic;
+}
+.tag-incorrect {
+  border-color: var(--color-incorrect);
+  background-color: color-mix(in srgb, #bd0f0f 50%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-color: color-mix(in oklab, var(--color-incorrect) 50%, transparent);
+  }
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  font-style: italic;
 }
 .radio {
   @layer daisyui.component {

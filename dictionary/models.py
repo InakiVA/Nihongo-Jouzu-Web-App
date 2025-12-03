@@ -89,7 +89,7 @@ class Palabra(models.Model):
 
     def significados_list(self, usuario):
         significados = self.significados_objetos(usuario)
-        return sorted([str(s.significado) for s in significados])
+        return sorted(list(set([str(s.significado) for s in significados])))
 
     def significados_str(self, usuario):
         significados = self.significados_list(usuario)
@@ -105,7 +105,7 @@ class Palabra(models.Model):
 
     def lecturas_list(self, usuario):
         lecturas = self.lecturas_objetos(usuario)
-        return sorted([str(l.lectura) for l in lecturas])
+        return sorted(list(set([str(l.lectura) for l in lecturas])))
 
     def lecturas_str(self, usuario):
         lecturas = self.lecturas_list(usuario)
@@ -119,7 +119,7 @@ class Palabra(models.Model):
 
     def notas_list(self, usuario):
         notas = self.notas_objetos(usuario)
-        return sorted([str(n.nota) for n in notas])
+        return sorted(list(set([str(n.nota) for n in notas])))
 
     def notas_str(self, usuario):
         notas = self.notas_list(usuario)
@@ -148,15 +148,16 @@ class Palabra(models.Model):
         return sorted(etiquetas, key=lambda x: (x.lower()))
 
     def grupos_objetos(self, usuario):
-        return self.palabra_grupos.filter(
+        palabra_grupos = self.palabra_grupos.filter(
             Q(grupo__usuario=usuario) | Q(grupo__usuario__perfil__rol="admin")
         )
+        return [pg.grupo for pg in palabra_grupos]
 
     def grupos_list(self, usuario):
-        grupos = [str(g.grupo) for g in self.grupos_objetos(usuario)]
+        grupos = [g.grupo_dict(usuario) for g in self.grupos_objetos(usuario)]
         return sorted(
             grupos,
-            key=lambda group: ut.custom_key(group),
+            key=lambda group: ut.custom_key(group["grupo"]),
         )
 
     def grupos_str(self, usuario):

@@ -417,6 +417,17 @@ class SesionView(LoginRequiredMixin, TemplateView):
         context["agregar_nota"] = reverse_lazy("agregar_nota")
         context["agregar_etiqueta"] = reverse_lazy("agregar_etiqueta")
 
+        context["correct_tag"] = {
+            "text": "Correcta",
+            "icon": "components/icons/check_mini.html",
+            "color": "correct",
+        }
+        context["incorrect_tag"] = {
+            "text": "Incorrecta",
+            "icon": "components/icons/cross_mini.html",
+            "color": "incorrect",
+        }
+
         return context
 
     def is_mobile(request):

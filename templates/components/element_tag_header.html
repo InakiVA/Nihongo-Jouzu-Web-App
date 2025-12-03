@@ -1,8 +1,8 @@
 <div class="flex items-center gap-4 divider divider-start before:bg-neutral-main after:bg-neutral-main overflow-x-clip">  
     <h2>{{header}}</h2>              
     <li class="flex flex-row flex-auto gap-2 font-light overflow-clip whitespace-nowrap">
-        {% for tag in elements %}
-        {% include "components/tag.html" with text=tag.etiqueta color=tag.color %}         
+        {% for element in elements %}
+        {% include "components/tag.html" with element=element %}         
         {% endfor %}
     </li>                         
 </div>

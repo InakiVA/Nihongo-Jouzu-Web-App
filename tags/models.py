@@ -74,6 +74,8 @@ class Etiqueta(models.Model):
             "creador": self.usuario,
             "fecha_creacion": self.fecha_creacion,
             "ultima_modificacion": self.ultima_modificacion,
+            "by_admin": self.usuario.perfil.rol == "admin",
+            "text": self.etiqueta,
         }
 
     def __str__(self):

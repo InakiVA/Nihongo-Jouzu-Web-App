@@ -1,1 +1,6 @@
-<div class="tag tag-{{color|default:'neutral'}} {{extra_classes}}">{{text}}</div>
+<div class="flex items-center gap-2 tag tag-{{element.color|default:'neutral'}} {% if element.by_admin %}underline!{% endif %} {{extra_classes}}">
+    {% if element.icon %}
+        {% include element.icon %}
+    {% endif %}
+    {{element.text}}
+</div>
