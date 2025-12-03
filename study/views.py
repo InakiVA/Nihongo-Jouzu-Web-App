@@ -11,6 +11,7 @@ from dictionary.models import Palabra
 
 import study.operations as op
 import core.operations as c_op
+import core.utils as ut
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -64,7 +65,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         )  # search
         context["buscar_grupo_input"] = buscar_grupo_input
         if buscar_grupo_input:
-            grupos = [g for g in grupos if buscar_grupo_input in g["text"].lower()]
+            grupos = [g for g in grupos if buscar_grupo_input in g["grupo"].lower()]
 
         grupos_elegidos = [g for g in grupos if g["estudiando"]]
         if ajustes.get("Creados por mí (grupos)"):
@@ -322,10 +323,12 @@ class SesionView(LoginRequiredMixin, TemplateView):
         palabra_obj = get_object_or_404(Palabra, id=palabra_id)
         palabra_dict = palabra_obj.palabra_dict(usuario)
         palabra_dict["kanji_data"] = False
+        palabra_dict["kana"] = False
         for etiqueta in palabra_dict["etiquetas_colores"]:
             if etiqueta["etiqueta"] == "Kanji":
                 palabra_dict["kanji_data"] = etiqueta
-                break
+            elif etiqueta["etiqueta"] == "Kana":
+                palabra_dict["kana"] = etiqueta
         pregunta_lenguaje = self.request.session.get(
             "idioma_preguntas_elegido", "Original"
         )
@@ -369,28 +372,32 @@ class SesionView(LoginRequiredMixin, TemplateView):
             palabras_relacionadas_dict_list.append(palabra.palabra_dict(usuario))
         context["palabras_relacionadas"] = palabras_relacionadas_dict_list
 
-        grupos_usuario = c_op.get_user_groups_list(usuario)
-        grupos_de_palabra_de_usuario = set(
-            Grupo.objects.filter(usuario=usuario, grupo_palabras__palabra=palabra_obj)
+        grupos_usuario = Grupo.objects.filter(usuario=usuario)
+        grupos_de_usuario_con_palabra = sorted(
+            grupos_usuario.filter(grupo_palabras__palabra=palabra_obj),
+            key=lambda group: ut.custom_key(group.grupo),
+        )
+        grupos_de_usuario_sin_palabra = sorted(
+            grupos_usuario.exclude(grupo_palabras__palabra=palabra_obj),
+            key=lambda group: ut.custom_key(group.grupo),
         )
 
         grupos_checks = []
         new_grupos_list = {}
         new_grupos_str = []
-        for grupo in grupos_usuario:
-            if grupo["grupo"] in grupos_de_palabra_de_usuario:
-                grupos_checks.append(
-                    {
-                        "id": grupo["id"],
-                        "text": grupo["grupo"],
-                        "is_selected": True,
-                    }
-                )
-            else:
-                new_grupos_list[grupo["grupo"]] = grupo["id"]
-                new_grupos_str.append(grupo["grupo"])
+        for grupo in grupos_de_usuario_con_palabra:
+            grupos_checks.append(
+                {
+                    "id": grupo.id,
+                    "text": grupo.grupo,
+                    "is_selected": True,
+                }
+            )
+        for grupo in grupos_de_usuario_sin_palabra:
+            new_grupos_list[grupo.grupo] = grupo.id
+            new_grupos_str.append(grupo.grupo)
 
-        context["nuevos_grupos"] = new_grupos_str
+        context["nuevos_grupos"] = grupos_de_usuario_sin_palabra
         self.request.session["new_grupos"] = new_grupos_list
         context["agregar_grupo"] = reverse_lazy("agregar_grupo")
         context["grupos_checks"] = grupos_checks

@@ -153,7 +153,11 @@ class Palabra(models.Model):
         )
 
     def grupos_list(self, usuario):
-        return sorted([str(g.grupo) for g in self.grupos_objetos(usuario)])
+        grupos = [str(g.grupo) for g in self.grupos_objetos(usuario)]
+        return sorted(
+            grupos,
+            key=lambda group: ut.custom_key(group),
+        )
 
     def grupos_str(self, usuario):
         grupos = self.grupos_list(usuario)

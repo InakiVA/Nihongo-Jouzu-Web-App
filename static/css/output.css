@@ -2772,10 +2772,6 @@
     border-top-left-radius: var(--radius-xl);
     border-top-right-radius: var(--radius-xl);
   }
-  .rounded-l-xl {
-    border-top-left-radius: var(--radius-xl);
-    border-bottom-left-radius: var(--radius-xl);
-  }
   .rounded-l-xl\! {
     border-top-left-radius: var(--radius-xl) !important;
     border-bottom-left-radius: var(--radius-xl) !important;
@@ -2788,10 +2784,6 @@
   }
   .rounded-tl-xl\! {
     border-top-left-radius: var(--radius-xl) !important;
-  }
-  .rounded-r-xl {
-    border-top-right-radius: var(--radius-xl);
-    border-bottom-right-radius: var(--radius-xl);
   }
   .rounded-r-xl\! {
     border-top-right-radius: var(--radius-xl) !important;
@@ -2987,6 +2979,10 @@
   .text-3xl {
     font-size: var(--text-3xl);
     line-height: var(--tw-leading, var(--text-3xl--line-height));
+  }
+  .text-3xl\! {
+    font-size: var(--text-3xl) !important;
+    line-height: var(--tw-leading, var(--text-3xl--line-height)) !important;
   }
   .text-4xl {
     font-size: var(--text-4xl);
@@ -3310,7 +3306,7 @@
   --color-secondary-dark: #7c182b;
 }
 [data-theme='Green Tea'] {
-  --color-include: #46d659;
+  --color-include: #20b8c7;
   --color-exclude: #ff2f4e;
   --color-neutral-light: #828282;
   --color-neutral-main: #393939;

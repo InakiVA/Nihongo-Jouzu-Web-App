@@ -13,6 +13,26 @@ from progress.models import UsuarioPalabra
 import core.utils as ut
 
 
+# __ Para hacer métodos que hagan algo específico de una vez
+def run_operation(request):
+    usuario = request.user
+    grupo = Grupo.objects.filter(grupo="Palabras N4").first()
+    palabras = Palabra.objects.filter(
+        Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
+    )
+    palabras = palabras.filter(
+        palabra_etiquetas__etiqueta__etiqueta="JLPT N4"
+    ).distinct()
+    palabras = palabras.filter(
+        Q(palabra_etiquetas__usuario=usuario)
+        | Q(palabra_etiquetas__usuario__perfil__rol="admin")
+    )
+    for palabra in palabras:
+        GrupoPalabra.objects.get_or_create(grupo=grupo, palabra=palabra)
+    messages.success(request, "Operación completada.")
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
 def crear_lectura(input_value, palabra_obj, user):
     lectura = Lectura.objects.create(
         lectura=input_value, palabra=palabra_obj, usuario=user

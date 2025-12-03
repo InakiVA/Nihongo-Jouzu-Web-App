@@ -150,6 +150,9 @@
         </form>
       </div>
     </dialog>
-  </div>
+
+    {% if run_operation %}
+      <a href="{{ operation_url }}" class="button-big">Run Operation</a>
+    {% endif %}
 </div>
 {% endblock %}

@@ -18,9 +18,13 @@
         {% else %}
         <div class="flex flex-1">
             {% if has_button_left %}
-                {% include "components/input.html" with icon=None extra_classes="rounded-none! rounded-tr-2xl!" %}
+            <div class="input rounded-none! rounded-tr-2xl!">
+                <input type="{{ type|default:'text' }}" name="{{ name }}" class="input_text {{ input_classes }}" placeholder="{{ placeholder|default:'Buscar:' }}" value="{{ value|default:'' }}" {% if required %} required {% endif %}/>
+            </div>
             {% else %}
-                {% include "components/input.html" with icon=None extra_classes="rounded-none! rounded-tl-2xl!" %}
+            <div class="input rounded-none! rounded-tl-2xl!">
+                <input type="{{ type|default:'text' }}" name="{{ name }}" class="input_text {{ input_classes }}" placeholder="{{ placeholder|default:'Buscar:' }}" value="{{ value|default:'' }}" {% if required %} required {% endif %}/>
+            </div>
             {% endif %}
         </div>
         {% endif %}

@@ -102,10 +102,21 @@ class DetailView(LoginRequiredMixin, TemplateView):
         context["grupo"] = grupo
         context["grupo_estrella_url"] = reverse_lazy("toggle_estrella_grupo")
 
-        palabras_obj_list = [gp.palabra for gp in ug.grupo.grupo_palabras.all()]
+        palabras = [gp.palabra for gp in ug.grupo.grupo_palabras.all()]
+
+        def sort_key(p):
+            etiquetas = p.etiquetas_objetos(usuario).order_by("etiqueta__color")
+            first = etiquetas.first()
+
+            if first:
+                return (0, first.etiqueta.color, p.palabra.lower())
+            else:  # palabras without etiquetas → end
+                return (1, "", p.palabra.lower())
+
+        palabras_sorted = sorted(palabras, key=sort_key)
 
         palabras = []
-        for palabra in palabras_obj_list:
+        for palabra in palabras_sorted:
             usuario_palabra = get_object_or_404(
                 UsuarioPalabra, palabra_id=palabra.id, usuario=usuario
             )

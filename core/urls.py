@@ -3,6 +3,7 @@ import core.operations as c_op
 import core.components as c_cp
 
 urlpatterns = [
+    path("run-operation", c_op.run_operation, name="run_operation"),
     # == atributos de palabra
     # __ create
     path(

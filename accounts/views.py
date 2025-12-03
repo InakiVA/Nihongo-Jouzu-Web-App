@@ -64,6 +64,8 @@ class UserView(LoginRequiredMixin, TemplateView):
                 "Cruel Angel",
             ]
         )
+        context["run_operation"] = self.request.user.perfil.rol == "admin"
+        context["operation_url"] = reverse("run_operation")
         context["themes"] = themes
         context["current_theme"] = self.request.user.perfil.tema
         context["usuario"] = self.request.user
