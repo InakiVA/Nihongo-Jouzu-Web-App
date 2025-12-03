@@ -243,62 +243,71 @@ class ResultadosView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         usuario = self.request.user
 
-        # Palabras de sesión
-        palabras_inputs_dict = self.request.session.get("respuestas_incorrectas", {})
-
-        # -- esto solo es para ordenar por más intentos incorrectos primero
-        palabras_inputs_list = list(
-            zip(palabras_inputs_dict, palabras_inputs_dict.values())
-        )
-        palabras_inputs_list = sorted(
-            palabras_inputs_list, key=lambda x: len(x[1]), reverse=True
-        )
-        palabras_inputs_dict = dict(palabras_inputs_list)
-        # -- fin de orden
-
-        # Palabras que están contestadas o previamente intentadas pero mal
-        palabras_contestadas = self.request.session.get("palabras_contestadas", {})
-        palabras_contestadas_list = []
-        for palabra_id in palabras_contestadas:
-            if (
-                palabras_contestadas[palabra_id]
-                or len(palabras_inputs_dict[palabra_id]) > 0
-            ):
-                palabras_contestadas_list.append(palabra_id)
-        palabras_contestadas_total = max(len(palabras_contestadas_list), 1)
-
-        palabras_incorrectas_id = []
-        palabras_correctas_id = []
-        for palabra in palabras_contestadas_list:
-            if len(palabras_inputs_dict[palabra]) > 0:
-                palabras_incorrectas_id.append(palabra)
-            else:
-                palabras_correctas_id.append(palabra)
-        calificacion = int(
-            (len(palabras_correctas_id) / palabras_contestadas_total) * 100
+        # ----- Load session data -----
+        palabras_inputs: dict = self.request.session.get("respuestas_incorrectas", {})
+        palabras_contestadas: dict = self.request.session.get(
+            "palabras_contestadas", {}
         )
 
+        # ----- Sort by number of incorrect attempts -----
+        palabras_inputs = dict(
+            sorted(
+                palabras_inputs.items(),
+                key=lambda item: len(item[1]),
+                reverse=True,
+            )
+        )
+
+        # ----- Detect words attempted (correct or incorrect) -----
+        palabras_contestadas_list = [
+            palabra_id
+            for palabra_id, correct in palabras_contestadas.items()
+            if correct or len(palabras_inputs.get(palabra_id, [])) > 0
+        ]
+
+        total_contestadas = max(len(palabras_contestadas_list), 1)
+
+        # ----- Split into correct / incorrect -----
+        palabras_incorrectas_id = [
+            pid
+            for pid in palabras_contestadas_list
+            if len(palabras_inputs.get(pid, [])) > 0
+        ]
+
+        palabras_correctas_id = [
+            pid
+            for pid in palabras_contestadas_list
+            if pid not in palabras_incorrectas_id
+        ]
+
+        # ----- Score -----
+        calificacion = int((len(palabras_correctas_id) / total_contestadas) * 100)
         context["calificacion"] = calificacion
         context["balance"] = (
             f"{len(palabras_correctas_id)} de {len(palabras_contestadas_list)}"
         )
 
-        palabras_incorrectas = []
-        palabras_correctas = []
+        # ----------------------------------------------------------------
+        #  IMPORTANT: Single DB query instead of 350+
+        # ----------------------------------------------------------------
+        all_ids = [int(pid) for pid in palabras_incorrectas_id + palabras_correctas_id]
+        palabras_qs = Palabra.objects.filter(id__in=all_ids)
+        palabras_map = {p.id: p for p in palabras_qs}
 
-        for palabra_id in palabras_incorrectas_id:
-            palabra_obj = get_object_or_404(Palabra, id=palabra_id)
-            palabras_incorrectas.append(palabra_obj.palabra_dict(usuario))
+        # ----- Build output lists -----
+        context["incorrectas"] = [
+            palabras_map[int(pid)].palabra_dict(usuario)
+            for pid in palabras_incorrectas_id
+            if int(pid) in palabras_map
+        ]
 
-        for palabra_id in palabras_correctas_id:
-            palabra_obj = get_object_or_404(Palabra, id=palabra_id)
-            palabras_correctas.append(palabra_obj.palabra_dict(usuario))
+        context["correctas"] = [
+            palabras_map[int(pid)].palabra_dict(usuario)
+            for pid in palabras_correctas_id
+            if int(pid) in palabras_map
+        ]
 
-        context["incorrectas"] = palabras_incorrectas
-        context["correctas"] = palabras_correctas
         context["palabra_url"] = reverse_lazy("elegir_palabra")
-
-        print(dict(self.request.session))
 
         return context
 
