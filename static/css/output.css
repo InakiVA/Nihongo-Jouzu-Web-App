@@ -3303,9 +3303,6 @@
   .pb-4 {
     padding-bottom: calc(var(--spacing) * 4);
   }
-  .pl-5 {
-    padding-left: calc(var(--spacing) * 5);
-  }
   .pl-10 {
     padding-left: calc(var(--spacing) * 10);
   }
@@ -3460,11 +3457,23 @@
       --alert-color: var(--color-warning);
     }
   }
+  .text-accent-light {
+    color: var(--color-accent-light);
+  }
+  .text-accent-light\! {
+    color: var(--color-accent-light) !important;
+  }
   .text-myalert {
     color: var(--color-myalert);
   }
   .text-myalert\! {
     color: var(--color-myalert) !important;
+  }
+  .text-neutral-light {
+    color: var(--color-neutral-light);
+  }
+  .text-neutral-light\! {
+    color: var(--color-neutral-light) !important;
   }
   .text-progress-0 {
     color: var(--color-progress-0);
