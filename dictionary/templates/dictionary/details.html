@@ -3,16 +3,38 @@
     <div class="border border-neutral-light rounded-t-4xl flex flex-auto w-full flex-col py-4">
         <div class="p-6 pt-2 gap-4 space-y-4 w-full">                     
             <div class="flex justify-between">
-            <h1 class="text-8xl font-light">{{palabra.palabra}}</h1>
+            <h1 class="text-8xl font-normal!">{{palabra.palabra}}</h1>
             {% include "components/button.html" with is_navigation=True text="Editar" url=editar_url icon="components/icons/pencil.html" extra_classes="button-main" %}
             </div>       
         </div>
         
-        <div class="px-6 flex flex-auto flex-col gap-2">
-            {% include "components/element_header.html" with header="Significados" elements=palabra.significados%}                  
-            {% include "components/element_header.html" with header="Lecturas" elements=palabra.lecturas%}                                                       
-            {% include "components/element_tag_header.html" with header="Etiquetas" elements=palabra.etiquetas_colores%}                
-            {% include "components/element_header.html" with header="Notas" elements=palabra.notas%}                                                      
+        <div class="px-6 flex flex-auto flex-col gap-4">
+            {% include "components/element_header.html" with header="Significados"%} 
+            <div class="flex flex-wrap flex-col overflow-auto pl-10">
+            {% for element in palabra.significados_list %}
+                <h2>- {{element}}</h2>
+            {% endfor %}
+            </div>
+            {% include "components/element_header.html" with header="Lecturas"%}
+            <div class="flex flex-wrap flex-col overflow-auto pl-10">
+            {% for element in palabra.lecturas_list %}
+                <h2>- {{element}}</h2>
+            {% endfor %}
+            </div>                                   
+            {% include "components/element_tag_header.html" with header="Etiquetas"%}
+            <div class="flex flex-wrap overflow-auto gap-2 pl-10">
+            {% for element in palabra.etiquetas_colores %}
+                {% include "components/tag.html"%}
+            {% endfor %}
+            </div>              
+            {% if palabra.notas_list %}
+            {% include "components/element_header.html" with header="Notas"%}
+            <div class="flex flex-wrap flex-col overflow-auto pl-10">
+            {% for element in palabra.notas_list %}
+                <h3>- {{element}}</h3>
+            {% endfor %}
+            </div>                                        
+            {% endif %}
             {% include "components/element_header.html" with header="Creador" elements=palabra.creador%}       
         </div>   
     </div>    

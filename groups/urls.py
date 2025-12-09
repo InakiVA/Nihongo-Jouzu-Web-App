@@ -27,6 +27,11 @@ urlpatterns = [
         name="delete_grupo",
     ),
     path(
+        "toggle-editar-palabras",
+        g_op.editar_grupo_palabras,
+        name="toggle_editar_palabras",
+    ),
+    path(
         "toggle-grupo-tiene-palabra",
         c_cp.toggle_checkbox,
         {"checkbox": "grupo_tiene_palabra"},

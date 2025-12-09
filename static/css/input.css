@@ -117,7 +117,7 @@ h4 {
 }
 
 .input {
- @apply input input-neutral rounded-t-xl font-light flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
+ @apply input input-neutral rounded-t-xl flex flex-auto join-item w-auto h-full min-h-10 border-neutral-light bg-neutral-dark text-textcolor;
  @apply focus:bg-neutral-main hover:bg-neutral-main;
 }
 
@@ -295,7 +295,7 @@ h4 {
 }
 
 .collapse-title{
- @apply collapse-title font-light text-lg;
+ @apply collapse-title text-lg;
 }
 
 .element_list {

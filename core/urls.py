@@ -65,6 +65,12 @@ urlpatterns = [
         {"pagina": "buscar"},
         name="cambiar_pagina_buscar",
     ),
+    path(
+        "switch-palabras-en-grupo-page",
+        c_op.cambiar_pagina,
+        {"pagina": "palabras_en_grupo"},
+        name="cambiar_pagina_palabras_en_grupo",
+    ),
     # == Checkboxes
     path(
         "toggle-estudiando",

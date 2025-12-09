@@ -36,36 +36,18 @@ class DetailView(LoginRequiredMixin, TemplateView):
         context["palabras_relacionadas"] = palabras_relacionadas_dict_list
         context["palabras_relacionadas_url"] = reverse_lazy("elegir_palabra")
 
-        grupos_usuario = c_op.get_user_groups_list(usuario)
-        grupos_de_palabra_de_usuario = set(
-            Grupo.objects.filter(
-                usuario=usuario, grupo_palabras__palabra=palabra_obj
-            ).values_list("grupo", flat=True)
+        grupos_de_usuario_sin_palabra = c_op.grupos_de_usuario_con_palabra(
+            usuario, palabra_obj, False
         )
 
-        grupos_checks = []
-        new_grupos_list = {}
-        new_grupos_str = []
-        for grupo in grupos_usuario:
-            grupo_str = grupo["grupo"]
-            if grupo_str in grupos_de_palabra_de_usuario:
-                grupos_checks.append(
-                    {
-                        "id": grupo["id"],
-                        "text": grupo["grupo"],
-                        "is_selected": True,
-                    }
-                )
-            else:
-                new_grupos_list[grupo["grupo"]] = grupo["id"]
-                new_grupos_str.append(grupo["grupo"])
-
-        context["nuevos_grupos"] = new_grupos_str
-        self.request.session["new_grupos"] = new_grupos_list
+        context["nuevos_grupos"] = grupos_de_usuario_sin_palabra
+        self.request.session["new_grupos"] = c_op.grupos_no_de_palabra_options(
+            usuario, palabra_obj
+        )
         context["agregar_grupo"] = reverse_lazy("agregar_grupo")
-
-        context["grupos_checks"] = grupos_checks
+        context["grupos_checks"] = c_op.grupos_de_palabra_checkbox(usuario, palabra_obj)
         context["grupos_checks_url"] = reverse_lazy("toggle_palabra_en_grupo")
+
         context["estrella_url"] = reverse_lazy("toggle_estrella_palabra")
         context["cambiar_progreso_url"] = reverse_lazy("cambiar_progreso")
         context["editar_url"] = reverse_lazy("editar_palabra")
@@ -228,16 +210,16 @@ class HomeView(LoginRequiredMixin, TemplateView):
         index = ut.bound_page_index(index, len(palabras))
         ajustes_palabras["page_index"] = index
         context["index"] = index + 1
+        start = index * 10
+        end = min(len(palabras), start + 10)
 
         palabras_list = []
-        for palabra in palabras[index * 10 : min(len(palabras), index * 10 + 10)]:
+        for palabra in palabras[start:end]:
             palabras_list.append(palabra.palabra_dict(usuario=usuario))
         if len(palabras) == 0:
             context["range"] = "No hay palabras para mostrar"
         else:
-            context["range"] = (
-                f"{index * 10 + 1} - {min(len(palabras), index * 10 + 10)} de {len(palabras)}"
-            )
+            context["range"] = f"{start + 1} - {end} de {len(palabras)}"
         context["palabras_list"] = palabras_list
         context["palabra_url"] = reverse_lazy("elegir_palabra")
 

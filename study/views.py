@@ -381,35 +381,16 @@ class SesionView(LoginRequiredMixin, TemplateView):
             palabras_relacionadas_dict_list.append(palabra.palabra_dict(usuario))
         context["palabras_relacionadas"] = palabras_relacionadas_dict_list
 
-        grupos_usuario = Grupo.objects.filter(usuario=usuario)
-        grupos_de_usuario_con_palabra = sorted(
-            grupos_usuario.filter(grupo_palabras__palabra=palabra_obj),
-            key=lambda group: ut.custom_key(group.grupo),
+        grupos_de_usuario_sin_palabra = c_op.grupos_de_usuario_con_palabra(
+            usuario, palabra_obj, False
         )
-        grupos_de_usuario_sin_palabra = sorted(
-            grupos_usuario.exclude(grupo_palabras__palabra=palabra_obj),
-            key=lambda group: ut.custom_key(group.grupo),
-        )
-
-        grupos_checks = []
-        new_grupos_list = {}
-        new_grupos_str = []
-        for grupo in grupos_de_usuario_con_palabra:
-            grupos_checks.append(
-                {
-                    "id": grupo.id,
-                    "text": grupo.grupo,
-                    "is_selected": True,
-                }
-            )
-        for grupo in grupos_de_usuario_sin_palabra:
-            new_grupos_list[grupo.grupo] = grupo.id
-            new_grupos_str.append(grupo.grupo)
 
         context["nuevos_grupos"] = grupos_de_usuario_sin_palabra
-        self.request.session["new_grupos"] = new_grupos_list
+        self.request.session["new_grupos"] = c_op.grupos_no_de_palabra_options(
+            usuario, palabra_obj
+        )
         context["agregar_grupo"] = reverse_lazy("agregar_grupo")
-        context["grupos_checks"] = grupos_checks
+        context["grupos_checks"] = c_op.grupos_de_palabra_checkbox(usuario, palabra_obj)
         context["grupos_checks_url"] = reverse_lazy("toggle_palabra_en_grupo")
 
         context["finalizar_url"] = reverse_lazy("resultados")

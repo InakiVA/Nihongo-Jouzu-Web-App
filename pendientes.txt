@@ -94,7 +94,7 @@
         ?? creador
     ?? Orden por (asc des)
         ?? abcd
-        ?? creación
+        ?? creación - id 
         ?? cantidad de palabras ??
         ?? progreso
 
@@ -104,7 +104,8 @@
     << Botón toggle con mismas propiedades de edición y eliminación que palabra
         >> Agregar palabras
         >> Agregar etiquetas
-    ?? Filtros por estrella, progreso, creador
+    ?? Filtros por estrella, progreso, creador, etiqueta
+    ?? Ordenar palabras por atributos
     .. omitir grupo_etiquetas hasta encontrarle propósito funcional
 
 == Vista de etiquetas

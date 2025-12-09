@@ -113,3 +113,12 @@ def eliminar_grupo(request):
     grupo_obj.delete()
     messages.success(request, "Grupo eliminado exitosamente")
     return redirect("grupos")
+
+
+@login_required
+def editar_grupo_palabras(request):
+    ajustes = request.session.get("ajustes_palabras_en_grupo", {})
+    editando = ajustes.get("editando", False)
+    ajustes["editando"] = not editando
+    request.session["ajustes_palabras_en_grupo"] = ajustes
+    return redirect(request.META.get("HTTP_REFERER", "/"))

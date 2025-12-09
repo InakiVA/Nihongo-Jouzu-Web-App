@@ -2,7 +2,7 @@
     <input type="radio" name="value_accordion"/>
     <div class="collapse-title flex items-end gap-4">  
         <h2>{{header}}</h2>              
-        <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2 font-light">
+        <li class="flex flex-row w-auto flex-wrap overflow-auto gap-2 ">
             {% for tag in elements %}
             {% include "components/tag.html" with element=tag %}         
             {% endfor %}

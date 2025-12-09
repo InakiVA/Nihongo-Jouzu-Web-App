@@ -65,10 +65,13 @@ class Palabra(models.Model):
             "id": self.id,
             "palabra": self.palabra,
             "lecturas": self.lecturas_str(usuario),
+            "lecturas_list": self.lecturas_list(usuario),
             "significados": self.significados_str(usuario),
+            "significados_list": self.significados_list(usuario),
             "etiquetas": self.etiquetas_list(usuario),
             "etiquetas_colores": self.etiquetas_colores(usuario),
             "notas": self.notas_str(usuario),
+            "notas_list": self.notas_list(usuario),
             "grupos": self.grupos_list(usuario),
             "editable": self.usuario == usuario,
             "progreso": self.palabra_usuarios.get(usuario=usuario).progreso,
@@ -128,7 +131,7 @@ class Palabra(models.Model):
     def etiquetas_objetos(self, usuario):
         return self.palabra_etiquetas.filter(
             Q(usuario=usuario) | Q(usuario__perfil__rol="admin")
-        )
+        ).order_by("etiqueta__color", "etiqueta__etiqueta")
 
     def etiquetas_colores(self, usuario):
         etiquetas_list = self.etiquetas_objetos(usuario)

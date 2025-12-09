@@ -1,12 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from tags.models import Etiqueta
-from groups.models import Grupo, UsuarioGrupo
+from groups.models import Grupo
 from dictionary.models import Palabra
-from progress.models import UsuarioPalabra
 
 import core.operations as c_op
 import core.utils as ut
@@ -88,51 +86,71 @@ class DetailView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         usuario = self.request.user
-
         grupo_id = self.request.session["grupo_actual"]
-        ug = get_object_or_404(
-            UsuarioGrupo.objects.select_related("grupo").prefetch_related(
-                "grupo__grupo_palabras__palabra__palabra_usuarios"
-            ),
-            usuario=usuario,
-            grupo_id=grupo_id,
-        )
-        grupo = ug.grupo.grupo_dict(usuario=usuario)
+        grupo_obj = get_object_or_404(Grupo, id=grupo_id)
+        context["grupo"] = grupo_obj.grupo_dict(usuario=usuario)
 
-        context["grupo"] = grupo
-        context["grupo_estrella_url"] = reverse_lazy("toggle_estrella_grupo")
+        # ------------------------------------------------------------
+        # PAGINATION STATE (similar to HomeView)
+        # ------------------------------------------------------------
+        ajustes = self.request.session.get("ajustes_palabras_en_grupo", {})
+        editando = ajustes.get("editando", False)
 
-        palabras = [gp.palabra for gp in ug.grupo.grupo_palabras.all()]
-
-        def sort_key(p):
-            etiquetas = p.etiquetas_objetos(usuario).order_by("etiqueta__color")
-            first = etiquetas.first()
-
-            if first:
-                return (0, first.etiqueta.color, p.palabra.lower())
-            else:  # palabras without etiquetas → end
-                return (1, "", p.palabra.lower())
-
-        palabras_sorted = sorted(palabras, key=sort_key)
-
-        palabras = []
-        for palabra in palabras_sorted:
-            usuario_palabra = get_object_or_404(
-                UsuarioPalabra, palabra_id=palabra.id, usuario=usuario
-            )
-            palabra_dict = palabra.palabra_dict(usuario)
-            palabra_dict["progreso"] = usuario_palabra.progreso
-            palabra_dict["estrella"] = usuario_palabra.estrella
-            palabra_dict["checked"] = True
-            palabras.append(palabra_dict)
-
-        context["palabras"] = palabras
         context["grupo_tiene_palabra_url"] = reverse_lazy("toggle_grupo_tiene_palabra")
         context["palabra_url"] = reverse_lazy("elegir_palabra")
-
         context["editar_url"] = reverse_lazy("editar_grupo")
 
-        context["buscar_palabras"] = reverse_lazy("buscar_filtrar_grupo_actual")
+        palabras = (
+            Palabra.objects.filter(palabra_grupos__grupo_id=grupo_id)
+            .distinct()
+            .order_by("id")
+        )
+        total_palabras = len(palabras)
+
+        if grupo_id != ajustes.get("last_grupo_id", None):
+            ajustes["page_index"] = 0  # reset page index if different group
+            ajustes["last_grupo_id"] = grupo_id
+            editando = False
+            ajustes["editando"] = editando
+
+        index = ajustes.get("page_index", 0)
+        index = ut.bound_page_index(index, total_palabras)
+        context["index"] = index + 1
+        start = index * 10
+        end = min(total_palabras, start + 10)
+
+        palabras_list = []
+
+        for palabra in palabras[start:end]:
+            d = palabra.palabra_dict(usuario)
+            d["checked"] = True
+            palabras_list.append(d)
+        context["palabras"] = palabras_list
+
+        # ------------------------------------------------------------
+        # PAGINATION UI
+        # ------------------------------------------------------------
+
+        ajustes["page_index"] = index
+        context["grupo_estrella_url"] = reverse_lazy("toggle_estrella_grupo")
+
+        if total_palabras == 0:
+            context["range"] = "No hay palabras para mostrar"
+        else:
+            context["range"] = f"{start + 1} - {end} de {total_palabras}"
+
+        # Create pagination list same as HomeView (use ut.create_pages_list)
+        pages_list = ut.create_pages_list(index, total_palabras)
+        context["pages_list"] = pages_list
+        context["show_pages_list"] = len(pages_list) > 1
+
+        # URL for pagination actions
+        context["cambiar_pagina_url"] = reverse_lazy("cambiar_pagina_palabras_en_grupo")
+        context["editar_palabras_url"] = reverse_lazy("toggle_editar_palabras")
+        context["editando"] = editando
+
+        # Save session state
+        self.request.session["ajustes_palabras_en_grupo"] = ajustes
 
         return context
 

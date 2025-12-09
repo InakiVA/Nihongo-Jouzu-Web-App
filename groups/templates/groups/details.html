@@ -2,9 +2,9 @@
 <div class="space-y-4 px-4">
     <div class="border space-y-2 border-neutral-light rounded-xl flex flex-auto w-full flex-col p-6">                 
         <div class="flex justify-between">
-            <h1 class="text-6xl font-light">{{grupo.grupo}}</h1>
+            <h1 class="text-6xl ">{{grupo.grupo}}</h1>
             {% if grupo.editable %}
-            {% include "components/button.html" with is_navigation=True text="Editar" url=editar_url icon="components/icons/pencil.html" extra_classes="button-main" %}
+            {% include "components/button.html" with is_navigation=True text="Editar Atributos" url=editar_url icon="components/icons/pencil.html" extra_classes="button-main" %}                    
             {% endif %}
         </div>  
         <h2>{{grupo.descripcion}}</h2>      
@@ -16,8 +16,15 @@
             <div class="flex gap-4 items-start">
                 <div class="flex gap-4 items-end">
                     <h2 class="list_title">Palabras en grupo</h2>
-                    <h3 class="list_subheader font-light">{{grupo.cantidad_palabras}}</h3>
+                    <h3 class="list_subheader ">{{grupo.cantidad_palabras}}</h3>
                 </div>
+                {% if grupo.cantidad_palabras > 0 %}
+                {% if grupo.editable and not editando %}
+                {% include "components/button.html" with is_navigation=True text="Editar Palabras" url=editar_palabras_url icon="components/icons/book.html" extra_classes="button-main" %}    
+                {% elif grupo.editable and editando %}
+                {% include "components/button.html" with is_navigation=True text="Dejar de Editar" url=editar_palabras_url icon="components/icons/back.html" extra_classes="button-neutral" %}    
+                {% endif %}
+                {% endif %}
             </div>              
             
             <div class="flex gap-4 items-center">
@@ -28,7 +35,7 @@
         <div class="space-y-4 p-4">
         {% for palabra in palabras %}
             <div class="flex gap-4 items-center">
-                {% if grupo.editable %}
+                {% if grupo.editable and editando %}
                 {% include "components/checkbox.html" with is_selected=True id=palabra.id url=grupo_tiene_palabra_url%}
                 {% endif %}
                 {% include "components/word_card.html" with palabra=palabra url=palabra_url %}
@@ -37,5 +44,11 @@
         </div>
     </div>
     
+    {% if show_pages_list %}
+    <div class="flex w-full items-center justify-center">
+      {% include "components/pagination.html" with pages=pages_list url=cambiar_pagina_url%}
+    </div>
+  {% endif %}
+  
 </div>
 {% endblock %}

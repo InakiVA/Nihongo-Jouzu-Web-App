@@ -75,6 +75,8 @@ def cambiar_pagina(request, pagina):
             ajustes_tipo = "ajustes_palabras"
         elif pagina == "grupos":
             ajustes_tipo = "ajustes_grupos"
+        elif pagina == "palabras_en_grupo":
+            ajustes_tipo = "ajustes_palabras_en_grupo"
         ajustes = request.session.get(ajustes_tipo, {})
         index_type = "page_index"
     action = request.POST.get("action")
@@ -248,3 +250,47 @@ def get_user_groups_list(usuario):
 
     sorted_groups = sorted(grupos, key=lambda group: ut.custom_key(group["grupo"]))
     return sorted_groups
+
+
+def grupos_de_usuario(usuario):
+    return Grupo.objects.filter(usuario=usuario)
+
+
+# () con=True → con palabra; con=False → sin palabra
+def grupos_de_usuario_con_palabra(usuario, palabra_obj, con=True):
+    grupos_de_usuario_list = grupos_de_usuario(usuario)
+    if not con:
+        return sorted(
+            grupos_de_usuario_list.exclude(grupo_palabras__palabra=palabra_obj),
+            key=lambda group: ut.custom_key(group.grupo),
+        )
+    return sorted(
+        grupos_de_usuario_list.filter(grupo_palabras__palabra=palabra_obj),
+        key=lambda group: ut.custom_key(group.grupo),
+    )
+
+
+def grupos_de_palabra_checkbox(usuario, palabra_obj):
+    grupos_checks = []
+    grupos_de_usuario_con_palabra_list = grupos_de_usuario_con_palabra(
+        usuario, palabra_obj, con=True
+    )
+    for grupo in grupos_de_usuario_con_palabra_list:
+        grupos_checks.append(
+            {
+                "id": grupo.id,
+                "text": grupo.grupo,
+                "is_selected": True,
+            }
+        )
+    return grupos_checks
+
+
+def grupos_no_de_palabra_options(usuario, palabra_obj):
+    new_grupos_list = {}
+    grupos_de_usuario_sin_palabra_list = grupos_de_usuario_con_palabra(
+        usuario, palabra_obj, con=False
+    )
+    for grupo in grupos_de_usuario_sin_palabra_list:
+        new_grupos_list[grupo.grupo] = grupo.id
+    return new_grupos_list
