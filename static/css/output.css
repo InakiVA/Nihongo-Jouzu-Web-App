@@ -39,6 +39,7 @@
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --font-weight-extrabold: 800;
+    --font-weight-black: 900;
     --leading-snug: 1.375;
     --radius-lg: 0.5rem;
     --radius-xl: 0.75rem;
@@ -3387,6 +3388,14 @@
     --tw-font-weight: var(--font-weight-bold) !important;
     font-weight: var(--font-weight-bold) !important;
   }
+  .font-black {
+    --tw-font-weight: var(--font-weight-black);
+    font-weight: var(--font-weight-black);
+  }
+  .font-black\! {
+    --tw-font-weight: var(--font-weight-black) !important;
+    font-weight: var(--font-weight-black) !important;
+  }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
@@ -3394,6 +3403,10 @@
   .font-bold\! {
     --tw-font-weight: var(--font-weight-bold) !important;
     font-weight: var(--font-weight-bold) !important;
+  }
+  .font-light {
+    --tw-font-weight: var(--font-weight-light);
+    font-weight: var(--font-weight-light);
   }
   .font-normal {
     --tw-font-weight: var(--font-weight-normal);
@@ -3468,12 +3481,6 @@
   }
   .text-myalert\! {
     color: var(--color-myalert) !important;
-  }
-  .text-neutral-light {
-    color: var(--color-neutral-light);
-  }
-  .text-neutral-light\! {
-    color: var(--color-neutral-light) !important;
   }
   .text-progress-0 {
     color: var(--color-progress-0);

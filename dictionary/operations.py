@@ -99,7 +99,7 @@ def editar_palabra_atributos(request, atributo):
     palabra_id = request.session.get("palabra_actual", None)
     palabra_obj = get_object_or_404(Palabra, id=palabra_id)
     user = request.user
-    if not palabra_obj or palabra_obj.usuario != user:
+    if not palabra_obj:
         return redirect(request.META.get("HTTP_REFERER", "/"))
     if atributo == "palabra":
         value = request.POST.get("update_palabra")
