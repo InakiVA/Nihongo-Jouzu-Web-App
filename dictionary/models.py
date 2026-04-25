@@ -21,13 +21,8 @@ class Palabra(models.Model):
     pregunta = None
     respuestas = None
 
-    def set_pregunta_respuesta(self, input_lenguaje, usuario, is_kanji=False):
-        if input_lenguaje == "Cualquiera":
-            lenguaje_elegido = random.choice(["Original", "Significados"])
-        else:
-            lenguaje_elegido = input_lenguaje
-
-        if lenguaje_elegido == "Original":
+    def set_pregunta_respuesta(self, idioma_pregunta, usuario, is_kanji=False):
+        if idioma_pregunta == "Original":
             if not is_kanji:
                 if self.palabra != self.lecturas_str(usuario):
                     self.pregunta = [self.palabra, self.lecturas_str(usuario)]
@@ -41,7 +36,7 @@ class Palabra(models.Model):
                 self.respuestas = ut.set_alternate_inputs(
                     self.lecturas_list(usuario) + self.significados_list(usuario)
                 )
-        elif lenguaje_elegido == "Significados":
+        elif idioma_pregunta == "Significados":
             self.pregunta = [self.significados_str(usuario)]
             self.respuestas = ut.set_alternate_inputs(
                 [self.palabra] + self.lecturas_list(usuario)

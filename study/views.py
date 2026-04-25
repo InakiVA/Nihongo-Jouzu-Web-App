@@ -328,6 +328,7 @@ class SesionView(LoginRequiredMixin, TemplateView):
         palabras_contestadas = self.request.session.get("palabras_contestadas", {})
         palabras_correctas = self.request.session.get("palabras_correctas", {})
         respuestas_incorrectas = self.request.session.get("respuestas_incorrectas", {})
+        palabras_idiomas = self.request.session.get("palabras_idiomas", {})
 
         palabra_obj = get_object_or_404(Palabra, id=palabra_id)
         palabra_dict = palabra_obj.palabra_dict(usuario)
@@ -338,11 +339,11 @@ class SesionView(LoginRequiredMixin, TemplateView):
                 palabra_dict["kanji_data"] = etiqueta
             elif etiqueta["etiqueta"] == "Kana":
                 palabra_dict["kana"] = etiqueta
-        pregunta_lenguaje = self.request.session.get(
-            "idioma_preguntas_elegido", "Original"
-        )
+
         palabra_obj.set_pregunta_respuesta(
-            pregunta_lenguaje, usuario, bool(palabra_dict["kanji_data"])
+            palabras_idiomas.get(str(palabra_id), "Original"),
+            usuario,
+            bool(palabra_dict["kanji_data"]),
         )
 
         pregunta_list = palabra_obj.pregunta

@@ -1,5 +1,6 @@
 import core.traduccion as trad
 import re
+import unicodedata
 
 
 # Natural order
@@ -111,29 +112,55 @@ def clean_input(input_):
     # Punctuation removal
     punctuation_variants = list(variants)
     for variant in punctuation_variants:
-        for char in ["*", "#", "、", ",", "¿", "?", "¡", "!", "<", ">"]:
+        for char in [
+            "*",
+            "#",
+            "、",
+            ",",
+            "¿",
+            "?",
+            "¡",
+            "!",
+            "<",
+            ">",
+            "{",
+            "}",
+            "「",
+            "」",
+            "『",
+            "』",
+            "[",
+            "]",
+            ".",
+        ]:
             variant_2 = variant.replace(char, "").strip()
             if variant_2 not in variants:
                 punctuation_variants.append(variant_2)
                 variants.add(variant_2)
 
-    # Accent removal
-    for variant in list(variants):
-        for a, b in [
-            ("á", "a"),
-            ("é", "e"),
-            ("í", "i"),
-            ("ó", "o"),
-            ("ú", "u"),
-            ("ñ", "n"),
-            ("Á", "A"),
-            ("É", "E"),
-            ("Í", "I"),
-            ("Ó", "O"),
-            ("Ú", "U"),
-            ("Ñ", "N"),
-        ]:
-            variants.add(variant.replace(a, b).strip())
+    char_variants = list(variants)
+    char_variants_dict = {
+        "á": "a",
+        "é": "e",
+        "í": "i",
+        "ó": "o",
+        "ú": "u",
+        "ü": "u",
+        "ñ": "n",
+        "Á": "A",
+        "É": "E",
+        "Í": "I",
+        "Ó": "O",
+        "Ú": "U",
+        "Ñ": "N",
+        "Ü": "U",
+    }
+    for variant in char_variants:
+        for char in char_variants_dict:
+            variant_2 = variant.replace(char, char_variants_dict[char]).strip()
+            if variant_2 not in variants:
+                char_variants.append(variant_2)
+                variants.add(variant_2)
 
     # Handle special character "・"
     for variant in list(variants):

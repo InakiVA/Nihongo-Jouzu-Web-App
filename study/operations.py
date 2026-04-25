@@ -36,14 +36,22 @@ def preparar_estudio(request):
     request.session["palabra_actual"] = palabras_id[0]
     contestadas = {}
     correctas = {}
+    idiomas = {}
     respuestas_incorrectas = {}
+    idioma_preguntas = request.session.get("idioma_preguntas_elegido", "Original")
     for key in palabras_id:
         contestadas[key] = False
         correctas[key] = False
         respuestas_incorrectas[key] = []
+        if idioma_preguntas == "Cualquiera":
+            idioma_pregunta = random.choice(["Original", "Significados"])
+        else:
+            idioma_pregunta = idioma_preguntas
+        idiomas[key] = idioma_pregunta
     request.session["palabras_contestadas"] = contestadas
     request.session["palabras_correctas"] = correctas
     request.session["respuestas_incorrectas"] = respuestas_incorrectas
+    request.session["palabras_idiomas"] = idiomas
     return redirect("estudio")
 
 
