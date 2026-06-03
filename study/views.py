@@ -69,7 +69,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         grupos_elegidos = [g for g in grupos if g["estudiando"]]
         if ajustes.get("Creados por mí (grupos)"):
-            grupos = [g for g in grupos if g["autor"] == usuario.username]
+            grupos = [g for g in grupos if g["creador"] == usuario]
         if ajustes.get("Por completar (grupos)"):
             grupos = [g for g in grupos if g["progreso"] < 100]
         if ajustes.get("Con estrella (grupos)"):
