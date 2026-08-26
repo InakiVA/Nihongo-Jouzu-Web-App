@@ -38,13 +38,13 @@ def preparar_estudio(request):
     correctas = {}
     idiomas = {}
     respuestas_incorrectas = {}
-    idioma_preguntas = request.session.get("idioma_preguntas_elegido", "Original")
+    idioma_preguntas = request.session.get("idioma_preguntas_elegido", "Japonés")
     for key in palabras_id:
         contestadas[key] = False
         correctas[key] = False
         respuestas_incorrectas[key] = []
         if idioma_preguntas == "Cualquiera":
-            idioma_pregunta = random.choice(["Original", "Significados"])
+            idioma_pregunta = random.choice(["Japonés", "Español"])
         else:
             idioma_pregunta = idioma_preguntas
         idiomas[key] = idioma_pregunta

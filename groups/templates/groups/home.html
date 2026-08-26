@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="flex flex-col flex-auto px-4 gap-4 pb-4">
-  <div class="flex flex-row w-full gap-4 justify-between items-start">
-    <h4 class="text-start">Grupos</h4>    
+  <div class="flex flex-row w-full gap-4 justify-between items-center">
+    <h4 class="text-start">Grupos</h4>
     <button type="button" class="button-big" data-open="#crear_grupo_modal">
       {% include "components/icons/add.html" %} Nuevo Grupo
     </button>    
@@ -14,30 +14,28 @@
         <h2>Grupo a crear</h2>
         <button type="button" class="button-exit-cross" data-close="#crear_grupo_modal">
           {% include "components/icons/cross.html" %}
-        </button>        
-      </div>     
+        </button>
+      </div>
       
       <form action="{{ crear_grupo_url }}" method="post" class="gap-4 p-4 flex flex-auto flex-col">
         {% csrf_token %}
         <div class="flex flex-auto flex-col gap-2">
             <div class="flex">
                 <label class="font-semibold">Grupo</label>
-                <label class="font-semibold text-myalert">*</label>          
-            </div>          
-
+                <label class="font-semibold text-myalert">*</label>
+            </div>
             {% include "components/input.html" with placeholder="Tu grupo:" name="grupo_nuevo" value=ajustes_grupos.grupo_valido%}
-
         </div>
 
         <div class="flex flex-auto flex-col gap-2">
             <label class="font-semibold">Descripción</label>
-            {% include "components/textarea.html" with placeholder="Su descripción:" name="descripcion_nueva" value=ajustes_grupos.desc_valida%}          
+            {% include "components/textarea.html" with placeholder="Su descripción:" name="descripcion_nueva" value=ajustes_grupos.desc_valida%}
         </div>
 
         <div class="flex flex-auto pt-8 justify-center">
         {% include "components/button.html" with url=crear_grupo_url text="Crear" icon="components/icons/add.html" extra_classes="button-big" %}
         </div>
-      </form>      
+      </form>
     </div>
   </dialog>
 

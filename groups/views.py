@@ -47,10 +47,6 @@ class GroupsView(LoginRequiredMixin, TemplateView):
         self.request.session["ajustes_grupos"] = ajustes_grupos
         return context
 
-    def is_mobile(request):
-        user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
-        return any(m in user_agent for m in ["mobile", "android", "iphone"])
-
 
 class EditView(LoginRequiredMixin, TemplateView):
     template_name = "groups/edit.html"
@@ -74,10 +70,6 @@ class EditView(LoginRequiredMixin, TemplateView):
         context["delete_grupo"] = reverse_lazy("delete_grupo")
 
         return context
-
-    def is_mobile(request):
-        user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
-        return any(m in user_agent for m in ["mobile", "android", "iphone"])
 
 
 class DetailView(LoginRequiredMixin, TemplateView):
@@ -153,7 +145,3 @@ class DetailView(LoginRequiredMixin, TemplateView):
         self.request.session["ajustes_palabras_en_grupo"] = ajustes
 
         return context
-
-    def is_mobile(request):
-        user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
-        return any(m in user_agent for m in ["mobile", "android", "iphone"])

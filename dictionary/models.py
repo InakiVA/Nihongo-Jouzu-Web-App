@@ -22,7 +22,7 @@ class Palabra(models.Model):
     respuestas = None
 
     def set_pregunta_respuesta(self, idioma_pregunta, usuario, is_kanji=False):
-        if idioma_pregunta == "Original":
+        if idioma_pregunta == "Japonés":
             if not is_kanji:
                 if self.palabra != self.lecturas_str(usuario):
                     self.pregunta = [self.palabra, self.lecturas_str(usuario)]
@@ -36,7 +36,7 @@ class Palabra(models.Model):
                 self.respuestas = ut.set_alternate_inputs(
                     self.lecturas_list(usuario) + self.significados_list(usuario)
                 )
-        elif idioma_pregunta == "Significados":
+        elif idioma_pregunta == "Español":
             self.pregunta = [self.significados_str(usuario)]
             self.respuestas = ut.set_alternate_inputs(
                 [self.palabra] + self.lecturas_list(usuario)

@@ -233,7 +233,3 @@ class HomeView(LoginRequiredMixin, TemplateView):
         self.request.session["ajustes_palabras"] = ajustes_palabras
 
         return context
-
-    def is_mobile(request):
-        user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
-        return any(m in user_agent for m in ["mobile", "android", "iphone"])

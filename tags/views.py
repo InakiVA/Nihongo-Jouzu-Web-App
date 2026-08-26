@@ -73,7 +73,3 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context["editar_color_url"] = reverse_lazy("update_color")
         context["eliminar_etiqueta_url"] = reverse_lazy("eliminar_etiqueta")
         return context
-
-    def is_mobile(request):
-        user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
-        return any(m in user_agent for m in ["mobile", "android", "iphone"])

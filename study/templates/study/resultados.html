@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block content %}
 <div class="flex flex-col flex-auto px-4 gap-4">
     <h4 class="text-start">Resultados de la sesión</h4> 
-    <div class="flex flex-auto {% if is_mobile %} flex-col {% else %} flex-row {% endif %} mt-4">        
+    <div class="flex flex-auto flex-row mt-4">        
         <div class="flex flex-col items-start justify-center text-start space-y-4 p-4">
             <h2 class="text-4xl!">Calificación</h2>
             <div class="flex flex-auto flex-col text-center items-center justify-start gap-8 py-8">
@@ -10,7 +10,7 @@
             </div>
         </div>  
         
-        <div class="divider before:bg-neutral-main after:bg-neutral-main {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %}"></div>   
+        <div class="divider before:bg-neutral-main after:bg-neutral-main divider-horizontal py-4"></div>   
         
         <div class="flex flex-auto flex-col py-4">
             {% if incorrectas %}

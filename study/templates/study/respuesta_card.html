@@ -1,4 +1,4 @@
-<div class="flex flex-auto {% if is_mobile %} flex-col {% else %} flex-row {% endif %} gap-0 justify-start">
+<div class="flex flex-auto flex-row gap-0 justify-start">
     
     <div class="flex flex-col items-center justify-center h-full min-w-1/5 px-4">
         <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-center whitespace-normal break-keep leading-snug">
@@ -19,12 +19,11 @@
         </div>
     </div>
 
-    <div class="divider {% if is_mobile %} px-4 {% else %} divider-horizontal py-4 {% endif %} {%if is_correct %} before:bg-correct after:bg-correct {% else %} before:bg-incorrect after:bg-incorrect {% endif %}"></div>
+    <div class="divider divider-horizontal py-4 {%if is_correct %} before:bg-correct after:bg-correct {% else %} before:bg-incorrect after:bg-incorrect {% endif %}"></div>
 
     <div class="flex flex-auto flex-col gap-2">  
         {% include "study/accordion_element.html" with input_name="agregar_significado" elements=palabra.significados url=agregar_significado header="Significados" placeholder="Nuevo significado:" %}        
         {% include "study/accordion_element.html" with input_name="agregar_lectura" elements=palabra.lecturas url=agregar_lectura header="Lecturas" placeholder="Nueva lectura:" %}
         {% include "study/accordion_tag_element.html" with select_name="agregar_etiqueta" elements=palabra.etiquetas_colores url=agregar_etiqueta header="Etiquetas" options=nuevas_etiquetas%}
         {% include "study/accordion_element.html" with input_name="agregar_nota" elements=palabra.notas url=agregar_nota header="Notas" placeholder="Nueva nota:" is_textarea=True is_checked=True %}
-    </div>       
 </div>

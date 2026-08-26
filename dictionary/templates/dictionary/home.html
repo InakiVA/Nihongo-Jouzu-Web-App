@@ -1,13 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="flex flex-col flex-auto px-4 gap-4 pb-4">
-  <div class="flex flex-row w-full gap-4 justify-between items-start">
-    <h4 class="text-start">Palabras: {{range}}</h4>  
-    <div class="flex flex-row gap-4">        
+  <div class="flex flex-row w-full gap-4 justify-between items-center">
+    <div>
+      <h4 class="text-start">Palabras</h4>
+      <label>{{range}}</label>
+    </div>
+    
+    <div class="flex flex-row gap-4">
       <button type="button" class="button-big" data-open="#crear_palabra_modal">
         {% include "components/icons/add.html" %} Nueva Palabra
-      </button>  
-    </div>    
+      </button>
+    </div>
   </div>
 
   <dialog id="crear_palabra_modal" class="modal">
@@ -16,31 +20,31 @@
         <h2>Palabra a crear</h2>
         <button type="button" class="button-exit-cross" data-close="#crear_palabra_modal">
           {% include "components/icons/cross.html" %}
-        </button>        
-      </div>     
+        </button>
+      </div>
       
       <form action="{{ crear_palabra_url }}" method="post" class="gap-4 p-4 flex flex-auto flex-col">
         {% csrf_token %}
         <div class="flex flex-auto flex-col gap-2">
           <div class="flex">
             <label class="font-semibold">Palabra</label>
-            <label class="font-semibold text-myalert">*</label>          
-          </div>            
+            <label class="font-semibold text-myalert">*</label>
+          </div>
           {% include "components/input.html" with placeholder="Tu palabra:" name="palabra_nueva" value=ajustes_palabras.palabra_valida%}
         </div>
 
         <div class="flex flex-auto flex-col gap-2">
           <div class="flex">
             <label class="font-semibold">Significado</label>
-            <label class="font-semibold text-myalert">*</label>          
-          </div>           
+            <label class="font-semibold text-myalert">*</label>
+          </div>
           {% include "components/input.html" with placeholder="Su significado:" name="significado_nuevo" value=ajustes_palabras.significado_valido%}
         </div>
 
         <div class="flex flex-auto flex-col gap-2">
           <div class="flex">
             <label class="font-semibold">Lectura</label>
-            <label class="font-semibold text-myalert">*</label>          
+            <label class="font-semibold text-myalert">*</label>
           </div>
           {% include "components/input.html" with placeholder="Su lectura:" name="lectura_nueva" value=ajustes_palabras.lectura_valida%}
         </div>
@@ -50,10 +54,9 @@
         <div class="flex flex-auto pt-8 justify-center">
         {% include "components/button.html" with text="Crear" icon="components/icons/add.html" extra_classes="button-big" %}
         </div>
-      </form>      
+      </form>
     </div>
   </dialog>
-  
   
   <div class="collapse border rounded-t-3xl rounded-b-none border-neutral-main hover:bg-neutral-main">
     <div class="collapse-title flex flex-row gap-4 items-center">
@@ -72,7 +75,7 @@
       </div>
       {% include "components/element_header.html" with header="Etiquetas" extra_classes="mt-4"%}
       <div class="columns-1 sm:columns-2 md:columns-3 gap-4 space-y-2">
-        {% for tag in tag_list %}  
+        {% for tag in tag_list %}
           {% include "components/checkbox.html" with url=filtrar_tag_url color=tag.color text=tag.etiqueta id=tag.id is_selected=tag.is_selected extra_classes="text-lg"%}
         {% endfor %}
       </div>

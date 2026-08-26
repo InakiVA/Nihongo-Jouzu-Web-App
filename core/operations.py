@@ -165,7 +165,7 @@ def asegurar_ajustes_sesion(request):
     ajustes_default = {
         "orden_elegido": "Nombre",
         "descendente": False,
-        "idioma_preguntas": "Original",
+        "idioma_preguntas": "Japonés",
         "aleatorio": False,
         "filtros_palabras_andor": "AND",
         "filtros_palabras_exclusivo": False,

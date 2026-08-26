@@ -96,7 +96,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         # __ Preguntas
         context["idioma_preguntas_url"] = reverse_lazy("toggle_idioma_preguntas")
-        idioma_preguntas_opciones = ("Original", "Significados", "Cualquiera")
+        idioma_preguntas_opciones = ("Japonés", "Español", "Cualquiera")
         context["idioma_preguntas_opciones"] = idioma_preguntas_opciones
         context["idioma_preguntas_elegido"] = self.request.session.get(
             "idioma_preguntas_elegido", idioma_preguntas_opciones[0]
@@ -221,19 +221,15 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         cantidad_grupos_elegidos = len(grupos_elegidos)
         if cantidad_grupos_elegidos == 1:
-            context["cantidad_grupos"] = f"{cantidad_grupos_elegidos} elegido"
+            context["cantidad_grupos"] = f"{cantidad_grupos_elegidos}"
         else:
-            context["cantidad_grupos"] = f"{cantidad_grupos_elegidos} elegidos"
+            context["cantidad_grupos"] = f"{cantidad_grupos_elegidos}"
 
         self.request.session["inicio_ajustes"] = ajustes
 
         print(dict(self.request.session))
 
         return context
-
-    def is_mobile(request):
-        user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
-        return user_agent in set("mobile", "android", "iphone", "ipad")
 
 
 class ResultadosView(LoginRequiredMixin, TemplateView):
@@ -311,10 +307,6 @@ class ResultadosView(LoginRequiredMixin, TemplateView):
 
         return context
 
-    def is_mobile(request):
-        user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
-        return user_agent in set("mobile", "android", "iphone", "ipad")
-
 
 class SesionView(LoginRequiredMixin, TemplateView):
     template_name = "study/sesion.html"
@@ -341,7 +333,7 @@ class SesionView(LoginRequiredMixin, TemplateView):
                 palabra_dict["kana"] = etiqueta
 
         palabra_obj.set_pregunta_respuesta(
-            palabras_idiomas.get(str(palabra_id), "Original"),
+            palabras_idiomas.get(str(palabra_id), "Japonés"),
             usuario,
             bool(palabra_dict["kanji_data"]),
         )
@@ -420,7 +412,3 @@ class SesionView(LoginRequiredMixin, TemplateView):
         }
 
         return context
-
-    def is_mobile(request):
-        user_agent = request.META.get("HTTP_USER_AGENT", "").lower()
-        return user_agent in set("mobile", "android", "iphone")
